@@ -1,0 +1,30 @@
+{
+  "name": "@icat/web",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Muhammad Faizan",
+  "packageManager": "npm@11.4.2",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "clean": "rm -rf .next .turbo",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@icat/ui": "*",
+    "next": "15.5.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.0",
+    "typescript": "^5"
+  }
+}

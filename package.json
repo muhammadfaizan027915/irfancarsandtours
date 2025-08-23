@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "name": "irfancarsandtours",
+  "description": "A comprehensive platform for booking cars and tours with Irfan Cars And Tours.",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "clean": "turbo clean"
+  },
+  "keywords": [
+    "Cars",
+    "Tours"
+  ],
+  "license": "MIT",
+  "author": "Muhammad Faizan",
+  "packageManager": "npm@11.4.2",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "turbo": "^2.5.6"
+  }
+}
