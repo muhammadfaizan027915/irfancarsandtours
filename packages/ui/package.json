@@ -5,9 +5,21 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./lib/*": "./src/lib/*.ts",
-    "./hooks/*": "./src/hooks/*.ts",
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./lib/*": {
+      "import": "./dist/lib/*.js",
+      "types": "./dist/lib/*.d.ts",
+      "default": "./dist/lib/*.js"
+    },
+    "./hooks/*": {
+      "import": "./dist/hooks/*.js",
+      "types": "./dist/hooks/*.d.ts",
+      "default": "./dist/hooks/*.js"
+    },
     "./globals.css": "./src/globals.css",
     "./postcss.config": "./postcss.config.mjs"
   },
@@ -27,6 +39,7 @@
   "author": "Muhammad Faizan",
   "packageManager": "npm@11.4.2",
   "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/postcss": "^4.1.12",
     "class-variance-authority": "^0.7.1",

@@ -1,0 +1,36 @@
+{
+  "name": "@icat/features",
+  "version": "1.0.0",
+  "description": "UI feature components for Irfan Cars And Tours.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "import": "./dist/*",
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist .turbo"
+  },
+  "keywords": [
+    "Freatures",
+    "Irfan",
+    "Cars",
+    "And",
+    "Tours"
+  ],
+  "license": "MIT",
+  "author": "Muhammad Faizan",
+  "packageManager": "npm@11.4.2",
+  "dependencies": {
+    "@icat/ui": "*"
+  }
+}

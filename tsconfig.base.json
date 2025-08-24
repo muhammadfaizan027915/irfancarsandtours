@@ -15,8 +15,10 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@icat/ui/*": ["./src/*"],
       "@icat/web/*": ["apps/web/src/*"],
+      "@icat/ui": ["packages/ui/src/index.ts"],
+      "@icat/ui/*": ["packages/ui/src/*"],
+      "@icat/features": ["packages/features/src/index.ts"],
       "@icat/features/*": ["packages/features/src/*"]
     }
   }

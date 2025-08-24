@@ -13,10 +13,11 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@icat/ui": "*",
     "next": "15.5.0",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "@icat/ui": "*",
+    "@icat/features": "*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

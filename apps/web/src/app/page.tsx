@@ -1,10 +1,5 @@
-import { Button } from "@icat/ui";
-import { Landmark } from "lucide-react";
+import { Topbar } from "@icat/features";
 
 export default function Home() {
-  return (
-    <Button className="hover:shadow-2xl transition-shadow">
-      <Landmark />
-    </Button>
-  );
+  return <Topbar />;
 }
