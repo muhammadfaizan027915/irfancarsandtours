@@ -31,7 +31,7 @@ export function Topbar({ transparent = false }: TopbarProps) {
         </Button>
       </div>
       <div className="w-1/4 flex justify-end items-center gap-2">
-        <hr className="h-10 border-l border-muted/50 mx-4" />
+        <hr className="h-10 border-l border-muted/50 dark:border-sidebar-foreground/50 mx-4" />
         <DarkModeToggler />
       </div>
     </div>
