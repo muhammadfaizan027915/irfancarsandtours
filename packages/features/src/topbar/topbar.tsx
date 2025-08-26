@@ -3,12 +3,13 @@ import { Phone, CarFront, Mail, MoveRight } from "lucide-react";
 import { TopbarProps } from "./topbar.types";
 import { cn } from "@icat/ui/lib/utils";
 
-export function Topbar({ transparent = false }: TopbarProps) {
+export function Topbar({ varient = "primary" }: TopbarProps) {
   return (
     <div
       className={cn(
         "w-full flex items-center px-8 h-10 text-white text-sm",
-        transparent ? "bg-transparent" : "bg-secondary/90"
+        "border-b border-muted/50 dark:border-sidebar-foreground/50",
+        varient === "primary" ? "bg-transparent" : "bg-secondary/90"
       )}
     >
       <div className="w-1/4 flex gap-8">

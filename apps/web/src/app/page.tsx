@@ -1,5 +1,5 @@
-import { Topbar } from "@icat/features";
+import { PrimrayHero } from "@icat/features";
 
-export default function Home() {
-  return <Topbar />;
+export default function HomePage() {
+  return <PrimrayHero />;
 }

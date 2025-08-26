@@ -1,5 +1,5 @@
 import { VarientType } from "../../common.types";
 
-export type TopbarProps = {
+export type HeaderProps = {
   varient?: VarientType;
 };
