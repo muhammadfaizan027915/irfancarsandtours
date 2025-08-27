@@ -1,9 +1,11 @@
-import { Logo } from "@icat/features";
+import { Logo } from "./logo";
+import { Button } from "@icat/ui";
+import { NavigationUrls } from "./header.constants";
 import { UserRound, LayoutGrid } from "lucide-react";
+import { HeaderProps } from "./header.types";
 import { cn } from "@icat/ui/lib/utils";
 
-import { HeaderProps } from "./header.types";
-import { Button } from "@icat/ui";
+import Link from "next/link";
 
 // border-border bg-primary/20 backdrop-blur-md
 
@@ -23,8 +25,8 @@ export function Header({ varient = "primary" }: HeaderProps) {
         </div>
         <div className="w-4/8">
           <nav className="flex items-stretch gap-8">
-            <a>Home</a>
-            <a>Cars</a>
+            <Link href={NavigationUrls.HOME}>Home</Link>
+            <Link href={NavigationUrls.CARS}>Cars</Link>
             <a>Tours</a>
             <a>About</a>
             <a>Contact</a>
@@ -32,11 +34,13 @@ export function Header({ varient = "primary" }: HeaderProps) {
         </div>
         <div className="w-2/8 flex items-stretch justify-end gap-2">
           <Button
+            asChild
             size={"lg"}
             variant={"ghost"}
             className="hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground"
           >
             <UserRound size={18} className="inline" /> Sign in
+            <Link href={NavigationUrls.SIGNIN} />
           </Button>
           <a className="flex items-center gap-2 text-sm"></a>
 
