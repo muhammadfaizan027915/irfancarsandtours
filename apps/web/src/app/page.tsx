@@ -1,5 +1,10 @@
-import { PrimrayHero } from "@icat/features";
+import { PrimrayHero, Searchbar } from "@icat/features";
 
 export default function HomePage() {
-  return <PrimrayHero />;
+  return (
+    <>
+      <PrimrayHero />
+      <Searchbar defaultTab="cars" />
+    </>
+  );
 }

@@ -31,6 +31,8 @@
   "author": "Muhammad Faizan",
   "packageManager": "npm@11.4.2",
   "dependencies": {
+    "next": "15.5.0",
+    "lucide-react": "^0.541.0",
     "@icat/ui": "*"
   }
 }

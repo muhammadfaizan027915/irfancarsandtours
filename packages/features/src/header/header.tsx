@@ -39,10 +39,10 @@ export function Header({ varient = "primary" }: HeaderProps) {
             variant={"ghost"}
             className="hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground"
           >
-            <UserRound size={18} className="inline" /> Sign in
-            <Link href={NavigationUrls.SIGNIN} />
+            <Link href={NavigationUrls.SIGNIN}>
+              <UserRound size={18} className="inline" /> Sign in
+            </Link>
           </Button>
-          <a className="flex items-center gap-2 text-sm"></a>
 
           <Button size={"lg"} className="shadow-none">
             <LayoutGrid />
