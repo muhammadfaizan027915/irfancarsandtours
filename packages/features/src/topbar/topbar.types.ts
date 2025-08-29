@@ -1,4 +1,4 @@
-import { VarientType } from "../common.types";
+import { VarientType } from "../common";
 
 export type TopbarProps = {
   varient?: VarientType;

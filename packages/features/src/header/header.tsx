@@ -28,8 +28,8 @@ export function Header({ varient = "primary" }: HeaderProps) {
             <Link href={NavigationUrls.HOME}>Home</Link>
             <Link href={NavigationUrls.CARS}>Cars</Link>
             <a>Tours</a>
-            <a>About</a>
-            <a>Contact</a>
+            <Link href={NavigationUrls.ABOUT_US}>About Us</Link>
+            <Link href={NavigationUrls.CONTACT}>Contact</Link>
           </nav>
         </div>
         <div className="w-2/8 flex items-stretch justify-end gap-2">

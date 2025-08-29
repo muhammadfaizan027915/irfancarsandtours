@@ -1,19 +1,37 @@
 import { Badge } from "@icat/ui";
+import { SecondaryHeroProps } from "./secondary.types";
 
-export function SecondaryHero() {
+export function SecondaryHero({
+  position = "center",
+  badge,
+  title,
+  subtitle,
+  heroImageUrl = "/assets/hero_bakground_secondary.jpg",
+}: SecondaryHeroProps) {
   return (
-    <div className="px-16 pt-8">
-      <div className="relative rounded-2xl overflow-hidden min-h-[400px] bg-[url('/assets/hero_bakground_secondary.jpg')] bg-cover bg-center">
+    <div className="px-4 sm:px-8 md:px-16 pt-8">
+      <div
+        className={`flex justify-${position} items-center p-8 relative rounded-2xl overflow-hidden min-h-[320px] md:min-h-[400px] bg-cover bg-center`}
+        style={{ backgroundImage: `url("${heroImageUrl}")` }}
+      >
         <div className="absolute inset-0 bg-black/50"></div>
 
-        <div className="flex flex-col items-center absolute top-2/5 left-1/2 -translate-y-1/2 -translate-x-1/2 text-background dark:text-foreground">
-          <Badge variant={"accent"} className={"px-8 py-3 text-sm rounded-lg"}>
-            Find cars for sale and for rent near you
-          </Badge>
-          <h1 className="text-[55px] font-bold tracking-wide">
-            Find Your Perfect Car
-          </h1>
-          <p>Search and find your best car rental with easy way</p>
+        <div
+          className={`flex flex-col items-${position} text-background dark:text-foreground z-10`}
+        >
+          {badge && (
+            <Badge
+              variant={"accent"}
+              className={"px-8 py-3 text-sm rounded-lg"}
+            >
+              {badge}
+            </Badge>
+          )}
+          {title && (
+            <h1 className="text-[55px] font-bold tracking-wide">{title}</h1>
+          )}
+
+          {subtitle && <p>{subtitle}</p>}
         </div>
       </div>
     </div>
