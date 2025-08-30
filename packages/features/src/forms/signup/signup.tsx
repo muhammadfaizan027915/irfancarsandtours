@@ -1,4 +1,4 @@
-import { NavigationUrls } from "@icat/features/header";
+import { NavigationUrls } from "../../header";
 import { Badge, Button, Card, Input } from "@icat/ui";
 import { ArrowRight, Mail, Lock, UserRound } from "lucide-react";
 import Link from "next/link";

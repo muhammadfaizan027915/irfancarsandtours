@@ -8,7 +8,9 @@ export default function CarsPage() {
         subtitle="Search and find your best car rental with easy way"
         badge="Find cars for sale and for rent near you"
       />
-      <Searchbar defaultTab="cars" />
+      <div className="container mx-auto px-4 md:px-8">
+        <Searchbar defaultTab="cars" />
+      </div>
     </>
   );
 }

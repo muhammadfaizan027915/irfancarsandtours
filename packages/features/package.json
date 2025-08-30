@@ -31,8 +31,9 @@
   "author": "Muhammad Faizan",
   "packageManager": "npm@11.4.2",
   "dependencies": {
-    "next": "15.5.0",
+    "@cardog-icons/react": "^1.0.1",
+    "@icat/ui": "*",
     "lucide-react": "^0.541.0",
-    "@icat/ui": "*"
+    "next": "15.5.0"
   }
 }

@@ -1,4 +1,4 @@
-import { ContactForm, SecondaryHero } from "@icat/features";
+import { ContactForm, Map, SecondaryHero } from "@icat/features";
 
 export default function ContactPage() {
   return (
@@ -9,7 +9,10 @@ export default function ContactPage() {
         subtitle="Reach out us at anytime"
       />
 
-      <ContactForm />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-2 py-8">
+        <ContactForm />
+        <Map />
+      </div>
     </>
   );
 }

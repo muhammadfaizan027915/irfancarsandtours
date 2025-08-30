@@ -11,7 +11,7 @@ export default function SharedLayout({ children }: SharedLayoutProps) {
       <Topbar varient={"secondary"} />
       <Header varient={"secondary"} />
 
-      {children}
+      <div className="px-4 sm:px-8 lg:px-16 py-8">{children}</div>
     </div>
   );
 }
