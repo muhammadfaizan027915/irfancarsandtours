@@ -9,3 +9,4 @@ export * from "./topbar";
 export * from "./header";
 export * from "./sliders";
 export * from "./searchbar";
+export * from "./cartypes";

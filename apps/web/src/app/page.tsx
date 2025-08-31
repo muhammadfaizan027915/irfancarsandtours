@@ -1,15 +1,20 @@
-import { BrandSlider, PrimrayHero, Searchbar } from "@icat/features";
+import { BrandSlider, PrimrayHero, Searchbar, CarTypes } from "@icat/features";
 
 export default function HomePage() {
   return (
     <>
       <PrimrayHero />
-      <div className="bg-muted pb-16">
+      <section className="bg-muted pb-16">
         <div className="container mx-auto px-4 md:px-8">
           <Searchbar defaultTab="cars" />
           <BrandSlider />
         </div>
-      </div>
+      </section>
+      <section className="py-16">
+        <div className="container mx-auto px-4 md:px-8">
+          <CarTypes />
+        </div>
+      </section>
     </>
   );
 }
