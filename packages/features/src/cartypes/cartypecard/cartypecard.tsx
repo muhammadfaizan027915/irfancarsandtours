@@ -29,7 +29,7 @@ export function CarTypeCard() {
               24 Vahicles
             </Badge>
 
-            <Button size={"sm"} className="rounded-3xl bg-muted dark:not-[:hover]:text-white w-8 h-8 shadow-none">
+            <Button size={"sm"} className="rounded-3xl bg-muted dark:not-[:hover]:text-muted-foreground w-8 h-8 shadow-none">
               <ArrowRight />
             </Button>
           </div>

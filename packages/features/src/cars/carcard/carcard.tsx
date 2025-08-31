@@ -20,19 +20,19 @@ export function CarCard() {
         <hr className="border-t border-border" />
         <div className="grid grid-cols-2 gap-4">
           <span>
-            <Gauge className="inline mr-2" /> 25,000 Miles
+            <Gauge size={22} className="inline mr-2" /> 25,000 Miles
           </span>
 
           <span>
-            <Cog className="inline mr-2" /> Automatic
+            <Cog size={22} className="inline mr-2" /> Automatic
           </span>
 
           <span>
-            <Fuel className="inline mr-2" /> Disel
+            <Fuel size={22} className="inline mr-2" /> Disel
           </span>
 
           <span>
-            <Armchair className="inline mr-2" /> 7 Seats
+            <Armchair size={22} className="inline mr-2" /> 7 Seats
           </span>
         </div>
         <div className="flex items-center justify-between">
@@ -41,7 +41,7 @@ export function CarCard() {
             <h5 className="text-2xl font-bold">$498.5</h5>
           </div>
           <Button
-            className="shadow-none border border-border bg-muted hover:border-transparent hover:bg-primary"
+            className="shadow-none font-bold border border-border bg-muted dark:not-[:hover]:text-muted-foreground hover:border-transparent hover:bg-primary"
             size="lg"
           >
             Book Now
