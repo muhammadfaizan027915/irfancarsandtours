@@ -15,24 +15,24 @@ export function CarCard() {
         />
       </div>
 
-      <div className="p-6 pt-8 bg-card rounded-xl -mt-2 flex flex-col gap-4">
+      <div className="p-6 pt-8 bg-card rounded-2xl flex flex-col gap-6">
         <h4 className="text-2xl font-bold">Audi A3 1.6 TDI S Line</h4>
         <hr className="border-t border-border" />
-        <div className="grid grid-cols-2 gap-4">
-          <span>
-            <Gauge size={22} className="inline mr-2" /> 25,000 Miles
+        <div className="grid grid-cols-2 gap-4 text-sm">
+          <span className="flex items-center">
+            <Gauge size={22} className="inline mr-1" /> 25,000 Miles
           </span>
 
-          <span>
-            <Cog size={22} className="inline mr-2" /> Automatic
+          <span className="flex items-center">
+            <Cog size={22} className="inline mr-1" /> Automatic
           </span>
 
-          <span>
-            <Fuel size={22} className="inline mr-2" /> Disel
+          <span className="flex items-center">
+            <Fuel size={22} className="inline mr-1" /> Disel
           </span>
 
-          <span>
-            <Armchair size={22} className="inline mr-2" /> 7 Seats
+          <span className="flex items-center">
+            <Armchair size={22} className="inline mr-1" /> 7 Seats
           </span>
         </div>
         <div className="flex items-center justify-between">

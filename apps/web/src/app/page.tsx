@@ -1,9 +1,10 @@
 import {
+  CarTypes,
   BrandSlider,
   PrimrayHero,
   Searchbar,
-  CarTypes,
-  CarCard,
+  SearchedCars,
+  FeaturedCars,
 } from "@icat/features";
 
 export default function HomePage() {
@@ -21,9 +22,14 @@ export default function HomePage() {
           <CarTypes />
         </div>
       </section>
-      <section className="py-16">
+      <section className="pb-16">
         <div className="container mx-auto px-4 md:px-8">
-          <CarCard />
+          <FeaturedCars />
+        </div>
+      </section>
+      <section className="pb-16">
+        <div className="container mx-auto px-4 md:px-8">
+          <SearchedCars />
         </div>
       </section>
     </>

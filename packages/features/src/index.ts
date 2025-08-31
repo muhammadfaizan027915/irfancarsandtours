@@ -10,4 +10,6 @@ export * from "./topbar";
 export * from "./header";
 export * from "./sliders";
 export * from "./searchbar";
+export * from "./searchedcars";
+export * from "./featuredcars";
 export * from "./cartypes";
