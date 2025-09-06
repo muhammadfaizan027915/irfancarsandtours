@@ -1,8 +1,9 @@
 import { Button } from "@icat/ui";
 import { Fuel, Gauge, Armchair, Cog } from "lucide-react";
+import { CarCardProps } from "./carcard.types";
 import Image from "next/image";
 
-export function CarCard() {
+export function CarCard({ varient = "default" }: CarCardProps) {
   return (
     <div className="border border-border rounded-xl hover:-translate-y-1 duration-300 transition-transform overflow-hidden">
       <div className="h-56 relative">
@@ -37,7 +38,9 @@ export function CarCard() {
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-muted-foreground">From</span>{" "}
+            {varient === "default" && (
+              <span className="text-muted-foreground">From</span>
+            )}
             <h5 className="text-2xl font-bold">$498.5</h5>
           </div>
           <Button

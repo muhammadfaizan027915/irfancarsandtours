@@ -1,10 +1,10 @@
-import { BrandName } from "./brands.types";
+import { BrandNames } from "@icat/db";
 
 import * as BrandIcons from "@cardog-icons/react";
 
 export const BrandLibrary: Partial<
   Record<
-    BrandName,
+    BrandNames,
     {
       name: string;
       icon: React.FC<React.SVGProps<SVGSVGElement>>;

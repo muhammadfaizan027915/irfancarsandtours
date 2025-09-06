@@ -1,0 +1,42 @@
+{
+  "name": "@icat/db",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Database library for Irfan Cars And Tours web application",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist .turbo",
+    "push": "drizzle-kit push",
+    "generate": "drizzle-kit generate", 
+    "migrate": "drizzle-kit generate && drizzle-kit migrate",
+    "studio": "drizzle-kit studio"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "keywords": [
+    "DB",
+    "Irfan",
+    "Cars",
+    "And",
+    "Tours"
+  ],
+  "license": "MIT",
+  "author": "Muhammad Faizan",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "drizzle-orm": "^0.44.5",
+    "pg": "^8.16.3",
+    "@icat/features": "*"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.15.5",
+    "drizzle-kit": "^0.31.4",
+    "tsx": "^4.20.5"
+  }
+}

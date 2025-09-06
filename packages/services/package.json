@@ -1,0 +1,24 @@
+{
+  "name": "@icat/services",
+  "description": "Services for Irfan Cars And Tours",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist .turbo"
+  },
+  "keywords": [
+    "Services",
+    "Irfan",
+    "Cars",
+    "And",
+    "Tours"
+  ],
+  "license": "MIT",
+  "author": "Muhammad Faizan",
+  "dependencies": {
+    "@auth/drizzle-adapter": "^1.10.0",
+    "next-auth": "^4.24.11"
+  }
+}

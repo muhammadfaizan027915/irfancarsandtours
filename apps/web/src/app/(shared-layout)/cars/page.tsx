@@ -1,4 +1,4 @@
-import { Cars, Searchbar, SecondaryHero } from "@icat/features";
+import { Cars, FilterSidebar, Searchbar, SecondaryHero } from "@icat/features";
 
 export default function CarsPage() {
   return (
@@ -16,8 +16,8 @@ export default function CarsPage() {
           <h3 className="text-4xl font-bold">Our Cars Fleet</h3>
           <p className="text-muted-foreground">Cars That Fit Your Lifestyle</p>
         </div>
-        <div className="grid grid-cols-[300px_1fr] gap-6">
-          <div className="bg-red-200"></div>
+        <div className="grid grid-cols-[300px_1fr] items-start gap-6">
+          <FilterSidebar />
           <Cars />
         </div>
       </div>
