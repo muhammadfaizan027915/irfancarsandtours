@@ -6,6 +6,7 @@ import {
   CarTypesList,
   TransmissionTypesList,
 } from "./enums";
+import { timestampColumns } from "../utils";
 
 export const carsTable = pgTable("cars", {
   id: text("id")
@@ -37,4 +38,5 @@ export const carsTable = pgTable("cars", {
   imageUrl: varchar("image_urls", { length: 500 }).array(),
   seatingCapacity: integer("seating_capacity").notNull(),
   pricePerDay: integer("price_per_day").notNull(),
+  ...timestampColumns,
 });

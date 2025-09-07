@@ -1,5 +1,6 @@
 import { timestamp, pgTable, text } from "drizzle-orm/pg-core";
 import { usersTable } from "./usersTable";
+import { timestampColumns } from "../utils";
 
 export const sessionsTable = pgTable("sessions", {
   sessionToken: text("session_token").primaryKey(),
@@ -7,4 +8,5 @@ export const sessionsTable = pgTable("sessions", {
     .notNull()
     .references(() => usersTable.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
+  ...timestampColumns,
 });

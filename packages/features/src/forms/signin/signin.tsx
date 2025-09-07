@@ -1,6 +1,7 @@
 import { NavigationUrls } from "../../header";
 import { Badge, Button, Card, Input } from "@icat/ui";
 import { ArrowRight, Mail, Lock } from "lucide-react";
+import { loginUser } from "@icat/web/actions";
 import Link from "next/link";
 
 export function SignInFrom() {
@@ -12,15 +13,17 @@ export function SignInFrom() {
 
       <h1 className="font-bold text-4xl">Welcome Back</h1>
 
-      <form className="flex flex-col gap-3 w-full mt-8">
+      <form className="flex flex-col gap-3 w-full mt-8" action={loginUser}>
         <Input
           type="email"
+          name="email"
           placeholder="Email Address"
           startIcon={<Mail size={18} />}
         />
 
         <Input
           type="password"
+          name="password"
           placeholder="Password"
           startIcon={<Lock size={18} />}
         />

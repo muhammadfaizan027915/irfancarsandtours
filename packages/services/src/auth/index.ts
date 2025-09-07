@@ -19,8 +19,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 });
 
 export class AuthService {
-  static handlers = handlers;
-  static auth = auth;
-  static signIn = signIn;
-  static signOut = signOut;
+  handlers = handlers;
+  auth = auth;
+  signIn = signIn;
+  signOut = signOut;
+
+  async hashPassword(password: string): Promise<string> {
+    const bcrypt = await import("bcryptjs");
+    return bcrypt.hash(password, 10);
+  }
+
+  async comparePassword(password: string, hashed: string): Promise<boolean> {
+    const bcrypt = await import("bcryptjs");
+    return bcrypt.compare(password, hashed);
+  }
 }

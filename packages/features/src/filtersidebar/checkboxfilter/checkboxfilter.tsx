@@ -15,12 +15,15 @@ export function CheckboxFilter<T extends string>({
   return (
     <Card className="shadow-none rounded-xl">
       <CardHeader>
-        <CardTitle>{}</CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {filtersList?.map((type) => (
           <div key={type} className="flex items-center">
-            <Checkbox className="" /> <Label className="ml-2">{type}</Label>
+            <Checkbox className="" id={type} name={type} />{" "}
+            <Label className="ml-2" htmlFor={type}>
+              {type}
+            </Label>
           </div>
         ))}
       </CardContent>

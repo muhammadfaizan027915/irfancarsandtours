@@ -1,0 +1,19 @@
+{
+  "name": "@icat/contracts",
+  "version": "1.0.0",
+  "description": "Contracts for Irfan Cars And Tours",
+  "keywords": [
+    "Contracts",
+    "Irfan",
+    "Cars",
+    "And",
+    "Tours"
+  ],
+  "license": "MIT",
+  "author": "Muhammad Faizan",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

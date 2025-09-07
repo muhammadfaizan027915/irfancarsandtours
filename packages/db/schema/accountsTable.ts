@@ -1,6 +1,7 @@
 import type { AdapterAccountType } from "@auth/core/adapters";
 import { pgTable, text, integer, primaryKey } from "drizzle-orm/pg-core";
 import { usersTable } from "./usersTable";
+import { timestampColumns } from "../utils";
 
 export const accountsTable = pgTable(
   "account",
@@ -18,6 +19,7 @@ export const accountsTable = pgTable(
     scope: text("scope"),
     id_token: text("id_token"),
     session_state: text("session_state"),
+    ...timestampColumns,
   },
   (account) => [
     {
