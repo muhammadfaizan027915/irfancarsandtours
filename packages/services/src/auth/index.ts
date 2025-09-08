@@ -8,14 +8,28 @@ import {
   accountsTable,
 } from "@icat/database";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db, {
     usersTable,
     sessionsTable,
     verificationTokensTable,
     accountsTable,
   }),
+
   providers: [],
+
+  pages: {
+    signIn: "/signin",
+    signOut: "/signout",
+    error: "/signin",
+  },
+  
+  debug: process.env.NODE_ENV === "development",
+
+  session: {
+    strategy: "database",
+  },
+
 });
 
 export class AuthService {

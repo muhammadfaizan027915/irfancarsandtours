@@ -11,8 +11,10 @@ export function CarCard({ varient = "default" }: CarCardProps) {
           fill
           src={"/assets/hero_background_primary.jpg"}
           alt=""
-          objectFit="cover"
-          objectPosition="center"
+          style={{
+            objectFit: "cover",
+            objectPosition: "center"
+          }}
         />
       </div>
 

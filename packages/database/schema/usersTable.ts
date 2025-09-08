@@ -12,3 +12,7 @@ export const usersTable = pgTable("users", {
   password: text("password").notNull(),
   ...timestampColumns,
 });
+
+export type UserInsert = typeof usersTable.$inferInsert;
+
+export type UserSelect = typeof usersTable.$inferSelect;

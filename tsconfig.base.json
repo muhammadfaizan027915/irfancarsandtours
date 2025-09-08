@@ -21,7 +21,13 @@
       "@icat/database": ["packages/database/schema/index.ts"],
       "@icat/database/*": ["packages/database/schema/*"],
       "@icat/features": ["packages/features/src/index.ts"],
-      "@icat/features/*": ["packages/features/src/*"]
+      "@icat/features/*": ["packages/features/src/*"],
+      "@icat/contracts": ["packages/contracts/src/index.ts"],
+      "@icat/contracts/*": ["packages/contracts/src/*"],
+      "@icat/services": ["packages/services/src/index.ts"],
+      "@icat/services/*": ["packages/services/src/*"],
+      "@icat/repositores": ["packages/repositores/src/index.ts"],
+      "@icat/repositores/*": ["packages/repositores/src/*"]
     }
   }
 }

@@ -1,13 +1,22 @@
-"use server"
+"use server";
 
-export async function loginUser(formData: FormData) {
-    const email = formData.get("email");
-    const password = formData.get("password");
+import { AuthService } from "@icat/services";
+import { SignInBodySchema } from "@icat/contracts";
+import { parseWithZod } from "@conform-to/zod/v4";
 
-    if (typeof email !== "string" || typeof password !== "string") {
-        console.error("Email or password is missing or not a string.");
-        return;
-    }
+export async function loginUser(initialValue: unknown, formData: FormData) {
+  const result = parseWithZod(formData, { schema: SignInBodySchema });
 
-    console.log(email, password);
+  if (result.status !== "success") {
+    return result.reply();
+  }
+
+  const { email, password } = result.payload;
+
+  const authService = new AuthService();
+
+  await authService.signIn("credentials", {
+    email,
+    password,
+  });
 }

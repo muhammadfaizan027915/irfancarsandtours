@@ -13,8 +13,10 @@ export function CarTypeCard() {
             fill
             src={"/assets/hero_background_primary.jpg"}
             alt=""
-            objectFit="cover"
-            objectPosition="center"
+            style={{
+              objectFit: "cover",
+              objectPosition: "center",
+            }}
           />
         </div>
 
@@ -29,7 +31,10 @@ export function CarTypeCard() {
               24 Vahicles
             </Badge>
 
-            <Button size={"sm"} className="rounded-3xl bg-muted dark:not-[:hover]:text-muted-foreground w-8 h-8 shadow-none">
+            <Button
+              size={"sm"}
+              className="rounded-3xl bg-muted dark:not-[:hover]:text-muted-foreground w-8 h-8 shadow-none"
+            >
               <ArrowRight />
             </Button>
           </div>

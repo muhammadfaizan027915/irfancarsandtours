@@ -8,7 +8,7 @@
     "dev": "tsc --watch",
     "clean": "rm -rf dist .turbo",
     "push": "drizzle-kit push",
-    "generate": "drizzle-kit generate", 
+    "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit generate && drizzle-kit migrate",
     "studio": "drizzle-kit studio"
   },
@@ -28,6 +28,7 @@
   ],
   "license": "MIT",
   "author": "Muhammad Faizan",
+  "packageManager": "npm@11.4.2",
   "dependencies": {
     "dotenv": "^17.2.2",
     "drizzle-orm": "^0.44.5",

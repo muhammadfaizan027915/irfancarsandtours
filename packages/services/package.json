@@ -8,6 +8,13 @@
     "dev": "tsc --watch",
     "clean": "rm -rf dist .turbo"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "keywords": [
     "Services",
     "Irfan",
@@ -17,9 +24,10 @@
   ],
   "license": "MIT",
   "author": "Muhammad Faizan",
+  "packageManager": "npm@11.4.2",
   "dependencies": {
-    "@auth/drizzle-adapter": "^1.10.0",
     "bcryptjs": "^3.0.2",
-    "next-auth": "^4.24.11"
+    "@auth/drizzle-adapter": "^1.10.0",
+    "@icat/repositories": "*"
   }
 }

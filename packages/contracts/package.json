@@ -1,7 +1,20 @@
 {
   "name": "@icat/contracts",
   "version": "1.0.0",
-  "description": "Contracts for Irfan Cars And Tours",
+  "description": "Contracts for Irfan Cars And Tours.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist .turbo"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "keywords": [
     "Contracts",
     "Irfan",
@@ -11,9 +24,8 @@
   ],
   "license": "MIT",
   "author": "Muhammad Faizan",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "packageManager": "npm@11.4.2",
+  "dependencies": {
+    "zod": "^4.1.5"
   }
 }
