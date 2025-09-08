@@ -1,4 +1,4 @@
-import { BrandNames } from "@icat/db";
+import { BrandNames } from "@icat/database";
 
 import * as BrandIcons from "@cardog-icons/react";
 

@@ -6,7 +6,7 @@ import {
   sessionsTable,
   verificationTokensTable,
   accountsTable,
-} from "@icat/db";
+} from "@icat/database";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db, {

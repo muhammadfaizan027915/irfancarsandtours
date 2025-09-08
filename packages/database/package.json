@@ -1,5 +1,5 @@
 {
-  "name": "@icat/db",
+  "name": "@icat/database",
   "version": "1.0.0",
   "type": "module",
   "description": "Database library for Irfan Cars And Tours web application",

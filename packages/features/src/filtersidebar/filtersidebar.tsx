@@ -3,7 +3,7 @@ import {
   TransmissionTypesList,
   FuelTypesList,
   AmenitiesList,
-} from "@icat/db";
+} from "@icat/database";
 import { CheckboxFilter } from "./checkboxfilter";
 import { PriceFilter } from "./pricefilter";
 

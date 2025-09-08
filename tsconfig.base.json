@@ -18,8 +18,8 @@
       "@icat/web/*": ["apps/web/src/*"],
       "@icat/ui": ["packages/ui/src/index.ts"],
       "@icat/ui/*": ["packages/ui/src/*"],
-      "@icat/db": ["packages/db/schema/index.ts"],
-      "@icat/db/*": ["packages/db/schema/*"],
+      "@icat/database": ["packages/database/schema/index.ts"],
+      "@icat/database/*": ["packages/database/schema/*"],
       "@icat/features": ["packages/features/src/index.ts"],
       "@icat/features/*": ["packages/features/src/*"]
     }
