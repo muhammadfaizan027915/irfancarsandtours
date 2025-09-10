@@ -1,6 +1,6 @@
 {
-  "type": "module",
   "name": "@icat/repositories",
+  "type": "module",
   "version": "1.0.0",
   "description": "Respositories for Irfan Cars And Tours",
   "scripts": {

@@ -1,3 +1,6 @@
+import path from "path";
+import dotenv from "dotenv";
+
 import { drizzle } from "drizzle-orm/node-postgres";
 
 import { carsTable } from "./carsTable";
@@ -13,6 +16,8 @@ export * from "./sessionsTable";
 export * from "./accountsTable";
 export * from "./verificationTokensTable";
 
+dotenv.config({ path: path.resolve(process.cwd(), ".env") });
+
 export const db = drizzle({
   schema: {
     carsTable,
@@ -24,6 +29,6 @@ export const db = drizzle({
 
   connection: {
     connectionString: process.env.DATABASE_URL,
-    ssl: true,
+    ssl: false,
   },
 });

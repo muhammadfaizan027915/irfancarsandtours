@@ -26,8 +26,8 @@
       "@icat/contracts/*": ["packages/contracts/src/*"],
       "@icat/services": ["packages/services/src/index.ts"],
       "@icat/services/*": ["packages/services/src/*"],
-      "@icat/repositores": ["packages/repositores/src/index.ts"],
-      "@icat/repositores/*": ["packages/repositores/src/*"]
+      "@icat/repositories": ["packages/repositories/src/index.ts"],
+      "@icat/repositories/*": ["packages/repositories/src/*"]
     }
   }
 }

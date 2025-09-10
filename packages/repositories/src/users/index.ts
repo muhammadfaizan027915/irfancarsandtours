@@ -1,12 +1,15 @@
 import { db, usersTable, UserInsert } from "@icat/database";
 
-export class UsersRepository {
+export class UserRepository {
+  constructor() {}
+
   async create(user: UserInsert) {
-    const createdUser = await db.insert(usersTable).values(user).returning();
-    return createdUser;
+    const [createdUser] = await db.insert(usersTable).values(user).returning();
+    const { password, ...safeUser } = createdUser;
+    return safeUser;
   }
 
-  fineByEmail(email: string) {
+  findByEmail(email: string) {
     return;
   }
 }

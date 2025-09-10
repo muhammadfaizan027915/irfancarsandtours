@@ -3,16 +3,22 @@
 import { NavigationUrls } from "../../header";
 import { Badge, Button, Card, Input } from "@icat/ui";
 import { ArrowRight, Mail, Lock } from "lucide-react";
-import { loginUser } from "@icat/web/actions";
+import { logInUser } from "@icat/web/actions";
 import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod/v4";
+import { SignInBodySchema } from "@icat/contracts";
 import { useActionState } from "react";
 import Link from "next/link";
 
 export function SignInFrom() {
-  const [lastResult, action] = useActionState(loginUser, null);
+  const [lastResult, action] = useActionState(logInUser, null);
 
   const [form, fields] = useForm({
     lastResult,
+    onValidate: ({ formData }) =>
+      parseWithZod(formData, { schema: SignInBodySchema }),
+    shouldValidate: "onBlur",
+    shouldRevalidate: "onInput",
   });
 
   return (
@@ -23,13 +29,19 @@ export function SignInFrom() {
 
       <h1 className="font-bold text-4xl">Welcome Back</h1>
 
-      <form className="flex flex-col gap-3 w-full mt-8" action={action}>
+      <form
+        id={form.id}
+        action={action}
+        onSubmit={form.onSubmit}
+        className="flex flex-col gap-3 w-full mt-8"
+      >
         <Input
-          // type="email"
           key={fields.email.key}
           name={fields.email.name}
           placeholder="Email Address"
           startIcon={<Mail size={18} />}
+          defaultValue={fields?.email?.initialValue}
+          errors={fields.email.errors}
         />
 
         <Input
@@ -38,6 +50,8 @@ export function SignInFrom() {
           name={fields.password.name}
           placeholder="Password"
           startIcon={<Lock size={18} />}
+          defaultValue={fields?.email?.initialValue}
+          errors={fields.password.errors}
         />
 
         <Button size={"lg"} className="font-bold shadow-none group mt-4">
