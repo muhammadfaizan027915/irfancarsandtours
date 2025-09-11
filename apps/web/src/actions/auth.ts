@@ -1,50 +1,32 @@
 "use server";
 
+import { handlerFormActionWithError } from "@icat/lib";
 import { AuthService, UserService } from "@icat/services";
 import {
   SignInBodySchema,
   CreateUserBodySchema,
   CreateUserBodyDto,
+  SignInBodyDto,
 } from "@icat/contracts";
-import { parseWithZod } from "@conform-to/zod/v4";
 import { NavigationUrls } from "@icat/features";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 
-export async function logInUser(initialValue: unknown, formData: FormData) {
-  const result = parseWithZod(formData, { schema: SignInBodySchema });
-
-  if (result.status !== "success") {
-    return result.reply();
+export const logInUser = handlerFormActionWithError(
+  SignInBodySchema,
+  async (data: SignInBodyDto) => {
+    const authService = new AuthService();
+    await authService.signIn("credentials", data);
   }
+);
 
-  const { email, password } = result.payload;
-
-  const authService = new AuthService();
-
-  await authService.signIn("credentials", {
-    email,
-    password,
-  });
-}
-
-export async function signUpUser(initialValue: unknown, formData: FormData) {
-  const result = parseWithZod(formData, { schema: CreateUserBodySchema });
-
-  if (result.status !== "success") {
-    return result.reply();
-  }
-
-  try {
+export const signUpUser = handlerFormActionWithError(
+  CreateUserBodySchema,
+  async (data: CreateUserBodyDto) => {
     const userService = new UserService();
-
-    const createdUser = await userService.createUser(
-      result?.payload as CreateUserBodyDto
-    );
+    const createdUser = await userService.createUser(data);
 
     if (createdUser?.id) {
-      redirect(NavigationUrls.SIGNIN);
+      redirect(NavigationUrls.SIGNIN, RedirectType.push);
     }
-  } catch (e) {
-    console.log(e)
   }
-}
+);

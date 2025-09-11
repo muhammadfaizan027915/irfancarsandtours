@@ -1,8 +1,8 @@
 {
-  "name": "@icat/services",
-  "description": "Services for Irfan Cars And Tours",
-  "version": "1.0.0",
+  "name": "@icat/lib",
   "type": "module",
+  "version": "1.0.0",
+  "description": "Helpers library for Irfan Cars And Tours",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -15,8 +15,12 @@
       "default": "./dist/index.js"
     }
   },
+  "dependencies": {
+    "@conform-to/react": "^1.9.0"
+  },
   "keywords": [
-    "Services",
+    "Helpers",
+    "Library",
     "Irfan",
     "Cars",
     "And",
@@ -24,12 +28,5 @@
   ],
   "license": "MIT",
   "author": "Muhammad Faizan",
-  "packageManager": "npm@11.4.2",
-  "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "@auth/drizzle-adapter": "^1.10.0",
-    "@icat/repositories": "*",
-    "@icat/contracts": "*",
-    "@icat/lib": "*"
-  }
+  "packageManager": "npm@11.4.2"
 }

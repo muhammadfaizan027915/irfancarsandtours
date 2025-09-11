@@ -1,7 +1,7 @@
 "use client";
 
 import { NavigationUrls } from "../../header";
-import { Badge, Button, Card, Input } from "@icat/ui";
+import { AlertBox, Badge, Button, Card, Input } from "@icat/ui";
 import { ArrowRight, Mail, Lock, UserRound } from "lucide-react";
 import { signUpUser } from "@icat/web/actions";
 import { useForm } from "@conform-to/react";
@@ -33,7 +33,12 @@ export function SignUpForm() {
         action={action}
         onSubmit={form.onSubmit}
         className="flex flex-col gap-3 w-full mt-8"
+        method="POST"
       >
+        {form?.errors?.map((error) => (
+          <AlertBox variant="destructive" description={error} />
+        ))}
+
         <Input
           type="text"
           placeholder="Name"

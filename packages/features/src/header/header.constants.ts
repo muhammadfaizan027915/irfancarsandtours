@@ -1,8 +1,8 @@
 export const NavigationUrls = {
-  HOME: "./",
-  CARS: "./cars",
-  SIGNIN: "./signin",
-  SIGNUP: "./signup",
-  ABOUT_US: "./about-us",
-  CONTACT: "./contact",
+  HOME: "/",
+  CARS: "/cars",
+  SIGNIN: "/signin",
+  SIGNUP: "/signup",
+  ABOUT_US: "/about-us",
+  CONTACT: "/contact",
 } as const;

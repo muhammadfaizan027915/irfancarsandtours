@@ -1,5 +1,6 @@
 import { UserRepository } from "@icat/repositories";
 import { CreateUserBodyDto, UserResponseSchema } from "@icat/contracts";
+import { DuplicateEmailError } from "@icat/lib";
 import { AuthService } from "../auth";
 
 export class UserService {
@@ -11,8 +12,14 @@ export class UserService {
     this.authService = new AuthService();
   }
 
-  async createUser(userData: CreateUserBodyDto) {
-    const { password, ...restUser } = userData;
+  async createUser(data: CreateUserBodyDto) {
+    const dbUser = await this.userRepository.findByEmail(data?.email);
+
+    if (dbUser) {
+      throw new DuplicateEmailError(data?.email);
+    }
+
+    const { password, ...restUser } = data;
 
     const passwodHash = await this.authService.hashPassword(password);
 

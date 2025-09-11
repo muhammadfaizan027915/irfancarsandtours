@@ -19,6 +19,7 @@
     "@icat/database": "*",
     "@icat/features": "*",
     "@icat/services": "*",
+    "@icat/lib": "*",
     "@icat/ui": "*",
     "next": "15.5.0",
     "react": "19.1.0",

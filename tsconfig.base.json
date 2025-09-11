@@ -27,7 +27,9 @@
       "@icat/services": ["packages/services/src/index.ts"],
       "@icat/services/*": ["packages/services/src/*"],
       "@icat/repositories": ["packages/repositories/src/index.ts"],
-      "@icat/repositories/*": ["packages/repositories/src/*"]
+      "@icat/repositories/*": ["packages/repositories/src/*"],
+      "@icat/lib": ["packages/lib/src/index.ts"],
+      "@icat/lib/*": ["packages/lib/src/*"]
     }
   }
 }

@@ -9,7 +9,14 @@ export class UserRepository {
     return safeUser;
   }
 
-  findByEmail(email: string) {
-    return;
+  async findByEmail(email: string) {
+    const user = await db.query.usersTable.findFirst({
+      where: (users, { eq }) => eq(users?.email, email),
+      columns: {
+        password: false,
+      },
+    });
+
+    return user;
   }
 }
