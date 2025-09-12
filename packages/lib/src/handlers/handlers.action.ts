@@ -12,10 +12,6 @@ export async function handleServerActionWithError<
     try {
       return await action(...args);
     } catch (error) {
-      if ((error as any).digest?.startsWith("NEXT_REDIRECT")) {
-        throw error;
-      }
-
       const errorPayload = handleError(error);
       return { error: errorPayload };
     }
@@ -35,7 +31,7 @@ export function handlerFormActionWithError<TArgs, TResult = SubmissionResult>(
 
     try {
       await action(submission.payload as TArgs);
-      return submission.reply({ resetForm: true });
+      return submission.reply({ resetForm: false });
     } catch (error) {
       const errorPayload = handleError(error);
       return submission.reply({ formErrors: [errorPayload?.message] });

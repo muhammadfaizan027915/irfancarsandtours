@@ -1,22 +1,51 @@
-import { db, usersTable, UserInsert } from "@icat/database";
+import { db, usersTable, UserInsert, UserSelect } from "@icat/database";
+import { eq } from "drizzle-orm";
 
 export class UserRepository {
-  constructor() {}
-
-  async create(user: UserInsert) {
+  async create(user: UserInsert): Promise<UserSelect> {
     const [createdUser] = await db.insert(usersTable).values(user).returning();
-    const { password, ...safeUser } = createdUser;
-    return safeUser;
+    return createdUser;
   }
 
-  async findByEmail(email: string) {
+  async findById(id: string): Promise<UserSelect | null> {
     const user = await db.query.usersTable.findFirst({
-      where: (users, { eq }) => eq(users?.email, email),
-      columns: {
-        password: false,
-      },
+      where: (users, { eq }) => eq(users.id, id),
     });
 
-    return user;
+    return user ?? null;
+  }
+
+  async findByEmail(email: string): Promise<UserSelect | null> {
+    const user = await db.query.usersTable.findFirst({
+      where: (users, { eq }) => eq(users.email, email),
+    });
+
+    return user ?? null;
+  }
+
+  async findAll(): Promise<UserSelect[]> {
+    return db.query.usersTable.findMany();
+  }
+
+  async update(
+    id: string,
+    data: Partial<UserInsert>
+  ): Promise<UserSelect | null> {
+    const [updatedUser] = await db
+      .update(usersTable)
+      .set(data)
+      .where(eq(usersTable.id, id))
+      .returning();
+
+    return updatedUser ?? null;
+  }
+
+  async delete(id: string): Promise<UserSelect | null> {
+    const [deletedUser] = await db
+      .delete(usersTable)
+      .where(eq(usersTable.id, id))
+      .returning();
+
+    return deletedUser ?? null;
   }
 }

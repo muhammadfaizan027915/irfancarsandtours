@@ -1,7 +1,7 @@
 "use client";
 
 import { NavigationUrls } from "../../header";
-import { Badge, Button, Card, Input } from "@icat/ui";
+import { AlertBox, Badge, Button, Card, Input } from "@icat/ui";
 import { ArrowRight, Mail, Lock } from "lucide-react";
 import { logInUser } from "@icat/web/actions";
 import { useForm } from "@conform-to/react";
@@ -35,6 +35,10 @@ export function SignInFrom() {
         onSubmit={form.onSubmit}
         className="flex flex-col gap-3 w-full mt-8"
       >
+        {form?.errors?.map((error) => (
+          <AlertBox variant="destructive" description={error} />
+        ))}
+
         <Input
           key={fields.email.key}
           name={fields.email.name}
@@ -54,7 +58,10 @@ export function SignInFrom() {
           errors={fields.password.errors}
         />
 
-        <Button size={"lg"} className="font-bold shadow-none group mt-4">
+        <Button
+          size={"lg"}
+          className="font-bold shadow-none group mt-4"
+        >
           Sign In
           <ArrowRight className="group-hover:translate-x-1 transition-transform" />
         </Button>

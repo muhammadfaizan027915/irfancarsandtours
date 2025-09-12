@@ -1,6 +1,7 @@
 import z, { ZodError } from "zod";
 import { BaseApiError } from "./errors";
 import { InternalServerError, ValidationError } from "./errors";
+import { CredentialsSignin } from "next-auth";
 
 export function handleError(error: unknown) {
   if ((error as any).digest?.startsWith("NEXT_REDIRECT")) {
@@ -9,6 +10,14 @@ export function handleError(error: unknown) {
 
   if (error instanceof BaseApiError) {
     return error.toJSON();
+  }
+
+  if (error instanceof CredentialsSignin) {
+    const validationError = new ValidationError({
+      cause: error.cause,
+      message: error.message?.replace("Read more at https://errors.authjs.dev#credentialssignin", ""),
+    });
+    return validationError.toJSON();
   }
 
   if (error instanceof ZodError) {

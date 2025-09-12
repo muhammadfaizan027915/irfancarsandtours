@@ -1,5 +1,3 @@
-import { AuthService } from "@icat/services";
+import { authHandlers } from "@icat/lib";
 
-const authService = new AuthService();
-
-export const { GET, POST } = authService.handlers;
+export const { GET, POST } = authHandlers;

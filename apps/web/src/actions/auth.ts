@@ -1,7 +1,7 @@
 "use server";
 
-import { handlerFormActionWithError } from "@icat/lib";
-import { AuthService, UserService } from "@icat/services";
+import { handlerFormActionWithError, signIn } from "@icat/lib";
+import { UserService } from "@icat/services";
 import {
   SignInBodySchema,
   CreateUserBodySchema,
@@ -14,8 +14,10 @@ import { redirect, RedirectType } from "next/navigation";
 export const logInUser = handlerFormActionWithError(
   SignInBodySchema,
   async (data: SignInBodyDto) => {
-    const authService = new AuthService();
-    await authService.signIn("credentials", data);
+    await signIn("credentials", {
+      ...data,
+      redirectTo: NavigationUrls.HOME,
+    });
   }
 );
 
