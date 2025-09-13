@@ -1,17 +1,16 @@
 "use client";
 
-import { NavigationUrls } from "../../header";
-import { AlertBox, Badge, Button, Card, Input } from "@icat/ui";
-import { ArrowRight, Mail, Lock, UserRound } from "lucide-react";
+import { AlertBox, Button, Card, Input, Textarea } from "@icat/ui";
+import { ArrowRight, Mail, Phone, UserRound, MapPin } from "lucide-react";
 import { signUpUser } from "@icat/web/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod/v4";
 import { CreateUserBodySchema } from "@icat/contracts";
 import { useActionState } from "react";
-import Link from "next/link";
 
-export function SignUpForm() {
+export function ProfileForm() {
   const [lastResult, action] = useActionState(signUpUser, null);
+
   const [form, fields] = useForm({
     lastResult,
     onValidate: ({ formData }) =>
@@ -21,12 +20,8 @@ export function SignUpForm() {
   });
 
   return (
-    <Card className="w-full p-8 max-w-md flex flex-col items-center gap-2 shadow-none">
-      <Badge variant={"accent"} className={"px-4 py-2 text-sm rounded-xl"}>
-        Sign Up
-      </Badge>
-
-      <h1 className="font-bold text-4xl">Create an Account</h1>
+    <Card className="w-full p-8 flex flex-col items-center gap-2 shadow-none">
+      <h1 className="font-bold text-4xl">Update Your Profile</h1>
 
       <form
         action={action}
@@ -48,6 +43,7 @@ export function SignUpForm() {
         />
 
         <Input
+          disabled
           placeholder="Email Address"
           startIcon={<Mail size={18} />}
           key={fields.email.key}
@@ -57,40 +53,29 @@ export function SignUpForm() {
         />
 
         <Input
-          type="password"
-          placeholder="Password"
-          startIcon={<Lock size={18} />}
-          key={fields.password.key}
-          name={fields.password.name}
-          defaultValue={fields.password.initialValue}
-          errors={fields.password.errors}
+          placeholder="Phone"
+          startIcon={<Phone size={18} />}
+          key={fields.phone.key}
+          name={fields.phone.name}
+          defaultValue={fields.phone.initialValue}
+          errors={fields.phone.errors}
         />
 
-        <Input
-          type="password"
-          placeholder="Confirm Password"
-          startIcon={<Lock size={18} />}
-          key={fields.confirmPassword.key}
-          name={fields.confirmPassword.name}
-          defaultValue={fields.confirmPassword.initialValue}
-          errors={fields.confirmPassword.errors}
+        <Textarea
+          className="h-30 scrollbar-thin"
+          placeholder="Address"
+          startIcon={<MapPin size={20} />}
+          key={fields.address.key}
+          name={fields.address.name}
+          defaultValue={fields.address.initialValue}
+          errors={fields.address.errors}
         />
 
         <Button size={"lg"} className="font-bold shadow-none group mt-4">
-          Sign Up
+          Update Profile
           <ArrowRight className="group-hover:translate-x-1 transition-transform" />
         </Button>
       </form>
-
-      <p className="text-muted-foreground text-sm mt-10">
-        Already have an account?{" "}
-        <Link
-          href={NavigationUrls.SIGNIN}
-          className="text-foreground hover:text-primary"
-        >
-          Sign In Here !
-        </Link>
-      </p>
     </Card>
   );
 }

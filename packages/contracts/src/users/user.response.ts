@@ -14,4 +14,15 @@ export const UserResponseWithPasswordSchema = UserResponseSchema.extend({
   password: z.string(),
 });
 
-export type UserResponseWithPasswordDto = z.infer<typeof UserResponseWithPasswordSchema>;
+export type UserResponseWithPasswordDto = z.infer<
+  typeof UserResponseWithPasswordSchema
+>;
+
+export const UserResponseWithContactSchema = UserResponseSchema.extend({
+  phone: z.string().min(1),
+  address: z.string().min(1),
+});
+
+export type UserResponseWithContactDto = z.infer<
+  typeof UserResponseWithContactSchema
+>;

@@ -30,13 +30,12 @@ export function SignInFrom() {
       <h1 className="font-bold text-4xl">Welcome Back</h1>
 
       <form
-        id={form.id}
         action={action}
         onSubmit={form.onSubmit}
         className="flex flex-col gap-3 w-full mt-8"
       >
         {form?.errors?.map((error) => (
-          <AlertBox variant="destructive" description={error} />
+          <AlertBox key={error} variant="destructive" description={error} />
         ))}
 
         <Input
@@ -54,14 +53,11 @@ export function SignInFrom() {
           name={fields.password.name}
           placeholder="Password"
           startIcon={<Lock size={18} />}
-          defaultValue={fields?.email?.initialValue}
+          defaultValue={fields?.password?.initialValue}
           errors={fields.password.errors}
         />
 
-        <Button
-          size={"lg"}
-          className="font-bold shadow-none group mt-4"
-        >
+        <Button size={"lg"} className="font-bold shadow-none group mt-4">
           Sign In
           <ArrowRight className="group-hover:translate-x-1 transition-transform" />
         </Button>

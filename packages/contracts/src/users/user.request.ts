@@ -24,3 +24,14 @@ export const CreateUserBodySchema = z
   });
 
 export type CreateUserBodyDto = z.infer<typeof CreateUserBodySchema>;
+
+export const UpdateUserBodySchema = CreateUserBodySchema.pick({
+  name: true,
+})
+  .extend({
+    phone: z.string(),
+    address: z.string(),
+  })
+  .partial();
+
+export type UpdateUserBodyDto = z.infer<typeof UpdateUserBodySchema>;
