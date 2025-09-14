@@ -4,6 +4,8 @@ import { InternalServerError, ValidationError } from "./errors";
 import { CredentialsSignin } from "next-auth";
 
 export function handleError(error: unknown) {
+  console.log(error);
+
   if ((error as any).digest?.startsWith("NEXT_REDIRECT")) {
     throw error;
   }
@@ -15,7 +17,10 @@ export function handleError(error: unknown) {
   if (error instanceof CredentialsSignin) {
     const validationError = new ValidationError({
       cause: error.cause,
-      message: error.message?.replace("Read more at https://errors.authjs.dev#credentialssignin", ""),
+      message: error.message?.replace(
+        "Read more at https://errors.authjs.dev#credentialssignin",
+        ""
+      ),
     });
     return validationError.toJSON();
   }

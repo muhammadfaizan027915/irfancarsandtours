@@ -10,7 +10,7 @@ import {
 } from "@icat/database";
 import { UserService } from "@icat/services";
 import { SignInBodyDto } from "@icat/contracts";
-import { BaseApiError, ValidationError } from "../errors";
+import { BaseApiError, handleError } from "../errors";
 
 export const {
   handlers: authHandlers,
@@ -35,15 +35,18 @@ export const {
       async authorize(credentials) {
         try {
           const userService = new UserService();
-
-          const user = await userService.validateUser(
+          const user = await userService.validateUserCredentials(
             credentials as SignInBodyDto
           );
 
           return user;
         } catch (error) {
-          if (error instanceof BaseApiError) {
-            throw new CredentialsSignin(error.message, { cause: error.cause });
+          const errorPayload = handleError(error);
+
+          if (errorPayload) {
+            throw new CredentialsSignin(errorPayload.message, {
+              cause: errorPayload.cause,
+            });
           }
 
           return null;
@@ -59,4 +62,17 @@ export const {
   },
 
   debug: process.env.NODE_ENV === "development",
+
+  session: {
+    strategy: "jwt",
+  },
+
+  callbacks: {
+    async session({ session, token }) {
+      const { jti, exp, iat, sub, ...user } = token;
+      session.user = user;
+
+      return session;
+    },
+  },
 });

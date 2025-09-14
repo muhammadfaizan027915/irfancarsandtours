@@ -3,8 +3,11 @@ import {
   CreateUserBodyDto,
   UserResponseSchema,
   UserResponseDto,
-  UserResponseWithPasswordSchema,
   SignInBodyDto,
+  DetailedUserResponseSchema,
+  DetailedUserResponseDto,
+  UserResponseWithPasswordSchema,
+  UpdateUserBodyDto,
 } from "@icat/contracts";
 import { DuplicateEmailError, NotFoundError, ValidationError } from "@icat/lib";
 import { AuthService } from "../auth";
@@ -55,7 +58,9 @@ export class UserService {
     return UserResponseWithPasswordSchema.parse(user);
   }
 
-  async validateUser(credentials: SignInBodyDto): Promise<UserResponseDto> {
+  async validateUserCredentials(
+    credentials: SignInBodyDto
+  ): Promise<UserResponseDto> {
     const { email, password } = credentials || {};
     const user = await this.getUserByEmailWithPassword(email);
 
@@ -69,5 +74,32 @@ export class UserService {
     }
 
     return UserResponseSchema.parse(user);
+  }
+
+  async getDetailedUserByEmail(
+    email: string
+  ): Promise<DetailedUserResponseDto> {
+    const user = await this.userRepository.findByEmail(email);
+
+    if (!user) {
+      throw new NotFoundError("User");
+    }
+
+    return DetailedUserResponseSchema.parse(user);
+  }
+
+  async updateUser(
+    id: string,
+    updates: UpdateUserBodyDto
+  ): Promise<DetailedUserResponseDto> {
+    const existingUser = await this.userRepository.findById(id);
+
+    if (!existingUser) {
+      throw new NotFoundError("User");
+    }
+
+    const updatedUser = await this.userRepository.update(id, updates);
+
+    return DetailedUserResponseSchema.parse(updatedUser);
   }
 }

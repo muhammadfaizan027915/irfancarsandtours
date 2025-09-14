@@ -5,4 +5,6 @@ export const NavigationUrls = {
   SIGNUP: "/signup",
   ABOUT_US: "/about-us",
   CONTACT: "/contact",
+  PROFILE: "/profile",
+  BOOKINGS: "/bookings",
 } as const;

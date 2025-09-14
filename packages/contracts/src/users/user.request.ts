@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { DetailedUserResponseSchema } from "./user.response";
 
 export const SignInBodySchema = z.object({
   email: z.email({ error: "Email required." }),
@@ -25,13 +26,9 @@ export const CreateUserBodySchema = z
 
 export type CreateUserBodyDto = z.infer<typeof CreateUserBodySchema>;
 
-export const UpdateUserBodySchema = CreateUserBodySchema.pick({
-  name: true,
-})
-  .extend({
-    phone: z.string(),
-    address: z.string(),
-  })
-  .partial();
+export const UpdateUserBodySchema = DetailedUserResponseSchema.omit({
+  createdAt: true,
+  updatedAt: true,
+}).partial();
 
 export type UpdateUserBodyDto = z.infer<typeof UpdateUserBodySchema>;

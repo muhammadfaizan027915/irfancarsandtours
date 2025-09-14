@@ -4,8 +4,9 @@ export const UserResponseSchema = z.object({
   id: z.uuid(),
   name: z.string().min(1),
   email: z.email(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  image: z.url().nullish(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
 });
 
 export type UserResponseDto = z.infer<typeof UserResponseSchema>;
@@ -18,11 +19,11 @@ export type UserResponseWithPasswordDto = z.infer<
   typeof UserResponseWithPasswordSchema
 >;
 
-export const UserResponseWithContactSchema = UserResponseSchema.extend({
-  phone: z.string().min(1),
-  address: z.string().min(1),
+export const DetailedUserResponseSchema = UserResponseSchema.extend({
+  phone: z.string().nullish(),
+  address: z.string().nullish(),
 });
 
-export type UserResponseWithContactDto = z.infer<
-  typeof UserResponseWithContactSchema
+export type DetailedUserResponseDto = z.infer<
+  typeof DetailedUserResponseSchema
 >;

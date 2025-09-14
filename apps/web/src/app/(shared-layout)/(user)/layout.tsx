@@ -1,6 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger } from "@icat/ui";
+import { NavigationUrls } from "@icat/features/header";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import Link from "next/link";
@@ -16,11 +17,11 @@ export default function SharedLayout({ children }: UserLayoutProps) {
     <div className="py-8">
       <Tabs defaultValue={pathname}>
         <TabsList>
-          <TabsTrigger value="/bookings" className="w-20">
-            <Link href={"/bookings"}>Bookings</Link>
+          <TabsTrigger value={NavigationUrls.BOOKINGS} className="w-20">
+            <Link href={NavigationUrls.BOOKINGS}>Bookings</Link>
           </TabsTrigger>
-          <TabsTrigger value="/profile" className="w-20">
-            <Link href={"/profile"}>Profile</Link>
+          <TabsTrigger value={NavigationUrls.PROFILE} className="w-20">
+            <Link href={NavigationUrls.PROFILE}>Profile</Link>
           </TabsTrigger>
         </TabsList>
       </Tabs>

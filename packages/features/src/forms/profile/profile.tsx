@@ -2,19 +2,21 @@
 
 import { AlertBox, Button, Card, Input, Textarea } from "@icat/ui";
 import { ArrowRight, Mail, Phone, UserRound, MapPin } from "lucide-react";
-import { signUpUser } from "@icat/web/actions";
+import { updateUser } from "@icat/web/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod/v4";
-import { CreateUserBodySchema } from "@icat/contracts";
+import { UpdateUserBodySchema } from "@icat/contracts";
+import { ProfileFormProps } from "./profile.types";
 import { useActionState } from "react";
 
-export function ProfileForm() {
-  const [lastResult, action] = useActionState(signUpUser, null);
+export function ProfileForm({ user }: ProfileFormProps) {
+  const [lastResult, action] = useActionState(updateUser, null);
 
   const [form, fields] = useForm({
     lastResult,
+    defaultValue: user,
     onValidate: ({ formData }) =>
-      parseWithZod(formData, { schema: CreateUserBodySchema }),
+      parseWithZod(formData, { schema: UpdateUserBodySchema }),
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
@@ -24,6 +26,7 @@ export function ProfileForm() {
       <h1 className="font-bold text-4xl">Update Your Profile</h1>
 
       <form
+        id={form.id}
         action={action}
         onSubmit={form.onSubmit}
         className="flex flex-col gap-3 w-full mt-8"

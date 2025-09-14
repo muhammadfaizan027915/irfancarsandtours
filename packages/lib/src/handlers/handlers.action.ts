@@ -31,7 +31,7 @@ export function handlerFormActionWithError<TArgs, TResult = SubmissionResult>(
 
     try {
       await action(submission.payload as TArgs);
-      return submission.reply({ resetForm: false });
+      return submission.reply({ resetForm: true });
     } catch (error) {
       const errorPayload = handleError(error);
       return submission.reply({ formErrors: [errorPayload?.message] });
