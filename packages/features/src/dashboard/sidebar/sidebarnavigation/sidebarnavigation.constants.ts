@@ -8,7 +8,7 @@ import {
 export const DashboardNavigationUrls = {
   BOOKINGS: "/dashboard",
   CARS: "/dashboard/cars",
-  USERS: "/dashboard/users",
+  CUSTOMERS: "/dashboard/customers",
   COMPLAINTS: "/dashboard/complaints",
 } as const;
 
@@ -24,8 +24,8 @@ export const DashboardNavigation = [
     icon: CarFront,
   },
   {
-    title: "Users",
-    url: DashboardNavigationUrls.USERS,
+    title: "Customers",
+    url: DashboardNavigationUrls.CUSTOMERS,
     icon: Users,
   },
   {

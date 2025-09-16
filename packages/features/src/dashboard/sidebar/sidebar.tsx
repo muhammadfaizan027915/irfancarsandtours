@@ -7,15 +7,16 @@ import {
 } from "@icat/ui";
 import { DashboardSidebarNavigation } from "./sidebarnavigation";
 import { DashboardSidebarFooter } from "./sidebarfooter/sidebarfooter";
+import { Logo } from "../../header";
 
 export function DashboardSidebar() {
   return (
     <Sidebar variant="inset">
       <SidebarHeader>
-        <h1 className="text-4xl">ICAT</h1>
+        <Logo />
       </SidebarHeader>
-      <SidebarSeparator className="my-4" />
-      <SidebarContent>
+      <SidebarSeparator className="mb-4" />
+      <SidebarContent className="px-2">
         <DashboardSidebarNavigation />
       </SidebarContent>
       <SidebarFooter>

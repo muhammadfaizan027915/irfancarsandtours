@@ -3,12 +3,13 @@
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@icat/ui";
 import { usePathname } from "next/navigation";
 import { DashboardNavigation } from "./sidebarnavigation.constants";
+import { cn } from "@icat/ui/lib/utils";
 import Link from "next/link";
 
 export function DashboardSidebarNavigation() {
   const pathname = usePathname();
   return (
-    <SidebarMenu>
+    <SidebarMenu className="gap-2">
       {DashboardNavigation?.map((navigation) => {
         const isActive = navigation.url === pathname;
         return (
@@ -17,7 +18,7 @@ export function DashboardSidebarNavigation() {
               asChild
               size={"lg"}
               isActive={isActive}
-              className="px-4"
+              className={cn("px-4 rounded-xl", isActive ? "shadow-md" : "")}
             >
               <Link href={navigation.url}>
                 <navigation.icon />

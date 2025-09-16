@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <DashboardSidebar />
       <SidebarInset>
         <DashboardHeader />
-        <main className="p-4">{children}</main>
+        <main className="p-6">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
