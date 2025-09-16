@@ -16,3 +16,4 @@ export * from "./filtersidebar";
 export * from "./searchedcars";
 export * from "./featuredcars";
 export * from "./cartypes";
+export * from "./dashboard";

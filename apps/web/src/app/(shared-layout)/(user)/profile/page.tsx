@@ -3,8 +3,6 @@ import { ProfileForm } from "@icat/features";
 import { Avatar, AvatarFallback, AvatarImage, Badge } from "@icat/ui";
 import { UserService } from "@icat/services";
 
-export const dynamic = "force-dynamic";
-
 export default async function ProfilePage() {
   const session = await auth();
 
