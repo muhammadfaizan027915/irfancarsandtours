@@ -9,7 +9,7 @@ export class UserRepository {
 
   async findById(id: string): Promise<UserSelect | null> {
     const user = await db.query.usersTable.findFirst({
-      where: (users, { eq }) => eq(users.id, id),
+      where: eq(usersTable.id, id),
     });
 
     return user ?? null;
@@ -17,7 +17,7 @@ export class UserRepository {
 
   async findByEmail(email: string): Promise<UserSelect | null> {
     const user = await db.query.usersTable.findFirst({
-      where: (users, { eq }) => eq(users.email, email),
+      where: eq(usersTable.email, email),
     });
 
     return user ?? null;

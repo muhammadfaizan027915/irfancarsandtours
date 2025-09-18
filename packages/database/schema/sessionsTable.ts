@@ -10,3 +10,8 @@ export const sessionsTable = pgTable("sessions", {
   expires: timestamp("expires", { mode: "date" }).notNull(),
   ...timestampColumns,
 });
+
+
+export type SessionInsert = typeof sessionsTable.$inferInsert;
+
+export type SessionSelect = typeof sessionsTable.$inferSelect;

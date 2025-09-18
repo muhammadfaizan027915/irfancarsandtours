@@ -10,6 +10,7 @@ export * from "./components/button";
 export * from "./components/slider";
 export * from "./components/textarea";
 export * from "./components/checkbox";
+export * from "./components/data-table";
 export * from "./components/dark-mode-toggler";
 export * from "./components/theme-provider";
 export * from "./components/dropdown-menu";

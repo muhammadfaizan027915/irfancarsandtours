@@ -17,3 +17,9 @@ export const verificationTokensTable = pgTable(
     },
   ]
 );
+
+export type VerificationTokenInsert =
+  typeof verificationTokensTable.$inferInsert;
+
+export type VerificationTokenSelect =
+  typeof verificationTokensTable.$inferSelect;
