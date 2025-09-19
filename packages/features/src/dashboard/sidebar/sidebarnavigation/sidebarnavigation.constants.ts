@@ -18,6 +18,7 @@ export const DashboardNavigation = [
     title: "Bookings",
     url: DashboardNavigationUrls.BOOKINGS,
     icon: ClipboardList,
+    isRoot: true
   },
   {
     title: "Cars",

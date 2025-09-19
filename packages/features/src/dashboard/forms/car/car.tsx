@@ -62,7 +62,7 @@ export function CarForm({ defaultValues, mode }: CarFormProps) {
         </div>
 
         <Button type="submit" size={"lg"} className="ml-auto">
-          Register Car
+          {mode === "create" ? "Register Car" : "Update Car"}
         </Button>
       </div>
     </form>
