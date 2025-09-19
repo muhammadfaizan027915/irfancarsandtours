@@ -1,6 +1,7 @@
-import { CarsTable, RegisterCarForm } from "@icat/features";
+import { CarsTable, DashboardNavigationUrls } from "@icat/features";
 import { Button } from "@icat/ui";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 
 export default function CarsPage() {
   return (
@@ -13,8 +14,10 @@ export default function CarsPage() {
           </p>
         </div>
 
-        <Button className="w-fit" size={"lg"}>
-          <Plus /> Register New
+        <Button className="w-fit" size={"lg"} asChild>
+          <Link href={DashboardNavigationUrls.REGISTER_CAR}>
+            <Plus /> Register New
+          </Link>
         </Button>
       </div>
 

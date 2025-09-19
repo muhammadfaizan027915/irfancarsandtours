@@ -1,21 +1,11 @@
 "use client";
 
-import {
-  AlertBox,
-  Badge,
-  Button,
-  Card,
-  Input,
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-  Textarea,
-} from "@icat/ui";
-import { ArrowRight, Mail, Lock, UserRound } from "lucide-react";
+import { AlertBox, Button, Card, Input } from "@icat/ui";
+import { CreateUserBodySchema } from "@icat/contracts";
+import { ArrowRight, Lock } from "lucide-react";
+import { parseWithZod } from "@conform-to/zod/v4";
 import { signUpUser } from "@icat/web/actions";
 import { useForm } from "@conform-to/react";
-import { parseWithZod } from "@conform-to/zod/v4";
-import { CreateUserBodySchema } from "@icat/contracts";
 import { useActionState } from "react";
 
 export function ChangePasswordForm() {

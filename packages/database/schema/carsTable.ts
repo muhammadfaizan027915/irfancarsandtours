@@ -34,9 +34,10 @@ export const carsTable = pgTable("cars", {
   amenities: varchar("amenities", {
     length: 500,
     enum: AmenitiesList,
-  }).notNull(),
+  }).array().notNull(),
   imageUrls: varchar("image_urls", { length: 500 }).array(),
   seatingCapacity: integer("seating_capacity").notNull(),
+  description: text("description"), 
   isFeatured: boolean("is_featured").default(false),
   timesSearched: integer("times_searched").default(0),
   isAllowedBookingWithoutDriver: boolean(

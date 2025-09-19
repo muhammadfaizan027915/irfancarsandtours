@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <DashboardSidebar />
       <SidebarInset>
         <DashboardHeader />
-        <main className="p-6">{children}</main>
+        <main className="p-6 overflow-y-auto max-h-[calc(100vh-90px)]">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

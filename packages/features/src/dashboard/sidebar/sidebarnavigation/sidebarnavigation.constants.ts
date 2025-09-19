@@ -8,6 +8,7 @@ import {
 export const DashboardNavigationUrls = {
   BOOKINGS: "/dashboard",
   CARS: "/dashboard/cars",
+  REGISTER_CAR: "/dashboard/cars/new",
   CUSTOMERS: "/dashboard/customers",
   COMPLAINTS: "/dashboard/complaints",
 } as const;

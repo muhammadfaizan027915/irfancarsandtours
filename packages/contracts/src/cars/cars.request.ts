@@ -5,9 +5,9 @@ import {
   AmenitiesList,
   CarTypesList,
   TransmissionTypesList,
-} from "@icat/database";
+} from "@icat/database/enums";
 
-export const RegisterCarSchema = z.object({
+export const RegisterCarBodySchema = z.object({
   name: z.string().min(1, "Name is required"),
   model: z.string().min(1, "Model is required"),
   year: z.number().int().min(1900, "Invalid year"),
@@ -26,16 +26,16 @@ export const RegisterCarSchema = z.object({
   isAllowedBookingWithoutDriver: z.boolean().optional().default(false),
 });
 
-export type RegisterCarDto = z.infer<typeof RegisterCarSchema>;
+export type RegisterCarBodyDto = z.infer<typeof RegisterCarBodySchema>;
 
-export const UpdateCarSchema = RegisterCarSchema.partial().extend({
+export const UpdateCarBodySchema = RegisterCarBodySchema.partial().extend({
   id: z.uuid("Invalid car ID"),
 });
 
-export type UpdateCarDto = z.infer<typeof UpdateCarSchema>;
+export type UpdateCarBodyDto = z.infer<typeof UpdateCarBodySchema>;
 
-export const DeleteCarSchema = z.object({
+export const DeleteCarBodySchema = z.object({
   id: z.uuid("Invalid car ID"),
 });
 
-export type DeleteCarDto = z.infer<typeof DeleteCarSchema>;
+export type DeleteCarBodyDto = z.infer<typeof DeleteCarBodySchema>;
