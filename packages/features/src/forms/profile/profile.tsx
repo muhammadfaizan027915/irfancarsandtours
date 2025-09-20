@@ -32,7 +32,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
         className="flex flex-col gap-3 w-full mt-8"
       >
         {form?.errors?.map((error) => (
-          <AlertBox variant="destructive" description={error} />
+          <AlertBox key={error} variant="destructive" description={error} />
         ))}
 
         <Input

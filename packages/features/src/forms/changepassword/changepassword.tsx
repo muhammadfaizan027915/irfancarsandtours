@@ -1,20 +1,20 @@
 "use client";
 
 import { AlertBox, Button, Card, Input } from "@icat/ui";
-import { CreateUserBodySchema } from "@icat/contracts";
+import { ChangePasswordBodySchema } from "@icat/contracts";
 import { ArrowRight, Lock } from "lucide-react";
 import { parseWithZod } from "@conform-to/zod/v4";
-import { signUpUser } from "@icat/web/actions";
+import { changeUserPassword } from "@icat/web/actions";
 import { useForm } from "@conform-to/react";
 import { useActionState } from "react";
 
 export function ChangePasswordForm() {
-  const [lastResult, action] = useActionState(signUpUser, null);
+  const [lastResult, action] = useActionState(changeUserPassword, null);
 
   const [form, fields] = useForm({
     lastResult,
     onValidate: ({ formData }) =>
-      parseWithZod(formData, { schema: CreateUserBodySchema }),
+      parseWithZod(formData, { schema: ChangePasswordBodySchema }),
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
@@ -29,17 +29,17 @@ export function ChangePasswordForm() {
         className="flex flex-col gap-3 w-full mt-8"
       >
         {form?.errors?.map((error) => (
-          <AlertBox variant="destructive" description={error} />
+          <AlertBox key={error} variant="destructive" description={error} />
         ))}
 
         <Input
           type="password"
           placeholder="Current Password"
           startIcon={<Lock size={18} />}
-          key={fields.password.key}
-          name={fields.password.name}
-          defaultValue={fields.password.initialValue}
-          errors={fields.password.errors}
+          key={fields.currentPassword.key}
+          name={fields.currentPassword.name}
+          defaultValue={fields.currentPassword.initialValue}
+          errors={fields.currentPassword.errors}
         />
 
         <Input

@@ -1,5 +1,5 @@
 {
-  "id": "59b8550a-fc7e-47d9-83b9-fbcba0e7af88",
+  "id": "f8a64c2d-c2aa-4b68-9da8-c52df9c5baed",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -34,31 +34,36 @@
         },
         "brand": {
           "name": "brand",
-          "type": "varchar(255)",
+          "type": "brand_enum",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         },
         "car_type": {
           "name": "car_type",
-          "type": "varchar(100)",
+          "type": "car_type_enum",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         },
         "fuel_type": {
           "name": "fuel_type",
-          "type": "varchar(100)",
+          "type": "fuel_type_enum",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         },
         "transmission_type": {
           "name": "transmission_type",
-          "type": "varchar(100)",
+          "type": "transmission_type_enum",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         },
         "amenities": {
           "name": "amenities",
-          "type": "varchar(500)",
+          "type": "amenities_enum[]",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         },
@@ -74,11 +79,38 @@
           "primaryKey": false,
           "notNull": true
         },
-        "price_per_day": {
-          "name": "price_per_day",
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_featured": {
+          "name": "is_featured",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "times_searched": {
+          "name": "times_searched",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false,
+          "default": 0
+        },
+        "is_allowed_booking_without_driver": {
+          "name": "is_allowed_booking_without_driver",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
@@ -131,6 +163,18 @@
           "primaryKey": false,
           "notNull": true
         },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "email_verified": {
           "name": "email_verified",
           "type": "timestamp",
@@ -142,6 +186,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
@@ -196,6 +246,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -227,51 +283,6 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.verification_tokens": {
-      "name": "verification_tokens",
-      "schema": "",
-      "columns": {
-        "identifier": {
-          "name": "identifier",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "token": {
-          "name": "token",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "expires": {
-          "name": "expires",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -348,6 +359,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -384,9 +401,169 @@
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
+    },
+    "public.verification_tokens": {
+      "name": "verification_tokens",
+      "schema": "",
+      "columns": {
+        "identifier": {
+          "name": "identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.amenities_enum": {
+      "name": "amenities_enum",
+      "schema": "public",
+      "values": [
+        "GPS",
+        "Bluetooth",
+        "Heated Seats",
+        "Sunroof/Moonroof",
+        "Air Conditioning",
+        "Backup Camera",
+        "Cruise Control",
+        "Alloy Wheels",
+        "Keyless Entry",
+        "Leather Seats",
+        "Parking Sensors"
+      ]
+    },
+    "public.brand_enum": {
+      "name": "brand_enum",
+      "schema": "public",
+      "values": [
+        "",
+        "use",
+        "Acura",
+        "AlfaRomeo",
+        "AstonMartin",
+        "Audi",
+        "BMW",
+        "BYD",
+        "Bentley",
+        "Cadillac",
+        "Chevrolet",
+        "Chrysler",
+        "Dodge",
+        "Ferrari",
+        "Fiat",
+        "Ford",
+        "GMC",
+        "Genesis",
+        "Honda",
+        "Hummer",
+        "Hyundai",
+        "Infiniti",
+        "Jaguar",
+        "Jeep",
+        "Kia",
+        "Lamborghini",
+        "Landrover",
+        "Lexus",
+        "Lincoln",
+        "Lotus",
+        "Lucid",
+        "MB",
+        "Maserati",
+        "Mazda",
+        "Mclaren",
+        "Mini",
+        "Mitsubishi",
+        "Nissan",
+        "Polestar",
+        "Porsche",
+        "RAM",
+        "RollsRoyce",
+        "Subaru",
+        "Tesla",
+        "Toyota",
+        "Vinfast",
+        "Volkswagen",
+        "Volvo"
+      ]
+    },
+    "public.car_type_enum": {
+      "name": "car_type_enum",
+      "schema": "public",
+      "values": [
+        "SUV",
+        "Sedan",
+        "Hatchback",
+        "Convertible",
+        "Sports Car",
+        "Compact",
+        "Coupe",
+        "Minivan",
+        "Pickup Truck",
+        "Station Wagon",
+        "Luxury",
+        "Crossover",
+        "Off-Road"
+      ]
+    },
+    "public.fuel_type_enum": {
+      "name": "fuel_type_enum",
+      "schema": "public",
+      "values": [
+        "Petrol",
+        "Diesel",
+        "Electric",
+        "Hybrid"
+      ]
+    },
+    "public.transmission_type_enum": {
+      "name": "transmission_type_enum",
+      "schema": "public",
+      "values": [
+        "Automatic",
+        "Manual"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

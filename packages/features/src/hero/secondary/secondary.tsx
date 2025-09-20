@@ -1,6 +1,6 @@
 import { Badge } from "@icat/ui";
 import { SecondaryHeroProps } from "./secondary.types";
-import { FlexToTextPositionMap } from "@icat/features/common/common.constants";
+import { FlexToTextPositionMap } from "@icat/features/common";
 
 export function SecondaryHero({
   position = "center",

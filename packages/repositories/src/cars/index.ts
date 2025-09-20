@@ -1,7 +1,25 @@
 import { db, carsTable, CarInsert, CarSelect } from "@icat/database";
-import { and, eq, ilike, isNull, sql } from "drizzle-orm";
+import { and, desc, eq, ilike, isNull, sql } from "drizzle-orm";
 
-export class CarsRepository {
+export const CarListSelect = {
+  id: carsTable.id,
+  name: carsTable.name,
+  model: carsTable.model,
+  year: carsTable.year,
+  brand: carsTable.brand,
+  carType: carsTable.carType,
+  fuelType: carsTable.fuelType,
+  transmissionType: carsTable.transmissionType,
+  imageUrls: carsTable.imageUrls,
+  seatingCapacity: carsTable.seatingCapacity,
+  isFeatured: carsTable.isFeatured,
+  isAllowedBookingWithoutDriver: carsTable.isAllowedBookingWithoutDriver,
+  timesSearched: carsTable.timesSearched,
+  createdAt: carsTable.createdAt,
+  updatedAt: carsTable.updatedAt
+};
+
+export class CarRepository {
   async findAll(args: { page?: number; limit?: number; search?: string }) {
     const { page = 1, limit = 10, search } = args;
 
@@ -15,7 +33,7 @@ export class CarsRepository {
     const whereClause = and(...conditions);
 
     const cars = await db
-      .select()
+      .select(CarListSelect)
       .from(carsTable)
       .where(whereClause)
       .limit(limit)
@@ -37,6 +55,21 @@ export class CarsRepository {
         pages: Math.ceil(total / limit),
       },
     };
+  }
+
+  async findFeatured() {
+    return db
+      .select(CarListSelect)
+      .from(carsTable)
+      .where(eq(carsTable.isFeatured, true));
+  }
+
+  async findMostSearched(limit = 10) {
+    return db
+      .select(CarListSelect)
+      .from(carsTable)
+      .orderBy(desc(carsTable.timesSearched))
+      .limit(limit);
   }
 
   async findById(id: string): Promise<CarSelect | null> {

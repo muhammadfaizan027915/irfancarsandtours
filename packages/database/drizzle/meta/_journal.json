@@ -5,50 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1757357089767,
-      "tag": "0000_misty_callisto",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1757359923749,
-      "tag": "0001_strange_electro",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1757360099583,
-      "tag": "0002_big_ben_grimm",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1757769662301,
-      "tag": "0003_lying_butterfly",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1758125769824,
-      "tag": "0004_typical_dracula",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1758126092897,
-      "tag": "0005_ancient_malcolm_colcord",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1758126117829,
-      "tag": "0006_happy_sue_storm",
+      "when": 1758355600616,
+      "tag": "0000_jazzy_sunspot",
       "breakpoints": true
     }
   ]

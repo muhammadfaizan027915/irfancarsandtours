@@ -8,6 +8,7 @@ import {
   DetailedUserResponseDto,
   UserResponseWithPasswordSchema,
   UpdateUserBodyDto,
+  ChangePasswordBodyDto,
 } from "@icat/contracts";
 import { DuplicateEmailError, NotFoundError, ValidationError } from "@icat/lib";
 import { AuthService } from "../auth";
@@ -101,5 +102,35 @@ export class UserService {
     const updatedUser = await this.userRepository.update(id, updates);
 
     return DetailedUserResponseSchema.parse(updatedUser);
+  }
+
+  async changePassword(
+    id: string,
+    data: ChangePasswordBodyDto
+  ): Promise<UserResponseDto> {
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new NotFoundError("User");
+    }
+
+    const userWithPassword = UserResponseWithPasswordSchema.parse(user);
+
+    const isValid = await this.authService.comparePassword(
+      data?.currentPassword,
+      userWithPassword.password
+    );
+
+    if (!isValid) {
+      throw new ValidationError({ message: "Current password is incorrect" });
+    }
+
+    const hashedPassword = await this.authService.hashPassword(data?.password);
+
+    const updatedUser = await this.userRepository.update(id, {
+      password: hashedPassword,
+    });
+
+    return UserResponseSchema.parse(updatedUser);
   }
 }

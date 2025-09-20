@@ -1,10 +1,10 @@
-import { integer, text, pgTable, varchar, boolean } from "drizzle-orm/pg-core";
+import { integer, text, pgTable, boolean, varchar } from "drizzle-orm/pg-core";
 import {
-  BrandNamesList,
-  FuelTypesList,
-  AmenitiesList,
-  CarTypesList,
-  TransmissionTypesList,
+  brandEnum,
+  fuelTypeEnum,
+  amenitiesEnum,
+  carTypeEnum,
+  transmissionTypeEnum,
 } from "./enums";
 import { timestampColumns } from "../utils";
 
@@ -15,34 +15,20 @@ export const carsTable = pgTable("cars", {
   name: varchar("name", { length: 255 }).notNull(),
   model: varchar("model", { length: 255 }).notNull(),
   year: integer("year").notNull(),
-  brand: varchar("brand", {
-    length: 255,
-    enum: BrandNamesList,
-  }).notNull(),
-  carType: varchar("car_type", {
-    length: 100,
-    enum: CarTypesList,
-  }).notNull(),
-  fuelType: varchar("fuel_type", {
-    length: 100,
-    enum: FuelTypesList,
-  }).notNull(),
-  transmissionType: varchar("transmission_type", {
-    length: 100,
-    enum: TransmissionTypesList,
-  }).notNull(),
-  amenities: varchar("amenities", {
-    length: 500,
-    enum: AmenitiesList,
-  }).array().notNull(),
+  brand: brandEnum("brand").notNull(),
+  carType: carTypeEnum("car_type").notNull(),
+  fuelType: fuelTypeEnum("fuel_type").notNull(),
+  transmissionType: transmissionTypeEnum("transmission_type").notNull(),
+  amenities: amenitiesEnum("amenities").array().notNull(),
   imageUrls: varchar("image_urls", { length: 500 }).array(),
   seatingCapacity: integer("seating_capacity").notNull(),
-  description: text("description"), 
+  description: text("description"),
   isFeatured: boolean("is_featured").default(false),
   timesSearched: integer("times_searched").default(0),
   isAllowedBookingWithoutDriver: boolean(
     "is_allowed_booking_without_driver"
   ).default(false),
+
   ...timestampColumns,
 });
 

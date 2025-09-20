@@ -1,6 +1,10 @@
+import { CarService } from "@icat/services";
 import { CarCard } from "../cars";
 
-export function FeaturedCars() {
+export async function FeaturedCars() {
+  const carService = new CarService();
+  const cars = await carService.getFeaturedCars();
+
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -10,10 +14,9 @@ export function FeaturedCars() {
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        <CarCard varient="small" />
-        <CarCard varient="small" />
-        <CarCard varient="small" />
-        <CarCard varient="small" />
+        {cars?.map((car) => (
+          <CarCard car={car} key={car?.id} />
+        ))}
       </div>
     </div>
   );

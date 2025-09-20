@@ -8,21 +8,29 @@ import {
 } from "@icat/database/enums";
 
 export const RegisterCarBodySchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  model: z.string().min(1, "Model is required"),
-  year: z.number().int().min(1900, "Invalid year"),
-  brand: z.enum(BrandNamesList),
-  carType: z.enum(CarTypesList),
-  fuelType: z.enum(FuelTypesList),
-  transmissionType: z.enum(TransmissionTypesList),
-  amenities: z.array(z.enum(AmenitiesList)),
-  imageUrls: z.array(z.url()).optional(),
+  name: z.string("Name is required").min(1,  "Name cannot be empty"),
+  model: z.string("Model is required").min(1,  "Model cannot be empty"),
+  year: z
+    .number("Year is required")
+    .int("Year is required")
+    .min(1900, "Year must be 1900 or later"),
+  description: z.string().optional(),
+  brand: z.enum(BrandNamesList, "Please select a valid brand"),
+  carType: z.enum(CarTypesList, "Please select a valid car type"),
+  fuelType: z.enum(FuelTypesList, "Please select a valid fuel type"),
+  transmissionType: z.enum(
+    TransmissionTypesList,
+    "Please select a valid transmission type"
+  ),
+  amenities: z
+    .array(z.enum(AmenitiesList, "Please select a valid amenities"))
+    .min(1, "At least one amenity must be selected"),
+  imageUrls: z.array(z.url("Each image must be a valid URL")).optional(),
   seatingCapacity: z
-    .number()
-    .int()
+    .number("Seating capacity is required")
+    .int("Seating capacity is required")
     .min(1, "Seating capacity must be at least 1"),
   isFeatured: z.boolean().optional().default(false),
-  timesSearched: z.number().int().optional().default(0),
   isAllowedBookingWithoutDriver: z.boolean().optional().default(false),
 });
 

@@ -1,0 +1,51 @@
+"use server";
+
+import { NavigationUrls } from "@icat/features";
+import {
+  RegisterCarBodySchema,
+  RegisterCarBodyDto,
+  UpdateCarBodySchema,
+  UpdateCarBodyDto,
+} from "@icat/contracts";
+import { auth, handlerFormActionWithError, UnauthorizedError } from "@icat/lib";
+import { CarService } from "@icat/services";
+import { revalidatePath } from "next/cache";
+
+export const registerCar = handlerFormActionWithError(
+  RegisterCarBodySchema,
+  async (data: RegisterCarBodyDto) => {
+    const session = await auth();
+    const sessionUser = session?.user;
+
+    if (!sessionUser?.id) {
+      throw new UnauthorizedError({ message: "Unauthorized to create car." });
+    }
+
+    const carService = new CarService();
+    const car = await carService.createCar({
+      ...data,
+      amenities: ["Air Conditioning"],
+    });
+
+    revalidatePath(`${NavigationUrls.CARS}/${car?.id}/edit`);
+    return car;
+  }
+);
+
+export const updateCar = handlerFormActionWithError(
+  UpdateCarBodySchema,
+  async (data: UpdateCarBodyDto) => {
+    const session = await auth();
+    const sessionUser = session?.user;
+
+    if (!sessionUser?.id) {
+      throw new UnauthorizedError({ message: "Unauthorized to update car." });
+    }
+
+    const carService = new CarService();
+    const car = await carService.updateCar(sessionUser?.id, data);
+
+    revalidatePath(`${NavigationUrls.CARS}/${car?.id}/edit`);
+    return car;
+  }
+);

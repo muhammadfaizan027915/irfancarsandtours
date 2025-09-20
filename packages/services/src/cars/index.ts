@@ -1,19 +1,21 @@
-import { CarsRepository } from "@icat/repositories";
+import { CarRepository } from "@icat/repositories";
 import {
   CarResponseDto,
   CarResponseSchema,
+  CarsListResponseSchema,
+  CarsListResponseDto,
   RegisterCarBodyDto,
   UpdateCarBodyDto,
   DeleteCarBodyDto,
-  PaginatedCarResponseDto,
   PaginatedCarResponseSchema,
+  PaginatedCarResponseDto,
 } from "@icat/contracts";
 
-export class CarsService {
-  private repo: CarsRepository;
+export class CarService {
+  private repo: CarRepository;
 
   constructor() {
-    this.repo = new CarsRepository();
+    this.repo = new CarRepository();
   }
 
   async getAll(args: {
@@ -25,7 +27,17 @@ export class CarsService {
     return PaginatedCarResponseSchema.parse(result);
   }
 
-  async getById(id: string): Promise<CarResponseDto | null> {
+  async getFeaturedCars(): Promise<CarsListResponseDto> {
+    const cars = await this.repo.findFeatured();
+    return CarsListResponseSchema.parse(cars);
+  }
+
+  async getMostSearchedCars(limit = 10): Promise<CarsListResponseDto> {
+    const cars = await this.repo.findMostSearched(limit);
+    return CarsListResponseSchema.parse(cars);
+  }
+
+  async getCarById(id: string): Promise<CarResponseDto | null> {
     const car = await this.repo.findById(id);
     return CarResponseSchema.parse(car);
   }
