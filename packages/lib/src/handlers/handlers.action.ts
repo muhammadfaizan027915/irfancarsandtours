@@ -27,6 +27,7 @@ export function handlerFormActionWithError<
   shouldResetForm?: boolean;
 }) {
   return async function (prevState: unknown, formData: FormData) {
+    console.log(formData.get("isFeatured"))
     const submission = parseWithZod(formData, { schema: args.schema });
 
     if (submission.status !== "success") {

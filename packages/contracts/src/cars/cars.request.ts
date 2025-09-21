@@ -8,8 +8,8 @@ import {
 } from "@icat/database/enums";
 
 export const RegisterCarBodySchema = z.object({
-  name: z.string("Name is required").min(1,  "Name cannot be empty"),
-  model: z.string("Model is required").min(1,  "Model cannot be empty"),
+  name: z.string("Name is required").min(1, "Name cannot be empty"),
+  model: z.string("Model is required").min(1, "Model cannot be empty"),
   year: z
     .number("Year is required")
     .int("Year is required")
@@ -24,14 +24,25 @@ export const RegisterCarBodySchema = z.object({
   ),
   amenities: z
     .array(z.enum(AmenitiesList, "Please select a valid amenities"))
-    .min(1, "At least one amenity must be selected"),
+    .min(1, "At least one amenity must be selected")
+    .transform((vals) => [...new Set(vals)]),
   imageUrls: z.array(z.url("Each image must be a valid URL")).optional(),
   seatingCapacity: z
     .number("Seating capacity is required")
     .int("Seating capacity is required")
     .min(1, "Seating capacity must be at least 1"),
-  isFeatured: z.boolean().optional().default(false),
-  isAllowedBookingWithoutDriver: z.boolean().optional().default(false),
+  isFeatured: z
+    .string()
+    .transform((val) => val === "on")
+    .pipe(z.boolean())
+    .optional()
+    .default(false),
+  isAllowedBookingWithoutDriver: z
+    .string()
+    .transform((val) => val === "on")
+    .pipe(z.boolean())
+    .optional()
+    .default(false),
 });
 
 export type RegisterCarBodyDto = z.infer<typeof RegisterCarBodySchema>;

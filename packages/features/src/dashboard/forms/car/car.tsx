@@ -1,24 +1,40 @@
 "use client";
 
-import { AlertBox, Button, Checkbox, Input, Label, Textarea } from "@icat/ui";
-import { registerCar, updateUser } from "@icat/web/actions";
+import {
+  AlertBox,
+  Button,
+  Checkbox,
+  Input,
+  Label,
+  Textarea,
+  GenericSelect,
+  toast,
+} from "@icat/ui";
+import { registerCar, updateCar } from "@icat/web/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod/v4";
 import { RegisterCarBodySchema, UpdateCarBodySchema } from "@icat/contracts";
+import {
+  AmenitiesList,
+  BrandNamesList,
+  CarTypesList,
+  FuelTypesList,
+  TransmissionTypesList,
+} from "@icat/database/enums";
 import { CarFormProps } from "./car.types";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 
-export function CarForm({ defaultValue, mode }: CarFormProps) {
+export function CarForm({ car, mode }: CarFormProps) {
   const isUpdateMode = mode === "update";
 
   const [lastResult, action] = useActionState(
-    isUpdateMode ? updateUser : registerCar,
+    isUpdateMode ? updateCar : registerCar,
     null
   );
 
   const [form, fields] = useForm({
     lastResult,
-    ...(!isUpdateMode ? defaultValue : {}),
+    defaultValue: isUpdateMode ? car : {},
     onValidate: ({ formData }) =>
       parseWithZod(formData, {
         schema: isUpdateMode ? UpdateCarBodySchema : RegisterCarBodySchema,
@@ -26,6 +42,17 @@ export function CarForm({ defaultValue, mode }: CarFormProps) {
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
+
+  useEffect(() => {
+    if (lastResult?.status === "success") {
+      toast.success(
+        `Car ${isUpdateMode ? "updated" : "registered"} successfully.`,
+        {
+          position: "top-center",
+        }
+      );
+    }
+  }, [lastResult]);
 
   return (
     <form
@@ -37,6 +64,15 @@ export function CarForm({ defaultValue, mode }: CarFormProps) {
       {form?.errors?.map((error) => (
         <AlertBox key={error} variant="destructive" description={error} />
       ))}
+
+      {isUpdateMode && (
+        <Input
+          type="hidden"
+          name={fields.id.name}
+          value={fields.id.initialValue}
+          key={fields.id.key}
+        />
+      )}
 
       <div className="grid grid-cols-2 gap-6">
         <div className="space-y-2">
@@ -67,7 +103,7 @@ export function CarForm({ defaultValue, mode }: CarFormProps) {
           <Label htmlFor="year">Year</Label>
           <Input
             id="year"
-            type="number"
+            type="year"
             placeholder="e.g. 2024"
             key={fields.year.key}
             name={fields.year.name}
@@ -91,9 +127,10 @@ export function CarForm({ defaultValue, mode }: CarFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="brand">Brand</Label>
-          <Input
+          <GenericSelect
             id="brand"
-            placeholder="e.g. Toyota"
+            options={BrandNamesList}
+            placeholder="Select brand name"
             key={fields.brand.key}
             name={fields.brand.name}
             defaultValue={fields.brand.initialValue}
@@ -102,10 +139,11 @@ export function CarForm({ defaultValue, mode }: CarFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="brand">Car Type</Label>
-          <Input
+          <Label htmlFor="carType">Car Type</Label>
+          <GenericSelect
             id="carType"
-            placeholder="e.g. Toyota"
+            options={CarTypesList}
+            placeholder="Select car type"
             key={fields.carType.key}
             name={fields.carType.name}
             defaultValue={fields.carType.initialValue}
@@ -114,10 +152,11 @@ export function CarForm({ defaultValue, mode }: CarFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="brand">Fuel Type</Label>
-          <Input
+          <Label htmlFor="fuelType">Fuel Type</Label>
+          <GenericSelect
             id="fuelType"
-            placeholder="e.g. Toyota"
+            options={FuelTypesList}
+            placeholder="Select fuel type"
             key={fields.fuelType.key}
             name={fields.fuelType.name}
             defaultValue={fields.fuelType.initialValue}
@@ -126,10 +165,11 @@ export function CarForm({ defaultValue, mode }: CarFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="brand">Transmission Type</Label>
-          <Input
+          <Label htmlFor="transmissionType">Transmission Type</Label>
+          <GenericSelect
             id="transmissionType"
-            placeholder="e.g. Toyota"
+            options={TransmissionTypesList}
+            placeholder="Select transmission type"
             key={fields.transmissionType.key}
             name={fields.transmissionType.name}
             defaultValue={fields.transmissionType.initialValue}
@@ -139,6 +179,20 @@ export function CarForm({ defaultValue, mode }: CarFormProps) {
       </div>
 
       <div className="grid gap-6">
+        <div className="space-y-2">
+          <Label htmlFor="amenities">Amenities</Label>
+          <GenericSelect
+            multiple
+            id="amenities"
+            options={AmenitiesList}
+            placeholder="Select amenities"
+            key={fields.amenities.key}
+            name={fields.amenities.name}
+            defaultValue={fields.amenities.initialValue}
+            errors={fields.amenities.errors}
+          />
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="description">Description</Label>
           <Textarea
@@ -162,9 +216,8 @@ export function CarForm({ defaultValue, mode }: CarFormProps) {
           <Checkbox
             key={fields.isFeatured.key}
             name={fields.isFeatured.name}
-            defaultValue={fields.isFeatured.initialValue}
-            // errors={fields.name.errors}
-          />{" "}
+            defaultChecked={fields.isFeatured.initialValue === "on"}
+          />
           <Label className="ml-2">Mark as Featured Car</Label>
         </div>
 
@@ -172,9 +225,8 @@ export function CarForm({ defaultValue, mode }: CarFormProps) {
           <Checkbox
             key={fields.isAllowedBookingWithoutDriver.key}
             name={fields.isAllowedBookingWithoutDriver.name}
-            defaultValue={fields.isAllowedBookingWithoutDriver.initialValue}
-            // errors={fields.name.errors}
-          />{" "}
+            defaultChecked={fields.isFeatured.initialValue === "on"}
+          />
           <Label className="ml-2">Allowed to book without driver</Label>
         </div>
 

@@ -92,7 +92,7 @@ export class UserService {
   async updateUser(
     id: string,
     updates: UpdateUserBodyDto
-  ): Promise<DetailedUserResponseDto> {
+  ): Promise<DetailedUserResponseDto | null> {
     const existingUser = await this.userRepository.findById(id);
 
     if (!existingUser) {
@@ -101,13 +101,13 @@ export class UserService {
 
     const updatedUser = await this.userRepository.update(id, updates);
 
-    return DetailedUserResponseSchema.parse(updatedUser);
+    return updatedUser ? DetailedUserResponseSchema.parse(updatedUser) : null;
   }
 
   async changePassword(
     id: string,
     data: ChangePasswordBodyDto
-  ): Promise<UserResponseDto> {
+  ): Promise<UserResponseDto | null> {
     const user = await this.userRepository.findById(id);
 
     if (!user) {
@@ -131,6 +131,6 @@ export class UserService {
       password: hashedPassword,
     });
 
-    return UserResponseSchema.parse(updatedUser);
+    return updatedUser ? UserResponseSchema.parse(updatedUser) : null;
   }
 }

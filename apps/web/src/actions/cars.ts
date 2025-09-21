@@ -27,7 +27,6 @@ export const registerCar = handlerFormActionWithError({
       amenities: ["Air Conditioning"],
     });
 
-    revalidatePath(`${NavigationUrls.CARS}/${car?.id}/edit`);
     return car;
   },
 });
@@ -43,7 +42,7 @@ export const updateCar = handlerFormActionWithError({
     }
 
     const carService = new CarService();
-    const car = await carService.updateCar(sessionUser?.id, data);
+    const car = await carService.updateCar(data.id, data);
 
     revalidatePath(`${NavigationUrls.CARS}/${car?.id}/edit`);
     return car;

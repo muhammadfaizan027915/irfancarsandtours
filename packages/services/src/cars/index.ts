@@ -51,7 +51,7 @@ export class CarService {
 
   async getCarById(id: string): Promise<CarResponseDto | null> {
     const car = await this.repo.findById(id);
-    return CarResponseSchema.parse(car);
+    return car ? CarResponseSchema.parse(car) : null;
   }
 
   async createCar(data: RegisterCarBodyDto): Promise<CarResponseDto> {
@@ -64,12 +64,12 @@ export class CarService {
     updates: UpdateCarBodyDto
   ): Promise<CarResponseDto | null> {
     const car = await this.repo.update(id, updates);
-    return CarResponseSchema.parse(car);
+    return car ? CarResponseSchema.parse(car) : null;
   }
 
   async deleteCar(data: DeleteCarBodyDto): Promise<CarResponseDto | null> {
     const car = await this.repo.delete(data.id);
-    return CarResponseSchema.parse(car);
+    return car ? CarResponseSchema.parse(car) : null;
   }
 
   async hardDeleteCar(id: string): Promise<void> {
