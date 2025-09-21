@@ -5,7 +5,13 @@ import {
   AmenitiesList,
   CarTypesList,
   TransmissionTypesList,
+  BrandNames,
+  CarTypes,
+  FuelTypes,
+  TransmissionTypes,
+  Amenities,
 } from "@icat/database/enums";
+import { toArray } from "../generic";
 
 export const RegisterCarBodySchema = z.object({
   name: z.string("Name is required").min(1, "Name cannot be empty"),
@@ -58,3 +64,41 @@ export const DeleteCarBodySchema = z.object({
 });
 
 export type DeleteCarBodyDto = z.infer<typeof DeleteCarBodySchema>;
+
+export const GetCarsBodySchema = z.object({
+  page: z
+    .string()
+    .optional()
+    .transform((val) => (val ? parseInt(val, 10) : 1)),
+
+  limit: z
+    .string()
+    .optional()
+    .transform((val) => (val ? parseInt(val, 10) : 10)),
+
+  search: z.string().optional(),
+
+  brand: z.enum(BrandNamesList).optional(),
+
+  carType: z.preprocess((val) => {
+    if (!val) return undefined;
+    return Array.isArray(val) ? val : [val];
+  }, z.array(z.enum(CarTypesList)).optional()),
+
+  fuelType: z.preprocess((val) => {
+    if (!val) return undefined;
+    return Array.isArray(val) ? val : [val];
+  }, z.array(z.enum(FuelTypesList)).optional()),
+
+  transmissionType: z.preprocess((val) => {
+    if (!val) return undefined;
+    return Array.isArray(val) ? val : [val];
+  }, z.array(z.enum(TransmissionTypesList)).optional()),
+
+  amenities: z.preprocess((val) => {
+    if (!val) return undefined;
+    return Array.isArray(val) ? val : [val];
+  }, z.array(z.enum(AmenitiesList)).optional()),
+});
+
+export type GetCarsBodyDto = z.infer<typeof GetCarsBodySchema>;

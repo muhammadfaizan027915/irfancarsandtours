@@ -2,6 +2,7 @@ import { Button } from "@icat/ui";
 import { NavigationUrls } from "../header";
 import { CarTypeCard } from "./cartypecard";
 import { ArrowRight } from "lucide-react";
+import { CarTypesList } from "@icat/database";
 import Link from "next/link";
 
 export function CarTypes() {
@@ -26,10 +27,9 @@ export function CarTypes() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8">
-        <CarTypeCard />
-        <CarTypeCard />
-        <CarTypeCard />
-        <CarTypeCard />
+        {CarTypesList?.map((carType) => (
+          <CarTypeCard name={carType} />
+        ))}
       </div>
     </div>
   );

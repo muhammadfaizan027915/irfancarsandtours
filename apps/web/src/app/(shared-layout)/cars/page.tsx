@@ -1,6 +1,22 @@
+import { GetCarsBodyDto } from "@icat/contracts";
 import { Cars, FilterSidebar, Searchbar, SecondaryHero } from "@icat/features";
 
-export default function CarsPage() {
+type CarsPageProps = {
+  searchParams: GetCarsBodyDto;
+};
+
+export default async function CarsPage({ searchParams }: CarsPageProps) {
+  const {
+    page,
+    limit,
+    search,
+    brand,
+    carType,
+    fuelType,
+    transmissionType,
+    amenities,
+  } = await searchParams;
+
   return (
     <>
       <SecondaryHero
@@ -18,7 +34,16 @@ export default function CarsPage() {
         </div>
         <div className="grid grid-cols-[300px_1fr] items-start gap-6">
           <FilterSidebar />
-          <Cars />
+          <Cars
+            page={page}
+            limit={limit}
+            search={search}
+            brand={brand}
+            carType={carType}
+            fuelType={fuelType}
+            transmissionType={transmissionType}
+            amenities={amenities}
+          />
         </div>
       </div>
     </>

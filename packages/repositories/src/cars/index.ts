@@ -1,5 +1,23 @@
-import { db, carsTable, CarInsert, CarSelect } from "@icat/database";
-import { and, desc, eq, ilike, isNull, sql } from "drizzle-orm";
+import {
+  db,
+  carsTable,
+  CarInsert,
+  CarSelect,
+  CarTypes,
+  FuelTypes,
+  TransmissionTypes,
+  Amenities,
+  BrandNames,
+} from "@icat/database";
+import {
+  and,
+  desc,
+  eq,
+  isNull,
+  sql,
+  inArray,
+  arrayOverlaps,
+} from "drizzle-orm";
 
 export const CarListSelect = {
   id: carsTable.id,
@@ -20,14 +38,52 @@ export const CarListSelect = {
 };
 
 export class CarRepository {
-  async findAll(args: { page?: number; limit?: number; search?: string }) {
-    const { page = 1, limit = 10, search } = args;
+  async findAll(args: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    brand?: BrandNames;
+    carType?: CarTypes[];
+    fuelType?: FuelTypes[];
+    transmissionType?: TransmissionTypes[];
+    amenities?: Amenities[];
+  }) {
+    const {
+      page = 1,
+      limit = 10,
+      search,
+      brand,
+      carType,
+      fuelType,
+      transmissionType,
+      amenities,
+    } = args;
 
     const offset = (page - 1) * limit;
     const conditions = [isNull(carsTable.deletedAt)];
 
     if (search) {
-      conditions.push(ilike(carsTable.name, `%${search}%`));
+      conditions.push(eq(carsTable.name, search));
+    }
+
+    if (brand) {
+      conditions.push(eq(carsTable.brand, brand));
+    }
+
+    if (carType) {
+      conditions.push(inArray(carsTable.carType, carType));
+    }
+
+    if (fuelType) {
+      conditions.push(inArray(carsTable.fuelType, fuelType));
+    }
+
+    if (transmissionType) {
+      conditions.push(inArray(carsTable.transmissionType, transmissionType));
+    }
+
+    if (amenities && amenities.length > 0) {
+      conditions.push(arrayOverlaps(carsTable.amenities, amenities));
     }
 
     const whereClause = and(...conditions);

@@ -1,5 +1,3 @@
-export type CarsProps = {
-  limit?: number;
-  page?: number;
-  search?: string;
-};
+import { GetCarsBodyDto } from "@icat/contracts";
+
+export type CarsProps = GetCarsBodyDto;

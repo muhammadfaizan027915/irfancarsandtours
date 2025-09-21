@@ -5,7 +5,7 @@ import {
   AmenitiesList,
 } from "@icat/database";
 import { CheckboxFilter } from "./checkboxfilter";
-import { PriceFilter } from "./pricefilter";
+// import { PriceFilter } from "./pricefilter";
 
 export function FilterSidebar() {
   return (
@@ -29,7 +29,7 @@ export function FilterSidebar() {
         />
         <CheckboxFilter
           title="Amenities Type"
-          filterName="amenitiesType"
+          filterName="amenities"
           filtersList={AmenitiesList}
         />
       </aside>

@@ -9,6 +9,7 @@ import {
   DeleteCarBodyDto,
   PaginatedCarResponseSchema,
   PaginatedCarResponseDto,
+  GetCarsBodyDto,
 } from "@icat/contracts";
 
 import { after } from "next/server";
@@ -20,11 +21,7 @@ export class CarService {
     this.repo = new CarRepository();
   }
 
-  async getAll(args: {
-    page?: number;
-    limit?: number;
-    search?: string;
-  }): Promise<PaginatedCarResponseDto> {
+  async getAll(args: GetCarsBodyDto): Promise<PaginatedCarResponseDto> {
     const result = await this.repo.findAll(args);
 
     const data = result?.data;

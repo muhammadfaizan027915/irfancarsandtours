@@ -1,12 +1,13 @@
+import { CarTypeCardProps } from "./cartypecard.types";
 import { NavigationUrls } from "@icat/features/header";
 import { Badge, Button } from "@icat/ui";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export function CarTypeCard() {
+export function CarTypeCard({ name }: CarTypeCardProps) {
   return (
-    <Link href={NavigationUrls.CARS}>
+    <Link href={`${NavigationUrls.CARS}?carType=${name}`}>
       <div className="border border-border rounded-xl p-4 hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal">
         <div className="h-30 relative rounded-lg overflow-hidden">
           <Image
@@ -21,16 +22,8 @@ export function CarTypeCard() {
         </div>
 
         <div className="mt-4">
-          <h4 className="text-xl font-bold">SUV</h4>
-
           <div className="flex items-center justify-between">
-            <Badge
-              variant={"outline"}
-              className="bg-muted px-3 py-1 rounded-xl"
-            >
-              24 Vahicles
-            </Badge>
-
+            <h4 className="text-xl font-bold">{name}</h4>
             <Button
               size={"sm"}
               className="rounded-3xl bg-muted dark:not-[:hover]:text-muted-foreground w-8 h-8 shadow-none"

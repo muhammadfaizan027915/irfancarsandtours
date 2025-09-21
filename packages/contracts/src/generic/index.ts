@@ -12,3 +12,11 @@ export const PaginatedResponseSchema = <T extends z.ZodTypeAny>(
       pages: z.number().int(),
     }),
   });
+
+export const toArray = <T extends z.ZodTypeAny>(schema: T) =>
+  z
+    .union([schema, z.array(schema)])
+    .optional()
+    .transform((val) =>
+      val === undefined ? undefined : Array.isArray(val) ? val : [val]
+    );
