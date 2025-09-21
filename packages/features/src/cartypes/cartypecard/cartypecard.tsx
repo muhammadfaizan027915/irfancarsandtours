@@ -7,7 +7,7 @@ import Link from "next/link";
 export function CarTypeCard() {
   return (
     <Link href={NavigationUrls.CARS}>
-      <div className="border border-border rounded-xl p-4 hover:-translate-y-1 duration-300 transition-transform">
+      <div className="border border-border rounded-xl p-4 hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal">
         <div className="h-30 relative rounded-lg overflow-hidden">
           <Image
             fill

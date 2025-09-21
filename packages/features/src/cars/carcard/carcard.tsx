@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function CarCard({ car }: CarCardProps) {
   return (
-    <div className="border border-border rounded-xl hover:-translate-y-1 duration-300 transition-transform overflow-hidden">
+    <div className="border border-border rounded-xl hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal overflow-hidden">
       <div className="h-56 relative">
         <Image
           fill

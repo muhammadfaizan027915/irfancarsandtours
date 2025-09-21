@@ -1,12 +1,12 @@
 "use client";
 
-import { AlertBox, Button, Card, Input } from "@icat/ui";
+import { AlertBox, Button, Card, Input, toast } from "@icat/ui";
 import { ChangePasswordBodySchema } from "@icat/contracts";
 import { ArrowRight, Lock } from "lucide-react";
 import { parseWithZod } from "@conform-to/zod/v4";
 import { changeUserPassword } from "@icat/web/actions";
 import { useForm } from "@conform-to/react";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 
 export function ChangePasswordForm() {
   const [lastResult, action] = useActionState(changeUserPassword, null);
@@ -18,6 +18,14 @@ export function ChangePasswordForm() {
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
+
+  useEffect(() => {
+    if (lastResult?.status === "success") {
+      toast.success("Password changed successfully.", {
+        position: "top-center",
+      });
+    }
+  }, [lastResult]);
 
   return (
     <Card className="w-full p-8 flex flex-col items-center gap-2 shadow-none">

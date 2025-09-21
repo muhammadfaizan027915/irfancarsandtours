@@ -18,20 +18,24 @@ export async function handleServerActionWithError<
   };
 }
 
-export function handlerFormActionWithError<TArgs, TResult = SubmissionResult>(
-  schema: ZodObject<any>,
-  action: (args: TArgs) => Promise<TResult> | void
-) {
+export function handlerFormActionWithError<
+  TArgs,
+  TResult = SubmissionResult
+>(args: {
+  schema: ZodObject<any>;
+  action: (args: TArgs) => Promise<TResult> | void;
+  shouldResetForm?: boolean;
+}) {
   return async function (prevState: unknown, formData: FormData) {
-    const submission = parseWithZod(formData, { schema });
+    const submission = parseWithZod(formData, { schema: args.schema });
 
     if (submission.status !== "success") {
       return submission.reply();
     }
 
     try {
-      await action(submission.payload as TArgs);
-      return submission.reply({ resetForm: true });
+      await args.action(submission.payload as TArgs);
+      return submission.reply({ resetForm: args.shouldResetForm });
     } catch (error) {
       const errorPayload = handleError(error);
       return submission.reply({ formErrors: [errorPayload?.message] });

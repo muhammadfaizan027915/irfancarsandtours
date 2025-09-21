@@ -1,13 +1,13 @@
 "use client";
 
-import { AlertBox, Button, Card, Input, Textarea } from "@icat/ui";
+import { AlertBox, Button, Card, Input, Textarea, toast } from "@icat/ui";
 import { ArrowRight, Mail, Phone, UserRound, MapPin } from "lucide-react";
 import { updateUser } from "@icat/web/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod/v4";
 import { UpdateUserBodySchema } from "@icat/contracts";
 import { ProfileFormProps } from "./profile.types";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 
 export function ProfileForm({ user }: ProfileFormProps) {
   const [lastResult, action] = useActionState(updateUser, null);
@@ -20,6 +20,14 @@ export function ProfileForm({ user }: ProfileFormProps) {
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
+
+  useEffect(() => {
+    if (lastResult?.status === "success") {
+      toast.success("Profile updated successfully.", {
+        position: "top-center",
+      });
+    }
+  }, [lastResult]);
 
   return (
     <Card className="w-full p-8 flex flex-col items-center gap-2 shadow-none">

@@ -1,5 +1,5 @@
 import { auth } from "@icat/lib";
-import { ProfileForm } from "@icat/features";
+import { ChangePasswordForm, ProfileForm } from "@icat/features";
 import { Avatar, AvatarFallback, AvatarImage, Badge } from "@icat/ui";
 import { UserService } from "@icat/services";
 
@@ -30,7 +30,7 @@ export default async function ProfilePage() {
       </div>
       <div className="flex flex-col gap-8">
         <ProfileForm user={user} />
-        {/* <ChangePasswordForm /> */}
+        <ChangePasswordForm />
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ export const CarListSelect = {
   isAllowedBookingWithoutDriver: carsTable.isAllowedBookingWithoutDriver,
   timesSearched: carsTable.timesSearched,
   createdAt: carsTable.createdAt,
-  updatedAt: carsTable.updatedAt
+  updatedAt: carsTable.updatedAt,
 };
 
 export class CarRepository {
@@ -96,6 +96,13 @@ export class CarRepository {
       .returning();
 
     return car ?? null;
+  }
+
+  async incrementTimesSearched(carIds: string[]) {
+    await db
+      .update(carsTable)
+      .set({ timesSearched: sql`times_searched + 1` })
+      .where(sql`${carsTable.id} in ${carIds}`);
   }
 
   async delete(id: string): Promise<CarSelect> {

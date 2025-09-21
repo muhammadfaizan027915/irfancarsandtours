@@ -11,9 +11,9 @@ import { auth, handlerFormActionWithError, UnauthorizedError } from "@icat/lib";
 import { CarService } from "@icat/services";
 import { revalidatePath } from "next/cache";
 
-export const registerCar = handlerFormActionWithError(
-  RegisterCarBodySchema,
-  async (data: RegisterCarBodyDto) => {
+export const registerCar = handlerFormActionWithError({
+  schema: RegisterCarBodySchema,
+  action: async (data: RegisterCarBodyDto) => {
     const session = await auth();
     const sessionUser = session?.user;
 
@@ -29,12 +29,12 @@ export const registerCar = handlerFormActionWithError(
 
     revalidatePath(`${NavigationUrls.CARS}/${car?.id}/edit`);
     return car;
-  }
-);
+  },
+});
 
-export const updateCar = handlerFormActionWithError(
-  UpdateCarBodySchema,
-  async (data: UpdateCarBodyDto) => {
+export const updateCar = handlerFormActionWithError({
+  schema: UpdateCarBodySchema,
+  action: async (data: UpdateCarBodyDto) => {
     const session = await auth();
     const sessionUser = session?.user;
 
@@ -47,5 +47,5 @@ export const updateCar = handlerFormActionWithError(
 
     revalidatePath(`${NavigationUrls.CARS}/${car?.id}/edit`);
     return car;
-  }
-);
+  },
+});

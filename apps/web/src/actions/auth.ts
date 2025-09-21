@@ -11,24 +11,24 @@ import {
 import { NavigationUrls } from "@icat/features";
 import { redirect, RedirectType } from "next/navigation";
 
-export const logInUser = handlerFormActionWithError(
-  SignInBodySchema,
-  async (data: SignInBodyDto) => {
+export const logInUser = handlerFormActionWithError({
+  schema: SignInBodySchema,
+  action: async (data: SignInBodyDto) => {
     await signIn("credentials", {
       ...data,
       redirectTo: NavigationUrls.HOME,
     });
-  }
-);
+  },
+});
 
-export const signUpUser = handlerFormActionWithError(
-  CreateUserBodySchema,
-  async (data: CreateUserBodyDto) => {
+export const signUpUser = handlerFormActionWithError({
+  schema: CreateUserBodySchema,
+  action: async (data: CreateUserBodyDto) => {
     const userService = new UserService();
     const createdUser = await userService.createUser(data);
 
     if (createdUser?.id) {
       redirect(NavigationUrls.SIGNIN, RedirectType.push);
     }
-  }
-);
+  },
+});

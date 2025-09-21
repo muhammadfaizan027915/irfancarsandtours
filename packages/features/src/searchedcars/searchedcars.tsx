@@ -1,10 +1,14 @@
 import { Button } from "@icat/ui";
 import { NavigationUrls } from "../header";
 import { LoaderCircle } from "lucide-react";
+import { CarService } from "@icat/services";
 import { CarCard } from "../cars";
 import Link from "next/link";
 
-export function SearchedCars() {
+export async function SearchedCars() {
+  const carService = new CarService();
+  const cars = await carService.getMostSearchedCars();
+
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -14,9 +18,9 @@ export function SearchedCars() {
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <CarCard />
-        <CarCard />
-        <CarCard />
+        {cars?.map((car) => (
+          <CarCard car={car} key={car?.id} />
+        ))}
       </div>
       <Button
         asChild

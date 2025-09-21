@@ -1,5 +1,5 @@
 import { Urbanist } from "next/font/google";
-import { ThemeProvider } from "@icat/ui";
+import { ThemeProvider, Toaster } from "@icat/ui";
 import "@icat/ui/globals.css";
 
 const urbansist = Urbanist({
@@ -26,6 +26,7 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
+          <Toaster />
         </body>
       </html>
     </>

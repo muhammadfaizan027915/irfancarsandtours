@@ -11,6 +11,8 @@ import {
   PaginatedCarResponseDto,
 } from "@icat/contracts";
 
+import { after } from "next/server";
+
 export class CarService {
   private repo: CarRepository;
 
@@ -24,6 +26,16 @@ export class CarService {
     search?: string;
   }): Promise<PaginatedCarResponseDto> {
     const result = await this.repo.findAll(args);
+
+    const data = result?.data;
+
+    if (data?.length > 0) {
+      after(() => {
+        const carIds = data?.map((car) => car?.id);
+        this.repo.incrementTimesSearched(carIds);
+      });
+    }
+
     return PaginatedCarResponseSchema.parse(result);
   }
 

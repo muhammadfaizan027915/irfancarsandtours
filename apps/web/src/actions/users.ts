@@ -11,9 +11,9 @@ import { auth, handlerFormActionWithError, UnauthorizedError } from "@icat/lib";
 import { UserService } from "@icat/services";
 import { revalidatePath } from "next/cache";
 
-export const updateUser = handlerFormActionWithError(
-  UpdateUserBodySchema,
-  async (data: UpdateUserBodyDto) => {
+export const updateUser = handlerFormActionWithError({
+  schema: UpdateUserBodySchema,
+  action: async (data: UpdateUserBodyDto) => {
     const session = await auth();
     const sessionUser = session?.user;
 
@@ -26,20 +26,22 @@ export const updateUser = handlerFormActionWithError(
 
     revalidatePath(NavigationUrls.PROFILE);
     return user;
-  }
-);
+  },
+});
 
-export const changeUserPassword = handlerFormActionWithError(
-  ChangePasswordBodySchema,
-  async (data: ChangePasswordBodyDto) => {
+export const changeUserPassword = handlerFormActionWithError({
+  schema: ChangePasswordBodySchema,
+  action: async (data: ChangePasswordBodyDto) => {
     const session = await auth();
     const sessionUser = session?.user;
 
     if (!sessionUser?.id) {
-      throw new UnauthorizedError({ message: "Unauthorized to update user." });
+      throw new UnauthorizedError({
+        message: "Unauthorized to change password.",
+      });
     }
 
     const userService = new UserService();
     await userService.changePassword(sessionUser?.id, data);
-  }
-);
+  },
+});

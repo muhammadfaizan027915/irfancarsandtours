@@ -68,10 +68,17 @@ export const {
   },
 
   callbacks: {
+    jwt({ token, user }) {
+      return {
+        ...token,
+        ...user,
+      };
+    },
+
     async session({ session, token }) {
       const { jti, exp, iat, sub, ...user } = token;
       session.user = user;
-
+      
       return session;
     },
   },
