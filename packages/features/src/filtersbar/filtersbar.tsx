@@ -7,7 +7,7 @@ import {
 import { CheckboxFilter } from "./checkboxfilter";
 // import { PriceFilter } from "./pricefilter";
 
-export function FilterSidebar() {
+export function FiltersBar() {
   return (
     <section>
       <aside className="flex flex-col gap-4">

@@ -1,5 +1,6 @@
 import { Urbanist } from "next/font/google";
 import { ThemeProvider, Toaster } from "@icat/ui";
+import { CarCartProvider } from "../store";
 import "@icat/ui/globals.css";
 
 const urbansist = Urbanist({
@@ -24,7 +25,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <CarCartProvider>{children}</CarCartProvider>
           </ThemeProvider>
           <Toaster />
         </body>

@@ -4,7 +4,7 @@ import { InternalServerError, ValidationError } from "./errors";
 import { CredentialsSignin } from "next-auth";
 
 export function handleError(error: unknown) {
-  console.log({ error });
+  console.log(error);
 
   if ((error as any).digest?.startsWith("NEXT_REDIRECT")) {
     throw error;

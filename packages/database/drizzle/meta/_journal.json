@@ -15,6 +15,13 @@
       "when": 1758466377858,
       "tag": "0001_friendly_nova",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1758993697176,
+      "tag": "0002_ambiguous_psynapse",
+      "breakpoints": true
     }
   ]
 }

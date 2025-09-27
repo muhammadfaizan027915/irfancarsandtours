@@ -1,5 +1,5 @@
 import { GetCarsBodyDto } from "@icat/contracts";
-import { Cars, FilterSidebar, Searchbar, SecondaryHero } from "@icat/features";
+import { Cars, FiltersBar, Searchbar, SecondaryHero } from "@icat/features";
 
 type CarsPageProps = {
   searchParams: GetCarsBodyDto;
@@ -33,7 +33,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
           <p className="text-muted-foreground">Cars That Fit Your Lifestyle</p>
         </div>
         <div className="grid grid-cols-[300px_1fr] items-start gap-6">
-          <FilterSidebar />
+          <FiltersBar />
           <Cars
             page={page}
             limit={limit}

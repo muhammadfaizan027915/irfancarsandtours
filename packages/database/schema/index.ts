@@ -9,6 +9,8 @@ import { sessionsTable } from "./sessionsTable";
 import { accountsTable } from "./accountsTable";
 import { verificationTokensTable } from "./verificationTokensTable";
 import { contactsTable } from "./contactsTable";
+import { bookingsTable } from "./bookingsTable";
+import { bookedCarsTable } from "./bookedCarsTable";
 
 export * from "./enums";
 export * from "./carsTable";
@@ -17,6 +19,8 @@ export * from "./sessionsTable";
 export * from "./accountsTable";
 export * from "./verificationTokensTable";
 export * from "./contactsTable";
+export * from "./bookingsTable";
+export * from "./bookedCarsTable";
 
 dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
@@ -28,6 +32,8 @@ export const db = drizzle({
     accountsTable,
     verificationTokensTable,
     contactsTable,
+    bookingsTable,
+    bookedCarsTable,
   },
 
   connection: {

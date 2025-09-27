@@ -1,3 +1,3 @@
-export * from "./filtersidebar";
+export * from "./filtersbar";
 export * from "./checkboxfilter";
 export * from "./pricefilter";

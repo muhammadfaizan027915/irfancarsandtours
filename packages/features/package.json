@@ -31,11 +31,12 @@
   "author": "Muhammad Faizan",
   "packageManager": "npm@11.4.2",
   "dependencies": {
-    "@icat/ui": "*",
-    "@icat/database": "*",
     "@cardog-icons/react": "^1.0.1",
-    "react": "19.1.0",
+    "@icat/database": "*",
+    "@icat/ui": "*",
     "lucide-react": "^0.541.0",
-    "next": "15.5.0"
+    "next": "15.5.0",
+    "react": "19.1.0",
+    "react-markdown": "^10.1.0"
   }
 }

@@ -1,6 +1,7 @@
 import { Badge } from "@icat/ui";
 import { CarForm } from "@icat/features";
 import { CarService } from "@icat/services";
+import { notFound } from "next/navigation";
 import { auth } from "@icat/lib";
 
 type UpdateCarProps = {
@@ -16,7 +17,7 @@ export default async function UpdateCarPage({ params }: UpdateCarProps) {
   const carService = new CarService();
   const car = await carService.getCarById(carId);
 
-  if (!car) return null;
+  if (!car) return notFound();
 
   return (
     <div className="flex flex-col gap-4">

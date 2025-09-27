@@ -28,7 +28,7 @@ export function CarTypes() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8">
         {CarTypesList?.map((carType) => (
-          <CarTypeCard name={carType} />
+          <CarTypeCard name={carType} key={carType} />
         ))}
       </div>
     </div>

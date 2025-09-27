@@ -199,7 +199,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             id="description"
             placeholder="Write about the car features..."
             rows={10}
-            className="h-40"
+            className="min-h-40"
             key={fields.description.key}
             name={fields.description.name}
             defaultValue={fields.description.initialValue}

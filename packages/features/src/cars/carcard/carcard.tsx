@@ -1,9 +1,26 @@
-import { Button } from "@icat/ui";
-import { Fuel, Gauge, Armchair, Cog } from "lucide-react";
+"use client";
+
+import { Button, toast } from "@icat/ui";
+import { useCarCart } from "@icat/web/store";
+import { Fuel, Armchair, Cog, ShoppingCart, CarFront } from "lucide-react";
+import { NavigationUrls } from "../../header";
 import { CarCardProps } from "./carcard.types";
 import Image from "next/image";
+import Link from "next/link";
 
 export function CarCard({ car }: CarCardProps) {
+  const { addToCart } = useCarCart();
+
+  const handleAddToCart = () => {
+    if (car) {
+      addToCart(car);
+
+      toast.success("Car successfully added to cart.", {
+        position: "top-center",
+      });
+    }
+  };
+
   return (
     <div className="border border-border rounded-xl hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal overflow-hidden">
       <div className="h-56 relative">
@@ -23,7 +40,7 @@ export function CarCard({ car }: CarCardProps) {
         <hr className="border-t border-border" />
         <div className="grid grid-cols-2 gap-4 text-sm">
           <span className="flex items-center">
-            <Gauge size={22} className="inline mr-1" /> 25,000 Miles
+            <CarFront size={22} className="inline mr-1" /> {car?.carType}
           </span>
 
           <span className="flex items-center">
@@ -39,12 +56,20 @@ export function CarCard({ car }: CarCardProps) {
             {car?.seatingCapacity} Seats
           </span>
         </div>
-        <Button
-          className="w-full shadow-none font-bold border border-border bg-muted dark:not-[:hover]:text-muted-foreground hover:border-transparent hover:bg-primary"
-          size="lg"
-        >
-          Book Now
-        </Button>
+
+        <div className="flex gap-2">
+          <Button className="shadow-none" onClick={handleAddToCart}>
+            <ShoppingCart />
+          </Button>
+
+          <Button
+            asChild
+            className="flex-1 shadow-none font-bold border border-border bg-muted dark:not-[:hover]:text-muted-foreground hover:border-transparent hover:bg-primary"
+            size="lg"
+          >
+            <Link href={`${NavigationUrls.CARS}/${car?.id}`}>Book Now</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
