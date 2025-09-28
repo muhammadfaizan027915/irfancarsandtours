@@ -1,2 +1,2 @@
 export * from "./carcartsidebar";
-export * from "./carcartcard";
+export * from "../../carcartlist/carcartcard";

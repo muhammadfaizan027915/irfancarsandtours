@@ -55,7 +55,7 @@ export function ContactForm() {
           startIcon={<UserRound size={18} />}
           key={fields.name.key}
           name={fields.name.name}
-          defaultValue={fields.name.initialValue}
+          defaultValue={fields.name.defaultValue}
           errors={fields.name.errors}
         />
 
@@ -66,7 +66,7 @@ export function ContactForm() {
           startIcon={<Mail size={18} />}
           key={fields.email.key}
           name={fields.email.name}
-          defaultValue={fields.email.initialValue}
+          defaultValue={fields.email.defaultValue}
           errors={fields.email.errors}
         />
 
@@ -77,7 +77,7 @@ export function ContactForm() {
           startIcon={<Phone size={18} />}
           key={fields.phone.key}
           name={fields.phone.name}
-          defaultValue={fields.phone.initialValue}
+          defaultValue={fields.phone.defaultValue}
           errors={fields.phone.errors}
         />
 
@@ -86,7 +86,7 @@ export function ContactForm() {
           placeholder="Leave us a message..."
           key={fields.message.key}
           name={fields.message.name}
-          defaultValue={fields.message.initialValue}
+          defaultValue={fields.message.defaultValue}
           errors={fields.message.errors}
         />
 

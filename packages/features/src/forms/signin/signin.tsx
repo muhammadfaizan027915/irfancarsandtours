@@ -43,7 +43,7 @@ export function SignInFrom() {
           name={fields.email.name}
           placeholder="Email Address"
           startIcon={<Mail size={18} />}
-          defaultValue={fields?.email?.initialValue}
+          defaultValue={fields?.email?.defaultValue}
           errors={fields.email.errors}
         />
 
@@ -53,7 +53,7 @@ export function SignInFrom() {
           name={fields.password.name}
           placeholder="Password"
           startIcon={<Lock size={18} />}
-          defaultValue={fields?.password?.initialValue}
+          defaultValue={fields?.password?.defaultValue}
           errors={fields.password.errors}
         />
 

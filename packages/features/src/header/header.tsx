@@ -1,16 +1,22 @@
+"use server";
+
 import { Logo } from "./logo";
 import { Button } from "@icat/ui";
 import { NavigationUrls } from "./header.constants";
-import { UserRound } from "lucide-react";
+import { UserRound, LogOut } from "lucide-react";
+import { lougOutUser } from "@icat/web/actions";
 import { HeaderProps } from "./header.types";
 import { CarCartSidebar } from "../sidebars";
 import { cn } from "@icat/ui/lib/utils";
+import { auth } from "@icat/lib";
 
 import Link from "next/link";
 
 // border-border bg-primary/20 backdrop-blur-md
 
-export function Header({ varient = "primary" }: HeaderProps) {
+export async function Header({ varient = "primary" }: HeaderProps) {
+  const session = await auth();
+
   return (
     <>
       <header
@@ -35,16 +41,32 @@ export function Header({ varient = "primary" }: HeaderProps) {
             </nav>
           </div>
           <div className="w-2/8 flex items-stretch justify-end gap-2">
-            <Button
-              asChild
-              size={"lg"}
-              variant={"ghost"}
-              className="hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground"
-            >
-              <Link href={NavigationUrls.SIGNIN}>
-                <UserRound size={18} className="inline" /> Sign in
-              </Link>
-            </Button>
+            {session?.user?.id ? (
+              <>
+                <Button asChild size={"lg"} variant={"ghost"}>
+                  <Link href={NavigationUrls.PROFILE}>
+                    <UserRound size={18} className="inline" /> Profile
+                  </Link>
+                </Button>
+
+                <form action={lougOutUser}>
+                  <Button size={"lg"} variant={"ghost"}>
+                    <LogOut size={18} className="inline" /> Logout
+                  </Button>
+                </form>
+              </>
+            ) : (
+              <Button
+                asChild
+                size={"lg"}
+                variant={"ghost"}
+                className="hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground"
+              >
+                <Link href={NavigationUrls.SIGNIN}>
+                  <UserRound size={18} className="inline" /> Sign in
+                </Link>
+              </Button>
+            )}
             <CarCartSidebar />
           </div>
         </div>

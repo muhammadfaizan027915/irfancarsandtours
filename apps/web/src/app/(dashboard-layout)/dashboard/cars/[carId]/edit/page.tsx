@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { auth } from "@icat/lib";
 
 type UpdateCarProps = {
-  params: { carId: string };
+  params: Promise<{ carId: string }>;
 };
 
 export default async function UpdateCarPage({ params }: UpdateCarProps) {

@@ -43,7 +43,7 @@ export function SignUpForm() {
           startIcon={<UserRound size={18} />}
           key={fields.name.key}
           name={fields.name.name}
-          defaultValue={fields.name.initialValue}
+          defaultValue={fields.name.defaultValue}
           errors={fields.name.errors}
         />
 
@@ -52,7 +52,7 @@ export function SignUpForm() {
           startIcon={<Mail size={18} />}
           key={fields.email.key}
           name={fields.email.name}
-          defaultValue={fields.email.initialValue}
+          defaultValue={fields.email.defaultValue}
           errors={fields.email.errors}
         />
 
@@ -62,7 +62,7 @@ export function SignUpForm() {
           startIcon={<Lock size={18} />}
           key={fields.password.key}
           name={fields.password.name}
-          defaultValue={fields.password.initialValue}
+          defaultValue={fields.password.defaultValue}
           errors={fields.password.errors}
         />
 
@@ -72,7 +72,7 @@ export function SignUpForm() {
           startIcon={<Lock size={18} />}
           key={fields.confirmPassword.key}
           name={fields.confirmPassword.name}
-          defaultValue={fields.confirmPassword.initialValue}
+          defaultValue={fields.confirmPassword.defaultValue}
           errors={fields.confirmPassword.errors}
         />
 

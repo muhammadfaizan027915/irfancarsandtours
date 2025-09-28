@@ -10,7 +10,7 @@ import {
 } from "@icat/database";
 import { UserService } from "@icat/services";
 import { SignInBodyDto } from "@icat/contracts";
-import { BaseApiError, handleError } from "../errors";
+import { handleError } from "../errors";
 
 export const {
   handlers: authHandlers,
@@ -77,7 +77,7 @@ export const {
 
     async session({ session, token }) {
       const { jti, exp, iat, sub, ...user } = token;
-      session.user = user;
+      session.user = user as any;
       
       return session;
     },

@@ -49,7 +49,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
           startIcon={<UserRound size={18} />}
           key={fields.name.key}
           name={fields.name.name}
-          defaultValue={fields.name.initialValue}
+          defaultValue={fields.name.defaultValue}
           errors={fields.name.errors}
         />
 
@@ -59,7 +59,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
           startIcon={<Mail size={18} />}
           key={fields.email.key}
           name={fields.email.name}
-          defaultValue={fields.email.initialValue}
+          defaultValue={fields.email.defaultValue}
           errors={fields.email.errors}
         />
 
@@ -68,7 +68,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
           startIcon={<Phone size={18} />}
           key={fields.phone.key}
           name={fields.phone.name}
-          defaultValue={fields.phone.initialValue}
+          defaultValue={fields.phone.defaultValue}
           errors={fields.phone.errors}
         />
 
@@ -78,7 +78,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
           startIcon={<MapPin size={20} />}
           key={fields.address.key}
           name={fields.address.name}
-          defaultValue={fields.address.initialValue}
+          defaultValue={fields.address.defaultValue}
           errors={fields.address.errors}
         />
 

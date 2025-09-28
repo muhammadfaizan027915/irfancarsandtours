@@ -12,7 +12,7 @@ import {
   toast,
 } from "@icat/ui";
 import { useCarCart } from "@icat/web/store";
-import { CarCartCard } from "./carcartcard";
+import { CarCartCard } from "../../carcartlist/carcartcard";
 import { EmptyCarCartMessage } from "./emptycarcartmessage";
 import { LayoutGrid } from "lucide-react";
 

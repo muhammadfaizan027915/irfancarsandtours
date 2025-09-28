@@ -2,7 +2,7 @@ import { GetCarsBodyDto } from "@icat/contracts";
 import { Cars, FiltersBar, Searchbar, SecondaryHero } from "@icat/features";
 
 type CarsPageProps = {
-  searchParams: GetCarsBodyDto;
+  searchParams: Promise<GetCarsBodyDto>;
 };
 
 export default async function CarsPage({ searchParams }: CarsPageProps) {

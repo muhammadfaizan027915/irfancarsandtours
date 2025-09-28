@@ -46,7 +46,7 @@ export function ChangePasswordForm() {
           startIcon={<Lock size={18} />}
           key={fields.currentPassword.key}
           name={fields.currentPassword.name}
-          defaultValue={fields.currentPassword.initialValue}
+          defaultValue={fields.currentPassword.defaultValue}
           errors={fields.currentPassword.errors}
         />
 
@@ -56,7 +56,7 @@ export function ChangePasswordForm() {
           startIcon={<Lock size={18} />}
           key={fields.password.key}
           name={fields.password.name}
-          defaultValue={fields.password.initialValue}
+          defaultValue={fields.password.defaultValue}
           errors={fields.password.errors}
         />
 
@@ -66,7 +66,7 @@ export function ChangePasswordForm() {
           startIcon={<Lock size={18} />}
           key={fields.confirmPassword.key}
           name={fields.confirmPassword.name}
-          defaultValue={fields.confirmPassword.initialValue}
+          defaultValue={fields.confirmPassword.defaultValue}
           errors={fields.confirmPassword.errors}
         />
 

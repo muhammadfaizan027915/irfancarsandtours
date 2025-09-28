@@ -1,6 +1,6 @@
 "use server";
 
-import { handlerFormActionWithError, signIn } from "@icat/lib";
+import { handlerFormActionWithError, signIn, signOut } from "@icat/lib";
 import { UserService } from "@icat/services";
 import {
   SignInBodySchema,
@@ -32,3 +32,7 @@ export const signUpUser = handlerFormActionWithError({
     }
   },
 });
+
+export const lougOutUser = async () => {
+  await signOut();
+};

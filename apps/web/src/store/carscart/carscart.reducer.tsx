@@ -1,9 +1,13 @@
 import { useCallback } from "react";
-import { CarCartAction, CarCartActionType, CarCartState } from "./carscart.types";
+import {
+  CarCartAction,
+  CarCartActionType,
+  CarCartState,
+} from "./carscart.types";
 import { CarListItemResponseDto } from "@icat/contracts";
-import { usePersistedReducer } from "@icat/lib/hooks";
+import { useCookieReducer } from "@icat/lib/hooks";
 
-export const carCartKey = "CarsCart"
+export const carCartKey = "CarsCart";
 
 export const initialCarCartState: CarCartState = {
   carsList: [],
@@ -36,25 +40,30 @@ export function carCartReducer(state: CarCartState, action: CarCartAction) {
   }
 }
 
-
 export function useCarCartReducer() {
-  const [state, dispatch] = usePersistedReducer(
+  const [state, dispatch] = useCookieReducer(
     carCartKey,
     carCartReducer,
     initialCarCartState
   );
 
-  const addToCart = useCallback((car: CarListItemResponseDto) => {
-    dispatch({ type: CarCartActionType.AddToCart, payload: car });
-  }, []);
+  const addToCart = useCallback(
+    (car: CarListItemResponseDto) => {
+      dispatch({ type: CarCartActionType.AddToCart, payload: car });
+    },
+    [dispatch]
+  );
 
-  const removeFromCart = useCallback((id: CarListItemResponseDto["id"]) => {
-    dispatch({ type: CarCartActionType.RemoveFromCart, payload: id });
-  }, []);
+  const removeFromCart = useCallback(
+    (id: CarListItemResponseDto["id"]) => {
+      dispatch({ type: CarCartActionType.RemoveFromCart, payload: id });
+    },
+    [dispatch]
+  );
 
   const clearCart = useCallback(() => {
     dispatch({ type: CarCartActionType.ClearCart });
-  }, []);
+  }, [dispatch]);
 
   return {
     ...state,

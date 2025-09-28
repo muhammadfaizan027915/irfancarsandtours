@@ -4,35 +4,35 @@
   "private": true,
   "license": "MIT",
   "author": "Muhammad Faizan",
-  "packageManager": "npm@11.4.2",
+  "packageManager": "npm@11.6.1",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
     "start": "next start",
     "clean": "rm -rf .next .turbo",
     "lint": "eslint"
   },
   "dependencies": {
-    "@conform-to/react": "^1.9.0",
-    "@conform-to/zod": "^1.9.0",
+    "@conform-to/react": "^1.11.0",
+    "@conform-to/zod": "^1.11.0",
     "@icat/contracts": "*",
     "@icat/database": "*",
     "@icat/features": "*",
     "@icat/services": "*",
     "@icat/lib": "*",
     "@icat/ui": "*",
-    "next": "15.5.0",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "zod": "^4.1.5"
+    "next": "15.5.4",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@types/node": "^20",
+    "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.5.0",
+    "eslint-config-next": "15.5.4",
     "typescript": "^5"
   }
 }

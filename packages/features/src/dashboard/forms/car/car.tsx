@@ -69,7 +69,7 @@ export function CarForm({ car, mode }: CarFormProps) {
         <Input
           type="hidden"
           name={fields.id.name}
-          value={fields.id.initialValue}
+          value={fields.id.defaultValue}
           key={fields.id.key}
         />
       )}
@@ -82,7 +82,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             placeholder="Enter car name"
             key={fields.name.key}
             name={fields.name.name}
-            defaultValue={fields.name.initialValue}
+            defaultValue={fields.name.defaultValue}
             errors={fields.name.errors}
           />
         </div>
@@ -94,7 +94,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             placeholder="Enter model"
             key={fields.model.key}
             name={fields.model.name}
-            defaultValue={fields.model.initialValue}
+            defaultValue={fields.model.defaultValue}
             errors={fields.model.errors}
           />
         </div>
@@ -107,7 +107,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             placeholder="e.g. 2024"
             key={fields.year.key}
             name={fields.year.name}
-            defaultValue={fields.year.initialValue}
+            defaultValue={fields.year.defaultValue}
             errors={fields.year.errors}
           />
         </div>
@@ -120,7 +120,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             placeholder="e.g. 5"
             key={fields.seatingCapacity.key}
             name={fields.seatingCapacity.name}
-            defaultValue={fields.seatingCapacity.initialValue}
+            defaultValue={fields.seatingCapacity.defaultValue}
             errors={fields.seatingCapacity.errors}
           />
         </div>
@@ -133,7 +133,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             placeholder="Select brand name"
             key={fields.brand.key}
             name={fields.brand.name}
-            defaultValue={fields.brand.initialValue}
+            defaultValue={fields.brand.defaultValue}
             errors={fields.brand.errors}
           />
         </div>
@@ -146,7 +146,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             placeholder="Select car type"
             key={fields.carType.key}
             name={fields.carType.name}
-            defaultValue={fields.carType.initialValue}
+            defaultValue={fields.carType.defaultValue}
             errors={fields.carType.errors}
           />
         </div>
@@ -159,7 +159,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             placeholder="Select fuel type"
             key={fields.fuelType.key}
             name={fields.fuelType.name}
-            defaultValue={fields.fuelType.initialValue}
+            defaultValue={fields.fuelType.defaultValue}
             errors={fields.fuelType.errors}
           />
         </div>
@@ -172,7 +172,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             placeholder="Select transmission type"
             key={fields.transmissionType.key}
             name={fields.transmissionType.name}
-            defaultValue={fields.transmissionType.initialValue}
+            defaultValue={fields.transmissionType.defaultValue}
             errors={fields.transmissionType.errors}
           />
         </div>
@@ -188,7 +188,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             placeholder="Select amenities"
             key={fields.amenities.key}
             name={fields.amenities.name}
-            defaultValue={fields.amenities.initialValue}
+            defaultValue={fields.amenities.defaultValue}
             errors={fields.amenities.errors}
           />
         </div>
@@ -202,7 +202,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             className="min-h-40"
             key={fields.description.key}
             name={fields.description.name}
-            defaultValue={fields.description.initialValue}
+            defaultValue={fields.description.defaultValue}
             errors={fields.description.errors}
           />
         </div>
@@ -216,7 +216,7 @@ export function CarForm({ car, mode }: CarFormProps) {
           <Checkbox
             key={fields.isFeatured.key}
             name={fields.isFeatured.name}
-            defaultChecked={fields.isFeatured.initialValue === "on"}
+            defaultChecked={fields.isFeatured.defaultValue === "on"}
           />
           <Label className="ml-2">Mark as Featured Car</Label>
         </div>
@@ -225,7 +225,7 @@ export function CarForm({ car, mode }: CarFormProps) {
           <Checkbox
             key={fields.isAllowedBookingWithoutDriver.key}
             name={fields.isAllowedBookingWithoutDriver.name}
-            defaultChecked={fields.isFeatured.initialValue === "on"}
+            defaultChecked={fields.isFeatured.defaultValue === "on"}
           />
           <Label className="ml-2">Allowed to book without driver</Label>
         </div>
