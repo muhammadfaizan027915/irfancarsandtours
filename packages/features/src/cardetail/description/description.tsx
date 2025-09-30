@@ -17,7 +17,7 @@ export function CarDescription({ description }: CarDescriptionProps) {
   const [open, onOpen, onClose] = useDisclosure(true);
   return (
     <Card className="shadow-none rounded-xl flex flex-row gap-4">
-      <CardContent>
+      <CardContent className="w-full">
         <Collapsible
           open={open}
           onOpenChange={open ? onClose : onOpen}

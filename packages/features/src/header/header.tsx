@@ -16,6 +16,7 @@ import Link from "next/link";
 
 export async function Header({ varient = "primary" }: HeaderProps) {
   const session = await auth();
+  const sessionUser = session?.user;
 
   return (
     <>
@@ -45,7 +46,8 @@ export async function Header({ varient = "primary" }: HeaderProps) {
               <>
                 <Button asChild size={"lg"} variant={"ghost"}>
                   <Link href={NavigationUrls.PROFILE}>
-                    <UserRound size={18} className="inline" /> Profile
+                    <UserRound size={18} className="inline" />{" "}
+                    {sessionUser?.name?.split(" ")?.[0] || "Profile"}
                   </Link>
                 </Button>
 

@@ -14,7 +14,9 @@ import {
 import { useCarCart } from "@icat/web/store";
 import { CarCartCard } from "../../carcartlist/carcartcard";
 import { EmptyCarCartMessage } from "./emptycarcartmessage";
+import { NavigationUrls } from "../../header";
 import { LayoutGrid } from "lucide-react";
+import Link from "next/link";
 
 export function CarCartSidebar() {
   const { carsList, clearCart } = useCarCart();
@@ -58,8 +60,16 @@ export function CarCartSidebar() {
           >
             Clear
           </Button>
-          <Button className="flex-1 shadow-none" disabled={!carsList?.length}>
-            Checkout
+          <Button
+            className="flex-1 shadow-none"
+            asChild={!!carsList?.length}
+            disabled={!carsList?.length}
+          >
+            {carsList?.length ? (
+              <Link href={NavigationUrls.CHECKOUT}>Checkout</Link>
+            ) : (
+              <>Checkout</>
+            )}
           </Button>
         </SheetFooter>
       </SheetContent>

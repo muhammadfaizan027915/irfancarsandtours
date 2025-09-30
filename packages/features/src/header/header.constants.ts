@@ -7,4 +7,5 @@ export const NavigationUrls = {
   CONTACT: "/contact",
   PROFILE: "/profile",
   BOOKINGS: "/bookings",
+  CHECKOUT: "/checkout",
 } as const;
