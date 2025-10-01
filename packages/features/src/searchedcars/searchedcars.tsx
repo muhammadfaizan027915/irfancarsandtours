@@ -9,6 +9,8 @@ export async function SearchedCars() {
   const carService = new CarService();
   const cars = await carService.getMostSearchedCars();
 
+  if (!cars?.length) return null; 
+
   return (
     <div className="flex flex-col gap-8">
       <div>

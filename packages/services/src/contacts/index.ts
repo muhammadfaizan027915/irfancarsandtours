@@ -7,10 +7,10 @@ import {
 } from "@icat/contracts";
 
 export class ContactService {
-  private repo: ContactRepository;
+  private contactRepository: ContactRepository;
 
   constructor() {
-    this.repo = new ContactRepository();
+    this.contactRepository = new ContactRepository();
   }
 
   async getAll(args: {
@@ -18,28 +18,28 @@ export class ContactService {
     limit?: number;
     search?: string;
   }): Promise<PaginatedContactResponseDto> {
-    const result = await this.repo.findAll(args);
+    const result = await this.contactRepository.findAll(args);
     return PaginatedContactResponseSchema.parse(result);
   }
 
   async getContactById(id: string): Promise<ContactResponseDto | null> {
-    const contact = await this.repo.findById(id);
+    const contact = await this.contactRepository.findById(id);
     return contact ? ContactResponseSchema.parse(contact) : null;
   }
 
   async createContact(
     data: Omit<ContactResponseDto, "id" | "createdAt" | "updatedAt">
   ): Promise<ContactResponseDto> {
-    const contact = await this.repo.create(data);
+    const contact = await this.contactRepository.create(data);
     return ContactResponseSchema.parse(contact);
   }
 
   async deleteContact(id: string): Promise<ContactResponseDto | null> {
-    const contact = await this.repo.delete(id);
+    const contact = await this.contactRepository.delete(id);
     return contact ? ContactResponseSchema.parse(contact) : null;
   }
 
   async hardDeleteContact(id: string): Promise<void> {
-    await this.repo.hardDelete(id);
+    await this.contactRepository.hardDelete(id);
   }
 }

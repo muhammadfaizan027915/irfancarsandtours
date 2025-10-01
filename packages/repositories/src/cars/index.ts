@@ -31,7 +31,7 @@ export const CarListSelect = {
   imageUrls: carsTable.imageUrls,
   seatingCapacity: carsTable.seatingCapacity,
   isFeatured: carsTable.isFeatured,
-  isAllowedBookingWithoutDriver: carsTable.isAllowedBookingWithoutDriver,
+  forceWithDriver: carsTable.forceWithDriver,
   timesSearched: carsTable.timesSearched,
   createdAt: carsTable.createdAt,
   updatedAt: carsTable.updatedAt,
@@ -152,6 +152,18 @@ export class CarRepository {
       .returning();
 
     return car ?? null;
+  }
+
+  async findCarsDriverRules(carIds: string[]) {
+    const cars = await db
+      .select({
+        id: carsTable.id,
+        forceWithDriver: carsTable.forceWithDriver,
+      })
+      .from(carsTable)
+      .where(inArray(carsTable.id, carIds));
+
+    return cars;
   }
 
   async incrementTimesSearched(carIds: string[]) {

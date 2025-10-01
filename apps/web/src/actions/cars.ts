@@ -1,6 +1,6 @@
 "use server";
 
-import { NavigationUrls } from "@icat/features";
+import { DashboardNavigationUrls } from "@icat/features";
 import {
   RegisterCarBodySchema,
   RegisterCarBodyDto,
@@ -22,10 +22,7 @@ export const registerCar = handlerFormActionWithError({
     }
 
     const carService = new CarService();
-    const car = await carService.createCar({
-      ...data,
-      amenities: ["Air Conditioning"],
-    });
+    const car = await carService.createCar(data);
 
     return car;
   },
@@ -44,7 +41,7 @@ export const updateCar = handlerFormActionWithError({
     const carService = new CarService();
     const car = await carService.updateCar(data.id, data);
 
-    revalidatePath(`${NavigationUrls.CARS}/${car?.id}/edit`);
+    revalidatePath(`${DashboardNavigationUrls.CARS}/${car?.id}/edit`);
     return car;
   },
 });

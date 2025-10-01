@@ -30,25 +30,14 @@ export const RegisterCarBodySchema = z.object({
   ),
   amenities: z
     .array(z.enum(AmenitiesList, "Please select a valid amenities"))
-    .min(1, "At least one amenity must be selected")
-    .transform((vals) => [...new Set(vals)]),
+    .min(1, "At least one amenity must be selected"),
   imageUrls: z.array(z.url("Each image must be a valid URL")).optional(),
   seatingCapacity: z
     .number("Seating capacity is required")
     .int("Seating capacity is required")
     .min(1, "Seating capacity must be at least 1"),
-  isFeatured: z
-    .string()
-    .transform((val) => val === "on")
-    .pipe(z.boolean())
-    .optional()
-    .default(false),
-  isAllowedBookingWithoutDriver: z
-    .string()
-    .transform((val) => val === "on")
-    .pipe(z.boolean())
-    .optional()
-    .default(false),
+  isFeatured: z.boolean().optional().default(false),
+  forceWithDriver: z.boolean().optional().default(false),
 });
 
 export type RegisterCarBodyDto = z.infer<typeof RegisterCarBodySchema>;

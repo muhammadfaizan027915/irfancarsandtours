@@ -7,7 +7,7 @@ import {
 
 import { eq, and, isNull } from "drizzle-orm";
 
-export class BookedCarsRepository {
+export class BookedCarRepository {
   async create(data: BookedCarInsert): Promise<BookedCarSelect> {
     const [bookedcar] = await db
       .insert(bookedCarsTable)

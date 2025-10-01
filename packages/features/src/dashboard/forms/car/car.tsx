@@ -56,7 +56,6 @@ export function CarForm({ car, mode }: CarFormProps) {
 
   return (
     <form
-      id={form.id}
       action={action}
       onSubmit={form.onSubmit}
       className="space-y-6"
@@ -188,7 +187,7 @@ export function CarForm({ car, mode }: CarFormProps) {
             placeholder="Select amenities"
             key={fields.amenities.key}
             name={fields.amenities.name}
-            defaultValue={fields.amenities.defaultValue}
+            defaultValue={fields.amenities.defaultOptions}
             errors={fields.amenities.errors}
           />
         </div>
@@ -216,18 +215,18 @@ export function CarForm({ car, mode }: CarFormProps) {
           <Checkbox
             key={fields.isFeatured.key}
             name={fields.isFeatured.name}
-            defaultChecked={fields.isFeatured.defaultValue === "on"}
+            defaultChecked={fields.isFeatured.defaultChecked}
           />
           <Label className="ml-2">Mark as Featured Car</Label>
         </div>
 
         <div className="flex items-center">
           <Checkbox
-            key={fields.isAllowedBookingWithoutDriver.key}
-            name={fields.isAllowedBookingWithoutDriver.name}
-            defaultChecked={fields.isFeatured.defaultValue === "on"}
+            key={fields.forceWithDriver.key}
+            name={fields.forceWithDriver.name}
+            defaultChecked={fields.forceWithDriver.defaultChecked}
           />
-          <Label className="ml-2">Allowed to book without driver</Label>
+          <Label className="ml-2">Force booking with driver</Label>
         </div>
 
         <Button type="submit" size={"lg"} className="ml-auto">

@@ -25,9 +25,7 @@ export const carsTable = pgTable("cars", {
   description: text("description"),
   isFeatured: boolean("is_featured").default(false),
   timesSearched: integer("times_searched").default(0),
-  isAllowedBookingWithoutDriver: boolean(
-    "is_allowed_booking_without_driver"
-  ).default(false),
+  forceWithDriver: boolean("force_with_driver").default(false),
 
   ...timestampColumns,
 });

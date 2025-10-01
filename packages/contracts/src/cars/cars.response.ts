@@ -32,7 +32,7 @@ export const CarResponseSchema = z.object({
   seatingCapacity: z.number().int(),
   isFeatured: z.boolean(),
   timesSearched: z.number().int().nullish(),
-  isAllowedBookingWithoutDriver: z.boolean().nullish(),
+  forceWithDriver: z.boolean().nullish(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
   deletedAt: z.coerce.date().nullish(),

@@ -15,21 +15,21 @@ import {
 import { after } from "next/server";
 
 export class CarService {
-  private repo: CarRepository;
+  private carRepository: CarRepository;
 
   constructor() {
-    this.repo = new CarRepository();
+    this.carRepository = new CarRepository();
   }
 
   async getAll(args: GetCarsBodyDto): Promise<PaginatedCarResponseDto> {
-    const result = await this.repo.findAll(args);
+    const result = await this.carRepository.findAll(args);
 
     const data = result?.data;
 
     if (data?.length > 0) {
       after(() => {
         const carIds = data?.map((car) => car?.id);
-        this.repo.incrementTimesSearched(carIds);
+        this.carRepository.incrementTimesSearched(carIds);
       });
     }
 
@@ -37,22 +37,22 @@ export class CarService {
   }
 
   async getFeaturedCars(): Promise<CarsListResponseDto> {
-    const cars = await this.repo.findFeatured();
+    const cars = await this.carRepository.findFeatured();
     return CarsListResponseSchema.parse(cars);
   }
 
   async getMostSearchedCars(limit = 10): Promise<CarsListResponseDto> {
-    const cars = await this.repo.findMostSearched(limit);
+    const cars = await this.carRepository.findMostSearched(limit);
     return CarsListResponseSchema.parse(cars);
   }
 
   async getCarById(id: string): Promise<CarResponseDto | null> {
-    const car = await this.repo.findById(id);
+    const car = await this.carRepository.findById(id);
     return car ? CarResponseSchema.parse(car) : null;
   }
 
   async createCar(data: RegisterCarBodyDto): Promise<CarResponseDto> {
-    const car = await this.repo.create(data);
+    const car = await this.carRepository.create(data);
     return CarResponseSchema.parse(car);
   }
 
@@ -60,16 +60,16 @@ export class CarService {
     id: string,
     updates: UpdateCarBodyDto
   ): Promise<CarResponseDto | null> {
-    const car = await this.repo.update(id, updates);
+    const car = await this.carRepository.update(id, updates);
     return car ? CarResponseSchema.parse(car) : null;
   }
 
   async deleteCar(data: DeleteCarBodyDto): Promise<CarResponseDto | null> {
-    const car = await this.repo.delete(data.id);
+    const car = await this.carRepository.delete(data.id);
     return car ? CarResponseSchema.parse(car) : null;
   }
 
   async hardDeleteCar(id: string): Promise<void> {
-    await this.repo.hardDelete(id);
+    await this.carRepository.hardDelete(id);
   }
 }

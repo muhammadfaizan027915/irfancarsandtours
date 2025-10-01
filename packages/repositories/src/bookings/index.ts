@@ -1,4 +1,10 @@
-import { db, bookingsTable, BookingInsert, BookingSelect } from "@icat/database";
+import {
+  db,
+  bookingsTable,
+  BookingInsert,
+  BookingSelect,
+  usersTable,
+} from "@icat/database";
 import { and, eq, isNull, sql } from "drizzle-orm";
 
 export const BookingListSelect = {
@@ -10,14 +16,23 @@ export const BookingListSelect = {
   userId: bookingsTable.userId,
   createdAt: bookingsTable.createdAt,
   updatedAt: bookingsTable.updatedAt,
+
+  bookedBy: {
+    id: usersTable.id,
+    name: usersTable.name,
+    email: usersTable.email,
+    phone: usersTable.phone,
+    cnic: usersTable.cnic,
+  },
 };
 
-export class BookingsRepository {
+export class BookingRepository {
   async findAll(args: { page?: number; limit?: number; userId?: string }) {
     const { page = 1, limit = 10, userId } = args;
     const offset = (page - 1) * limit;
 
     const conditions = [isNull(bookingsTable.deletedAt)];
+
     if (userId) {
       conditions.push(eq(bookingsTable.userId, userId));
     }
@@ -27,6 +42,7 @@ export class BookingsRepository {
     const bookings = await db
       .select(BookingListSelect)
       .from(bookingsTable)
+      .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
       .where(whereClause)
       .limit(limit)
       .offset(offset);

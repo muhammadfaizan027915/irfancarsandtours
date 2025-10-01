@@ -22,6 +22,13 @@
       "when": 1758993697176,
       "tag": "0002_ambiguous_psynapse",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1759336436884,
+      "tag": "0003_small_cerebro",
+      "breakpoints": true
     }
   ]
 }
