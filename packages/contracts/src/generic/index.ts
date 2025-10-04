@@ -20,3 +20,15 @@ export const toArray = <T extends z.ZodTypeAny>(schema: T) =>
     .transform((val) =>
       val === undefined ? undefined : Array.isArray(val) ? val : [val]
     );
+
+export const toDate = <T extends z.ZodTypeAny>(schema: T) =>
+  z.preprocess((arg) => {
+    if (arg === null || arg === undefined) return arg;
+    if (arg instanceof Date) return arg;
+    if (typeof arg === "number") return new Date(arg);
+    if (typeof arg === "string") {
+      const d = new Date(arg);
+      return isNaN(d.getTime()) ? arg : d;
+    }
+    return arg;
+  }, schema);

@@ -27,7 +27,6 @@ export function handlerFormActionWithError<
   shouldResetForm?: boolean;
 }) {
   return async function (prevState: unknown, formData: FormData) {
-    console.log(formData.get("isFeatured"))
     const submission = parseWithZod(formData, { schema: args.schema });
 
     if (submission.status !== "success") {
@@ -38,6 +37,7 @@ export function handlerFormActionWithError<
       await args.action(submission.payload as TArgs);
       return submission.reply({ resetForm: args.shouldResetForm });
     } catch (error) {
+      console.log("Error in form action:", error);
       const errorPayload = handleError(error);
       return submission.reply({ formErrors: [errorPayload?.message] });
     }

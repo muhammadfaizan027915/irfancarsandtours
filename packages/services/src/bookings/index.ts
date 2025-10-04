@@ -3,10 +3,14 @@ import {
   BookedCarRepository,
   CarRepository,
 } from "@icat/repositories";
-import { BookingInsert, BookingSelect, BookedCarSelect } from "@icat/database";
-import { CarBookingRequestDto } from "@icat/contracts";
+import { BookingSelect } from "@icat/database";
+import {
+  CarBookingRequestDto,
+  CarBookingResponseDto,
+  CarBookingResponseSchema,
+} from "@icat/contracts";
+import { UserService } from "@icat/services/users";
 import { auth } from "@icat/lib";
-import { UserService } from "../users";
 
 export class BookingService {
   private bookingRepository: BookingRepository;
@@ -21,15 +25,18 @@ export class BookingService {
     this.userService = new UserService();
   }
 
-  async createBooking({ cars, ...data }: CarBookingRequestDto): Promise<{
-    booking: BookingSelect;
-  }> {
+  async createBooking({
+    cars,
+    ...data
+  }: CarBookingRequestDto): Promise<CarBookingResponseDto> {
     const session = await auth();
     const sessionUser = session?.user;
 
     const booking = await this.bookingRepository.create({
-      userId: sessionUser?.id as string,
       ...data,
+      userId: sessionUser?.id as string,
+      pickupDate: new Date(data.pickupDate),
+      dropoffDate: new Date(data.dropoffDate),
     });
 
     this.userService.updateUser(sessionUser?.id as string, data);
@@ -39,7 +46,7 @@ export class BookingService {
       carIds
     );
 
-    for (const car of cars) {
+    for await (const car of cars) {
       const carWithDriverRule = carsWithDriverRules.find(
         (c) => c.id === car.carId
       );
@@ -50,9 +57,16 @@ export class BookingService {
         bookedWithDriver: carWithDriverRule?.forceWithDriver
           ? carWithDriverRule?.forceWithDriver
           : car?.bookedWithDriver,
-    });
+      });
     }
 
-    return { booking };
+    return CarBookingResponseSchema.parse(booking);
+  }
+
+  async getBookingById(
+    bookingId: string
+  ): Promise<CarBookingResponseDto | null> {
+    const booking = await this.bookingRepository.findById(bookingId);
+    return booking ? CarBookingResponseSchema.parse(booking) : null;
   }
 }

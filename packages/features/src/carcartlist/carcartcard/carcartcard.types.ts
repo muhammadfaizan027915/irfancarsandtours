@@ -1,5 +1,5 @@
-import { CarListItemResponseDto } from "@icat/contracts";
+import { CarCartItem } from "@icat/web/store";
 
 export type CarCartCardProps = {
-  car: CarListItemResponseDto;
+  car: CarCartItem;
 };

@@ -20,3 +20,4 @@ export * from "./carcartlist";
 export * from "./cardetail";
 export * from "./dashboard";
 export * from "./cartypes";
+export * from "./booking";

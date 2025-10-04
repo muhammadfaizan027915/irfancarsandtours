@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import {
   CarCartAction,
   CarCartActionType,
+  CarCartItem,
   CarCartState,
 } from "./carscart.types";
 import { CarListItemResponseDto } from "@icat/contracts";
@@ -20,17 +21,59 @@ export function carCartReducer(state: CarCartState, action: CarCartAction) {
       if (exists) {
         return state;
       }
+
       return {
         ...state,
         carsList: [...state.carsList, action.payload],
       };
     }
 
-    case CarCartActionType.RemoveFromCart:
+    case CarCartActionType.IncrementQuantity: {
+      const updatedCarsList = state.carsList.map((car) => {
+        if (car.id === action.payload.id) {
+          return { ...car, quantity: car?.quantity + 1 };
+        }
+
+        return car;
+      });
+
       return {
         ...state,
-        carsList: state.carsList.filter((car) => car.id !== action.payload),
+        carsList: updatedCarsList,
       };
+    }
+
+    case CarCartActionType.DecrementQuantity: {
+      const updatedCarsList = state.carsList
+        .map((car) => {
+          if (car.id === action.payload.id) {
+            return { ...car, quantity: car?.quantity - 1 };
+          }
+
+          return car;
+        })
+        .filter((car) => car?.quantity > 0);
+
+      return {
+        ...state,
+        carsList: updatedCarsList,
+      };
+    }
+
+    case CarCartActionType.ToggleDriver: {
+      const updatedCarsList = state.carsList.map((car) => {
+        if (car.id === action.payload.id) {
+          return { ...car, bookedWithDriver: action.payload.bookedWithDriver };
+        }
+
+        return car;
+      });
+
+      return {
+        ...state,
+        carsList: updatedCarsList,
+      };
+    }
 
     case CarCartActionType.ClearCart:
       return initialCarCartState;
@@ -48,15 +91,11 @@ export function useCarCartReducer() {
   );
 
   const addToCart = useCallback(
-    (car: CarListItemResponseDto) => {
-      dispatch({ type: CarCartActionType.AddToCart, payload: car });
-    },
-    [dispatch]
-  );
-
-  const removeFromCart = useCallback(
-    (id: CarListItemResponseDto["id"]) => {
-      dispatch({ type: CarCartActionType.RemoveFromCart, payload: id });
+    (car: CarCartItem) => {
+      dispatch({
+        type: CarCartActionType.AddToCart,
+        payload: { ...car, quantity: 1 },
+      });
     },
     [dispatch]
   );
@@ -65,10 +104,36 @@ export function useCarCartReducer() {
     dispatch({ type: CarCartActionType.ClearCart });
   }, [dispatch]);
 
+  const incrementQuantity = useCallback(
+    (id: CarListItemResponseDto["id"]) => {
+      dispatch({ type: CarCartActionType.IncrementQuantity, payload: { id } });
+    },
+    [dispatch]
+  );
+
+  const decrementQuantity = useCallback(
+    (id: CarListItemResponseDto["id"]) => {
+      dispatch({ type: CarCartActionType.DecrementQuantity, payload: { id } });
+    },
+    [dispatch]
+  );
+
+  const toggleDriver = useCallback(
+    (id: CarListItemResponseDto["id"], bookedWithDriver: boolean) => {
+      dispatch({
+        type: CarCartActionType.ToggleDriver,
+        payload: { id, bookedWithDriver },
+      });
+    },
+    [dispatch]
+  );
+
   return {
     ...state,
     addToCart,
-    removeFromCart,
     clearCart,
+    incrementQuantity,
+    decrementQuantity,
+    toggleDriver,
   };
 }

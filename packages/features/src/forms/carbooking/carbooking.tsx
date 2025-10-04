@@ -7,13 +7,12 @@ import {
   Label,
   Textarea,
   AlertBox,
-  toast,
 } from "@icat/ui";
 import { ArrowRight, User, Mail, Phone, IdCard } from "lucide-react";
-import { useActionState, useEffect } from "react";
+import { useActionState } from "react";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod/v4";
-import { CarBookingRequestDto, CarBookingRequestSchema } from "@icat/contracts";
+import { CarBookingRequestSchema } from "@icat/contracts";
 import { CarBookingFormProps } from "./carbooking.types";
 import { bookCar } from "@icat/web/actions";
 
@@ -22,18 +21,12 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
 
   const [form, fields] = useForm({
     lastResult,
-    defaultValue: defaultValue as CarBookingRequestDto,
+    defaultValue: { ...defaultValue },
     onValidate: ({ formData }) =>
       parseWithZod(formData, { schema: CarBookingRequestSchema }),
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
-
-  useEffect(() => {
-    if (lastResult?.status === "success") {
-      toast.success("Car booked successfully!", { position: "top-center" });
-    }
-  }, [lastResult]);
 
   return (
     <form
@@ -137,7 +130,11 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
         />
       </div>
 
-      <Button size="lg" className="font-bold shadow-none group mt-2">
+      <Button
+        size="lg"
+        className="font-bold shadow-none group mt-2"
+        type="submit"
+      >
         Confirm Booking
         <ArrowRight className="group-hover:translate-x-1 transition-transform" />
       </Button>
