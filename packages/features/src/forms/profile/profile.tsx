@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertBox, Button, Card, Input, Textarea, toast } from "@icat/ui";
-import { ArrowRight, Mail, Phone, UserRound, MapPin } from "lucide-react";
+import { ArrowRight, Mail, Phone, UserRound, MapPin, IdCard } from "lucide-react";
 import { updateUser } from "@icat/web/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod/v4";
@@ -70,6 +70,15 @@ export function ProfileForm({ user }: ProfileFormProps) {
           name={fields.phone.name}
           defaultValue={fields.phone.defaultValue}
           errors={fields.phone.errors}
+        />
+
+        <Input
+          id="cnic"
+          name={fields.cnic.name}
+          defaultValue={fields.cnic.defaultValue}
+          errors={fields.cnic.errors}
+          placeholder="CNIC"
+          startIcon={<IdCard size={18} />}
         />
 
         <Textarea

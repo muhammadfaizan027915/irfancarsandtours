@@ -18,9 +18,10 @@
     "@icat/contracts": "*",
     "@icat/database": "*",
     "@icat/features": "*",
-    "@icat/services": "*",
     "@icat/lib": "*",
-    "@icat/ui": "*"
+    "@icat/services": "*",
+    "@icat/ui": "*",
+    "axios": "^1.12.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

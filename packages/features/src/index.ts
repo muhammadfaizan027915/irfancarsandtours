@@ -17,4 +17,5 @@ export * from "./filtersbar";
 export * from "./carcartlist";
 export * from "./cardetail";
 export * from "./dashboard";
+export * from "./useravatar";
 export * from "./booking";

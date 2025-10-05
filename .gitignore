@@ -47,3 +47,11 @@ apps/*/node_modules
 packages/*/node_modules
 apps/*/dist
 packages/*/dist
+
+
+# -------------------------
+# Env files
+# -------------------------
+.env
+.env.*.local
+.env.local

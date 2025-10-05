@@ -20,6 +20,7 @@ export type UserResponseWithPasswordDto = z.infer<
 >;
 
 export const DetailedUserResponseSchema = UserResponseSchema.extend({
+  cnic: z.string().nullish(),
   phone: z.string().nullish(),
   address: z.string().nullish(),
 });

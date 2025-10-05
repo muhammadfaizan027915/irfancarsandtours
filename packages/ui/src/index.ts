@@ -19,6 +19,7 @@ export * from "./components/theme-provider";
 export * from "./components/dropdown-menu";
 export * from "./components/separator";
 export * from "./components/skeleton";
+export * from "./components/progress";
 export * from "./components/sidebar";
 export * from "./components/tooltip";
 export * from "./components/select";
