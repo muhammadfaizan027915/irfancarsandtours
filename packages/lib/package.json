@@ -15,9 +15,6 @@
       "default": "./dist/index.js"
     }
   },
-  "dependencies": {
-    "@conform-to/react": "^1.11.0"
-  },
   "keywords": [
     "Helpers",
     "Library",

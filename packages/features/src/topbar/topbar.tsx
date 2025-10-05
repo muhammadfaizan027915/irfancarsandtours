@@ -7,7 +7,7 @@ export function Topbar({ varient = "primary" }: TopbarProps) {
   return (
     <div
       className={cn(
-        "w-full flex items-center px-8 h-10 text-white text-sm",
+        "w-full items-center px-8 h-10 text-white text-sm hidden lg:flex",
         "border-b border-muted/50 dark:border-sidebar-foreground/50",
         varient === "primary" ? "bg-transparent" : "bg-secondary/90"
       )}

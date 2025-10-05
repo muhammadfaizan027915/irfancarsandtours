@@ -35,8 +35,6 @@
     "@icat/database": "*",
     "@icat/ui": "*",
     "lucide-react": "^0.544.0",
-    "next": "15.5.4",
-    "react": "19.1.1",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1"
   }

@@ -13,7 +13,7 @@ export function CarCard({ car }: CarCardProps) {
 
   const handleAddToCart = () => {
     if (car) {
-      addToCart(car);
+      addToCart({...car, quantity: 1});
 
       toast.success("Car successfully added to cart.", {
         position: "top-center",

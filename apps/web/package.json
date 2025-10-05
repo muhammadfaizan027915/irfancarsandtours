@@ -20,11 +20,7 @@
     "@icat/features": "*",
     "@icat/services": "*",
     "@icat/lib": "*",
-    "@icat/ui": "*",
-    "next": "15.5.4",
-    "react": "19.1.1",
-    "react-dom": "19.1.1",
-    "zod": "^4.1.11"
+    "@icat/ui": "*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

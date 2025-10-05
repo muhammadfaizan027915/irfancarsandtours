@@ -24,8 +24,5 @@
   ],
   "license": "MIT",
   "author": "Muhammad Faizan",
-  "packageManager": "npm@11.6.1",
-  "dependencies": {
-    "zod": "^4.1.11"
-  }
+  "packageManager": "npm@11.6.1"
 }

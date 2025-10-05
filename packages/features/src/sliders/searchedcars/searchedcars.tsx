@@ -1,29 +1,40 @@
-import { Button } from "@icat/ui";
-import { NavigationUrls } from "../header";
+import { CarCard } from "../../cars";
+import { NavigationUrls } from "../../header";
 import { LoaderCircle } from "lucide-react";
+import { Button, SliderContainer } from "@icat/ui";
 import { CarService } from "@icat/services";
-import { CarCard } from "../cars";
 import Link from "next/link";
 
 export async function SearchedCars() {
   const carService = new CarService();
   const cars = await carService.getMostSearchedCars();
 
-  if (!cars?.length) return null; 
+  const settings = {
+    slidesToShow: 3,
+    responsive: [
+      { breakpoint: 1048, settings: { slidesToShow: 3 } },
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 1 } },
+    ],
+  };
+
+  if (!cars?.length) return null;
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
       <div>
         <h3 className="text-3xl font-bold">Most Searched Cars</h3>
         <p className="text-muted-foreground">
           Choosen and trusted by most of the people
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <SliderContainer settings={settings}>
         {cars?.map((car) => (
-          <CarCard car={car} key={car?.id} />
+          <div key={car?.id} className="p-2">
+            <CarCard car={car} />
+          </div>
         ))}
-      </div>
+      </SliderContainer>
       <Button
         asChild
         size="lg"
