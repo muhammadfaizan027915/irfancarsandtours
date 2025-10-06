@@ -5,11 +5,6 @@ import {
   AmenitiesList,
   CarTypesList,
   TransmissionTypesList,
-  BrandNames,
-  CarTypes,
-  FuelTypes,
-  TransmissionTypes,
-  Amenities,
 } from "@icat/database/enums";
 import { toArray } from "../generic";
 
@@ -28,10 +23,16 @@ export const RegisterCarBodySchema = z.object({
     TransmissionTypesList,
     "Please select a valid transmission type"
   ),
-  amenities: z
-    .array(z.enum(AmenitiesList, "Please select a valid amenities"))
-    .min(1, "At least one amenity must be selected"),
-  imageUrls: z.array(z.url("Each image must be a valid URL")).optional(),
+  amenities: z.preprocess((val) => {
+    if (!val) return undefined;
+    return Array.isArray(val) ? val : [val];
+  }, z.array(z.enum(AmenitiesList, "Please select a valid amenities"))),
+  imageUrls: z
+    .preprocess((val) => {
+      if (!val) return undefined;
+      return Array.isArray(val) ? val : [val];
+    }, z.array(z.url("Each image must be a valid URL")))
+    .optional(),
   seatingCapacity: z
     .number("Seating capacity is required")
     .int("Seating capacity is required")

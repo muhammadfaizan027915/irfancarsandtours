@@ -66,7 +66,28 @@ export class GCSClient {
     return `gs://${this.bucketName}/${fileName}`;
   }
 
-  async deleteFile(fileName: string): Promise<boolean> {
+  extractFileNameFromUrl(url: string): string {
+    const match = url.match(/https:\/\/storage\.googleapis\.com\/[^/]+\/(.+)/);
+    return match ? match[1] : url;
+  }
+
+  async deleteFile(fileIdentifier: string): Promise<boolean> {
+    let fileName = fileIdentifier;
+
+    if (fileIdentifier.startsWith("http")) {
+      const match = fileIdentifier.match(
+        /https:\/\/storage\.googleapis\.com\/([^/]+)\/([^?]+)/
+      );
+
+      if (match) {
+        fileName = decodeURIComponent(match[2]);
+      } else {
+        throw new Error("Invalid GCS URL format: cannot extract filename");
+      }
+    }
+
+    console.log(`Deleting file: ${fileName}`);
+
     const file = this.bucket.file(fileName);
     await file.delete({ ignoreNotFound: true });
     return true;

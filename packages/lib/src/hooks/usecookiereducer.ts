@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducer, useEffect, Reducer } from "react";
-import { getCookie, setCookie } from "../utils";
+import { getCookie, setCookie } from "@icat/lib/utils";
 
 export function useCookieReducer<State, Action>(
   key: string,

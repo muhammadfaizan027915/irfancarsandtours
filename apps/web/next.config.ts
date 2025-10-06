@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
     "@icat/services",
     "@icat/ui",
   ],
+  images: {
+    domains: ["storage.googleapis.com"],
+  },
 };
 
 export default nextConfig;

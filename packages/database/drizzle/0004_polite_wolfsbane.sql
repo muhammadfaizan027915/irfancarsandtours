@@ -1,0 +1,1 @@
+ALTER TABLE "cars" ALTER COLUMN "image_urls" SET DATA TYPE varchar[];

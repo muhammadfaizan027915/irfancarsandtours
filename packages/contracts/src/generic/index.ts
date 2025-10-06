@@ -1,4 +1,4 @@
-import z from "zod";
+import z, { core } from "zod";
 
 export const PaginatedResponseSchema = <T extends z.ZodTypeAny>(
   itemSchema: T
@@ -13,13 +13,40 @@ export const PaginatedResponseSchema = <T extends z.ZodTypeAny>(
     }),
   });
 
-export const toArray = <T extends z.ZodTypeAny>(schema: T) =>
-  z
-    .union([schema, z.array(schema)])
-    .optional()
-    .transform((val) =>
-      val === undefined ? undefined : Array.isArray(val) ? val : [val]
-    );
+export function toArray<T extends core.SomeType>(schema: T) {
+  return z.preprocess((input) => {
+    if (input === undefined || input === null) {
+      return [];
+    }
+
+    if (Array.isArray(input)) {
+      return input;
+    }
+
+    if (typeof input === "string") {
+      const s = input.trim();
+
+      if (s.startsWith("[") && s.endsWith("]")) {
+        try {
+          const parsed = JSON.parse(s);
+          if (Array.isArray(parsed)) return parsed;
+        } catch {}
+      }
+
+      if (s.includes(",")) {
+        return s
+          .split(",")
+          .map((p) => p.trim())
+          .filter(Boolean);
+      }
+
+      if (s.length === 0) return [];
+      return [s];
+    }
+
+    return [input];
+  }, z.array(schema));
+}
 
 export const toDate = <T extends z.ZodTypeAny>(schema: T) =>
   z.preprocess((arg) => {

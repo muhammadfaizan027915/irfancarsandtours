@@ -17,3 +17,12 @@ export async function getSignedUploadUrl(
 export async function getSignedDownloadUrl(fileName: string) {
   return await gcsClient.createSignedDownloadUrl(fileName);
 }
+
+export async function deleteFileFromCloudStorage(fileIdentifier: string) {
+  try {
+    return await gcsClient.deleteFile(fileIdentifier);
+  } catch (error) {
+    console.log("Error in delete file:", error);
+    throw error;
+  }
+}

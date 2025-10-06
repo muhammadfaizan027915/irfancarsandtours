@@ -30,7 +30,7 @@ export function UserAvatar({ user }: UserAvatarProps) {
     if (uploadedUrl) {
       const formData = new FormData();
       formData.append("image", uploadedUrl);
-      const result = await updateUser({}, formData);
+      const result = await updateUser(user, formData);
 
       if (result?.status === "success") {
         toast.success("Profile image updated successfully.", {

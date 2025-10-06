@@ -20,7 +20,7 @@ export const carsTable = pgTable("cars", {
   fuelType: fuelTypeEnum("fuel_type").notNull(),
   transmissionType: transmissionTypeEnum("transmission_type").notNull(),
   amenities: amenitiesEnum("amenities").array().notNull(),
-  imageUrls: varchar("image_urls", { length: 500 }).array(),
+  imageUrls: text("image_urls").array(),
   seatingCapacity: integer("seating_capacity").notNull(),
   description: text("description"),
   isFeatured: boolean("is_featured").default(false),

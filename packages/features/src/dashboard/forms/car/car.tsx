@@ -9,9 +9,10 @@ import {
   Textarea,
   GenericSelect,
   toast,
+  Progress,
 } from "@icat/ui";
 import { registerCar, updateCar } from "@icat/web/actions";
-import { useForm } from "@conform-to/react";
+import { useForm, useInputControl } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod/v4";
 import { RegisterCarBodySchema, UpdateCarBodySchema } from "@icat/contracts";
 import {
@@ -23,6 +24,9 @@ import {
 } from "@icat/database/enums";
 import { CarFormProps } from "./car.types";
 import { useActionState, useEffect } from "react";
+import { useMultiFileUpload } from "@icat/lib/hooks";
+import { X } from "lucide-react";
+import Image from "next/image";
 
 export function CarForm({ car, mode }: CarFormProps) {
   const isUpdateMode = mode === "update";
@@ -43,6 +47,23 @@ export function CarForm({ car, mode }: CarFormProps) {
     shouldRevalidate: "onInput",
   });
 
+  const imageUrlsControl = useInputControl({
+    name: fields.imageUrls.name,
+    key: fields.imageUrls.key,
+    formId: form.id,
+  });
+
+  const { files, uploadFiles, deleteFile } = useMultiFileUpload({
+    initialUrls: car?.imageUrls,
+    onSuccess(files) {
+      const urls = files.map((file) => file.previewUrl);
+
+      console.log("All uploaded file URLs:", urls);
+
+      imageUrlsControl.change(urls as string[]);
+    },
+  });
+
   useEffect(() => {
     if (lastResult?.status === "success") {
       toast.success(
@@ -54,8 +75,15 @@ export function CarForm({ car, mode }: CarFormProps) {
     }
   }, [lastResult]);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      uploadFiles(e.target.files);
+    }
+  };
+
   return (
     <form
+      id={form.id}
       action={action}
       onSubmit={form.onSubmit}
       className="space-y-6"
@@ -208,7 +236,42 @@ export function CarForm({ car, mode }: CarFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="images">Upload Images</Label>
-          <Input id="images" type="file" multiple accept="image/*" />
+          <Input
+            multiple
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            key={fields.imageUrls.key}
+          />
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {files.map((f) => (
+            <div
+              key={f.id}
+              className="relative border rounded-lg overflow-hidden"
+            >
+              <Image
+                src={f.previewUrl || "/placeholder.jpg"}
+                alt={f?.file?.name || "Car Image Preview"}
+                width={200}
+                height={150}
+                className="object-cover w-full h-40"
+              />
+              {f.isUploading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                  <Progress value={f.progress} className="w-3/4" />
+                </div>
+              )}
+              <button
+                type="button"
+                onClick={() => deleteFile(f.id)}
+                className="absolute top-1 right-1 bg-white/80 rounded-full p-1"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          ))}
         </div>
 
         <div className="flex items-center">

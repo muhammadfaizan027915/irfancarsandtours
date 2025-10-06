@@ -38,6 +38,8 @@ export const updateCar = handlerFormActionWithError({
       throw new UnauthorizedError({ message: "Unauthorized to update car." });
     }
 
+    console.log("Updating car with data:", data);
+
     const carService = new CarService();
     const car = await carService.updateCar(data.id, data);
 
