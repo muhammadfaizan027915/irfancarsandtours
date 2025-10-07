@@ -9,10 +9,10 @@ import { and, eq, isNull, sql } from "drizzle-orm";
 
 export const BookingListSelect = {
   id: bookingsTable.id,
-  pickupAddress: bookingsTable.pickupAddress,
   pickupDate: bookingsTable.pickupDate,
-  dropoffAddress: bookingsTable.dropoffAddress,
+  pickupAddress: bookingsTable.pickupAddress,
   dropoffDate: bookingsTable.dropoffDate,
+  dropoffAddress: bookingsTable.dropoffAddress,
   userId: bookingsTable.userId,
   createdAt: bookingsTable.createdAt,
   updatedAt: bookingsTable.updatedAt,
@@ -23,12 +23,13 @@ export const BookingListSelect = {
     email: usersTable.email,
     phone: usersTable.phone,
     cnic: usersTable.cnic,
+    image: usersTable.image,
   },
 };
 
 export class BookingRepository {
-  async findAll(args: { page?: number; limit?: number; userId?: string }) {
-    const { page = 1, limit = 10, userId } = args;
+  async findAll(args?: { page?: number; limit?: number; userId?: string }) {
+    const { page = 1, limit = 10, userId } = args || {};
     const offset = (page - 1) * limit;
 
     const conditions = [isNull(bookingsTable.deletedAt)];

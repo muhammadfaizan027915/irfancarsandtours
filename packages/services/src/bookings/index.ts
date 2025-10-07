@@ -3,11 +3,13 @@ import {
   BookedCarRepository,
   CarRepository,
 } from "@icat/repositories";
-import { BookingSelect } from "@icat/database";
 import {
-  CarBookingRequestDto,
-  CarBookingResponseDto,
-  CarBookingResponseSchema,
+  BookingRequestDto,
+  BookingResponseDto,
+  BookingResponseSchema,
+  GetBookingsBodyDto,
+  PaginatedBookingWithUserResponseDto,
+  PaginatedBookingWithUserResponseSchema,
 } from "@icat/contracts";
 import { UserService } from "@icat/services/users";
 import { auth } from "@icat/lib";
@@ -25,10 +27,23 @@ export class BookingService {
     this.userService = new UserService();
   }
 
+  async getAll(
+    args?: GetBookingsBodyDto
+  ): Promise<PaginatedBookingWithUserResponseDto> {
+    const result = await this.bookingRepository.findAll(args);
+    console.log(result)
+    return PaginatedBookingWithUserResponseSchema.parse(result);
+  }
+
+  async getBookingById(bookingId: string): Promise<BookingResponseDto | null> {
+    const booking = await this.bookingRepository.findById(bookingId);
+    return booking ? BookingResponseSchema.parse(booking) : null;
+  }
+
   async createBooking({
     cars,
     ...data
-  }: CarBookingRequestDto): Promise<CarBookingResponseDto> {
+  }: BookingRequestDto): Promise<BookingResponseDto> {
     const session = await auth();
     const sessionUser = session?.user;
 
@@ -60,13 +75,6 @@ export class BookingService {
       });
     }
 
-    return CarBookingResponseSchema.parse(booking);
-  }
-
-  async getBookingById(
-    bookingId: string
-  ): Promise<CarBookingResponseDto | null> {
-    const booking = await this.bookingRepository.findById(bookingId);
-    return booking ? CarBookingResponseSchema.parse(booking) : null;
+    return BookingResponseSchema.parse(booking);
   }
 }

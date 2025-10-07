@@ -1,7 +1,8 @@
 import z from "zod";
-import { toDate } from "../generic";
+import { PaginatedResponseSchema, toDate } from "../generic";
+import { DetailedUserResponseSchema } from "../users";
 
-export const CarBookingResponseSchema = z.object({
+export const BookingResponseSchema = z.object({
   id: z.uuid(),
   userId: z.string(),
   pickupAddress: z.string().min(1),
@@ -13,4 +14,56 @@ export const CarBookingResponseSchema = z.object({
   updatedAt: toDate(z.date().nullable()),
 });
 
-export type CarBookingResponseDto = z.infer<typeof CarBookingResponseSchema>;
+export type BookingResponseDto = z.infer<typeof BookingResponseSchema>;
+
+const BookingListItemResponseSchema = BookingResponseSchema.omit({
+  deletedAt: true,
+});
+
+export type BookingListItemResponseDto = z.infer<
+  typeof BookingListItemResponseSchema
+>;
+
+export const BookingWithUserListItemResponseSchema =
+  BookingListItemResponseSchema.extend({
+    bookedBy: DetailedUserResponseSchema.pick({
+      id: true,
+      name: true,
+      email: true,
+      phone: true,
+      cnic: true,
+      image: true,
+    }),
+  });
+
+export type BookingWithUserListItemDto = z.infer<
+  typeof BookingWithUserListItemResponseSchema
+>;
+
+export const BookingListResponseSchema = z.array(BookingListItemResponseSchema);
+
+export type BookingListResponseDto = z.infer<typeof BookingListResponseSchema>;
+
+export const PaginatedBookingResponseSchema = PaginatedResponseSchema(
+  BookingListItemResponseSchema
+);
+
+export type PaginatedBookingResponseDto = z.infer<
+  typeof PaginatedBookingResponseSchema
+>;
+
+export const BookingWithUserListResponseSchema = z.array(
+  BookingWithUserListItemResponseSchema
+);
+
+export type BookingWithUserListResponseDto = z.infer<
+  typeof BookingWithUserListResponseSchema
+>;
+
+export const PaginatedBookingWithUserResponseSchema = PaginatedResponseSchema(
+  BookingWithUserListItemResponseSchema
+);
+
+export type PaginatedBookingWithUserResponseDto = z.infer<
+  typeof PaginatedBookingWithUserResponseSchema
+>;

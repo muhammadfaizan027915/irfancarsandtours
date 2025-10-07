@@ -1,7 +1,7 @@
-import { CarBookingRequestDto } from "@icat/contracts";
+import { BookingRequestDto } from "@icat/contracts";
 
 export type CarBookingFormProps = {
   defaultValue?: Partial<
-    Pick<CarBookingRequestDto, "name" | "email" | "cnic" | "phone">
+    Pick<BookingRequestDto, "name" | "email" | "cnic" | "phone">
   >;
 };

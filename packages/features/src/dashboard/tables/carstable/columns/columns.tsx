@@ -1,12 +1,15 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { CarSelect } from "@icat/database";
+import { CarListItemResponseDto } from "@icat/contracts";
+import { CarImageCell } from "./imagecell";
+import { CarActionsCell } from "./actionscell";
 
-export const columns: ColumnDef<CarSelect>[] = [
+export const carsColumns: ColumnDef<CarListItemResponseDto>[] = [
   {
-    accessorKey: "imageUrl",
+    accessorKey: "imageUrls",
     header: "Image",
+    cell: CarImageCell,
   },
   {
     accessorKey: "name",
@@ -21,7 +24,7 @@ export const columns: ColumnDef<CarSelect>[] = [
     header: "Brand",
   },
   {
-    accessorKey: "type",
+    accessorKey: "carType",
     header: "Type",
   },
   {
@@ -29,7 +32,7 @@ export const columns: ColumnDef<CarSelect>[] = [
     header: "Fuel Type",
   },
   {
-    accessorKey: "actions",
-    header: "Actions",
+    id: "actions",
+    cell: CarActionsCell,
   },
 ];

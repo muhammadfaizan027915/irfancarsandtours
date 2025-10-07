@@ -38,7 +38,7 @@ export const CarListSelect = {
 };
 
 export class CarRepository {
-  async findAll(args: {
+  async findAll(args?: {
     page?: number;
     limit?: number;
     search?: string;
@@ -57,7 +57,7 @@ export class CarRepository {
       fuelType,
       transmissionType,
       amenities,
-    } = args;
+    } = args || {};
 
     const offset = (page - 1) * limit;
     const conditions = [isNull(carsTable.deletedAt)];

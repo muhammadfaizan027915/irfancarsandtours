@@ -1,7 +1,7 @@
 import { auth } from "@icat/lib";
 import { CarBookingForm } from "../../forms";
 import { Card, CardContent, CardHeader } from "@icat/ui";
-import { CarBookingRequestDto } from "@icat/contracts";
+import { BookingRequestDto } from "@icat/contracts";
 
 export async function CarBooking() {
   const session = await auth();
@@ -13,7 +13,7 @@ export async function CarBooking() {
         <h1 className="text-start text-2xl font-bold">Make Car Booking</h1>
       </CardHeader>
       <CardContent>
-        <CarBookingForm defaultValue={sessionUser as CarBookingRequestDto} />
+        <CarBookingForm defaultValue={sessionUser as BookingRequestDto} />
       </CardContent>
     </Card>
   );

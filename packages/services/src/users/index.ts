@@ -9,6 +9,8 @@ import {
   UserResponseWithPasswordSchema,
   UpdateUserBodyDto,
   ChangePasswordBodyDto,
+  PaginatedUserResponseDto,
+  PaginatedUserResponseSchema,
 } from "@icat/contracts";
 import { DuplicateEmailError, NotFoundError, ValidationError } from "@icat/lib";
 import { AuthService } from "../auth";
@@ -22,21 +24,9 @@ export class UserService {
     this.authService = new AuthService();
   }
 
-  async createUser(data: CreateUserBodyDto): Promise<UserResponseDto> {
-    const existingUser = await this.userRepository.findByEmail(data.email);
-
-    if (existingUser) {
-      throw new DuplicateEmailError(data?.email);
-    }
-
-    const passwordHash = await this.authService.hashPassword(data.password);
-
-    const createdUser = await this.userRepository.create({
-      ...data,
-      password: passwordHash,
-    });
-
-    return UserResponseSchema.parse(createdUser);
+  async getAll(): Promise<PaginatedUserResponseDto> {
+    const result = this.userRepository.findAll();
+    return PaginatedUserResponseSchema.parse(result);
   }
 
   async getUserByEmail(email: string): Promise<UserResponseDto> {
@@ -57,6 +47,23 @@ export class UserService {
     }
 
     return UserResponseWithPasswordSchema.parse(user);
+  }
+
+  async createUser(data: CreateUserBodyDto): Promise<UserResponseDto> {
+    const existingUser = await this.userRepository.findByEmail(data.email);
+
+    if (existingUser) {
+      throw new DuplicateEmailError(data?.email);
+    }
+
+    const passwordHash = await this.authService.hashPassword(data.password);
+
+    const createdUser = await this.userRepository.create({
+      ...data,
+      password: passwordHash,
+    });
+
+    return UserResponseSchema.parse(createdUser);
   }
 
   async validateUserCredentials(

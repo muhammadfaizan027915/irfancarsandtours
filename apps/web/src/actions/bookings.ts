@@ -1,6 +1,6 @@
 "use server";
 
-import { CarBookingRequestSchema, CarBookingRequestDto } from "@icat/contracts";
+import { CarBookingRequestSchema, BookingRequestDto } from "@icat/contracts";
 import { auth, handlerFormActionWithError, UnauthorizedError } from "@icat/lib";
 import { CarCartItem, carCartKey } from "@icat/web/store";
 import { BookingService } from "@icat/services";
@@ -10,7 +10,7 @@ import { NavigationUrls } from "@icat/features";
 
 export const bookCar = handlerFormActionWithError({
   schema: CarBookingRequestSchema,
-  action: async (data: CarBookingRequestDto) => {
+  action: async (data: BookingRequestDto) => {
     const session = await auth();
     const sessionUser = session?.user;
 

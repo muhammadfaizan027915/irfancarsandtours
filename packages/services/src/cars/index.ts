@@ -21,7 +21,7 @@ export class CarService {
     this.carRepository = new CarRepository();
   }
 
-  async getAll(args: GetCarsBodyDto): Promise<PaginatedCarResponseDto> {
+  async getAll(args?: GetCarsBodyDto): Promise<PaginatedCarResponseDto> {
     const result = await this.carRepository.findAll(args);
 
     const data = result?.data;

@@ -1,5 +1,5 @@
-import { CarBookingResponseDto } from "@icat/contracts";
+import { BookingResponseDto } from "@icat/contracts";
 
 export type BookingConfirmationProps = {
-  booking: CarBookingResponseDto;
+  booking: BookingResponseDto;
 };

@@ -1,4 +1,5 @@
 import z from "zod";
+import { PaginatedResponseSchema } from "../generic";
 
 export const UserResponseSchema = z.object({
   id: z.uuid(),
@@ -27,4 +28,12 @@ export const DetailedUserResponseSchema = UserResponseSchema.extend({
 
 export type DetailedUserResponseDto = z.infer<
   typeof DetailedUserResponseSchema
+>;
+
+export const PaginatedUserResponseSchema = PaginatedResponseSchema(
+  DetailedUserResponseSchema
+);
+
+export type PaginatedUserResponseDto = z.infer<
+  typeof PaginatedUserResponseSchema
 >;
