@@ -39,7 +39,7 @@ export const db = drizzle({
   connection: {
     connectionString: process.env.DATABASE_URL,
     ssl: false,
-    query_timeout: 10000,
-    statement_timeout: 10000,
+    query_timeout: 0,
+    statement_timeout: 0,
   },
 });

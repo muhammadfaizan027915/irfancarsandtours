@@ -1,7 +1,7 @@
 import { db, usersTable, UserInsert, UserSelect } from "@icat/database";
 import { and, eq, isNull, sql } from "drizzle-orm";
 
-const UsersListSelect = {
+export const UserItemSelect = {
   id: usersTable.id,
   name: usersTable.name,
   email: usersTable.email,
@@ -26,13 +26,11 @@ export class UserRepository {
     const whereClause = and(...conditions);
 
     const users = await db
-      .select(UsersListSelect)
+      .select(UserItemSelect)
       .from(usersTable)
       .where(whereClause)
       .limit(limit)
       .offset(offset);
-
-    console.log({ users });
 
     const [result] = await db
       .select({ total: sql<number>`count(*)` })

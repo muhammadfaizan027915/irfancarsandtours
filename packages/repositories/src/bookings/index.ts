@@ -4,10 +4,13 @@ import {
   BookingInsert,
   BookingSelect,
   usersTable,
+  bookedCarsTable,
+  carsTable,
 } from "@icat/database";
 import { and, eq, isNull, sql } from "drizzle-orm";
+import { UserItemSelect } from "../users";
 
-export const BookingListSelect = {
+export const BookingItemSelect = {
   id: bookingsTable.id,
   pickupDate: bookingsTable.pickupDate,
   pickupAddress: bookingsTable.pickupAddress,
@@ -16,15 +19,11 @@ export const BookingListSelect = {
   userId: bookingsTable.userId,
   createdAt: bookingsTable.createdAt,
   updatedAt: bookingsTable.updatedAt,
+};
 
-  bookedBy: {
-    id: usersTable.id,
-    name: usersTable.name,
-    email: usersTable.email,
-    phone: usersTable.phone,
-    cnic: usersTable.cnic,
-    image: usersTable.image,
-  },
+export const BookingItemWithUserSelect = {
+  ...BookingItemSelect,
+  bookedBy: UserItemSelect,
 };
 
 export class BookingRepository {
@@ -41,7 +40,7 @@ export class BookingRepository {
     const whereClause = and(...conditions);
 
     const bookings = await db
-      .select(BookingListSelect)
+      .select(BookingItemWithUserSelect)
       .from(bookingsTable)
       .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
       .where(whereClause)
@@ -66,11 +65,79 @@ export class BookingRepository {
     };
   }
 
-  async findById(id: string): Promise<BookingSelect | null> {
-    const booking = await db.query.bookingsTable.findFirst({
-      where: and(eq(bookingsTable.id, id), isNull(bookingsTable.deletedAt)),
-    });
-    return booking ?? null;
+  async findAllByUserId(args: {
+    page?: number;
+    limit?: number;
+    userId: string;
+  }) {
+    const { page = 1, limit = 10, userId } = args || {};
+    const offset = (page - 1) * limit;
+
+    const conditions = [isNull(bookingsTable.deletedAt)];
+
+    if (userId) {
+      conditions.push(eq(bookingsTable.userId, userId));
+    }
+
+    const whereClause = and(...conditions);
+
+    const bookings = await db
+      .select(BookingItemSelect)
+      .from(bookingsTable)
+      .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
+      .where(whereClause)
+      .limit(limit)
+      .offset(offset);
+
+    const [result] = await db
+      .select({ total: sql<number>`count(*)` })
+      .from(bookingsTable)
+      .where(whereClause);
+
+    const total = bookings.length > 0 ? Number(result.total) : 0;
+
+    return {
+      data: bookings,
+      pagination: {
+        total,
+        page,
+        limit,
+        pages: Math.ceil(total / limit),
+      },
+    };
+  }
+
+  async findById(id: string) {
+    const conditions = [
+      isNull(bookingsTable.deletedAt),
+      eq(bookingsTable.id, id),
+    ];
+
+    const whereClause = and(...conditions);
+
+    const [booking] = await db
+      .select(BookingItemSelect)
+      .from(bookingsTable)
+      .where(whereClause);
+
+    return booking;
+  }
+
+  async findByIdWithUser(id: string) {
+    const conditions = [
+      isNull(bookingsTable.deletedAt),
+      eq(bookingsTable.id, id),
+    ];
+
+    const whereClause = and(...conditions);
+
+    const [bookingWithUser] = await db
+      .select(BookingItemWithUserSelect)
+      .from(bookingsTable)
+      .leftJoin(usersTable, eq(usersTable.id, bookingsTable.userId))
+      .where(whereClause);
+
+    return bookingWithUser;
   }
 
   async create(data: BookingInsert): Promise<BookingSelect> {

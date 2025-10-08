@@ -10,8 +10,7 @@ export async function CustoemrsTable() {
 
   const userService = new UserService();
   const response = await userService.getAll();
+  const customers = response?.data;
 
-  const cars = response?.data || [];
-
-  return <DataTable columns={customersColumns} data={cars} />;
+  return <DataTable columns={customersColumns} data={customers} />;
 }

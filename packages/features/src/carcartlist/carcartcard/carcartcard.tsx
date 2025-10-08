@@ -17,6 +17,7 @@ import Image from "next/image";
 
 export function CarCartCard({ car }: CarCartCardProps) {
   const { incrementQuantity, decrementQuantity, toggleDriver } = useCarCart();
+  const imageUrl = car?.imageUrls?.[0];
 
   const handleIncrementQuantity = (e: MouseEvent) => {
     incrementQuantity(car.id);
@@ -37,7 +38,7 @@ export function CarCartCard({ car }: CarCartCardProps) {
     <Card className="flex flex-row gap-2 items-center p-3 rounded-xl shadow-none hover:shadow hover:-translate-y-1 duration-300 transition-normal">
       <div className="relative w-24 h-20 rounded-lg overflow-hidden">
         <Image
-          src={car.imageUrls?.[0] || "/assets/hero_background_primary.jpg"}
+          src={imageUrl || null}
           alt={`${car.name} ${car.brand}`}
           fill
           style={{ objectFit: "cover", objectPosition: "center" }}

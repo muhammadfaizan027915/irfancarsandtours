@@ -1,14 +1,13 @@
 "use client";
 
-import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar";
-import { BookingWithUserListItemDto } from "@icat/contracts";
+import { BookingListItemResponseDto } from "@icat/contracts";
 import { ColumnDef } from "@tanstack/react-table";
-import { BookedByCell } from "./bookedbycell";
+import { NavigationUrls } from "@icat/features/header";
 import { ExternalLink } from "lucide-react";
 import { format } from "date-fns";
 import Link from "next/link";
 
-export const bookingsColumns: ColumnDef<BookingWithUserListItemDto>[] = [
+export const userBookingsColumns: ColumnDef<BookingListItemResponseDto>[] = [
   {
     accessorKey: "id",
     header: "Booking ID",
@@ -22,7 +21,9 @@ export const bookingsColumns: ColumnDef<BookingWithUserListItemDto>[] = [
     accessorKey: "dropoffDate",
     header: "Dropoff Date",
     cell: ({ row }) =>
-      format(new Date(row.original.dropoffDate), "dd MMM yyyy"),
+      row.original.dropoffDate
+        ? format(new Date(row.original.dropoffDate), "dd MMM yyyy")
+        : "—",
   },
   {
     accessorKey: "pickupAddress",
@@ -31,11 +32,6 @@ export const bookingsColumns: ColumnDef<BookingWithUserListItemDto>[] = [
   {
     accessorKey: "dropoffAddress",
     header: "Dropoff Address",
-  },
-  {
-    accessorKey: "bookedBy",
-    header: "Booked By",
-    cell: BookedByCell,
   },
   {
     accessorKey: "createdAt",
@@ -48,7 +44,7 @@ export const bookingsColumns: ColumnDef<BookingWithUserListItemDto>[] = [
     cell: ({ row }) => {
       return (
         <Link
-          href={`${DashboardNavigationUrls.BOOKINGS}/${row.original.id}`}
+          href={`${NavigationUrls.BOOKINGS}/${row.original.id}`}
           className="text-primary"
         >
           <ExternalLink size={18} />

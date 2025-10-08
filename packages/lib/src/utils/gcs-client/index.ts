@@ -41,6 +41,7 @@ export class GCSClient {
     expiresIn = 5 * 60 * 1000
   ): Promise<string> {
     const file = this.bucket.file(fileName);
+    await file.makePublic();
 
     const options: GetSignedUrlConfig = {
       version: "v4",
@@ -50,6 +51,12 @@ export class GCSClient {
 
     const [url] = await file.getSignedUrl(options);
     return url;
+  }
+
+  async createPublicUrl(fileName: string) {
+    const fileKey = encodeURIComponent(fileName);
+    const publicUrl = `https://storage.googleapis.com/${this.bucketName}/${fileKey}`;
+    return publicUrl;
   }
 
   async uploadFile(
@@ -68,26 +75,12 @@ export class GCSClient {
 
   extractFileNameFromUrl(url: string): string {
     const match = url.match(/https:\/\/storage\.googleapis\.com\/[^/]+\/(.+)/);
-    return match ? match[1] : url;
+    const fileKey = match ? match[1] : url;
+    return decodeURIComponent(fileKey);
   }
 
-  async deleteFile(fileIdentifier: string): Promise<boolean> {
-    let fileName = fileIdentifier;
-
-    if (fileIdentifier.startsWith("http")) {
-      const match = fileIdentifier.match(
-        /https:\/\/storage\.googleapis\.com\/([^/]+)\/([^?]+)/
-      );
-
-      if (match) {
-        fileName = decodeURIComponent(match[2]);
-      } else {
-        throw new Error("Invalid GCS URL format: cannot extract filename");
-      }
-    }
-
-    console.log(`Deleting file: ${fileName}`);
-
+  async deleteFile(url: string): Promise<boolean> {
+    const fileName = this.extractFileNameFromUrl(url);
     const file = this.bucket.file(fileName);
     await file.delete({ ignoreNotFound: true });
     return true;

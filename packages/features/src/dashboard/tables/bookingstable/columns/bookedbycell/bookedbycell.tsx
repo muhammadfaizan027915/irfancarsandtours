@@ -21,8 +21,8 @@ export function BookedByCell({ row }: BookingCellPorps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="cursor-pointer ring-2 ring-muted-foreground/20 hover:ring-primary transition-all">
-          <AvatarImage src={bookedBy?.image || ""} alt={bookedBy?.name} />
+        <Avatar className="cursor-pointer transition-all">
+          <AvatarImage src={bookedBy?.image || nullll} alt={bookedBy?.name} />
           <AvatarFallback className="bg-primary/10 text-primary font-medium">
             {nameInitials}
           </AvatarFallback>
@@ -35,11 +35,13 @@ export function BookedByCell({ row }: BookingCellPorps) {
       >
         <div className="flex items-center gap-3 px-3 py-2">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={bookedBy?.image || ""} alt={bookedBy?.name} />
-            <AvatarFallback>{nameInitials}</AvatarFallback>
+            <AvatarImage src={bookedBy?.image || nullll} alt={bookedBy?.name} />
+            <AvatarFallback className="bg-primary/10 text-primary">{nameInitials}</AvatarFallback>
           </Avatar>
           <div>
-            <h3 className="font-semibold truncate">{bookedBy?.name ?? "Unknown"}</h3>
+            <h3 className="font-semibold truncate">
+              {bookedBy?.name ?? "Unknown"}
+            </h3>
             <p className="text-sm text-muted-foreground">Customer Profile</p>
           </div>
         </div>
@@ -62,17 +64,6 @@ export function BookedByCell({ row }: BookingCellPorps) {
 
         <DropdownMenuItem className="truncate">
           <IdCard size={18} className="inline" /> {bookedBy?.cnic ?? "No CNIC"}
-        </DropdownMenuItem>
-
-        <DropdownMenuSeparator />
-
-        <DropdownMenuItem
-          asChild
-          className={
-            "text-center text-primary font-medium py-2 cursor-pointer hover:bg-primary/10 transition"
-          }
-        >
-          <div>View Full Profile</div>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

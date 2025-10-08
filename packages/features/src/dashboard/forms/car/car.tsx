@@ -48,18 +48,16 @@ export function CarForm({ car, mode }: CarFormProps) {
   });
 
   const imageUrlsControl = useInputControl({
+    formId: form.id,
     name: fields.imageUrls.name,
     key: fields.imageUrls.key,
-    formId: form.id,
+    initialValue: car?.imageUrls,
   });
 
   const { files, uploadFiles, deleteFile } = useMultiFileUpload({
     initialUrls: car?.imageUrls,
     onSuccess(files) {
       const urls = files.map((file) => file.previewUrl);
-
-      console.log("All uploaded file URLs:", urls);
-
       imageUrlsControl.change(urls as string[]);
     },
   });
@@ -246,7 +244,7 @@ export function CarForm({ car, mode }: CarFormProps) {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {files.map((f) => (
+          {files?.map((f) => (
             <div
               key={f.id}
               className="relative border rounded-lg overflow-hidden"

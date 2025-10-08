@@ -19,7 +19,7 @@ import {
   arrayOverlaps,
 } from "drizzle-orm";
 
-export const CarListSelect = {
+export const CarItemSelect = {
   id: carsTable.id,
   name: carsTable.name,
   model: carsTable.model,
@@ -89,7 +89,7 @@ export class CarRepository {
     const whereClause = and(...conditions);
 
     const cars = await db
-      .select(CarListSelect)
+      .select(CarItemSelect)
       .from(carsTable)
       .where(whereClause)
       .limit(limit)
@@ -114,16 +114,21 @@ export class CarRepository {
   }
 
   async findFeatured() {
-    return db
-      .select(CarListSelect)
-      .from(carsTable)
-      .where(eq(carsTable.isFeatured, true));
+    const conditions = [
+      isNull(carsTable.deletedAt),
+      eq(carsTable.isFeatured, true),
+    ];
+    const whereClause = and(...conditions);
+    return db.select(CarItemSelect).from(carsTable).where(whereClause);
   }
 
   async findMostSearched(limit = 10) {
+    const conditions = [isNull(carsTable.deletedAt)];
+    const whereClause = and(...conditions);
     return db
-      .select(CarListSelect)
+      .select(CarItemSelect)
       .from(carsTable)
+      .where(whereClause)
       .orderBy(desc(carsTable.timesSearched))
       .limit(limit);
   }

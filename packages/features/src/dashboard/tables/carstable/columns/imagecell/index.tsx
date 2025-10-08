@@ -1,1 +1,1 @@
-export * from "./carimagecell";
+export * from "./imagecell";

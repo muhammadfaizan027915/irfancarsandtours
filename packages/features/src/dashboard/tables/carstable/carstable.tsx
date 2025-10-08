@@ -10,8 +10,7 @@ export async function CarsTable() {
 
   const carService = new CarService();
   const response = await carService.getAll();
-
-  const cars = response?.data || [];
+  const cars = response?.data;
 
   return <DataTable columns={carsColumns} data={cars} />;
 }

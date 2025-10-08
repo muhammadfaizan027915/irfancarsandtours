@@ -19,3 +19,4 @@ export * from "./cardetail";
 export * from "./dashboard";
 export * from "./useravatar";
 export * from "./booking";
+export * from "./tables";

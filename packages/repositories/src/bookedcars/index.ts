@@ -3,9 +3,24 @@ import {
   bookedCarsTable,
   BookedCarInsert,
   BookedCarSelect,
+  carsTable,
 } from "@icat/database";
 
 import { eq, and, isNull } from "drizzle-orm";
+import { CarItemSelect } from "../cars";
+
+export const BookedCarItemSelect = {
+  id: bookedCarsTable.id,
+  quotedPrice: bookedCarsTable.quotedPrice,
+  bookedWithDriver: bookedCarsTable.bookedWithDriver,
+  quantity: bookedCarsTable.quantity,
+  createdAt: bookedCarsTable.createdAt,
+};
+
+export const BookedCarWithCarSelect = {
+  ...BookedCarItemSelect,
+  car: CarItemSelect,
+};
 
 export class BookedCarRepository {
   async create(data: BookedCarInsert): Promise<BookedCarSelect> {
@@ -32,6 +47,23 @@ export class BookedCarRepository {
       );
 
     return bookedcar;
+  }
+
+  async findByBookingIdWithCars(id: string) {
+    const conditions = [
+      isNull(bookedCarsTable.deletedAt),
+      eq(bookedCarsTable.bookingId, id),
+    ];
+
+    const whereClause = and(...conditions);
+
+    const [bookedCars] = await db
+      .select(BookedCarWithCarSelect)
+      .from(bookedCarsTable)
+      .leftJoin(carsTable, eq(carsTable.id, bookedCarsTable.carId))
+      .where(whereClause);
+
+    return bookedCars;
   }
 
   async update(

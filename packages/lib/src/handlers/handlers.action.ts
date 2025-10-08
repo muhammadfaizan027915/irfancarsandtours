@@ -4,16 +4,16 @@ import { ServerAction } from "./handlers.types";
 import { parseWithZod } from "@conform-to/zod/v4";
 import type { SubmissionResult } from "@conform-to/react";
 
-export async function handleServerActionWithError<
-  TArgs extends unknown[],
-  TResult
->(action: ServerAction<TArgs, TResult | void>) {
+export function handleServerActionWithError<TArgs extends unknown[], TResult>(
+  action: ServerAction<TArgs, TResult>
+) {
   return async (...args: TArgs) => {
     try {
-      return await action(...args);
+      const result = await action(...args);
+      return { error: null, data: result };
     } catch (error) {
       const errorPayload = handleError(error);
-      return { error: errorPayload };
+      return { error: errorPayload, data: null };
     }
   };
 }

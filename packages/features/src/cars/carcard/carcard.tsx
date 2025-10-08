@@ -10,10 +10,11 @@ import Link from "next/link";
 
 export function CarCard({ car }: CarCardProps) {
   const { addToCart } = useCarCart();
+  const imageUrl = car?.imageUrls?.[0];
 
   const handleAddToCart = () => {
     if (car) {
-      addToCart({...car, quantity: 1});
+      addToCart({ ...car, quantity: 1 });
 
       toast.success("Car successfully added to cart.", {
         position: "top-center",
@@ -26,7 +27,7 @@ export function CarCard({ car }: CarCardProps) {
       <div className="h-56 relative">
         <Image
           fill
-          src={"/assets/hero_background_primary.jpg"}
+          src={imageUrl || null}
           alt=""
           style={{
             objectFit: "cover",

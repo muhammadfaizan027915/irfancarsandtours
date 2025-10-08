@@ -1,7 +1,7 @@
 import {
-  deleteFileFromCloudStorage,
-  getSignedDownloadUrl,
+  getPublicFileUrl,
   getSignedUploadUrl,
+  deleteFileFromCloudStorage,
 } from "@icat/web/actions/file";
 import axios from "axios";
 
@@ -19,8 +19,11 @@ export async function uploadFile(arg: {
   onPreview?.(previewUrl);
 
   try {
-    const signedUploadUrl = await getSignedUploadUrl(file.name, file.type);
+    const result = await getSignedUploadUrl(file.name, file.type);
 
+    if (result.error) return null;
+
+    const signedUploadUrl = result.data;
     await axios.put(signedUploadUrl, file, {
       headers: { "Content-Type": file.type },
       onUploadProgress: (e) => {
@@ -31,10 +34,8 @@ export async function uploadFile(arg: {
       },
     });
 
-    const downloadUrl = await getSignedDownloadUrl(file.name);
-
+    const downloadUrl = await getPublicFileUrl(file.name);
     onSuccess?.(downloadUrl);
-
     return downloadUrl;
   } catch (error) {
     onError?.(error);
@@ -54,16 +55,20 @@ export async function deleteFile(arg: {
 }): Promise<boolean> {
   const { fileUrl, onStart, onSuccess, onError, onFinally } = arg;
 
-  try {
-    onStart?.();
-    await deleteFileFromCloudStorage(fileUrl);
-    onSuccess?.();
-    return true;
-  } catch (error) {
-    console.error("Error deleting file:", error);
-    onError?.(error);
-    return false;
-  } finally {
+  onStart?.();
+  const result = await deleteFileFromCloudStorage(fileUrl);
+
+  if (result.error) {
+    onError?.(result.error);
     onFinally?.();
+
+    return false;
+  } else if (result.data) {
+    onSuccess?.();
+    onFinally?.();
+
+    return true;
   }
+
+  return false;
 }

@@ -35,13 +35,21 @@ export type BookingRequestDto = z.infer<typeof CarBookingRequestSchema>;
 export const GetBookingsBodySchema = z.object({
   page: z
     .string()
-    .optional()
-    .transform((val) => (val ? parseInt(val, 10) : 1)),
+    .transform((val) => (val ? parseInt(val, 10) : 1))
+    .optional(),
 
   limit: z
     .string()
-    .optional()
-    .transform((val) => (val ? parseInt(val, 10) : 10)),
+    .transform((val) => (val ? parseInt(val, 10) : 10))
+    .optional(),
 });
 
 export type GetBookingsBodyDto = z.infer<typeof GetBookingsBodySchema>;
+
+export const GetBookingByUserIdBodySchema = GetBookingsBodySchema.extend({
+  userId: z.string(),
+});
+
+export type GetBookingsByUserIdBodyDto = z.infer<
+  typeof GetBookingByUserIdBodySchema
+>;

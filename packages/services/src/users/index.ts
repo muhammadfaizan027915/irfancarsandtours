@@ -25,7 +25,7 @@ export class UserService {
   }
 
   async getAll(): Promise<PaginatedUserResponseDto> {
-    const result = this.userRepository.findAll();
+    const result = await this.userRepository.findAll();
     return PaginatedUserResponseSchema.parse(result);
   }
 

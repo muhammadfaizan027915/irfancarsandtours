@@ -1,16 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import { format } from "date-fns";
-import { Avatar, AvatarFallback, AvatarImage, Button } from "@icat/ui";
+import { Avatar, AvatarFallback, AvatarImage } from "@icat/ui";
 import { ColumnDef } from "@tanstack/react-table";
 import { DetailedUserResponseDto } from "@icat/contracts";
 import { getNameInitials } from "@icat/lib/utils";
+import Link from "next/link";
 
 export const customersColumns: ColumnDef<DetailedUserResponseDto>[] = [
   {
-    accessorKey: "image",
-    header: "Avatar",
+    id: "image",
     cell: ({ row }) => {
       const imageUrl = row.original.image;
       const name = row.original.name;
@@ -18,8 +17,10 @@ export const customersColumns: ColumnDef<DetailedUserResponseDto>[] = [
 
       return (
         <Avatar className="h-10 w-10">
-          <AvatarImage src={imageUrl || ""} alt={name} />
-          <AvatarFallback>{nameInitials}</AvatarFallback>
+          <AvatarImage src={imageUrl || null} alt={name} />
+          <AvatarFallback className="bg-primary/10 text-primary">
+            {nameInitials}
+          </AvatarFallback>
         </Avatar>
       );
     },
@@ -27,20 +28,17 @@ export const customersColumns: ColumnDef<DetailedUserResponseDto>[] = [
   {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => (
-      <span className="font-medium text-foreground">{row.original.name}</span>
-    ),
   },
   {
     accessorKey: "email",
     header: "Email",
     cell: ({ row }) => (
-      <a
+      <Link
         href={`mailto:${row.original.email}`}
-        className="text-blue-600 hover:underline"
+        className="text-secondary-foreground underline"
       >
         {row.original.email}
-      </a>
+      </Link>
     ),
   },
   {

@@ -1,4 +1,4 @@
-import { CarCellPorps } from "./../columns.types";
+import { CarCellPorps } from "../columns.types";
 import Image from "next/image";
 
 export function CarImageCell({ row }: CarCellPorps) {

@@ -7,7 +7,12 @@ import {
   BookingRequestDto,
   BookingResponseDto,
   BookingResponseSchema,
+  BookingWithUserListItemDto,
+  BookingWithUserListItemResponseSchema,
   GetBookingsBodyDto,
+  GetBookingsByUserIdBodyDto,
+  PaginatedBookingResponseDto,
+  PaginatedBookingResponseSchema,
   PaginatedBookingWithUserResponseDto,
   PaginatedBookingWithUserResponseSchema,
 } from "@icat/contracts";
@@ -31,13 +36,28 @@ export class BookingService {
     args?: GetBookingsBodyDto
   ): Promise<PaginatedBookingWithUserResponseDto> {
     const result = await this.bookingRepository.findAll(args);
-    console.log(result)
     return PaginatedBookingWithUserResponseSchema.parse(result);
+  }
+
+  async getAllByUserId(
+    args: GetBookingsByUserIdBodyDto
+  ): Promise<PaginatedBookingResponseDto> {
+    const result = await this.bookingRepository.findAllByUserId(args);
+    return PaginatedBookingResponseSchema.parse(result);
   }
 
   async getBookingById(bookingId: string): Promise<BookingResponseDto | null> {
     const booking = await this.bookingRepository.findById(bookingId);
     return booking ? BookingResponseSchema.parse(booking) : null;
+  }
+
+  async getBookingByIdWithUser(
+    bookingId: string
+  ): Promise<BookingWithUserListItemDto | null> {
+    const booking = await this.bookingRepository.findByIdWithUser(bookingId);
+    return booking
+      ? BookingWithUserListItemResponseSchema.parse(booking)
+      : null;
   }
 
   async createBooking({

@@ -16,14 +16,14 @@ type UploadedFile = {
 
 type UseMultiFileUploadOptions = {
   initialUrls?: string[];
-  onError?: (error: any) => void;
   onSuccess?: (uploadFiles: UploadedFile[]) => void;
+  onError?: (error: any) => void;
 };
 
 export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
   const { initialUrls = [], onSuccess, onError } = options || {};
 
-  const [files, setFiles] = useState<UploadedFile[]>(
+  const [files, setFiles] = useState<UploadedFile[]>(() =>
     initialUrls.map((url) => ({
       id: crypto.randomUUID(),
       file: null,
@@ -53,16 +53,17 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
         onPreview: (previewUrl) => updateFile(id, { previewUrl }),
         onProgress: (progress) => updateFile(id, { progress }),
         onSuccess: (previewUrl) => {
-          const suceessfullyUploaded = {
+          const successfullyUploaded: UploadedFile = {
             id,
+            file: null,
             previewUrl,
             progress: 100,
             isUploading: false,
-            file: null,
           };
 
-          updateFile(id, suceessfullyUploaded);
-          onSuccess?.([...files, suceessfullyUploaded]);
+          updateFile(id, successfullyUploaded);
+          const updatedFiles = getCurrentFiles();
+          onSuccess?.(updatedFiles);
         },
         onError: (error) => {
           updateFile(id, { isUploading: false });
@@ -79,8 +80,6 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
     if (file.previewUrl) {
       const prevFiles = getCurrentFiles();
       const leftFiles = files.filter((f) => f.id !== id);
-
-      setFiles(leftFiles);
 
       await deleteFileUtil({
         fileUrl: file.previewUrl,
@@ -101,9 +100,8 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
     );
   };
 
-  const getCurrentFiles = () => {
-    return JSON.parse(JSON.stringify(files)) as UploadedFile[];
-  };
+  const getCurrentFiles = () =>
+    JSON.parse(JSON.stringify(files)) as UploadedFile[];
 
   return {
     files,
