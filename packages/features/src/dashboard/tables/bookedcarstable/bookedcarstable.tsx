@@ -1,12 +1,10 @@
 import { DataTable } from "@icat/ui";
-import { userBookedCarsColumns } from "./columns";
+import { bookedCarsColumns } from "./columns";
 import { BookedCarService } from "@icat/services";
-import { UserBookedCarsTableProps } from "./userbookedcarstable.types";
 import { auth } from "@icat/lib";
+import { BookedCarsTableProps } from "./bookedcarstable.types";
 
-export async function UserBookedCarsTable({
-  bookingId,
-}: UserBookedCarsTableProps) {
+export async function BookedCarsTable({ bookingId }: BookedCarsTableProps) {
   const session = await auth();
   const sessionUser = session?.user;
 
@@ -15,5 +13,5 @@ export async function UserBookedCarsTable({
   const bookedCarService = new BookedCarService();
   const bookedCars = await bookedCarService.getByBookingIdWithCars(bookingId);
 
-  return <DataTable columns={userBookedCarsColumns} data={bookedCars} />;
+  return <DataTable columns={bookedCarsColumns} data={bookedCars} />;
 }

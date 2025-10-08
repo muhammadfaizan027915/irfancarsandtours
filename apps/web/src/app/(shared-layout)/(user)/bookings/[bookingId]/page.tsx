@@ -1,4 +1,4 @@
-import { BookingDetail } from "@icat/features";
+import { BookingDetail, UserBookedCarsTable } from "@icat/features";
 import { BookingService } from "@icat/services";
 import { notFound } from "next/navigation";
 import { auth } from "@icat/lib";
@@ -20,5 +20,10 @@ export default async function UserBookingDetailPage({
 
   if (!booking) return notFound();
 
-  return <BookingDetail booking={booking} />;
+  return (
+    <div className="grid gap-6">
+      <BookingDetail booking={booking} />
+      <UserBookedCarsTable bookingId={bookingId} />
+    </div>
+  );
 }

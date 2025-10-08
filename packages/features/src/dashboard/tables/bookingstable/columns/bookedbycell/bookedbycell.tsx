@@ -22,7 +22,7 @@ export function BookedByCell({ row }: BookingCellPorps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer transition-all">
-          <AvatarImage src={bookedBy?.image || nullll} alt={bookedBy?.name} />
+          <AvatarImage src={bookedBy?.image || ""} alt={bookedBy?.name} />
           <AvatarFallback className="bg-primary/10 text-primary font-medium">
             {nameInitials}
           </AvatarFallback>
@@ -35,7 +35,7 @@ export function BookedByCell({ row }: BookingCellPorps) {
       >
         <div className="flex items-center gap-3 px-3 py-2">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={bookedBy?.image || nullll} alt={bookedBy?.name} />
+            <AvatarImage src={bookedBy?.image || ""} alt={bookedBy?.name} />
             <AvatarFallback className="bg-primary/10 text-primary">{nameInitials}</AvatarFallback>
           </Avatar>
           <div>

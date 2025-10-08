@@ -57,7 +57,7 @@ export class BookedCarRepository {
 
     const whereClause = and(...conditions);
 
-    const [bookedCars] = await db
+    const bookedCars = await db
       .select(BookedCarWithCarSelect)
       .from(bookedCarsTable)
       .leftJoin(carsTable, eq(carsTable.id, bookedCarsTable.carId))

@@ -21,10 +21,10 @@ export function BookingDetail({ booking }: BookingDetailProps) {
         <CardContent className="grid gap-6">
           <div>
             <p className="text-muted-foreground">Booking ID</p>
-            <p className="font-mono text-primary">{booking.id}</p>
+            <p className="text-primary">{booking.id}</p>
           </div>
           <div>
-            <p className="text-muted-foreground">Created At</p>
+            <p className="text-muted-foreground">Booked At</p>
             <p className="font-medium">
               {format(new Date(booking.createdAt!), "PPPp")}
             </p>

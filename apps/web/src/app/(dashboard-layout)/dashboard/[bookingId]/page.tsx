@@ -1,5 +1,5 @@
 import { auth } from "@icat/lib";
-import { BookingDetail } from "@icat/features";
+import { BookedCarsTable, BookingDetail } from "@icat/features";
 import { BookingService } from "@icat/services";
 import { notFound } from "next/navigation";
 
@@ -21,9 +21,10 @@ export default async function BookingDetailPage({
   if (!booking) return notFound();
 
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col gap-6 w-full">
       <h1 className="text-3xl font-semibold tracking-tight">Booking Details</h1>
       <BookingDetail booking={booking} />
+      <BookedCarsTable bookingId={bookingId} />
     </div>
   );
 }

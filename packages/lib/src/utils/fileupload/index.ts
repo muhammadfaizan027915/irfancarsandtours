@@ -63,12 +63,10 @@ export async function deleteFile(arg: {
     onFinally?.();
 
     return false;
-  } else if (result.data) {
-    onSuccess?.();
-    onFinally?.();
-
-    return true;
   }
 
-  return false;
+  onSuccess?.();
+  onFinally?.();
+
+  return true;
 }

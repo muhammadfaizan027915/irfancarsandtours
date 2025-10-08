@@ -10,7 +10,7 @@ function Input({ className, type, startIcon, errors, ...props }: InputProps) {
   const hasError = errors && errors.length > 0;
 
   return (
-    <div className="w-full">
+    <div className="w-[inherit]">
       <div className="relative">
         {startIcon && (
           <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">

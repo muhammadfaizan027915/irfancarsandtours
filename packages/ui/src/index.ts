@@ -17,6 +17,7 @@ export * from "./components/slider-container";
 export * from "./components/date-time-picker";
 export * from "./components/theme-provider";
 export * from "./components/dropdown-menu";
+export * from "./components/small-image";
 export * from "./components/separator";
 export * from "./components/skeleton";
 export * from "./components/progress";

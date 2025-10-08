@@ -1,14 +1,14 @@
 "use client";
 
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar";
-import { BookingWithUserListItemDto } from "@icat/contracts";
+import { BookingWithUserListItemResponseDto } from "@icat/contracts";
 import { ColumnDef } from "@tanstack/react-table";
 import { BookedByCell } from "./bookedbycell";
 import { ExternalLink } from "lucide-react";
 import { format } from "date-fns";
 import Link from "next/link";
 
-export const bookingsColumns: ColumnDef<BookingWithUserListItemDto>[] = [
+export const bookingsColumns: ColumnDef<BookingWithUserListItemResponseDto>[] = [
   {
     accessorKey: "id",
     header: "Booking ID",

@@ -1,4 +1,4 @@
-import { BookingWithUserListItemDto } from "@icat/contracts";
+import { BookingWithUserListItemResponseDto } from "@icat/contracts";
 import { CellContext } from "@tanstack/react-table";
 
-export type BookingCellPorps = CellContext<BookingWithUserListItemDto, unknown>;
+export type BookingCellPorps = CellContext<BookingWithUserListItemResponseDto, unknown>;

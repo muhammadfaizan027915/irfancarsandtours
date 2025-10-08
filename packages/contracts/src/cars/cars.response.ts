@@ -40,7 +40,7 @@ export const CarResponseSchema = z.object({
 
 export type CarResponseDto = z.infer<typeof CarResponseSchema>;
 
-const CarListItemResponseSchema = CarResponseSchema.omit({
+export const CarListItemResponseSchema = CarResponseSchema.omit({
   description: true,
   amenities: true,
   deletedAt: true,

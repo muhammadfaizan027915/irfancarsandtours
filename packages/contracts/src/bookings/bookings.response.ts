@@ -9,9 +9,9 @@ export const BookingResponseSchema = z.object({
   pickupDate: toDate(z.date()),
   dropoffAddress: z.string().min(1),
   dropoffDate: toDate(z.date()),
-  deletedAt: toDate(z.date().nullable()),
-  createdAt: toDate(z.date().nullable()),
-  updatedAt: toDate(z.date().nullable()),
+  deletedAt: toDate(z.date().nullish()),
+  createdAt: toDate(z.date()),
+  updatedAt: toDate(z.date()),
 });
 
 export type BookingResponseDto = z.infer<typeof BookingResponseSchema>;
@@ -36,7 +36,7 @@ export const BookingWithUserListItemResponseSchema =
     }),
   });
 
-export type BookingWithUserListItemDto = z.infer<
+export type BookingWithUserListItemResponseDto = z.infer<
   typeof BookingWithUserListItemResponseSchema
 >;
 

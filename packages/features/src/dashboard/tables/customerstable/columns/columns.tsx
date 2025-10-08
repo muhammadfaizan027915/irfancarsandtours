@@ -17,7 +17,7 @@ export const customersColumns: ColumnDef<DetailedUserResponseDto>[] = [
 
       return (
         <Avatar className="h-10 w-10">
-          <AvatarImage src={imageUrl || null} alt={name} />
+          <AvatarImage src={imageUrl || ""} alt={name} />
           <AvatarFallback className="bg-primary/10 text-primary">
             {nameInitials}
           </AvatarFallback>

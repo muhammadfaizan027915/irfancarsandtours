@@ -12,11 +12,14 @@ export const CarBookingRequestSchema = z
     pickupDate: toDate(z.date("Pickup date required")),
     pickupAddress: z
       .string("Pickup address is required")
-      .min(5, "Pickup address is required"),
+      .min(5, "Pickup address must be at least 5 characters")
+      .max(255, "Pickup address is too long"),
+
     dropoffDate: toDate(z.date("Dropoff date required")),
     dropoffAddress: z
       .string("Dropoff address is required")
-      .min(5, "Dropoff address is required"),
+      .min(5, "Dropoff address is required")
+      .max(255, "Dropoff address too long"),
     cars: z.array(
       z.object({
         carId: z.string(),

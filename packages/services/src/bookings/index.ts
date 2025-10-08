@@ -1,13 +1,9 @@
-import {
-  BookingRepository,
-  BookedCarRepository,
-  CarRepository,
-} from "@icat/repositories";
+import { BookingRepository } from "@icat/repositories";
 import {
   BookingRequestDto,
   BookingResponseDto,
   BookingResponseSchema,
-  BookingWithUserListItemDto,
+  BookingWithUserListItemResponseDto,
   BookingWithUserListItemResponseSchema,
   GetBookingsBodyDto,
   GetBookingsByUserIdBodyDto,
@@ -16,19 +12,19 @@ import {
   PaginatedBookingWithUserResponseDto,
   PaginatedBookingWithUserResponseSchema,
 } from "@icat/contracts";
-import { UserService } from "@icat/services/users";
+import { BookedCarService, CarService, UserService } from "@icat/services";
 import { auth } from "@icat/lib";
 
 export class BookingService {
   private bookingRepository: BookingRepository;
-  private bookedCarRepository: BookedCarRepository;
-  private carRepository: CarRepository;
+  private bookedCarService: BookedCarService;
   private userService: UserService;
+  private carService: CarService;
 
   constructor() {
     this.bookingRepository = new BookingRepository();
-    this.bookedCarRepository = new BookedCarRepository();
-    this.carRepository = new CarRepository();
+    this.bookedCarService = new BookedCarService();
+    this.carService = new CarService();
     this.userService = new UserService();
   }
 
@@ -53,7 +49,7 @@ export class BookingService {
 
   async getBookingByIdWithUser(
     bookingId: string
-  ): Promise<BookingWithUserListItemDto | null> {
+  ): Promise<BookingWithUserListItemResponseDto | null> {
     const booking = await this.bookingRepository.findByIdWithUser(bookingId);
     return booking
       ? BookingWithUserListItemResponseSchema.parse(booking)
@@ -77,16 +73,14 @@ export class BookingService {
     this.userService.updateUser(sessionUser?.id as string, data);
 
     const carIds = cars.map((car) => car?.carId);
-    const carsWithDriverRules = await this.carRepository.findCarsDriverRules(
-      carIds
-    );
+    const carsWithDriverRules = await this.carService.getCarsDriverRules(carIds);
 
     for await (const car of cars) {
       const carWithDriverRule = carsWithDriverRules.find(
         (c) => c.id === car.carId
       );
 
-      await this.bookedCarRepository.create({
+      await this.bookedCarService.create({
         ...car,
         bookingId: booking.id,
         bookedWithDriver: carWithDriverRule?.forceWithDriver

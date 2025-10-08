@@ -25,11 +25,9 @@ export function CarActionsCell({ row }: CarCellPorps) {
       });
     }
 
-    if (result.data?.id) {
-      return toast.success("Car deleted successfully.", {
-        position: "top-center"
-      });
-    }
+    return toast.success("Car deleted successfully.", {
+      position: "top-center",
+    });
   };
 
   return (

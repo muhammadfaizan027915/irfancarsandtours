@@ -27,7 +27,7 @@ export function CarCard({ car }: CarCardProps) {
       <div className="h-56 relative">
         <Image
           fill
-          src={imageUrl || null}
+          src={imageUrl || ""}
           alt=""
           style={{
             objectFit: "cover",

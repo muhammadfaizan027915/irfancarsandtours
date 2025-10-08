@@ -36,6 +36,10 @@ export class CarService {
     return PaginatedCarResponseSchema.parse(result);
   }
 
+  async getCarsDriverRules(carIds: string[]) {
+    return await this.carRepository.findCarsDriverRules(carIds);
+  }
+
   async getFeaturedCars(): Promise<CarsListResponseDto> {
     const cars = await this.carRepository.findFeatured();
     return CarsListResponseSchema.parse(cars);
