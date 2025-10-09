@@ -1,9 +1,8 @@
-
 import { NavigationUrls } from "../../header";
 import { Button, SliderContainer } from "@icat/ui";
+import { CarTypesLibrary } from "./cartypes.constants";
 import { CarTypeCard } from "./cartypecard";
 import { ArrowRight } from "lucide-react";
-import { CarTypesList } from "@icat/database";
 import Link from "next/link";
 
 export function CarTypes() {
@@ -26,9 +25,9 @@ export function CarTypes() {
       </div>
 
       <SliderContainer>
-        {CarTypesList?.map((carType) => (
-          <div key={carType} className="p-2">
-            <CarTypeCard name={carType} />
+        {CarTypesLibrary?.map((carType) => (
+          <div key={carType?.name} className="p-2">
+            <CarTypeCard name={carType?.name} image={carType?.image} />
           </div>
         ))}
       </SliderContainer>

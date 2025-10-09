@@ -11,6 +11,7 @@ import {
   ChangePasswordBodyDto,
   PaginatedUserResponseDto,
   PaginatedUserResponseSchema,
+  GetUsersBodyDto,
 } from "@icat/contracts";
 import { DuplicateEmailError, NotFoundError, ValidationError } from "@icat/lib";
 import { AuthService } from "../auth";
@@ -24,8 +25,8 @@ export class UserService {
     this.authService = new AuthService();
   }
 
-  async getAll(): Promise<PaginatedUserResponseDto> {
-    const result = await this.userRepository.findAll();
+  async getAll(arg?:GetUsersBodyDto): Promise<PaginatedUserResponseDto> {
+    const result = await this.userRepository.findAll(arg);
     return PaginatedUserResponseSchema.parse(result);
   }
 

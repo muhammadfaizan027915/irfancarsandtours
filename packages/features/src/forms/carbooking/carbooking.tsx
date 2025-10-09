@@ -151,12 +151,12 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
             <input
               type="hidden"
               name={fieldset.quantity.name}
-              defaultValue={fieldset.quantity.defaultValue}
+              defaultValue={String(fieldset.quantity.defaultValue)}
             />
             <input
               type="hidden"
               name={fieldset.bookedWithDriver.name}
-              defaultValue={fieldset.bookedWithDriver.defaultValue}
+              defaultValue={String(fieldset.bookedWithDriver.defaultValue ?? false)}
             />
           </Fragment>
         );

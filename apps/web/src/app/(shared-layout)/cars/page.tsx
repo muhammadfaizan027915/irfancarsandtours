@@ -6,16 +6,7 @@ type CarsPageProps = {
 };
 
 export default async function CarsPage({ searchParams }: CarsPageProps) {
-  const {
-    page,
-    limit,
-    search,
-    brand,
-    carType,
-    fuelType,
-    transmissionType,
-    amenities,
-  } = await searchParams;
+  const filters = await searchParams;
 
   return (
     <>
@@ -34,16 +25,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
         </div>
         <div className="grid grid-cols-[300px_1fr] items-start gap-6">
           <FiltersBar />
-          <Cars
-            page={page}
-            limit={limit}
-            search={search}
-            brand={brand}
-            carType={carType}
-            fuelType={fuelType}
-            transmissionType={transmissionType}
-            amenities={amenities}
-          />
+          <Cars {...filters} />
         </div>
       </div>
     </>

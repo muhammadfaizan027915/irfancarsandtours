@@ -21,7 +21,7 @@ export function BookedByCell({ row }: BookingCellPorps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="cursor-pointer transition-all">
+        <Avatar className="cursor-pointer transition-all mx-auto">
           <AvatarImage src={bookedBy?.image || ""} alt={bookedBy?.name} />
           <AvatarFallback className="bg-primary/10 text-primary font-medium">
             {nameInitials}
@@ -36,7 +36,9 @@ export function BookedByCell({ row }: BookingCellPorps) {
         <div className="flex items-center gap-3 px-3 py-2">
           <Avatar className="h-10 w-10">
             <AvatarImage src={bookedBy?.image || ""} alt={bookedBy?.name} />
-            <AvatarFallback className="bg-primary/10 text-primary">{nameInitials}</AvatarFallback>
+            <AvatarFallback className="bg-primary/10 text-primary">
+              {nameInitials}
+            </AvatarFallback>
           </Avatar>
           <div>
             <h3 className="font-semibold truncate">
@@ -48,22 +50,28 @@ export function BookedByCell({ row }: BookingCellPorps) {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem asChild className="truncate w-inherit">
-          <Link href={`mailto:${bookedBy?.email}`}>
+        <DropdownMenuItem>
+          <Link
+            href={`mailto:${bookedBy?.email}`}
+            className="truncate max-w-52"
+          >
             <Mail size={18} className="inline" />{" "}
             {bookedBy?.email ?? "No email"}
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem asChild className="truncate">
-          <Link href={`tel:${bookedBy?.phone}`}>
+        <DropdownMenuItem>
+          <Link href={`tel:${bookedBy?.phone}`} className="truncate max-w-52">
             <Phone size={18} className="inline" />{" "}
             {bookedBy?.phone ?? "No phone"}
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem className="truncate">
-          <IdCard size={18} className="inline" /> {bookedBy?.cnic ?? "No CNIC"}
+        <DropdownMenuItem>
+          <span className="truncate max-w-52">
+            <IdCard size={18} className="inline" />{" "}
+            {bookedBy?.cnic ?? "No CNIC"}
+          </span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

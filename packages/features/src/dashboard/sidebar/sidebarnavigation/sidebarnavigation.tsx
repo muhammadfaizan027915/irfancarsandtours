@@ -8,12 +8,13 @@ import Link from "next/link";
 
 export function DashboardSidebarNavigation() {
   const pathname = usePathname();
+
+  console.log(pathname);
+
   return (
     <SidebarMenu className="gap-2">
       {DashboardNavigation?.map((navigation) => {
-        const isActive = navigation?.isRoot
-          ? pathname === navigation?.url
-          : pathname.startsWith(navigation.url);
+        const isActive = pathname.startsWith(navigation.url);
         return (
           <SidebarMenuItem key={navigation.title}>
             <SidebarMenuButton

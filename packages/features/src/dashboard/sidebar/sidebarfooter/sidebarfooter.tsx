@@ -1,3 +1,4 @@
+import { NavigationUrls } from "@icat/features/header";
 import {
   Avatar,
   AvatarFallback,
@@ -10,7 +11,9 @@ import {
   SidebarMenuAction,
   SidebarMenuItem,
 } from "@icat/ui";
+import { lougOutUser } from "@icat/web/actions";
 import { MoreHorizontal, UserRound, LogOut } from "lucide-react";
+import Link from "next/link";
 
 export function DashboardSidebarFooter() {
   return (
@@ -28,14 +31,17 @@ export function DashboardSidebarFooter() {
             </SidebarMenuAction>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="right">
-            <DropdownMenuItem>
-              <UserRound className="text-foreground" />
-              <span>Go to Profile</span>
+            <DropdownMenuItem asChild>
+              <Link href={NavigationUrls.PROFILE}>
+                <UserRound className="text-foreground" />
+                <span>Go to Profile</span>
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <LogOut className="text-foreground" />
-              <span>Logout</span>
-            </DropdownMenuItem>
+            <form action={lougOutUser}>
+              <DropdownMenuItem>
+                <LogOut className="text-foreground" /> Logout
+              </DropdownMenuItem>
+            </form>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

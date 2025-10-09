@@ -3,23 +3,33 @@ import {
   getAuthenticatedAdminSession,
   getAuthenticatedUserSession,
 } from "./session";
+import {
+  GetBookingByUserIdBodySchema,
+  GetBookingsBodyDto,
+  GetBookingsBodySchema,
+  GetBookingsByUserIdBodyDto,
+} from "@icat/contracts";
 
-export async function getUserBookings() {
+export async function getUserBookings(arg?: GetBookingsByUserIdBodyDto) {
   const session = await getAuthenticatedUserSession();
 
-  const bookingService = new BookingService();
-  const result = await bookingService.getAllByUserId({
-    userId: session?.user?.id!,
+  const args = GetBookingByUserIdBodySchema.parse({
+    userId: session?.user?.id,
+    ...arg,
   });
 
+  const bookingService = new BookingService();
+  const result = await bookingService.getAllByUserId(args);
+  
   return result;
 }
 
-export async function getBookings() {
+export async function getBookings(arg?: GetBookingsBodyDto) {
   await getAuthenticatedAdminSession();
 
+  const args = GetBookingsBodySchema.parse(arg);
   const bookingService = new BookingService();
-  const result = await bookingService.getAll();
+  const result = await bookingService.getAll(args);
 
   return result;
 }

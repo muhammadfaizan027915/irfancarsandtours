@@ -50,7 +50,7 @@ export class CarRepository {
   }) {
     const {
       page = 1,
-      limit = 10,
+      limit = 50,
       search,
       brand,
       carType,
@@ -92,6 +92,7 @@ export class CarRepository {
       .select(CarItemSelect)
       .from(carsTable)
       .where(whereClause)
+      .orderBy(desc(carsTable.createdAt))
       .limit(limit)
       .offset(offset);
 

@@ -1,5 +1,5 @@
 import { db, usersTable, UserInsert, UserSelect } from "@icat/database";
-import { and, eq, isNull, sql } from "drizzle-orm";
+import { and, desc, eq, isNull, sql } from "drizzle-orm";
 
 export const UserItemSelect = {
   id: usersTable.id,
@@ -13,24 +13,20 @@ export const UserItemSelect = {
 };
 
 export class UserRepository {
-  async findAll(args?: { page?: number; limit?: number; userId?: string }) {
-    const { page = 1, limit = 10 } = args || {};
+  async findAll(args?: { page?: number; limit?: number }) {
+    const { page = 1, limit = 50 } = args || {};
+    
     const offset = (page - 1) * limit;
-
     const conditions = [isNull(usersTable.deletedAt)];
-
-    // if (userId) {
-    //   conditions.push(eq(usersTable.userId, userId));
-    // }
-
     const whereClause = and(...conditions);
 
     const users = await db
       .select(UserItemSelect)
       .from(usersTable)
       .where(whereClause)
+      .orderBy(desc(usersTable.createdAt))
       .limit(limit)
-      .offset(offset);
+      .offset(offset)
 
     const [result] = await db
       .select({ total: sql<number>`count(*)` })

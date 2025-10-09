@@ -6,7 +6,6 @@ import {
   CarTypesList,
   TransmissionTypesList,
 } from "@icat/database/enums";
-import { toArray } from "../generic";
 
 export const RegisterCarBodySchema = z.object({
   name: z.string("Name is required").min(1, "Name cannot be empty"),
@@ -64,7 +63,7 @@ export const GetCarsBodySchema = z.object({
   limit: z
     .string()
     .optional()
-    .transform((val) => (val ? parseInt(val, 10) : 10)),
+    .transform((val) => (val ? parseInt(val, 10) : 50)),
 
   search: z.string().optional(),
 

@@ -9,11 +9,12 @@ export async function getUserCars(arg: GetCarsBodyDto) {
   return result;
 }
 
-export async function getCars() {
+export async function getCars(arg?: GetCarsBodyDto) {
   await getAuthenticatedAdminSession();
 
+  const args = GetCarsBodySchema.parse(arg);
   const carService = new CarService();
-  const result = await carService.getAll();
+  const result = await carService.getAll(args);
   return result;
 }
 

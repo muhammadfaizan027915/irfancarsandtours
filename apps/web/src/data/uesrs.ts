@@ -3,6 +3,7 @@ import {
   getAuthenticatedAdminSession,
   getAuthenticatedUserSession,
 } from "./session";
+import { GetUsersBodyDto, GetUsersBodySchema } from "@icat/contracts";
 
 export async function getUserProfile() {
   const session = await getAuthenticatedUserSession();
@@ -11,10 +12,11 @@ export async function getUserProfile() {
   return user;
 }
 
-export async function getCustomers() {
+export async function getCustomers(arg?: GetUsersBodyDto) {
   await getAuthenticatedAdminSession();
 
+  const args = GetUsersBodySchema.parse(arg);
   const userService = new UserService();
-  const result = await userService.getAll();
+  const result = await userService.getAll(args);
   return result;
 }

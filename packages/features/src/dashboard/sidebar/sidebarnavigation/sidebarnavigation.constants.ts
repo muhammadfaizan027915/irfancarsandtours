@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 
 export const DashboardNavigationUrls = {
-  BOOKINGS: "/dashboard",
+  BOOKINGS: "/dashboard/bookings",
   CARS: "/dashboard/cars",
   REGISTER_CAR: "/dashboard/cars/new",
   CUSTOMERS: "/dashboard/customers",

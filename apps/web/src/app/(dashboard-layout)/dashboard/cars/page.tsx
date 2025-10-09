@@ -1,12 +1,20 @@
+import { GetCarsBodyDto } from "@icat/contracts";
 import { CarsTable, DashboardNavigationUrls } from "@icat/features";
 import { Button } from "@icat/ui";
 import { getCars } from "@icat/web/data/cars";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-export default async function CarsPage() {
-  const result = await getCars();
+type CarsPageProps = {
+  searchParams: Promise<GetCarsBodyDto>;
+};
+
+export default async function CarsPage({ searchParams }: CarsPageProps) {
+  const { page, limit } = await searchParams;
+
+  const result = await getCars({ page, limit });
   const cars = result.data;
+  const pagination = result.pagination;
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -25,7 +33,7 @@ export default async function CarsPage() {
         </Button>
       </div>
 
-      <CarsTable cars={cars} />
+      <CarsTable cars={cars} pagination={pagination} />
     </div>
   );
 }

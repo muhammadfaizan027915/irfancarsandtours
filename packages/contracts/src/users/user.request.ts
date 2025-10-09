@@ -47,3 +47,17 @@ export const ChangePasswordBodySchema = z
   });
 
 export type ChangePasswordBodyDto = z.infer<typeof ChangePasswordBodySchema>;
+
+export const GetUsersBodySchema = z.object({
+  page: z
+    .string()
+    .transform((val) => (val ? parseInt(val, 10) : 1))
+    .optional(),
+
+  limit: z
+    .string()
+    .transform((val) => (val ? parseInt(val, 10) : 50))
+    .optional(),
+});
+
+export type GetUsersBodyDto = z.infer<typeof GetUsersBodySchema>;

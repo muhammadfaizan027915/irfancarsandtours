@@ -43,7 +43,7 @@ export const GetBookingsBodySchema = z.object({
 
   limit: z
     .string()
-    .transform((val) => (val ? parseInt(val, 10) : 10))
+    .transform((val) => (val ? parseInt(val, 10) : 50))
     .optional(),
 });
 

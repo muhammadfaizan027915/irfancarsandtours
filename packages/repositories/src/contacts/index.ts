@@ -18,7 +18,7 @@ export const ContactListSelect = {
 
 export class ContactRepository {
   async findAll(args: { page?: number; limit?: number; search?: string }) {
-    const { page = 1, limit = 10, search } = args;
+    const { page = 1, limit = 50, search } = args;
 
     const offset = (page - 1) * limit;
     const conditions = [isNull(contactsTable.deletedAt)];
