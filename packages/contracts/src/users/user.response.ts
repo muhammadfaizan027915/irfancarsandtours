@@ -30,6 +30,10 @@ export type DetailedUserResponseDto = z.infer<
   typeof DetailedUserResponseSchema
 >;
 
+export const UsersListResponseSchema = z.array(DetailedUserResponseSchema);
+
+export type UsersListResponseDto = z.infer<typeof UsersListResponseSchema>;
+
 export const PaginatedUserResponseSchema = PaginatedResponseSchema(
   DetailedUserResponseSchema
 );

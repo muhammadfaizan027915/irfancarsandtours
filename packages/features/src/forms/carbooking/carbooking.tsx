@@ -9,7 +9,7 @@ import {
   AlertBox,
 } from "@icat/ui";
 import { ArrowRight, User, Mail, Phone, IdCard } from "lucide-react";
-import { useActionState } from "react";
+import { Fragment, useActionState } from "react";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod/v4";
 import { CarBookingRequestSchema } from "@icat/contracts";
@@ -30,6 +30,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
 
   return (
     <form
+      id={form.id}
       action={action}
       onSubmit={form.onSubmit}
       className="grid gap-4 w-full"
@@ -43,6 +44,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
 
         <Input
           id="name"
+          key={fields.name.key}
           name={fields.name.name}
           defaultValue={fields.name.defaultValue}
           errors={fields.name.errors}
@@ -56,6 +58,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
         <Input
           id="email"
           type="email"
+          key={fields.email.key}
           name={fields.email.name}
           defaultValue={fields.email.defaultValue}
           errors={fields.email.errors}
@@ -67,6 +70,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
       <div className="space-y-2">
         <Label htmlFor="name">Phone Number</Label>
         <Input
+          key={fields.phone.key}
           id="phone"
           name={fields.phone.name}
           defaultValue={fields.phone.defaultValue}
@@ -79,6 +83,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
       <div className="space-y-2">
         <Label htmlFor="name">CNIC</Label>
         <Input
+          key={fields.cnic.key}
           id="cnic"
           name={fields.cnic.name}
           defaultValue={fields.cnic.defaultValue}
@@ -91,6 +96,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
       <div className="space-y-2">
         <Label htmlFor="name">Pick Up Date</Label>
         <DateTimePicker
+          key={fields.pickupDate.key}
           name={fields.pickupDate.name}
           defaultValue={fields.pickupDate.defaultValue}
           errors={fields.pickupDate.errors}
@@ -101,6 +107,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
         <Label htmlFor="name">Pick Up Address</Label>
         <Textarea
           id="pickupAddress"
+          key={fields.pickupAddress.key}
           name={fields.pickupAddress.name}
           defaultValue={fields.pickupAddress.defaultValue}
           errors={fields.pickupAddress.errors}
@@ -112,6 +119,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
       <div className="space-y-2">
         <Label htmlFor="name">Drop Off Date</Label>
         <DateTimePicker
+          key={fields.dropoffDate.key}
           name={fields.dropoffDate.name}
           defaultValue={fields.dropoffDate.defaultValue}
           errors={fields.dropoffDate.errors}
@@ -122,6 +130,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
         <Label htmlFor="name">Drop Off Address</Label>
         <Textarea
           id="dropoffAddress"
+          key={fields.dropoffAddress.key}
           name={fields.dropoffAddress.name}
           defaultValue={fields.dropoffAddress.defaultValue}
           errors={fields.dropoffAddress.errors}
@@ -129,6 +138,29 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
           className="resize-none"
         />
       </div>
+      {fields.cars.getFieldList().map((field) => {
+        const fieldset = field.getFieldset();
+
+        return (
+          <Fragment key={field.key}>
+            <input
+              type="hidden"
+              name={fieldset.carId.name}
+              defaultValue={fieldset.carId.defaultValue}
+            />
+            <input
+              type="hidden"
+              name={fieldset.quantity.name}
+              defaultValue={fieldset.quantity.defaultValue}
+            />
+            <input
+              type="hidden"
+              name={fieldset.bookedWithDriver.name}
+              defaultValue={fieldset.bookedWithDriver.defaultValue}
+            />
+          </Fragment>
+        );
+      })}
 
       <Button
         size="lg"

@@ -8,8 +8,8 @@ import {
   AvatarImage,
 } from "@icat/ui";
 import { Calendar, MapPin, User, Mail, Phone, IdCard } from "lucide-react";
-import { format } from "date-fns";
 import { BookingDetailProps } from "./detail.types";
+import { format } from "date-fns";
 
 export function BookingDetail({ booking }: BookingDetailProps) {
   return (

@@ -2,6 +2,8 @@ import { auth } from "@icat/lib";
 import { BookedCarsTable, BookingDetail } from "@icat/features";
 import { BookingService } from "@icat/services";
 import { notFound } from "next/navigation";
+import { getBooking } from "@icat/web/data/bookings";
+import { getBookedCars } from "@icat/web/data/bookedcars";
 
 type BookingDetailPageProps = {
   params: Promise<{ bookingId: string }>;
@@ -11,12 +13,9 @@ export default async function BookingDetailPage({
   params,
 }: BookingDetailPageProps) {
   const { bookingId } = await params;
-  const session = await auth();
 
-  if (!session?.user?.email) return <p>Not authenticated</p>;
-
-  const bookingService = new BookingService();
-  const booking = await bookingService.getBookingByIdWithUser(bookingId);
+  const booking = await getBooking(bookingId);
+  const bookedCars = await getBookedCars(bookingId);
 
   if (!booking) return notFound();
 
@@ -24,7 +23,7 @@ export default async function BookingDetailPage({
     <div className="flex flex-col gap-6 w-full">
       <h1 className="text-3xl font-semibold tracking-tight">Booking Details</h1>
       <BookingDetail booking={booking} />
-      <BookedCarsTable bookingId={bookingId} />
+      <BookedCarsTable bookedCars={bookedCars} />
     </div>
   );
 }

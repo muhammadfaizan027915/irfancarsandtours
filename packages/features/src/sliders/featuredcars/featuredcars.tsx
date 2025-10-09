@@ -1,11 +1,9 @@
 import { CarCard } from "../../cars";
-import { CarService } from "@icat/services";
 import { SliderContainer } from "@icat/ui";
+import { getFeaturedCars } from "@icat/web/data/cars";
 
 export async function FeaturedCars() {
-  const carService = new CarService();
-  const cars = await carService.getFeaturedCars();
-
+  const cars = await getFeaturedCars();
   if (!cars?.length) return null;
 
   return (

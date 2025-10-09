@@ -23,8 +23,8 @@ export const CarBookingRequestSchema = z
     cars: z.array(
       z.object({
         carId: z.string(),
-        quantity: z.number().optional().default(1),
-        bookedWithDriver: z.boolean().optional().default(false),
+        quantity: z.coerce.number().optional().default(1),
+        bookedWithDriver: z.coerce.boolean().optional().default(false),
       })
     ),
   })

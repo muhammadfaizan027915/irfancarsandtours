@@ -1,16 +1,7 @@
-import { auth } from "@icat/lib";
-import { customersColumns } from "./columns";
 import { DataTable } from "@icat/ui";
-import { UserService } from "@icat/services";
+import { customersColumns } from "./columns";
+import { CustomersTableProps } from "./customerstable.types";
 
-export async function CustoemrsTable() {
-  const session = await auth();
-
-  if (!session?.user?.email) return <p>Not authenticated</p>;
-
-  const userService = new UserService();
-  const response = await userService.getAll();
-  const customers = response?.data;
-
+export async function CustoemrsTable({ customers }: CustomersTableProps) {
   return <DataTable columns={customersColumns} data={customers} />;
 }

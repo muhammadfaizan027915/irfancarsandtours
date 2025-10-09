@@ -2,12 +2,11 @@ import { CarCard } from "../../cars";
 import { NavigationUrls } from "../../header";
 import { LoaderCircle } from "lucide-react";
 import { Button, SliderContainer } from "@icat/ui";
-import { CarService } from "@icat/services";
+import { getMostSearchedCars } from "@icat/web/data/cars";
 import Link from "next/link";
 
 export async function SearchedCars() {
-  const carService = new CarService();
-  const cars = await carService.getMostSearchedCars();
+  const cars = await getMostSearchedCars();
 
   const settings = {
     slidesToShow: 3,

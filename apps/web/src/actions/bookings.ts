@@ -1,12 +1,12 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { CarBookingRequestSchema, BookingRequestDto } from "@icat/contracts";
 import { auth, handlerFormActionWithError, UnauthorizedError } from "@icat/lib";
-import { CarCartItem, carCartKey } from "@icat/web/store";
+import { carCartKey } from "@icat/web/store";
 import { BookingService } from "@icat/services";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { NavigationUrls } from "@icat/features";
+import { redirect } from "next/navigation";
 
 export const bookCar = handlerFormActionWithError({
   schema: CarBookingRequestSchema,
@@ -18,22 +18,13 @@ export const bookCar = handlerFormActionWithError({
       throw new UnauthorizedError({ message: "Unauthorized to book car." });
     }
 
-    const cookieStore = await cookies();
-    const cartCookie = cookieStore.get(carCartKey);
-    const cart = cartCookie ? JSON.parse(cartCookie.value) : [];
-    const carsList = cart?.carsList ?? [];
-
-    const cars = carsList?.map((car: CarCartItem) => ({
-      carId: car?.id,
-      quantity: car?.quantity,
-      bookedWithDriver: car?.bookedWithDriver ?? false,
-    }));
+    console.log(data?.cars);
 
     const bookingService = new BookingService();
-    const booking = await bookingService.createBooking({ ...data, cars });
+    const booking = await bookingService.createBooking(data);
 
     if (booking) {
-      cookieStore.delete(carCartKey);
+      (await cookies()).delete(carCartKey);
       redirect(`${NavigationUrls.BOOKINGS}/${booking?.id}/confirmation`);
     }
 

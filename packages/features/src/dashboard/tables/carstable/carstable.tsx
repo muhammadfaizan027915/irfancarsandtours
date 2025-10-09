@@ -1,16 +1,7 @@
-import { auth } from "@icat/lib";
-import { carsColumns } from "./columns";
 import { DataTable } from "@icat/ui";
-import { CarService } from "@icat/services";
+import { carsColumns } from "./columns";
+import { CarsTableProps } from "./carstable.types";
 
-export async function CarsTable() {
-  const session = await auth();
-
-  if (!session?.user?.email) return <p>Not authenticated</p>;
-
-  const carService = new CarService();
-  const response = await carService.getAll();
-  const cars = response?.data;
-
+export async function CarsTable({ cars }: CarsTableProps) {
   return <DataTable columns={carsColumns} data={cars} />;
 }

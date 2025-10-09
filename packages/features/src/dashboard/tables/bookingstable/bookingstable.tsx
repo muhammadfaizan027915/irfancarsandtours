@@ -1,16 +1,7 @@
-import { auth } from "@icat/lib";
-import { bookingsColumns } from "./columns";
 import { DataTable } from "@icat/ui";
-import { BookingService } from "@icat/services";
+import { bookingsColumns } from "./columns";
+import { BookingsTableProps } from "./bookingstable.types";
 
-export async function BookingsTable() {
-  const session = await auth();
-
-  if (!session?.user?.email) return <p>Not authenticated</p>;
-
-  const bookingService = new BookingService();
-  const result = await bookingService.getAll();
-  const bookings = result.data;
-
+export async function BookingsTable({ bookings }: BookingsTableProps) {
   return <DataTable columns={bookingsColumns} data={bookings} />;
 }

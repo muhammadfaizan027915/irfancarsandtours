@@ -1,8 +1,7 @@
 import { Badge } from "@icat/ui";
 import { CarForm } from "@icat/features";
-import { CarService } from "@icat/services";
 import { notFound } from "next/navigation";
-import { auth } from "@icat/lib";
+import { getCar } from "@icat/web/data/cars";
 
 type UpdateCarProps = {
   params: Promise<{ carId: string }>;
@@ -10,12 +9,7 @@ type UpdateCarProps = {
 
 export default async function UpdateCarPage({ params }: UpdateCarProps) {
   const { carId } = await params;
-  const session = await auth();
-
-  if (!session?.user?.email) return <p>Not authenticated</p>;
-
-  const carService = new CarService();
-  const car = await carService.getCarById(carId);
+  const car = await getCar(carId);
 
   if (!car) return notFound();
 
@@ -25,6 +19,6 @@ export default async function UpdateCarPage({ params }: UpdateCarProps) {
         Update Car
       </Badge>
       <CarForm mode="update" car={car} />
-    </div>  
+    </div>
   );
 }

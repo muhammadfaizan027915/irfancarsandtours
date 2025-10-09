@@ -1,3 +1,5 @@
+import { BookedCarWithCarListResponseDto } from "@icat/contracts";
+
 export type BookedCarsTableProps = {
-  bookingId: string;
+  bookedCars: BookedCarWithCarListResponseDto;
 };

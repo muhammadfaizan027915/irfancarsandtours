@@ -72,7 +72,7 @@ export class BookingService {
 
     this.userService.updateUser(sessionUser?.id as string, data);
 
-    const carIds = cars.map((car) => car?.carId);
+    const carIds = cars?.map((car) => car?.carId);
     const carsWithDriverRules = await this.carService.getCarsDriverRules(carIds);
 
     for await (const car of cars) {

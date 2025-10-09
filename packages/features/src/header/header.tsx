@@ -3,20 +3,17 @@
 import { Logo } from "./logo";
 import { Button } from "@icat/ui";
 import { NavigationUrls } from "./header.constants";
+import { getSession } from "@icat/web/data/session";
 import { UserRound, LogOut } from "lucide-react";
 import { lougOutUser } from "@icat/web/actions";
 import { HeaderProps } from "./header.types";
 import { CarCartSidebar } from "../sidebars";
 import { cn } from "@icat/ui/lib/utils";
-import { auth } from "@icat/lib";
 
 import Link from "next/link";
 
-// border-border bg-primary/20 backdrop-blur-md
-
 export async function Header({ varient = "primary" }: HeaderProps) {
-  const session = await auth();
-  const sessionUser = session?.user;
+  const session = await getSession();
 
   return (
     <>
@@ -47,7 +44,7 @@ export async function Header({ varient = "primary" }: HeaderProps) {
                 <Button asChild size={"lg"} variant={"ghost"}>
                   <Link href={NavigationUrls.PROFILE}>
                     <UserRound size={18} className="inline" />{" "}
-                    {sessionUser?.name?.split(" ")?.[0] || "Profile"}
+                    {session?.user?.name?.split(" ")?.[0] || "Profile"}
                   </Link>
                 </Button>
 

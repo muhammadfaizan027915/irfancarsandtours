@@ -1,5 +1,5 @@
 import { NavigationUrls, BookingConfirmation } from "@icat/features";
-import { BookingService } from "@icat/services";
+import { getUserBooking } from "@icat/web/data/bookings";
 import { redirect } from "next/navigation";
 
 type BookingConfirmationPageProps = {
@@ -11,8 +11,7 @@ export default async function BookingConfirmationPage({
 }: BookingConfirmationPageProps) {
   const { bookingId } = await params;
 
-  const bookingService = new BookingService();
-  const booking = await bookingService.getBookingById(bookingId);
+  const booking = await getUserBooking(bookingId);
 
   if (!booking) {
     redirect(NavigationUrls.HOME);

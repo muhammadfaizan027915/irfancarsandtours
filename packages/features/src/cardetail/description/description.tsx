@@ -31,7 +31,7 @@ export function CarDescription({ description }: CarDescriptionProps) {
               } transition-transform duration-500`}
             />
           </CollapsibleTrigger>
-          <CollapsibleContent className="mt-4">
+          <CollapsibleContent className="mt-4 w-[inherit]">
             <Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown>
           </CollapsibleContent>
         </Collapsible>

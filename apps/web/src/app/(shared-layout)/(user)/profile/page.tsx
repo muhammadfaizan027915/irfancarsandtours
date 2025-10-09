@@ -1,14 +1,8 @@
-import { auth } from "@icat/lib";
 import { ChangePasswordForm, ProfileForm, UserAvatar } from "@icat/features";
-import { UserService } from "@icat/services";
+import { getUserProfile } from "@icat/web/data/uesrs";
 
 export default async function ProfilePage() {
-  const session = await auth();
-  if (!session?.user?.email) return <p>Not authenticated</p>;
-
-  const userService = new UserService();
-  const user = await userService.getDetailedUserByEmail(session.user.email);
-
+  const user = await getUserProfile();
   return (
     <div className="grid grid-cols-[300px_1fr] gap-4">
       <UserAvatar user={user} />

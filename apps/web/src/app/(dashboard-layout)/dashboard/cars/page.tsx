@@ -1,9 +1,13 @@
 import { CarsTable, DashboardNavigationUrls } from "@icat/features";
 import { Button } from "@icat/ui";
+import { getCars } from "@icat/web/data/cars";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-export default function CarsPage() {
+export default async function CarsPage() {
+  const result = await getCars();
+  const cars = result.data;
+
   return (
     <div className="flex flex-col gap-4 w-full">
       <div className="flex gap-4 w-full">
@@ -21,7 +25,7 @@ export default function CarsPage() {
         </Button>
       </div>
 
-      <CarsTable />
+      <CarsTable cars={cars} />
     </div>
   );
 }
