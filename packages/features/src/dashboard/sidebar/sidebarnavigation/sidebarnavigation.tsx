@@ -1,6 +1,6 @@
 "use client";
 
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@icat/ui";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@icat/ui/components/sidebar";
 import { usePathname } from "next/navigation";
 import { DashboardNavigation } from "./sidebarnavigation.constants";
 import { cn } from "@icat/ui/lib/utils";
@@ -8,8 +8,6 @@ import Link from "next/link";
 
 export function DashboardSidebarNavigation() {
   const pathname = usePathname();
-
-  console.log(pathname);
 
   return (
     <SidebarMenu className="gap-2">

@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, toast } from "@icat/ui";
+import { Button } from "@icat/ui/components/button";
+import { toast } from "@icat/ui/components/sonner";
 import { useCarCart } from "@icat/web/store";
 import { Fuel, Armchair, Cog, ShoppingCart, CarFront } from "lucide-react";
 import { CarPlaceHolderImageUrl } from "@icat/features/common";

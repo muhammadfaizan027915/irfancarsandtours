@@ -1,11 +1,11 @@
 import {
-  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  toast,
-} from "@icat/ui";
+} from "@icat/ui/components/dropdown-menu";
+import { Button } from "@icat/ui/components/button";
+import { toast } from "@icat/ui/components/sonner";
 import { CarCellPorps } from "../columns.types";
 import { NavigationUrls } from "@icat/features/header";
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar";

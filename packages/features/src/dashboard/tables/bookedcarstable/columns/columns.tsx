@@ -3,7 +3,9 @@
 import { BookedCarWithCarResponseDto } from "@icat/contracts";
 import { userBookedCarsColumns } from "@icat/features/tables/userbookedcarstable/columns";
 import { ColumnDef } from "@tanstack/react-table";
-import { Button, Input, toast } from "@icat/ui";
+import { Button } from "@icat/ui/components/button";
+import { Input } from "@icat/ui/components/input";
+import { toast } from "@icat/ui/components/sonner";
 import { useDisclosure } from "@icat/lib/hooks";
 import { qoutePrice } from "@icat/web/actions";
 import { useState, KeyboardEvent } from "react";

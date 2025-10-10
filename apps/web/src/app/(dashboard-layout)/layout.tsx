@@ -1,5 +1,6 @@
-import { DashboardSidebar, DashboardHeader } from "@icat/features";
-import { SidebarProvider, SidebarInset } from "@icat/ui";
+import { DashboardSidebar } from "@icat/features/dashboard/sidebar";
+import { DashboardHeader } from "@icat/features/dashboard/header";
+import { SidebarProvider, SidebarInset } from "@icat/ui/components/sidebar";
 import { ReactNode } from "react";
 
 type DashboardLayoutProps = {

@@ -1,13 +1,13 @@
 "use client";
 
 import {
-  Button,
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-  Checkbox,
-} from "@icat/ui";
+} from "@icat/ui/components/card";
+import { Checkbox } from "@icat/ui/components/checkbox";
+import { Button } from "@icat/ui/components/button";
 import { CarCartCardProps } from "./carcartcard.types";
 import { Armchair, Fuel, Minus, Plus } from "lucide-react";
 import { useCarCart } from "@icat/web/store";

@@ -1,14 +1,15 @@
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@icat/ui";
+} from "@icat/ui/components/dropdown-menu";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@icat/ui/components/avatar";
 import { BookingCellPorps } from "../columns.types";
 import { getNameInitials } from "@icat/lib/utils";
 import { Mail, IdCard, Phone } from "lucide-react";

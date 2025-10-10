@@ -1,6 +1,7 @@
 import { GetCarsBodyDto } from "@icat/contracts";
-import { CarsTable, DashboardNavigationUrls } from "@icat/features";
-import { Button } from "@icat/ui";
+import { CarsTable } from "@icat/features/dashboard/tables/carstable";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
+import { Button } from "@icat/ui/components/button";
 import { getCars } from "@icat/web/data/cars";
 import { Plus } from "lucide-react";
 import Link from "next/link";

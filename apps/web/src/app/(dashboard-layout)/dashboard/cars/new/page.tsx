@@ -1,5 +1,5 @@
-import { Badge } from "@icat/ui";
-import { CarForm } from "@icat/features";
+import { Badge } from "@icat/ui/components/badge";
+import { CarForm } from "@icat/features/dashboard/forms/car";
 
 export default function CreateCarPage() {
   return (

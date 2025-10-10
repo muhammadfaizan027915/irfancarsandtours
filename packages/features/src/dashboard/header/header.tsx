@@ -1,6 +1,7 @@
 "use client";
 
-import { DarkModeToggler, SidebarTrigger } from "@icat/ui";
+import { DarkModeToggler } from "@icat/ui/components/dark-mode-toggler";
+import { SidebarTrigger } from "@icat/ui/components/sidebar";
 import { usePathname } from "next/navigation";
 
 export function DashboardHeader() {

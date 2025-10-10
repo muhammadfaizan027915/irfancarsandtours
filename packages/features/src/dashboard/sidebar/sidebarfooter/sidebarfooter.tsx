@@ -1,16 +1,12 @@
 import { NavigationUrls } from "@icat/features/header";
+import { Avatar, AvatarFallback, AvatarImage } from "@icat/ui/components/avatar";
+import { SidebarMenu, SidebarMenuAction, SidebarMenuItem } from "@icat/ui/components/sidebar";
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  SidebarMenu,
-  SidebarMenuAction,
-  SidebarMenuItem,
-} from "@icat/ui";
+} from "@icat/ui/components/dropdown-menu";
 import { lougOutUser } from "@icat/web/actions";
 import { MoreHorizontal, UserRound, LogOut } from "lucide-react";
 import Link from "next/link";

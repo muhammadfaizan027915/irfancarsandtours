@@ -1,4 +1,4 @@
-import { DataTable } from "@icat/ui";
+import { DataTable } from "@icat/ui/components/data-table";
 import { bookingsColumns } from "./columns";
 import { BookingsTableProps } from "./bookingstable.types";
 

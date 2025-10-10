@@ -3,18 +3,17 @@
 import { ChevronUp } from "lucide-react";
 import { useDisclosure } from "@icat/lib/hooks";
 import {
-  Button,
-  Card,
-  CardContent,
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@icat/ui";
+} from "@icat/ui/components/collapsible";
+import { Button } from "@icat/ui/components/button";
+import { Card, CardContent } from "@icat/ui/components/card";
 import { CarAmenitiesProps } from "./amenities.types";
 
 export function CarAmenities({ amenities }: CarAmenitiesProps) {
   const [open, onOpen, onClose] = useDisclosure(true);
-  
+
   return (
     <Card className="shadow-none rounded-xl">
       <CardContent className="flex flex-row gap-4">

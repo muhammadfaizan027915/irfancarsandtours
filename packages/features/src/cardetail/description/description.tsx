@@ -3,12 +3,11 @@
 import { ChevronUp } from "lucide-react";
 import { useDisclosure } from "@icat/lib/hooks";
 import {
-  Card,
-  CardContent,
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@icat/ui";
+} from "@icat/ui/components/collapsible";
+import { Card, CardContent } from "@icat/ui/components/card";
 import { CarDescriptionProps } from "./description.types";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
