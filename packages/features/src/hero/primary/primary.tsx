@@ -13,7 +13,7 @@ export function PrimrayHero() {
 
         <div className="absolute top-1/2 -translate-y-1/2 px-[8%] md:px-[10%] flex flex-col gap-1 w-full md:w-fit">
           <p className="text-primary font-medium">Find Your Perfect Car</p>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl md:leading-20 mb-4 md:mb-6 font-bold">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl md:leading-20 mb-4 md:mb-6 font-bold">
             Looking for a car ? <br />
             You're at right place.
           </h1>

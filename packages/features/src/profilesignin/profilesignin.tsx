@@ -1,0 +1,43 @@
+import { Button } from "@icat/ui";
+import { getSession } from "@icat/web/data/session";
+import { UserRound, LogOut } from "lucide-react";
+import { lougOutUser } from "@icat/web/actions";
+import { NavigationUrls } from "../header";
+import { ProfileSigninProps } from "./profilesignin.types";
+import { cn } from "@icat/ui/lib/utils";
+import Link from "next/link";
+
+export async function ProfileSigin({ className }: ProfileSigninProps) {
+  const session = await getSession();
+
+  return session?.user?.id ? (
+    <div className={cn("flex gap-4",className)}>
+      <Button asChild size={"lg"} variant={"ghost"}>
+        <Link href={NavigationUrls.PROFILE}>
+          <UserRound size={18} className="inline" />{" "}
+          {session?.user?.name?.split(" ")?.[0] || "Profile"}
+        </Link>
+      </Button>
+
+      <form action={lougOutUser}>
+        <Button size={"lg"} variant={"ghost"}>
+          <LogOut size={18} className="inline" /> Logout
+        </Button>
+      </form>
+    </div>
+  ) : (
+    <Button
+      asChild
+      size={"lg"}
+      variant={"ghost"}
+      className={cn(
+        "hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground",
+        className
+      )}
+    >
+      <Link href={NavigationUrls.SIGNIN}>
+        <UserRound size={18} className="inline" /> Sign in
+      </Link>
+    </Button>
+  );
+}

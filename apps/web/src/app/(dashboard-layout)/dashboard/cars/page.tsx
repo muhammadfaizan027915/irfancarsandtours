@@ -18,7 +18,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <div className="flex gap-4 w-full">
+      <div className="flex flex-col md:flex-row gap-4 w-full">
         <div className="flex-1">
           <h1 className="text-3xl font-semibold tracking-tight">Cars</h1>
           <p className="text-muted-foreground">

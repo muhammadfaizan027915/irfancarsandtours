@@ -1,16 +1,14 @@
 "use server";
 
 import { Logo } from "./logo";
-import { Button } from "@icat/ui";
 import { NavigationUrls } from "./header.constants";
 import { getSession } from "@icat/web/data/session";
-import { UserRound, LogOut } from "lucide-react";
-import { lougOutUser } from "@icat/web/actions";
 import { HeaderProps } from "./header.types";
-import { CarCartSidebar } from "../sidebars";
+import { CarCartSidebar, NavigationBar } from "../sidebars";
 import { cn } from "@icat/ui/lib/utils";
 
 import Link from "next/link";
+import { ProfileSigin } from "../profilesignin";
 
 export async function Header({ varient = "primary" }: HeaderProps) {
   const session = await getSession();
@@ -25,11 +23,11 @@ export async function Header({ varient = "primary" }: HeaderProps) {
             : ""
         )}
       >
-        <div className="h-16 flex items-center">
-          <div className="w-2/8">
+        <div className="h-16 flex justify-between items-center w-full">
+          <div className="lg:w-2/8">
             <Logo />
           </div>
-          <div className="w-4/8">
+          <div className="lg:w-4/8 hidden lg:block">
             <nav className="flex items-stretch gap-8">
               <Link href={NavigationUrls.HOME}>Home</Link>
               <Link href={NavigationUrls.CARS}>Cars</Link>
@@ -38,35 +36,10 @@ export async function Header({ varient = "primary" }: HeaderProps) {
               <Link href={NavigationUrls.CONTACT}>Contact</Link>
             </nav>
           </div>
-          <div className="w-2/8 flex items-stretch justify-end gap-2">
-            {session?.user?.id ? (
-              <>
-                <Button asChild size={"lg"} variant={"ghost"}>
-                  <Link href={NavigationUrls.PROFILE}>
-                    <UserRound size={18} className="inline" />{" "}
-                    {session?.user?.name?.split(" ")?.[0] || "Profile"}
-                  </Link>
-                </Button>
-
-                <form action={lougOutUser}>
-                  <Button size={"lg"} variant={"ghost"}>
-                    <LogOut size={18} className="inline" /> Logout
-                  </Button>
-                </form>
-              </>
-            ) : (
-              <Button
-                asChild
-                size={"lg"}
-                variant={"ghost"}
-                className="hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground"
-              >
-                <Link href={NavigationUrls.SIGNIN}>
-                  <UserRound size={18} className="inline" /> Sign in
-                </Link>
-              </Button>
-            )}
+          <div className="lg:w-2/8 flex items-stretch justify-end gap-2">
+            <ProfileSigin className="hidden md:flex" />
             <CarCartSidebar />
+            <NavigationBar />
           </div>
         </div>
       </header>
