@@ -3,6 +3,7 @@
 import { Button, toast } from "@icat/ui";
 import { useCarCart } from "@icat/web/store";
 import { Fuel, Armchair, Cog, ShoppingCart, CarFront } from "lucide-react";
+import { CarPlaceHolderImageUrl } from "@icat/features/common";
 import { NavigationUrls } from "../../header";
 import { CarCardProps } from "./carcard.types";
 import Image from "next/image";
@@ -27,7 +28,7 @@ export function CarCard({ car }: CarCardProps) {
       <div className="h-56 relative">
         <Image
           fill
-          src={imageUrl || ""}
+          src={imageUrl || CarPlaceHolderImageUrl}
           alt=""
           style={{
             objectFit: "cover",

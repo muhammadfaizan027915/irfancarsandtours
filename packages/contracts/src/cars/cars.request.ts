@@ -10,7 +10,7 @@ import {
 export const RegisterCarBodySchema = z.object({
   name: z.string("Name is required").min(1, "Name cannot be empty"),
   model: z.string("Model is required").min(1, "Model cannot be empty"),
-  year: z
+  year: z.coerce
     .number("Year is required")
     .int("Year is required")
     .min(1900, "Year must be 1900 or later"),
@@ -32,12 +32,12 @@ export const RegisterCarBodySchema = z.object({
       return Array.isArray(val) ? val : [val];
     }, z.array(z.url("Each image must be a valid URL")))
     .optional(),
-  seatingCapacity: z
+  seatingCapacity: z.coerce
     .number("Seating capacity is required")
     .int("Seating capacity is required")
     .min(1, "Seating capacity must be at least 1"),
-  isFeatured: z.boolean().optional().default(false),
-  forceWithDriver: z.boolean().optional().default(false),
+  isFeatured: z.coerce.boolean().optional().default(false),
+  forceWithDriver: z.coerce.boolean().optional().default(false),
 });
 
 export type RegisterCarBodyDto = z.infer<typeof RegisterCarBodySchema>;

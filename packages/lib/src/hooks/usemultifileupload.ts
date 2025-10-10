@@ -103,10 +103,13 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
   const getCurrentFiles = () =>
     JSON.parse(JSON.stringify(files)) as UploadedFile[];
 
+  const resetFiles = () => setFiles([]);
+
   return {
     files,
     uploadFiles,
     deleteFile,
     updateFile,
+    resetFiles,
   };
 }

@@ -16,7 +16,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
         badge="Find cars for sale and for rent near you"
       />
       <div className="container mx-auto px-4 md:px-8">
-        <Searchbar defaultTab="cars" />
+        <Searchbar type="cars" {...filters} />
       </div>
       <div className="flex flex-col gap-8 md:px-4">
         <div className="flex flex-col gap-2">

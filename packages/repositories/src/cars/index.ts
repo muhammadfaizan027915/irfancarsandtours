@@ -17,6 +17,7 @@ import {
   sql,
   inArray,
   arrayOverlaps,
+  ilike,
 } from "drizzle-orm";
 
 export const CarItemSelect = {
@@ -63,7 +64,7 @@ export class CarRepository {
     const conditions = [isNull(carsTable.deletedAt)];
 
     if (search) {
-      conditions.push(eq(carsTable.name, search));
+      conditions.push(ilike(carsTable.name, `%${search}%`));
     }
 
     if (brand) {

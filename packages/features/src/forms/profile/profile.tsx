@@ -1,94 +1,86 @@
 "use client";
 
 import { AlertBox, Button, Card, Input, Textarea, toast } from "@icat/ui";
-import { ArrowRight, Mail, Phone, UserRound, MapPin, IdCard } from "lucide-react";
+import {
+  ArrowRight,
+  Mail,
+  Phone,
+  UserRound,
+  MapPin,
+  IdCard,
+} from "lucide-react";
 import { updateUser } from "@icat/web/actions";
-import { useForm } from "@conform-to/react";
-import { parseWithZod } from "@conform-to/zod/v4";
-import { UpdateUserBodySchema } from "@icat/contracts";
 import { ProfileFormProps } from "./profile.types";
 import { useActionState, useEffect } from "react";
 
 export function ProfileForm({ user }: ProfileFormProps) {
-  const [lastResult, action] = useActionState(updateUser, null);
+  const [result, action] = useActionState(updateUser, null);
 
-  const [form, fields] = useForm({
-    lastResult,
-    defaultValue: user,
-    onValidate: ({ formData }) =>
-      parseWithZod(formData, { schema: UpdateUserBodySchema }),
-    shouldValidate: "onBlur",
-    shouldRevalidate: "onInput",
-  });
+  const success = result?.success;
+  const error = result?.error;
 
   useEffect(() => {
-    if (lastResult?.status === "success") {
+    if (success) {
       toast.success("Profile updated successfully.", {
         position: "top-center",
       });
     }
-  }, [lastResult]);
+  }, [result]);
 
   return (
     <Card className="w-full p-8 flex flex-col items-center gap-2 shadow-none">
       <h1 className="font-bold text-4xl">Update Your Profile</h1>
 
-      <form
-        id={form.id}
-        action={action}
-        onSubmit={form.onSubmit}
-        className="flex flex-col gap-3 w-full mt-8"
-      >
-        {form?.errors?.map((error) => (
-          <AlertBox key={error} variant="destructive" description={error} />
-        ))}
+      <form action={action} className="flex flex-col gap-3 w-full mt-8">
+        {!success && error?.message && (
+          <AlertBox
+            key={error.status}
+            variant="destructive"
+            description={error?.message}
+          />
+        )}
 
         <Input
           type="text"
           placeholder="Name"
           startIcon={<UserRound size={18} />}
-          key={fields.name.key}
-          name={fields.name.name}
-          defaultValue={fields.name.defaultValue}
-          errors={fields.name.errors}
+          name={"name"}
+          defaultValue={user?.name}
+          errors={error?.cause?.name?._errors}
         />
 
         <Input
           disabled
           placeholder="Email Address"
           startIcon={<Mail size={18} />}
-          key={fields.email.key}
-          name={fields.email.name}
-          defaultValue={fields.email.defaultValue}
-          errors={fields.email.errors}
+          defaultValue={user?.email}
         />
 
         <Input
+          type="tel"
           placeholder="Phone"
           startIcon={<Phone size={18} />}
-          key={fields.phone.key}
-          name={fields.phone.name}
-          defaultValue={fields.phone.defaultValue}
-          errors={fields.phone.errors}
+          name={"phone"}
+          defaultValue={user?.phone ?? ""}
+          errors={error?.cause?.phone?._errors}
         />
 
         <Input
           id="cnic"
-          name={fields.cnic.name}
-          defaultValue={fields.cnic.defaultValue}
-          errors={fields.cnic.errors}
           placeholder="CNIC"
           startIcon={<IdCard size={18} />}
+          name={"cnic"}
+          defaultValue={user?.cnic ?? ""}
+          errors={error?.cause?.cnic?._errors}
         />
 
         <Textarea
           className="h-30 scrollbar-thin"
           placeholder="Address"
           startIcon={<MapPin size={20} />}
-          key={fields.address.key}
-          name={fields.address.name}
-          defaultValue={fields.address.defaultValue}
-          errors={fields.address.errors}
+          name={"address"}
+          defaultValue={user.address ?? ""}
+          errors={error?.cause?.address?._errors}
         />
 
         <Button size={"lg"} className="font-bold shadow-none group mt-4">

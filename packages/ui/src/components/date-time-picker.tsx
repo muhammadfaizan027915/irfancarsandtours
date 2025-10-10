@@ -15,12 +15,14 @@ import {
 } from "@icat/ui/components/popover";
 
 type DateTimePickerProps = {
+  id?: string;
   name?: string;
   defaultValue?: string;
   errors?: string[];
 };
 
 export function DateTimePicker({
+  id,
   name,
   defaultValue,
   errors,
@@ -54,6 +56,7 @@ export function DateTimePicker({
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <button
+              id={id}
               type="button"
               aria-invalid={hasError ? "true" : undefined}
               className={cn(

@@ -1,17 +1,18 @@
+import { BrandNames } from "@icat/database";
+
 export type SearchType = "cars" | "tours";
 
 export type BaseSearchbarProps = {
-  showTabs?: boolean;
+  type: "cars" | "tours";
 };
 
 export type CarSerachProps = BaseSearchbarProps & {
-  defaultTab: "cars";
-  pickupLocation?: string;
+  search?: string;
+  brand?: BrandNames;
 };
 
 export type TourSearchProps = BaseSearchbarProps & {
-  defaultTab: "tours";
   destination?: string;
 };
 
-export type SearchbarProps = CarSerachProps | TourSearchProps;
+export type SearchbarProps = CarSerachProps & TourSearchProps;

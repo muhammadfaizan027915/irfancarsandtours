@@ -8,3 +8,5 @@ export const FlexToTextPositionMap: Record<
   end: "right",
   center: "center",
 };
+
+export const CarPlaceHolderImageUrl = "/assets/car_placeholder.png"

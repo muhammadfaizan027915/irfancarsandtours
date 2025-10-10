@@ -12,9 +12,6 @@ import {
   Progress,
 } from "@icat/ui";
 import { registerCar, updateCar } from "@icat/web/actions";
-import { useForm, useInputControl } from "@conform-to/react";
-import { parseWithZod } from "@conform-to/zod/v4";
-import { RegisterCarBodySchema, UpdateCarBodySchema } from "@icat/contracts";
 import {
   AmenitiesList,
   BrandNamesList,
@@ -25,45 +22,27 @@ import {
 import { CarFormProps } from "./car.types";
 import { useActionState, useEffect } from "react";
 import { useMultiFileUpload } from "@icat/lib/hooks";
+import { mergeObjectToFormData } from "@icat/lib/utils";
 import { X } from "lucide-react";
 import Image from "next/image";
 
 export function CarForm({ car, mode }: CarFormProps) {
   const isUpdateMode = mode === "update";
 
-  const [lastResult, action] = useActionState(
+  const [result, action] = useActionState(
     isUpdateMode ? updateCar : registerCar,
     null
   );
 
-  const [form, fields] = useForm({
-    lastResult,
-    defaultValue: isUpdateMode ? car : {},
-    onValidate: ({ formData }) =>
-      parseWithZod(formData, {
-        schema: isUpdateMode ? UpdateCarBodySchema : RegisterCarBodySchema,
-      }),
-    shouldValidate: "onBlur",
-    shouldRevalidate: "onInput",
-  });
+  const success = result?.success;
+  const error = result?.error;
 
-  const imageUrlsControl = useInputControl({
-    formId: form.id,
-    name: fields.imageUrls.name,
-    key: fields.imageUrls.key,
-    initialValue: car?.imageUrls,
-  });
-
-  const { files, uploadFiles, deleteFile } = useMultiFileUpload({
+  const { files, uploadFiles, deleteFile, resetFiles } = useMultiFileUpload({
     initialUrls: car?.imageUrls,
-    onSuccess(files) {
-      const urls = files.map((file) => file.previewUrl);
-      imageUrlsControl.change(urls as string[]);
-    },
   });
 
   useEffect(() => {
-    if (lastResult?.status === "success") {
+    if (result?.success) {
       toast.success(
         `Car ${isUpdateMode ? "updated" : "registered"} successfully.`,
         {
@@ -71,7 +50,9 @@ export function CarForm({ car, mode }: CarFormProps) {
         }
       );
     }
-  }, [lastResult]);
+
+    resetFiles()
+  }, [result]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
@@ -79,23 +60,24 @@ export function CarForm({ car, mode }: CarFormProps) {
     }
   };
 
-  return (
-    <form
-      id={form.id}
-      action={action}
-      onSubmit={form.onSubmit}
-      className="space-y-6"
-    >
-      {form?.errors?.map((error) => (
-        <AlertBox key={error} variant="destructive" description={error} />
-      ))}
+  const actionWithImageUrls = (formData: FormData) => {
+    const imageUrls = files?.map((file) => file.previewUrl);
 
-      {isUpdateMode && (
-        <Input
-          type="hidden"
-          name={fields.id.name}
-          value={fields.id.defaultValue}
-          key={fields.id.key}
+    const formDataWithImageUrls = mergeObjectToFormData(formData, {
+      ...(isUpdateMode ? { id: car?.id } : {}),
+      imageUrls,
+    });
+
+    action(formDataWithImageUrls);
+  };
+
+  return (
+    <form action={actionWithImageUrls} className="space-y-6">
+      {!success && error?.message && (
+        <AlertBox
+          key={error.status}
+          variant="destructive"
+          description={error?.message}
         />
       )}
 
@@ -105,10 +87,9 @@ export function CarForm({ car, mode }: CarFormProps) {
           <Input
             id="name"
             placeholder="Enter car name"
-            key={fields.name.key}
-            name={fields.name.name}
-            defaultValue={fields.name.defaultValue}
-            errors={fields.name.errors}
+            name={"name"}
+            defaultValue={car?.name}
+            errors={error?.cause?.name?._errors}
           />
         </div>
 
@@ -117,10 +98,9 @@ export function CarForm({ car, mode }: CarFormProps) {
           <Input
             id="model"
             placeholder="Enter model"
-            key={fields.model.key}
-            name={fields.model.name}
-            defaultValue={fields.model.defaultValue}
-            errors={fields.model.errors}
+            name={"model"}
+            defaultValue={car?.model}
+            errors={error?.cause?.model?._errors}
           />
         </div>
 
@@ -130,10 +110,9 @@ export function CarForm({ car, mode }: CarFormProps) {
             id="year"
             type="year"
             placeholder="e.g. 2024"
-            key={fields.year.key}
-            name={fields.year.name}
-            defaultValue={fields.year.defaultValue}
-            errors={fields.year.errors}
+            name={"year"}
+            defaultValue={car?.year}
+            errors={error?.cause?.year?._errors}
           />
         </div>
 
@@ -143,10 +122,9 @@ export function CarForm({ car, mode }: CarFormProps) {
             id="seatingCapacity"
             type="number"
             placeholder="e.g. 5"
-            key={fields.seatingCapacity.key}
-            name={fields.seatingCapacity.name}
-            defaultValue={fields.seatingCapacity.defaultValue}
-            errors={fields.seatingCapacity.errors}
+            name={"seatingCapacity"}
+            defaultValue={car?.seatingCapacity}
+            errors={error?.cause?.seatingCapacity?._errors}
           />
         </div>
 
@@ -156,10 +134,9 @@ export function CarForm({ car, mode }: CarFormProps) {
             id="brand"
             options={BrandNamesList}
             placeholder="Select brand name"
-            key={fields.brand.key}
-            name={fields.brand.name}
-            defaultValue={fields.brand.defaultValue}
-            errors={fields.brand.errors}
+            name={"brand"}
+            defaultValue={car?.brand}
+            errors={error?.cause?.brand?._errors}
           />
         </div>
 
@@ -169,10 +146,9 @@ export function CarForm({ car, mode }: CarFormProps) {
             id="carType"
             options={CarTypesList}
             placeholder="Select car type"
-            key={fields.carType.key}
-            name={fields.carType.name}
-            defaultValue={fields.carType.defaultValue}
-            errors={fields.carType.errors}
+            name={"carType"}
+            defaultValue={car?.carType}
+            errors={error?.cause?.carType?._errors}
           />
         </div>
 
@@ -182,10 +158,9 @@ export function CarForm({ car, mode }: CarFormProps) {
             id="fuelType"
             options={FuelTypesList}
             placeholder="Select fuel type"
-            key={fields.fuelType.key}
-            name={fields.fuelType.name}
-            defaultValue={fields.fuelType.defaultValue}
-            errors={fields.fuelType.errors}
+            name={"fuelType"}
+            defaultValue={car?.fuelType}
+            errors={error?.cause?.fuelType?._errors}
           />
         </div>
 
@@ -195,10 +170,9 @@ export function CarForm({ car, mode }: CarFormProps) {
             id="transmissionType"
             options={TransmissionTypesList}
             placeholder="Select transmission type"
-            key={fields.transmissionType.key}
-            name={fields.transmissionType.name}
-            defaultValue={fields.transmissionType.defaultValue}
-            errors={fields.transmissionType.errors}
+            name={"transmissionType"}
+            defaultValue={car?.transmissionType}
+            errors={error?.cause?.transmissionType?._errors}
           />
         </div>
       </div>
@@ -211,10 +185,9 @@ export function CarForm({ car, mode }: CarFormProps) {
             id="amenities"
             options={AmenitiesList}
             placeholder="Select amenities"
-            key={fields.amenities.key}
-            name={fields.amenities.name}
-            defaultValue={fields.amenities.defaultOptions}
-            errors={fields.amenities.errors}
+            name={"amenities"}
+            defaultValue={car?.amenities}
+            errors={error?.cause?.amenities?._errors}
           />
         </div>
 
@@ -225,21 +198,20 @@ export function CarForm({ car, mode }: CarFormProps) {
             placeholder="Write about the car features..."
             rows={10}
             className="min-h-40"
-            key={fields.description.key}
-            name={fields.description.name}
-            defaultValue={fields.description.defaultValue}
-            errors={fields.description.errors}
+            name={"description"}
+            defaultValue={car?.description ?? ""}
+            errors={error?.cause?.description?._errors}
           />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="images">Upload Images</Label>
           <Input
+            id="images"
             multiple
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            key={fields.imageUrls.key}
           />
         </div>
 
@@ -273,19 +245,14 @@ export function CarForm({ car, mode }: CarFormProps) {
         </div>
 
         <div className="flex items-center">
-          <Checkbox
-            key={fields.isFeatured.key}
-            name={fields.isFeatured.name}
-            defaultChecked={fields.isFeatured.defaultChecked}
-          />
+          <Checkbox name={"isFeatured"} defaultChecked={car?.isFeatured} />
           <Label className="ml-2">Mark as Featured Car</Label>
         </div>
 
         <div className="flex items-center">
           <Checkbox
-            key={fields.forceWithDriver.key}
-            name={fields.forceWithDriver.name}
-            defaultChecked={fields.forceWithDriver.defaultChecked}
+            name={"forceWithDriver"}
+            defaultChecked={car?.forceWithDriver ?? false}
           />
           <Label className="ml-2">Force booking with driver</Label>
         </div>

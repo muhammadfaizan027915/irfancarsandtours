@@ -26,8 +26,6 @@ export const registerCar = handlerFormActionWithError({
       throw new UnauthorizedError({ message: "Unauthorized to create car." });
     }
 
-    console.log({ data });
-
     const carService = new CarService();
     const car = await carService.createCar(data);
 

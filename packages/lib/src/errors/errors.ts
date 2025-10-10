@@ -1,17 +1,18 @@
 import { BaseApiErrorOptions, ErrorCode } from "./errors.types";
 import { ErrorMessages } from "./errors.constants";
 
-
-
-export class BaseApiError extends Error {
+export class BaseApiError<
+  TCause extends object = object,
+  TArgs extends any[] = any[]
+> extends Error {
   status: number;
   code: ErrorCode;
-  cause?: unknown;
+  cause?: TCause;
 
   constructor(
     code: ErrorCode,
     status: number,
-    { message, cause, args }: BaseApiErrorOptions = {}
+    { message, cause, args }: BaseApiErrorOptions<TCause, TArgs> = {}
   ) {
     const msg = message ?? BaseApiError.resolveMessage(code, args);
 
@@ -23,11 +24,14 @@ export class BaseApiError extends Error {
     Object.setPrototypeOf(this, new.target.prototype);
   }
 
-  private static resolveMessage(code: ErrorCode, args?: unknown[]): string {
+  private static resolveMessage<TArgs extends any[]>(
+    code: ErrorCode,
+    args?: TArgs
+  ): string {
     const msg = ErrorMessages[code];
 
     if (typeof msg === "function") {
-      return (msg as (...args: unknown[]) => string)(...(args ?? []));
+      return msg(...((args ?? []) as unknown as Parameters<typeof msg>));
     }
 
     return msg;
@@ -43,7 +47,7 @@ export class BaseApiError extends Error {
   }
 }
 
-export class ValidationError extends BaseApiError {
+export class ValidationError extends BaseApiError<{ field?: string }> {
   constructor(options: BaseApiErrorOptions = {}) {
     super(ErrorCode.VALIDATION_ERROR, 400, options);
   }
@@ -61,13 +65,13 @@ export class ForbiddenError extends BaseApiError {
   }
 }
 
-export class NotFoundError extends BaseApiError {
+export class NotFoundError extends BaseApiError<object, [string]> {
   constructor(resource: string, options: BaseApiErrorOptions = {}) {
     super(ErrorCode.NOT_FOUND, 404, { ...options, args: [resource] });
   }
 }
 
-export class DuplicateEmailError extends BaseApiError {
+export class DuplicateEmailError extends BaseApiError<{ email: string }> {
   constructor(email: string, options: BaseApiErrorOptions = {}) {
     super(ErrorCode.DUPLICATE_EMAIL, 409, {
       ...options,

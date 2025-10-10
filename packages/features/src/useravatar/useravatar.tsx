@@ -32,7 +32,7 @@ export function UserAvatar({ user }: UserAvatarProps) {
       formData.append("image", uploadedUrl);
       const result = await updateUser(user, formData);
 
-      if (result?.status === "success") {
+      if (result?.success) {
         toast.success("Profile image updated successfully.", {
           position: "top-center",
         });

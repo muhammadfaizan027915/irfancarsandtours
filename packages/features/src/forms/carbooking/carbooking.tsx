@@ -9,158 +9,124 @@ import {
   AlertBox,
 } from "@icat/ui";
 import { ArrowRight, User, Mail, Phone, IdCard } from "lucide-react";
-import { Fragment, useActionState } from "react";
-import { useForm } from "@conform-to/react";
-import { parseWithZod } from "@conform-to/zod/v4";
-import { CarBookingRequestSchema } from "@icat/contracts";
+import { useActionState } from "react";
+import { mergeObjectToFormData } from "@icat/lib/utils";
 import { CarBookingFormProps } from "./carbooking.types";
 import { bookCar } from "@icat/web/actions";
 
 export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
-  const [lastResult, action] = useActionState(bookCar, null);
+  const [result, action] = useActionState(bookCar, null);
 
-  const [form, fields] = useForm({
-    lastResult,
-    defaultValue: { ...defaultValue },
-    onValidate: ({ formData }) =>
-      parseWithZod(formData, { schema: CarBookingRequestSchema }),
-    shouldValidate: "onBlur",
-    shouldRevalidate: "onInput",
-  });
+  const success = result?.success;
+  const error = result?.error;
+
+  const actionWithCars = (formData: FormData) => {
+    const formDataWithCars = mergeObjectToFormData(formData, {
+      cars: defaultValue?.cars,
+    });
+
+    action(formDataWithCars);
+  };
 
   return (
-    <form
-      id={form.id}
-      action={action}
-      onSubmit={form.onSubmit}
-      className="grid gap-4 w-full"
-    >
-      {form?.errors?.map((error) => (
-        <AlertBox key={error} variant="destructive" description={error} />
-      ))}
+    <form action={actionWithCars} className="grid gap-4 w-full">
+      {!success && error?.message && (
+        <AlertBox
+          key={error.status}
+          variant="destructive"
+          description={error?.message}
+        />
+      )}
 
       <div className="space-y-2">
         <Label htmlFor="name">Name</Label>
 
         <Input
           id="name"
-          key={fields.name.key}
-          name={fields.name.name}
-          defaultValue={fields.name.defaultValue}
-          errors={fields.name.errors}
           placeholder="Enter your name"
           startIcon={<User size={18} />}
+          name={"name"}
+          defaultValue={defaultValue?.name}
+          errors={error?.cause?.name?._errors}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="name">Email Address</Label>
+        <Label htmlFor="email">Email Address</Label>
         <Input
           id="email"
           type="email"
-          key={fields.email.key}
-          name={fields.email.name}
-          defaultValue={fields.email.defaultValue}
-          errors={fields.email.errors}
           placeholder="Enter your email address"
           startIcon={<Mail size={18} />}
+          name={"email"}
+          defaultValue={defaultValue?.email}
+          errors={error?.cause?.email?._errors}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="name">Phone Number</Label>
+        <Label htmlFor="phone">Phone Number</Label>
         <Input
-          key={fields.phone.key}
           id="phone"
-          name={fields.phone.name}
-          defaultValue={fields.phone.defaultValue}
-          errors={fields.phone.errors}
           placeholder="Enter your phone number"
           startIcon={<Phone size={18} />}
+          name={"phone"}
+          defaultValue={defaultValue?.phone}
+          errors={error?.cause?.phone?._errors}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="name">CNIC</Label>
+        <Label htmlFor="cnic">CNIC</Label>
         <Input
-          key={fields.cnic.key}
           id="cnic"
-          name={fields.cnic.name}
-          defaultValue={fields.cnic.defaultValue}
-          errors={fields.cnic.errors}
           placeholder="Enter your CNIC number"
           startIcon={<IdCard size={18} />}
+          name={"cnic"}
+          defaultValue={defaultValue?.cnic}
+          errors={error?.cause?.cnic?._errors}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="name">Pick Up Date</Label>
+        <Label htmlFor="pickupDate">Pick Up Date</Label>
         <DateTimePicker
-          key={fields.pickupDate.key}
-          name={fields.pickupDate.name}
-          defaultValue={fields.pickupDate.defaultValue}
-          errors={fields.pickupDate.errors}
+          id="pickupDate"
+          name={"pickupDate"}
+          errors={error?.cause?.pickupDate?._errors}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="name">Pick Up Address</Label>
+        <Label htmlFor="pickupAddress">Pick Up Address</Label>
         <Textarea
           id="pickupAddress"
-          key={fields.pickupAddress.key}
-          name={fields.pickupAddress.name}
-          defaultValue={fields.pickupAddress.defaultValue}
-          errors={fields.pickupAddress.errors}
           placeholder="Enter your pick up address"
           className="resize-none"
+          name={"pickupAddress"}
+          errors={error?.cause?.pickupAddress?._errors}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="name">Drop Off Date</Label>
+        <Label htmlFor="dropoffDate">Drop Off Date</Label>
         <DateTimePicker
-          key={fields.dropoffDate.key}
-          name={fields.dropoffDate.name}
-          defaultValue={fields.dropoffDate.defaultValue}
-          errors={fields.dropoffDate.errors}
+          id="dropoffDate"
+          name={"dropoffDate"}
+          errors={error?.cause?.dropoffDate?._errors}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="name">Drop Off Address</Label>
+        <Label htmlFor="dropoffAddress">Drop Off Address</Label>
         <Textarea
           id="dropoffAddress"
-          key={fields.dropoffAddress.key}
-          name={fields.dropoffAddress.name}
-          defaultValue={fields.dropoffAddress.defaultValue}
-          errors={fields.dropoffAddress.errors}
           placeholder="Enter your drop off address"
           className="resize-none"
+          name={"dropoffAddress"}
+          errors={error?.cause?.dropoffAddress?._errors}
         />
       </div>
-      {fields.cars.getFieldList().map((field) => {
-        const fieldset = field.getFieldset();
-
-        return (
-          <Fragment key={field.key}>
-            <input
-              type="hidden"
-              name={fieldset.carId.name}
-              defaultValue={fieldset.carId.defaultValue}
-            />
-            <input
-              type="hidden"
-              name={fieldset.quantity.name}
-              defaultValue={String(fieldset.quantity.defaultValue)}
-            />
-            <input
-              type="hidden"
-              name={fieldset.bookedWithDriver.name}
-              defaultValue={String(fieldset.bookedWithDriver.defaultValue ?? false)}
-            />
-          </Fragment>
-        );
-      })}
 
       <Button
         size="lg"

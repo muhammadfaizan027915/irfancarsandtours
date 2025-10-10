@@ -11,8 +11,11 @@ export enum ErrorCode {
 
 export type ErrorCodeType = keyof typeof ErrorMessages;
 
-export type BaseApiErrorOptions = {
+export type BaseApiErrorOptions<
+  TCause extends object = object,
+  TArgs extends any[] = any[]
+> = {
   message?: string;
-  cause?: unknown;
-  args?: unknown[];
+  cause?: TCause;
+  args?: TArgs;
 };

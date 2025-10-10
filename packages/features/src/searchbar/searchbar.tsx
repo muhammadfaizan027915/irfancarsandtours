@@ -1,21 +1,18 @@
-import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from "@icat/ui";
+import { Card } from "@icat/ui";
 import { SearchbarProps } from "./searchbar.types";
+import { CarSearchbar } from "./carsearch";
 
-export function Searchbar({
-  defaultTab = "cars",
-  showTabs,
-  ...props
-}: SearchbarProps) {
+export function Searchbar({ type = "cars", brand, search }: SearchbarProps) {
+  const SearchPanel = SearchbarMap[type];
+
   return (
     <Card className="-translate-y-1/2 p-6 mx-auto shadow-2xl">
-      <Tabs defaultValue={defaultTab}>
-        <TabsList>
-          <TabsTrigger value="Cars">Cars</TabsTrigger>
-          <TabsTrigger value="Tours">Tours</TabsTrigger>
-        </TabsList>
-        <TabsContent value="cars"></TabsContent>
-        <TabsContent value="tours"></TabsContent>
-      </Tabs>
+      <SearchPanel type={type} brand={brand} search={search} />
     </Card>
   );
 }
+
+const SearchbarMap = {
+  cars: CarSearchbar,
+  tours: () => <h1>Tours</h1>,
+};

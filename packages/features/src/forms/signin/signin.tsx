@@ -4,22 +4,14 @@ import { NavigationUrls } from "../../header";
 import { AlertBox, Badge, Button, Card, Input } from "@icat/ui";
 import { ArrowRight, Mail, Lock } from "lucide-react";
 import { logInUser } from "@icat/web/actions";
-import { useForm } from "@conform-to/react";
-import { parseWithZod } from "@conform-to/zod/v4";
-import { SignInBodySchema } from "@icat/contracts";
 import { useActionState } from "react";
 import Link from "next/link";
 
 export function SignInFrom() {
-  const [lastResult, action] = useActionState(logInUser, null);
+  const [result, action] = useActionState(logInUser, null);
 
-  const [form, fields] = useForm({
-    lastResult,
-    onValidate: ({ formData }) =>
-      parseWithZod(formData, { schema: SignInBodySchema }),
-    shouldValidate: "onBlur",
-    shouldRevalidate: "onInput",
-  });
+  const success = result?.success;
+  const error = result?.error;
 
   return (
     <Card className="w-full p-8 max-w-md flex flex-col items-center gap-2 shadow-none">
@@ -29,32 +21,28 @@ export function SignInFrom() {
 
       <h1 className="font-bold text-4xl">Welcome Back</h1>
 
-      <form
-        action={action}
-        onSubmit={form.onSubmit}
-        className="flex flex-col gap-3 w-full mt-8"
-      >
-        {form?.errors?.map((error) => (
-          <AlertBox key={error} variant="destructive" description={error} />
-        ))}
+      <form action={action} className="flex flex-col gap-3 w-full mt-8">
+        {!success && error?.message && (
+          <AlertBox
+            key={error.status}
+            variant="destructive"
+            description={error?.message}
+          />
+        )}
 
         <Input
-          key={fields.email.key}
-          name={fields.email.name}
+          name={"email"}
           placeholder="Email Address"
           startIcon={<Mail size={18} />}
-          defaultValue={fields?.email?.defaultValue}
-          errors={fields.email.errors}
+          errors={error?.cause?.email?._errors}
         />
 
         <Input
           type="password"
-          key={fields.password.key}
-          name={fields.password.name}
+          name={"password"}
           placeholder="Password"
           startIcon={<Lock size={18} />}
-          defaultValue={fields?.password?.defaultValue}
-          errors={fields.password.errors}
+          errors={error?.cause?.password?._errors}
         />
 
         <Button size={"lg"} className="font-bold shadow-none group mt-4">

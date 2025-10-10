@@ -14,24 +14,25 @@ type PaginationBarProps = {
 };
 
 function PaginationBar({ pagination }: PaginationBarProps) {
-  const { page = 1, pages = 1, limit = 50 } = pagination || {};
-  const makeHref = (p: number) => `?page=${p}&limit=${limit}`;
+  const { page = 1, pages = 1, limit = 50 } = pagination ?? {};
+  const makeHref = (p?: number) => `?page=${p ?? 1}&limit=${limit ?? 50}`;
+
+  if (!pagination || pages < 1) return null;
 
   return (
     <Pagination className="justify-end">
       <PaginationContent>
         <PaginationItem>
-          <Link href={page > 1 ? makeHref(page - 1) : "#"} passHref>
-            <PaginationPrevious
-              className={page === 1 ? "pointer-events-none opacity-50" : ""}
-            />
-          </Link>
+          <PaginationPrevious
+            href={page > 1 ? makeHref(page - 1) : "#"}
+            className={page === 1 ? "pointer-events-none opacity-50" : ""}
+          />
         </PaginationItem>
 
         <PaginationItem>
-          <Link href={makeHref(1)} passHref>
-            <PaginationLink isActive={page === 1}>1</PaginationLink>
-          </Link>
+          <PaginationLink isActive={page === 1} href={makeHref(1)}>
+            1
+          </PaginationLink>
         </PaginationItem>
 
         {page > 3 && (
@@ -42,9 +43,9 @@ function PaginationBar({ pagination }: PaginationBarProps) {
 
         {page > 1 && page < pages && (
           <PaginationItem>
-            <Link href={makeHref(page)} passHref>
-              <PaginationLink isActive>{page}</PaginationLink>
-            </Link>
+            <PaginationLink isActive href={makeHref(page)}>
+              {page}
+            </PaginationLink>
           </PaginationItem>
         )}
 
@@ -56,19 +57,17 @@ function PaginationBar({ pagination }: PaginationBarProps) {
 
         {pages > 1 && (
           <PaginationItem>
-            <Link href={makeHref(pages)} passHref>
-              <PaginationLink isActive={page === pages}>{pages}</PaginationLink>
-            </Link>
+            <PaginationLink isActive={page === pages} href={makeHref(pages)}>
+              {pages}
+            </PaginationLink>
           </PaginationItem>
         )}
 
-        {/* Next */}
         <PaginationItem>
-          <Link href={page < pages ? makeHref(page + 1) : "#"} passHref>
-            <PaginationNext
-              className={page === pages ? "pointer-events-none opacity-50" : ""}
-            />
-          </Link>
+          <PaginationNext
+            href={page < pages ? makeHref(page + 1) : "#"}
+            className={page === pages ? "pointer-events-none opacity-50" : ""}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
@@ -107,16 +106,18 @@ function PaginationItem({ ...props }: React.ComponentProps<"li">) {
 type PaginationLinkProps = {
   isActive?: boolean;
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
-  React.ComponentProps<"a">;
+  React.ComponentProps<typeof Link>;
 
 function PaginationLink({
   className,
   isActive,
   size = "icon",
+  href = "#",
   ...props
 }: PaginationLinkProps) {
   return (
-    <a
+    <Link
+      href={href}
       aria-current={isActive ? "page" : undefined}
       data-slot="pagination-link"
       data-active={isActive}
@@ -134,12 +135,14 @@ function PaginationLink({
 
 function PaginationPrevious({
   className,
+  href,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
       aria-label="Go to previous page"
       size="default"
+      href={href ?? "#"}
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}
     >
@@ -151,12 +154,14 @@ function PaginationPrevious({
 
 function PaginationNext({
   className,
+  href,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
       aria-label="Go to next page"
       size="default"
+      href={href ?? "#"}
       className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
       {...props}
     >

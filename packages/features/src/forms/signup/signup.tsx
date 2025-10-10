@@ -4,21 +4,14 @@ import { NavigationUrls } from "../../header";
 import { AlertBox, Badge, Button, Card, Input } from "@icat/ui";
 import { ArrowRight, Mail, Lock, UserRound } from "lucide-react";
 import { signUpUser } from "@icat/web/actions";
-import { useForm } from "@conform-to/react";
-import { parseWithZod } from "@conform-to/zod/v4";
-import { CreateUserBodySchema } from "@icat/contracts";
 import { useActionState } from "react";
 import Link from "next/link";
 
 export function SignUpForm() {
-  const [lastResult, action] = useActionState(signUpUser, null);
-  const [form, fields] = useForm({
-    lastResult,
-    onValidate: ({ formData }) =>
-      parseWithZod(formData, { schema: CreateUserBodySchema }),
-    shouldValidate: "onBlur",
-    shouldRevalidate: "onInput",
-  });
+  const [result, action] = useActionState(signUpUser, null);
+
+  const success = result?.success;
+  const error = result?.error;
 
   return (
     <Card className="w-full p-8 max-w-md flex flex-col items-center gap-2 shadow-none">
@@ -28,52 +21,44 @@ export function SignUpForm() {
 
       <h1 className="font-bold text-4xl">Create an Account</h1>
 
-      <form
-        action={action}
-        onSubmit={form.onSubmit}
-        className="flex flex-col gap-3 w-full mt-8"
-      >
-        {form?.errors?.map((error) => (
-          <AlertBox key={error} variant="destructive" description={error} />
-        ))}
+      <form action={action} className="flex flex-col gap-3 w-full mt-8">
+        {!success && error?.message && (
+          <AlertBox
+            key={error.status}
+            variant="destructive"
+            description={error?.message}
+          />
+        )}
 
         <Input
           type="text"
           placeholder="Name"
           startIcon={<UserRound size={18} />}
-          key={fields.name.key}
-          name={fields.name.name}
-          defaultValue={fields.name.defaultValue}
-          errors={fields.name.errors}
+          name={"name"}
+          errors={error?.cause?.name?._errors}
         />
 
         <Input
           placeholder="Email Address"
           startIcon={<Mail size={18} />}
-          key={fields.email.key}
-          name={fields.email.name}
-          defaultValue={fields.email.defaultValue}
-          errors={fields.email.errors}
+          name={"email"}
+          errors={error?.cause?.email?._errors}
         />
 
         <Input
           type="password"
           placeholder="Password"
           startIcon={<Lock size={18} />}
-          key={fields.password.key}
-          name={fields.password.name}
-          defaultValue={fields.password.defaultValue}
-          errors={fields.password.errors}
+          name={"password"}
+          errors={error?.cause?.password?._errors}
         />
 
         <Input
           type="password"
           placeholder="Confirm Password"
           startIcon={<Lock size={18} />}
-          key={fields.confirmPassword.key}
-          name={fields.confirmPassword.name}
-          defaultValue={fields.confirmPassword.defaultValue}
-          errors={fields.confirmPassword.errors}
+          name={"confirmPassword"}
+          errors={error?.cause?.confirmPassword?._errors}
         />
 
         <Button size={"lg"} className="font-bold shadow-none group mt-4">

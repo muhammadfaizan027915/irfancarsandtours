@@ -13,7 +13,7 @@ export default function HomePage() {
       <PrimrayHero />
       <section className="bg-muted pb-16">
         <div className="container mx-auto px-4 md:px-8">
-          <Searchbar defaultTab="cars" />
+          <Searchbar type="cars" />
           <BrandSlider />
         </div>
       </section>

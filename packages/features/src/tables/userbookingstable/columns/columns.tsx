@@ -11,15 +11,18 @@ export const userBookingsColumns: ColumnDef<BookingListItemResponseDto>[] = [
   {
     accessorKey: "id",
     header: "Booking ID",
+    size: 120,
   },
   {
     accessorKey: "pickupDate",
     header: "Pickup Date",
+    size: 140,
     cell: ({ row }) => format(new Date(row.original.pickupDate), "dd MMM yyyy"),
   },
   {
     accessorKey: "dropoffDate",
     header: "Dropoff Date",
+    size: 140,
     cell: ({ row }) =>
       row.original.dropoffDate
         ? format(new Date(row.original.dropoffDate), "dd MMM yyyy")
@@ -28,14 +31,33 @@ export const userBookingsColumns: ColumnDef<BookingListItemResponseDto>[] = [
   {
     accessorKey: "pickupAddress",
     header: "Pickup Address",
+    size: 220,
+    cell: ({ row }) => (
+      <span
+        className="block max-w-[200px] truncate"
+        title={row.original.pickupAddress}
+      >
+        {row.original.pickupAddress}
+      </span>
+    ),
   },
   {
     accessorKey: "dropoffAddress",
     header: "Dropoff Address",
+    size: 220,
+    cell: ({ row }) => (
+      <span
+        className="block max-w-[200px] truncate"
+        title={row.original.dropoffAddress}
+      >
+        {row.original.dropoffAddress}
+      </span>
+    ),
   },
   {
     accessorKey: "createdAt",
     header: "Created",
+    size: 180,
     cell: ({ row }) =>
       format(new Date(row.original.createdAt!), "dd MMM yyyy hh:mm a"),
   },

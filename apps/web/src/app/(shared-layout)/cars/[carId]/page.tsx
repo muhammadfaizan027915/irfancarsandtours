@@ -5,6 +5,7 @@ import {
   CarAmenities,
   CarGetStarted,
   CarBooking,
+  CarImages,
 } from "@icat/features";
 import { getUserCar } from "@icat/web/data/cars";
 
@@ -30,17 +31,21 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
   }
 
   return (
-    <div className="grid grid-cols-6 items-start gap-6">
-      <div className="grid gap-6 col-span-4">
-        <CarProperties {...car} />
-        <CarDescription
-          description={car?.description || "No description available"}
-        />
-        <CarAmenities amenities={car?.amenities || []} />
-      </div>
-      <div className="grid gap-6 col-span-2">
-        <CarGetStarted />
-        <CarBooking cars={_cars} />
+    <div className="grid gap-6">
+      <CarImages imageUrls={car?.imageUrls || []} />
+      <h1 className="font-bold text-5xl">{car?.name} {car?.model} {car?.year}</h1>
+      <div className="grid grid-cols-6 items-start gap-6">
+        <div className="grid gap-6 col-span-4">
+          <CarProperties {...car} />
+          <CarDescription
+            description={car?.description || "No description available"}
+          />
+          <CarAmenities amenities={car?.amenities || []} />
+        </div>
+        <div className="grid gap-6 col-span-2">
+          <CarGetStarted />
+          <CarBooking cars={_cars} />
+        </div>
       </div>
     </div>
   );

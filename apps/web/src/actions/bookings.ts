@@ -18,8 +18,6 @@ export const bookCar = handlerFormActionWithError({
       throw new UnauthorizedError({ message: "Unauthorized to book car." });
     }
 
-    console.log(data?.cars);
-
     const bookingService = new BookingService();
     const booking = await bookingService.createBooking(data);
 

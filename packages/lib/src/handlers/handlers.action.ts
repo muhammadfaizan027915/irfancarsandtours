@@ -1,8 +1,7 @@
 import { ZodObject } from "zod";
 import { handleError } from "../errors";
 import { ServerAction } from "./handlers.types";
-import { parseWithZod } from "@conform-to/zod/v4";
-import type { SubmissionResult } from "@conform-to/react";
+import { formDataToObject } from "../utils/form-to-object";
 
 export function handleServerActionWithError<TArgs extends unknown[], TResult>(
   action: ServerAction<TArgs, TResult>
@@ -20,26 +19,24 @@ export function handleServerActionWithError<TArgs extends unknown[], TResult>(
 
 export function handlerFormActionWithError<
   TArgs,
-  TResult = SubmissionResult
+  TResult
 >(args: {
   schema: ZodObject<any>;
   action: (args: TArgs) => Promise<TResult> | void;
   shouldResetForm?: boolean;
 }) {
   return async function (prevState: unknown, formData: FormData) {
-    const submission = parseWithZod(formData, { schema: args.schema });
-
-    if (submission.status !== "success") {
-      return submission.reply();
-    }
-
     try {
-      await args.action(submission.payload as TArgs);
-      return submission.reply({ resetForm: args.shouldResetForm });
+      const payload = args.schema.parse(formDataToObject(formData));
+      const data = await args.action(payload as TArgs);
+
+      return {
+        success: true,
+        data: data ?? null,
+      };
     } catch (error) {
-      console.log("Error in form action:", error);
       const errorPayload = handleError(error);
-      return submission.reply({ formErrors: [errorPayload?.message] });
+      return { success: false, error: errorPayload };
     }
   };
 }

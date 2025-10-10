@@ -28,12 +28,12 @@ export function BrandSlider() {
 
       <div className="mt-8 overflow-hidden group">
         <div className="flex gap-6 animate-slide group-hover:[animation-play-state:paused]">
-          {Object.entries(BrandLibrary)?.map(([brand, { icon }], i) => (
-            <BrandCard key={brand} brandIcon={icon} />
+          {Object.entries(BrandLibrary)?.map(([brand, { name, icon }], i) => (
+            <BrandCard key={brand} brandIcon={icon} brandName={name} />
           ))}
 
-          {Object.entries(BrandLibrary)?.map(([brand, { icon }], i) => (
-            <BrandCard key={brand} brandIcon={icon} />
+          {Object.entries(BrandLibrary)?.map(([brand, { name, icon }], i) => (
+            <BrandCard key={brand} brandIcon={icon} brandName={name} />
           ))}
         </div>
       </div>
