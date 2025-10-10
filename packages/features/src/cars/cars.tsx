@@ -1,7 +1,7 @@
 import { CarCard } from "./carcard";
 import { CarsProps } from "./cars.types";
 import { getUserCars } from "@icat/web/data/cars";
-import { PaginationBar } from "@icat/ui";
+import { PaginationBar } from "@icat/ui/components/pagination";
 
 export async function Cars(props: CarsProps) {
   const result = await getUserCars(props);

@@ -1,18 +1,21 @@
-"use server";
-
 import { Logo } from "./logo";
-import { NavigationUrls } from "./header.constants";
-import { getSession } from "@icat/web/data/session";
 import { HeaderProps } from "./header.types";
-import { CarCartSidebar, NavigationBar } from "../sidebars";
+import { NavigationUrls } from "./header.constants";
+import { ProfileSigin } from "@icat/features/profilesignin";
 import { cn } from "@icat/ui/lib/utils";
 
 import Link from "next/link";
-import { ProfileSigin } from "../profilesignin";
+import dynamic from "next/dynamic";
+
+const CarCartSidebar = dynamic(() =>
+  import("@icat/features/sidebars/carcartsidebar").then((m) => m.CarCartSidebar)
+);
+
+const NavigationBar = dynamic(() =>
+  import("@icat/features/sidebars/navigationbar").then((m) => m.NavigationBar)
+);
 
 export async function Header({ varient = "primary" }: HeaderProps) {
-  const session = await getSession();
-
   return (
     <>
       <header

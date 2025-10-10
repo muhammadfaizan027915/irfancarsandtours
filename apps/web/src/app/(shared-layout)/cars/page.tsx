@@ -1,5 +1,8 @@
+import { Cars } from "@icat/features/cars";
+import { FiltersBar } from "@icat/features/filtersbar";
+import { Searchbar } from "@icat/features/searchbar";
+import { SecondaryHero } from "@icat/features/hero/secondary";
 import { GetCarsBodyDto } from "@icat/contracts";
-import { Cars, FiltersBar, Searchbar, SecondaryHero } from "@icat/features";
 
 type CarsPageProps = {
   searchParams: Promise<GetCarsBodyDto>;

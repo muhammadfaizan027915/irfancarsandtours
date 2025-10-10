@@ -1,5 +1,5 @@
-import { Header } from "../../header";
-import { Topbar } from "../../topbar";
+import { Header } from "@icat/features/header";
+import { Topbar } from "@icat/features/topbar";
 import { CircleCheck } from "lucide-react";
 
 export function PrimrayHero() {

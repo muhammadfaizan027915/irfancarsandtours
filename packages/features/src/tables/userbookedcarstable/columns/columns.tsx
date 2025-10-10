@@ -1,7 +1,7 @@
 "use client";
 
 import { BookedCarWithCarResponseDto } from "@icat/contracts";
-import { SmallImage } from "@icat/ui";
+import { SmallImage } from "@icat/ui/components/small-image";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 

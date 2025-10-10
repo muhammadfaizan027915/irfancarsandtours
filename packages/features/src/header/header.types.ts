@@ -1,5 +1,5 @@
 import { Session } from "next-auth";
-import { VarientType } from "../common";
+import { VarientType } from "@icat/features/common";
 
 export type HeaderProps = {
   varient?: VarientType;

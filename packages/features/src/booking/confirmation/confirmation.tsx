@@ -1,5 +1,6 @@
-import { CheckCircle2, Calendar, MapPin } from "lucide-react";
-import { Card, CardHeader, CardContent, Button } from "@icat/ui";
+import { Button } from "@icat/ui/components/button";
+import { Card, CardHeader, CardContent } from "@icat/ui/components/card";
+import { CheckCircle2, MapPin } from "lucide-react";
 import { BookingConfirmationProps } from "./confirmation.types";
 import { NavigationUrls } from "@icat/features";
 import Link from "next/link";

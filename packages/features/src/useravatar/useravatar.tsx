@@ -1,19 +1,19 @@
 "use client";
 
-import { getSignedUploadUrl } from "@icat/web/actions/file";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-  Badge,
-  Button,
-  Progress,
-  toast,
-} from "@icat/ui";
+} from "@icat/ui/components/avatar";
+import { Badge } from "@icat/ui/components/badge";
+import { Button } from "@icat/ui/components/button";
+import { Progress } from "@icat/ui/components/progress";
+import { toast } from "@icat/ui/components/sonner";
+
 import { UserAvatarProps } from "./useravatar.types";
 import { Pencil, UploadCloud } from "lucide-react";
-import { getNameInitials } from "@icat/lib/utils";
-import { useFileUpload } from "@icat/lib/hooks";
+import { getNameInitials } from "@icat/lib/utils/nameinitials";
+import { useFileUpload } from "@icat/lib/hooks/usefileupload";
 import { updateUser } from "@icat/web/actions";
 import { useRef } from "react";
 

@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader } from "@icat/ui";
+import { Card, CardContent, CardHeader } from "@icat/ui/components/card";
+import { CarBookingForm } from "@icat/features/forms/carbooking";
 import { BookingRequestDto } from "@icat/contracts";
-import { CarBookingForm } from "@icat/features/forms";
 import { getSession } from "@icat/web/data/session";
 import { CarBookingProps } from "./booking.types";
 

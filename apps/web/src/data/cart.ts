@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { carCartKey } from "../store";
+import { carCartKey } from "@icat/web/store";
 
 export async function getCartCars() {
   const cookieStore = await cookies();

@@ -1,4 +1,4 @@
-import { PositionType } from "../../common";
+import { PositionType } from "@icat/features/common";
 
 export type SecondaryHeroProps = {
   badge?: string;

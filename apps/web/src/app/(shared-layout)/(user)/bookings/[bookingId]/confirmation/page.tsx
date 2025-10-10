@@ -1,4 +1,5 @@
-import { NavigationUrls, BookingConfirmation } from "@icat/features";
+import { BookingConfirmation } from "@icat/features/booking/confirmation";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { getUserBooking } from "@icat/web/data/bookings";
 import { redirect } from "next/navigation";
 

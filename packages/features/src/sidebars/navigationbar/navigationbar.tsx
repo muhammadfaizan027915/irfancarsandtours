@@ -8,7 +8,7 @@ import {
   SheetFooter,
   SheetTrigger,
 } from "@icat/ui";
-import { NavigationUrls } from "../../header";
+import { NavigationUrls } from "@icat/features/header";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 

@@ -1,6 +1,11 @@
 "use client";
 
-import { AlertBox, Button, Card, Input, Textarea, toast } from "@icat/ui";
+import { Card } from "@icat/ui/components/card";
+import { toast } from "@icat/ui/components/sonner";
+import { Input } from "@icat/ui/components/input";
+import { Button } from "@icat/ui/components/button";
+import { AlertBox } from "@icat/ui/components/alert";
+import { Textarea } from "@icat/ui/components/textarea";
 import {
   ArrowRight,
   Mail,

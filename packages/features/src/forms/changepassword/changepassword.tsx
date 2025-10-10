@@ -1,6 +1,10 @@
 "use client";
 
-import { AlertBox, Button, Card, Input, toast } from "@icat/ui";
+import { Card } from "@icat/ui/components/card";
+import { toast } from "@icat/ui/components/sonner";
+import { Input } from "@icat/ui/components/input";
+import { Button } from "@icat/ui/components/button";
+import { AlertBox } from "@icat/ui/components/alert";
 import { ArrowRight, Lock } from "lucide-react";
 import { changeUserPassword } from "@icat/web/actions";
 import { useActionState, useEffect } from "react";
@@ -13,7 +17,9 @@ export function ChangePasswordForm() {
 
   useEffect(() => {
     if (success) {
-      toast.success("Password changed successfully!", { position: "top-center" });
+      toast.success("Password changed successfully!", {
+        position: "top-center",
+      });
     }
   }, [result]);
 
@@ -24,7 +30,7 @@ export function ChangePasswordForm() {
       <form action={action} className="flex flex-col gap-3 w-full mt-8">
         {!success && error?.message && (
           <AlertBox
-            key={error.status}  
+            key={error.status}
             variant="destructive"
             description={error?.message}
           />

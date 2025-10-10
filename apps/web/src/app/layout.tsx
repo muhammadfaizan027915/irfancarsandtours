@@ -1,6 +1,7 @@
 import { Urbanist } from "next/font/google";
-import { ThemeProvider, Toaster } from "@icat/ui";
-import { CarCartProvider } from "../store";
+import { ThemeProvider } from "@icat/ui/components/theme-provider";
+import { Toaster } from "@icat/ui/components/sonner";
+import { CarCartProvider } from "@icat/web/store";
 import "@icat/ui/globals.css";
 
 const urbansist = Urbanist({

@@ -12,9 +12,9 @@ import {
   toast,
 } from "@icat/ui";
 import { useCarCart } from "@icat/web/store";
-import { CarCartCard } from "../../carcartlist/carcartcard";
+import { CarCartCard } from "@icat/features/carcartlist/carcartcard";
+import { NavigationUrls } from "@icat/features/header";
 import { EmptyCarCartMessage } from "./emptycarcartmessage";
-import { NavigationUrls } from "../../header";
 import { LayoutGrid } from "lucide-react";
 import Link from "next/link";
 

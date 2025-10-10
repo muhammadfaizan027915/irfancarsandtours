@@ -1,4 +1,6 @@
-import { ContactForm, Map, SecondaryHero } from "@icat/features";
+import { Map } from "@icat/features/map";
+import { ContactForm } from "@icat/features/forms/contact";
+import { SecondaryHero } from "@icat/features/hero/secondary";
 
 export default function ContactPage() {
   return (

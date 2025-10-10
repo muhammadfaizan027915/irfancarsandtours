@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { toDate } from "../generic";
-import { CarListItemResponseSchema } from "../cars";
+import { toDate } from "@icat/contracts/generic";
+import { CarListItemResponseSchema } from "@icat/contracts/cars";
 
 export const BookedCarResponseSchema = z.object({
   id: z.string(),

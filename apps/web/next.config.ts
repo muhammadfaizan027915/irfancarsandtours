@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
     "@icat/ui",
   ],
   images: {
-    domains: ["storage.googleapis.com"],
+    remotePatterns: [{ protocol: "https", hostname: "storage.googleapis.com" }],
   },
 };
 

@@ -1,13 +1,11 @@
 "use client";
 
-import {
-  Button,
-  DateTimePicker,
-  Input,
-  Label,
-  Textarea,
-  AlertBox,
-} from "@icat/ui";
+import { Input } from "@icat/ui/components/input";
+import { Label } from "@icat/ui/components/label";
+import { Button } from "@icat/ui/components/button";
+import { AlertBox } from "@icat/ui/components/alert";
+import { Textarea } from "@icat/ui/components/textarea";
+import { DateTimePicker } from "@icat/ui/components/date-time-picker";
 import { ArrowRight, User, Mail, Phone, IdCard } from "lucide-react";
 import { useActionState } from "react";
 import { mergeObjectToFormData } from "@icat/lib/utils";

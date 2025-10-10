@@ -1,6 +1,6 @@
-import { CarCard } from "../../cars";
-import { SliderContainer } from "@icat/ui";
 import { getFeaturedCars } from "@icat/web/data/cars";
+import { CarCard } from "@icat/features/cars/carcard";
+import { SliderContainer } from "@icat/ui/components/slider-container";
 
 export async function FeaturedCars() {
   const cars = await getFeaturedCars();

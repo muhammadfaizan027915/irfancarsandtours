@@ -5,7 +5,6 @@ import {
   AmenitiesList,
 } from "@icat/database";
 import { CheckboxFilter } from "./checkboxfilter";
-// import { PriceFilter } from "./pricefilter";
 
 export function FiltersBar() {
   return (

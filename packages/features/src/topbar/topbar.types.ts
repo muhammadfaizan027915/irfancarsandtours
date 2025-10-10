@@ -1,4 +1,4 @@
-import { VarientType } from "../common";
+import { VarientType } from "@icat/features/common";
 
 export type TopbarProps = {
   varient?: VarientType;

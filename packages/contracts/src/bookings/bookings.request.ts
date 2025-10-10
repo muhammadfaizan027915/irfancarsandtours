@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { toDate } from "../generic";
+import { toDate } from "@icat/contracts/generic";
 
 export const CarBookingRequestSchema = z
   .object({

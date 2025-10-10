@@ -1,37 +1,52 @@
-import {
-  CarTypes,
-  BrandSlider,
-  PrimrayHero,
-  Searchbar,
-  SearchedCars,
-  FeaturedCars,
-} from "@icat/features";
+import dynamic from "next/dynamic";
+
+import { Searchbar } from "@icat/features/searchbar";
+import { PrimrayHero } from "@icat/features/hero/primary";
+import { BrandSlider } from "@icat/features/sliders/brands";
+
+const CarTypes = dynamic(() =>
+  import("@icat/features/sliders/cartypes").then((m) => m.CarTypes)
+);
+
+const FeaturedCars = dynamic(() =>
+  import("@icat/features/sliders/featuredcars").then((m) => m.FeaturedCars)
+);
+
+const SearchedCars = dynamic(() =>
+  import("@icat/features/sliders/searchedcars").then((m) => m.SearchedCars)
+);
 
 export default function HomePage() {
   return (
     <>
-      <PrimrayHero />
-      <section className="bg-muted pb-16">
+      <link
+        rel="preload"
+        href="/assets/hero_background_primary.jpg"
+        as="image"
+      />
+
+      <section>
+        <PrimrayHero />
+      </section>
+
+      <main className="bg-muted pb-16">
         <div className="container mx-auto px-4 md:px-8">
           <Searchbar type="cars" />
           <BrandSlider />
         </div>
-      </section>
-      <section className="py-16">
-        <div className="container mx-auto px-4 md:px-8">
+
+        <div className="py-16 container mx-auto px-4 md:px-8">
           <CarTypes />
         </div>
-      </section>
-      <section className="pb-16">
-        <div className="container mx-auto px-4 md:px-8">
+
+        <div className="pb-16 container mx-auto px-4 md:px-8">
           <FeaturedCars />
         </div>
-      </section>
-      <section className="pb-16">
-        <div className="container mx-auto px-4 md:px-8">
+
+        <div className="pb-16 container mx-auto px-4 md:px-8">
           <SearchedCars />
         </div>
-      </section>
+      </main>
     </>
   );
 }

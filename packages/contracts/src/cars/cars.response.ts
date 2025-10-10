@@ -6,7 +6,7 @@ import {
   CarTypesList,
   TransmissionTypesList,
 } from "@icat/database/enums";
-import { PaginatedResponseSchema } from "../generic";
+import { PaginatedResponseSchema } from "@icat/contracts/generic";
 
 export const CarResponseSchema = z.object({
   id: z.uuid(),

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NavigationUrls } from "../header.constants";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 
 export function Logo() {
   return (

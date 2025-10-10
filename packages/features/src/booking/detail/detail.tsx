@@ -3,10 +3,12 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
+} from "@icat/ui/components/card";
+import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@icat/ui";
+} from "@icat/ui/components/avatar";
 import { Calendar, MapPin, User, Mail, Phone, IdCard } from "lucide-react";
 import { BookingDetailProps } from "./detail.types";
 import { format } from "date-fns";

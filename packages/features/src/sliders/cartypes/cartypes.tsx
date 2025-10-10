@@ -1,4 +1,4 @@
-import { NavigationUrls } from "../../header";
+import { NavigationUrls } from "@icat/features/header";
 import { Button, SliderContainer } from "@icat/ui";
 import { CarTypesLibrary } from "./cartypes.constants";
 import { CarTypeCard } from "./cartypecard";

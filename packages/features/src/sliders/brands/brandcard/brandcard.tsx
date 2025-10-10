@@ -1,6 +1,6 @@
 import { Card } from "@icat/ui";
 import { BrandCardProps } from "./brandcard.types";
-import { NavigationUrls } from "../../../header";
+import { NavigationUrls } from "@icat/features/header";
 import Link from "next/link";
 
 export function BrandCard({ brandName, brandIcon: BrandIcon }: BrandCardProps) {

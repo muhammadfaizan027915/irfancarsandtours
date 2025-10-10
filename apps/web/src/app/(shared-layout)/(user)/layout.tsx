@@ -1,7 +1,7 @@
 "use client";
 
-import { Tabs, TabsList, TabsTrigger } from "@icat/ui";
-import { NavigationUrls } from "@icat/features/header";
+import { Tabs, TabsList, TabsTrigger } from "@icat/ui/components/tabs";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import Link from "next/link";

@@ -1,8 +1,8 @@
-import { Button } from "@icat/ui";
 import { ArrowRight } from "lucide-react";
-import { BrandCard } from "./brandcard";
+import { Button } from "@icat/ui/components/button";
+import { NavigationUrls } from "@icat/features/header";
 import { BrandLibrary } from "./brands.constants";
-import { NavigationUrls } from "../../header";
+import { BrandCard } from "./brandcard";
 import Link from "next/link";
 
 export function BrandSlider() {

@@ -1,14 +1,11 @@
 "use client";
 
-import {
-  Button,
-  Input,
-  Label,
-  Textarea,
-  toast,
-  Card,
-  AlertBox,
-} from "@icat/ui";
+import { Input } from "@icat/ui/components/input";
+import { Label } from "@icat/ui/components/label";
+import { toast } from "@icat/ui/components/sonner";
+import { AlertBox } from "@icat/ui/components/alert";
+import { Button } from "@icat/ui/components/button";
+import { Textarea } from "@icat/ui/components/textarea";
 import { ArrowRight, Mail, Phone, UserRound } from "lucide-react";
 import { useActionState, useEffect } from "react";
 import { sendMessage } from "@icat/web/actions/contact";

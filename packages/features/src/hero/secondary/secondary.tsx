@@ -1,4 +1,4 @@
-import { Badge } from "@icat/ui";
+import { Badge } from "@icat/ui/components/badge";
 import { SecondaryHeroProps } from "./secondary.types";
 import { FlexToTextPositionMap } from "@icat/features/common";
 

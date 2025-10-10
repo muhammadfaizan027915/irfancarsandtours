@@ -8,7 +8,7 @@ import { GetUsersBodyDto, GetUsersBodySchema } from "@icat/contracts";
 export async function getUserProfile() {
   const session = await getAuthenticatedUserSession();
   const userService = new UserService();
-  const user = await userService.getDetailedUserByEmail(session?.user?.email!);
+  const user = await userService?.getDetailedUserByEmail(session?.user?.email!);
   return user;
 }
 

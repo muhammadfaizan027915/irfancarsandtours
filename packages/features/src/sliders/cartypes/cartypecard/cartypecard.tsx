@@ -1,7 +1,9 @@
-import { CarTypeCardProps } from "./cartypecard.types";
+import { CarPlaceHolderImageUrl } from "@icat/features/common";
 import { NavigationUrls } from "@icat/features/header";
-import { Button } from "@icat/ui";
 import { ArrowRight } from "lucide-react";
+import { Button } from "@icat/ui";
+
+import { CarTypeCardProps } from "./cartypecard.types";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,7 +14,7 @@ export function CarTypeCard({ name, image }: CarTypeCardProps) {
         <div className="h-30 relative rounded-lg overflow-hidden">
           <Image
             fill
-            src={image ?? ""}
+            src={image ?? CarPlaceHolderImageUrl}
             alt=""
             style={{
               objectFit: "cover",

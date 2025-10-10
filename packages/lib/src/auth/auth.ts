@@ -18,6 +18,8 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  trustHost: true,
+
   adapter: DrizzleAdapter(db, {
     usersTable,
     sessionsTable,

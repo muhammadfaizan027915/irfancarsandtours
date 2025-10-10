@@ -1,4 +1,6 @@
-import { ChangePasswordForm, ProfileForm, UserAvatar } from "@icat/features";
+import { ChangePasswordForm } from "@icat/features/forms/changepassword";
+import { ProfileForm } from "@icat/features/forms/profile";
+import { UserAvatar } from "@icat/features/useravatar";
 import { getUserProfile } from "@icat/web/data/uesrs";
 
 export default async function ProfilePage() {

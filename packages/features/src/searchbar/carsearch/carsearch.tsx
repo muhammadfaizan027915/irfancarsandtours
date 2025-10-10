@@ -1,7 +1,10 @@
 import { BrandNamesList } from "@icat/database";
+import { Input } from "@icat/ui/components/input";
+import { Label } from "@icat/ui/components/label";
+import { Button } from "@icat/ui/components/button";
+import { GenericSelect } from "@icat/ui/components/select";
+import { CarSerachProps } from "@icat/features/searchbar/searchbar.types";
 import { NavigationUrls } from "@icat/features/header";
-import { Button, GenericSelect, Input, Label } from "@icat/ui";
-import { CarSerachProps } from "../searchbar.types";
 import { Search } from "lucide-react";
 import Form from "next/form";
 
@@ -41,7 +44,10 @@ export function CarSearchbar({ search, brand }: CarSerachProps) {
             defaultValue={brand}
           />
         </div>
-        <Button size={"lg"} className="h-12 md:h-16 w-full lg:max-w-48 shadow-none">
+        <Button
+          size={"lg"}
+          className="h-12 md:h-16 w-full lg:max-w-48 shadow-none"
+        >
           <Search /> Find Car
         </Button>
       </Form>

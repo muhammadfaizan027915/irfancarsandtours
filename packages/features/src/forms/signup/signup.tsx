@@ -1,7 +1,11 @@
 "use client";
 
-import { NavigationUrls } from "../../header";
-import { AlertBox, Badge, Button, Card, Input } from "@icat/ui";
+import { Card } from "@icat/ui/components/card";
+import { Input } from "@icat/ui/components/input";
+import { Button } from "@icat/ui/components/button";
+import { AlertBox } from "@icat/ui/components/alert";
+import { Badge } from "@icat/ui/components/badge";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { ArrowRight, Mail, Lock, UserRound } from "lucide-react";
 import { signUpUser } from "@icat/web/actions";
 import { useActionState } from "react";

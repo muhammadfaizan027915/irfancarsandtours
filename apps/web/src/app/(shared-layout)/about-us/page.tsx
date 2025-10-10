@@ -1,4 +1,4 @@
-import { SecondaryHero } from "@icat/features";
+import { SecondaryHero } from "@icat/features/hero/secondary";
 
 export default function AboutUsPage() {
   return (

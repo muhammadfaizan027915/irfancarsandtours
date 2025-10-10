@@ -5,9 +5,9 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  Checkbox,
-  Label,
-} from "@icat/ui";
+} from "@icat/ui/components/card";
+import { Label } from "@icat/ui/components/label";
+import { Checkbox } from "@icat/ui/components/checkbox";
 import { CheckBoxFilterProps } from "./checkboxfilter.types";
 import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 

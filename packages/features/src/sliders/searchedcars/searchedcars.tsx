@@ -1,7 +1,8 @@
-import { CarCard } from "../../cars";
-import { NavigationUrls } from "../../header";
 import { LoaderCircle } from "lucide-react";
-import { Button, SliderContainer } from "@icat/ui";
+import { Button } from "@icat/ui/components/button";
+import { SliderContainer } from "@icat/ui/components/slider-container";
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import { CarCard } from "@icat/features/cars/carcard";
 import { getMostSearchedCars } from "@icat/web/data/cars";
 import Link from "next/link";
 

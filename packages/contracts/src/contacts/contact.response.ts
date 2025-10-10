@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { PaginatedResponseSchema } from "../generic";
+import { PaginatedResponseSchema } from "@icat/contracts/generic";
 
 export const ContactResponseSchema = z.object({
   id: z.string(),

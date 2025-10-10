@@ -1,2 +1,2 @@
 export * from "./carcartsidebar";
-export * from "../../carcartlist/carcartcard";
+export * from "@icat/features/carcartlist/carcartcard";

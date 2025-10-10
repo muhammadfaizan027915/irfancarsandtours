@@ -4,7 +4,7 @@ import { Button, toast } from "@icat/ui";
 import { useCarCart } from "@icat/web/store";
 import { Fuel, Armchair, Cog, ShoppingCart, CarFront } from "lucide-react";
 import { CarPlaceHolderImageUrl } from "@icat/features/common";
-import { NavigationUrls } from "../../header";
+import { NavigationUrls } from "@icat/features/header";
 import { CarCardProps } from "./carcard.types";
 import Image from "next/image";
 import Link from "next/link";

@@ -1,12 +1,10 @@
 import { notFound } from "next/navigation";
-import {
-  CarDescription,
-  CarProperties,
-  CarAmenities,
-  CarGetStarted,
-  CarBooking,
-  CarImages,
-} from "@icat/features";
+import { CarDescription } from "@icat/features/cardetail/description";
+import { CarProperties } from "@icat/features/cardetail/properties";
+import { CarAmenities } from "@icat/features/cardetail/amenities";
+import { CarGetStarted } from "@icat/features/cardetail/getstarted";
+import { CarBooking } from "@icat/features/cardetail/booking";
+import { CarImages } from "@icat/features/sliders/carimages";
 import { getUserCar } from "@icat/web/data/cars";
 
 type CarDetailPageProps = {
@@ -33,7 +31,9 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
   return (
     <div className="grid gap-6">
       <CarImages imageUrls={car?.imageUrls || []} />
-      <h1 className="font-bold text-5xl">{car?.name} {car?.model} {car?.year}</h1>
+      <h1 className="font-bold text-5xl">
+        {car?.name} {car?.model} {car?.year}
+      </h1>
       <div className="grid grid-cols-6 items-start gap-6">
         <div className="grid gap-6 col-span-4">
           <CarProperties {...car} />

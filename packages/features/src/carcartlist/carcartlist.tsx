@@ -1,7 +1,7 @@
 "use client";
 
-import { Card, CardContent, CardHeader } from "@icat/ui";
-import { EmptyCarCartMessage } from "../sidebars/carcartsidebar/emptycarcartmessage";
+import { Card, CardContent, CardHeader } from "@icat/ui/components/card";
+import { EmptyCarCartMessage } from "@icat/features/sidebars/carcartsidebar/emptycarcartmessage";
 import { useCarCart } from "@icat/web/store";
 import { CarCartCard } from "./carcartcard";
 

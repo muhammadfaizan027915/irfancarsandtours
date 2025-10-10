@@ -1,6 +1,4 @@
-import { auth } from "@icat/lib";
 import { BookedCarsTable, BookingDetail } from "@icat/features";
-import { BookingService } from "@icat/services";
 import { notFound } from "next/navigation";
 import { getBooking } from "@icat/web/data/bookings";
 import { getBookedCars } from "@icat/web/data/bookedcars";
