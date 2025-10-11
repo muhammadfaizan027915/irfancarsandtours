@@ -1,5 +1,8 @@
-import path from "path";
-import dotenv from "dotenv";
+if (!process.env.NEXT_RUNTIME) {
+  const path = await import("path");
+  const dotenv = await import("dotenv");
+  dotenv.config({ path: path.resolve(process.cwd(), ".env") });
+}
 
 import { drizzle } from "drizzle-orm/node-postgres";
 
@@ -21,8 +24,6 @@ export * from "./verificationTokensTable";
 export * from "./contactsTable";
 export * from "./bookingsTable";
 export * from "./bookedCarsTable";
-
-dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 export const db = drizzle({
   schema: {

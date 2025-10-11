@@ -1,9 +1,17 @@
 import type { NextConfig } from "next";
-import analyzer from "@next/bundle-analyzer";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
+  serverExternalPackages: ["zod"],
   experimental: {
     optimizeCss: true,
+    optimizePackageImports: [
+      "axios",
+      "@radix/ui",
+      "react-slick",
+      "react-day-picker",
+      "lucide-react",
+    ],
   },
   transpilePackages: [
     "@icat/contracts",
@@ -19,8 +27,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-const withBundleAnalyzer = analyzer({
-  enabled: process.env.ANALYZE === "true",
-});
-
-export default withBundleAnalyzer(nextConfig);
+export default nextConfig;

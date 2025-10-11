@@ -1,7 +1,11 @@
 "use client";
 
 import { format } from "date-fns";
-import { Avatar, AvatarFallback, AvatarImage } from "@icat/ui/components/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@icat/ui/components/avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { DetailedUserResponseDto } from "@icat/contracts";
 import { getNameInitials } from "@icat/lib/utils";

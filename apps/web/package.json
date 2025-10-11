@@ -13,16 +13,12 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@conform-to/react": "^1.11.0",
-    "@conform-to/zod": "^1.11.0",
     "@icat/contracts": "*",
     "@icat/database": "*",
     "@icat/features": "*",
     "@icat/lib": "*",
     "@icat/services": "*",
-    "@icat/ui": "*",
-    "@next/bundle-analyzer": "^15.5.4",
-    "axios": "^1.12.2"
+    "@icat/ui": "*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
