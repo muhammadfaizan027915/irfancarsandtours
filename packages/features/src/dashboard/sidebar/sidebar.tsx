@@ -7,7 +7,7 @@ import {
 } from "@icat/ui/components/sidebar";
 import { DashboardSidebarNavigation } from "./sidebarnavigation";
 import { DashboardSidebarFooter } from "./sidebarfooter/sidebarfooter";
-import { Logo } from "@icat/features/header";
+import { Logo } from "@icat/features/header/logo";
 
 export function DashboardSidebar() {
   return (

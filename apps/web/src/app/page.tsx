@@ -2,7 +2,10 @@ import dynamic from "next/dynamic";
 
 import { Searchbar } from "@icat/features/searchbar";
 import { PrimrayHero } from "@icat/features/hero/primary";
-import { BrandSlider } from "@icat/features/sliders/brands";
+
+const BrandSlider = dynamic(() =>
+  import("@icat/features/sliders/brands").then((m) => m.BrandSlider)
+);
 
 const CarTypes = dynamic(() =>
   import("@icat/features/sliders/cartypes").then((m) => m.CarTypes)
@@ -19,12 +22,6 @@ const SearchedCars = dynamic(() =>
 export default function HomePage() {
   return (
     <>
-      <link
-        rel="preload"
-        href="/assets/hero_background_primary.jpg"
-        as="image"
-      />
-
       <section>
         <PrimrayHero />
       </section>

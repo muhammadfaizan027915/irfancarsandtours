@@ -1,6 +1,12 @@
-import { Map } from "@icat/features/map";
-import { ContactForm } from "@icat/features/forms/contact";
 import { SecondaryHero } from "@icat/features/hero/secondary";
+
+import dynamic from "next/dynamic";
+
+const ContactForm = dynamic(() =>
+  import("@icat/features/forms/contact").then((m) => m.ContactForm)
+);
+
+const Map = dynamic(() => import("@icat/features/map").then((m) => m.Map));
 
 export default function ContactPage() {
   return (

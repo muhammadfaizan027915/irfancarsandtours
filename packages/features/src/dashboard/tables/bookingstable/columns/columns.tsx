@@ -1,6 +1,6 @@
 "use client";
 
-import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import { BookingWithUserListItemResponseDto } from "@icat/contracts";
 import { ColumnDef } from "@tanstack/react-table";
 import { BookedByCell } from "./bookedbycell";

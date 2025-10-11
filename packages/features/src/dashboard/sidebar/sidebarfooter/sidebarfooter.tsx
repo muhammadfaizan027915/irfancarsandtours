@@ -1,4 +1,4 @@
-import { NavigationUrls } from "@icat/features/header";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { Avatar, AvatarFallback, AvatarImage } from "@icat/ui/components/avatar";
 import { SidebarMenu, SidebarMenuAction, SidebarMenuItem } from "@icat/ui/components/sidebar";
 import {

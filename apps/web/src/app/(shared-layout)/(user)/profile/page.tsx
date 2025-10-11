@@ -1,7 +1,19 @@
-import { ChangePasswordForm } from "@icat/features/forms/changepassword";
-import { ProfileForm } from "@icat/features/forms/profile";
-import { UserAvatar } from "@icat/features/useravatar";
 import { getUserProfile } from "@icat/web/data/uesrs";
+import dynamic from "next/dynamic";
+
+const UserAvatar = dynamic(() =>
+  import("@icat/features/useravatar").then((m) => m.UserAvatar)
+);
+
+const ProfileForm = dynamic(() =>
+  import("@icat/features/forms/profile").then((m) => m.ProfileForm)
+);
+
+const ChangePasswordForm = dynamic(() =>
+  import("@icat/features/forms/changepassword").then(
+    (m) => m.ChangePasswordForm
+  )
+);
 
 export default async function ProfilePage() {
   const user = await getUserProfile();

@@ -1,11 +1,14 @@
 import { Logo } from "./logo";
 import { HeaderProps } from "./header.types";
 import { NavigationUrls } from "./header.constants";
-import { ProfileSigin } from "@icat/features/profilesignin";
 import { cn } from "@icat/ui/lib/utils";
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
+
+const ProfileSigin = dynamic(() =>
+  import("@icat/features/profilesignin").then((m) => m.ProfileSigin)
+);
 
 const CarCartSidebar = dynamic(() =>
   import("@icat/features/sidebars/carcartsidebar").then((m) => m.CarCartSidebar)

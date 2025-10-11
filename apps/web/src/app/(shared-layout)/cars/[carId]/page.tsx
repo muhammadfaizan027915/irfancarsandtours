@@ -1,11 +1,28 @@
 import { notFound } from "next/navigation";
-import { CarDescription } from "@icat/features/cardetail/description";
-import { CarProperties } from "@icat/features/cardetail/properties";
-import { CarAmenities } from "@icat/features/cardetail/amenities";
-import { CarGetStarted } from "@icat/features/cardetail/getstarted";
-import { CarBooking } from "@icat/features/cardetail/booking";
 import { CarImages } from "@icat/features/sliders/carimages";
 import { getUserCar } from "@icat/web/data/cars";
+
+import dynamic from "next/dynamic";
+
+const CarBooking = dynamic(() =>
+  import("@icat/features/cardetail/booking").then((m) => m.CarBooking)
+);
+
+const CarDescription = dynamic(() =>
+  import("@icat/features/cardetail/description").then((m) => m.CarDescription)
+);
+
+const CarProperties = dynamic(() =>
+  import("@icat/features/cardetail/properties").then((m) => m.CarProperties)
+);
+
+const CarAmenities = dynamic(() =>
+  import("@icat/features/cardetail/amenities").then((m) => m.CarAmenities)
+);
+
+const CarGetStarted = dynamic(() =>
+  import("@icat/features/cardetail/getstarted").then((m) => m.CarGetStarted)
+);
 
 type CarDetailPageProps = {
   params: Promise<{ carId: string }>;

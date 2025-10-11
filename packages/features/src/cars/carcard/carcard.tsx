@@ -5,7 +5,7 @@ import { toast } from "@icat/ui/components/sonner";
 import { useCarCart } from "@icat/web/store";
 import { Fuel, Armchair, Cog, ShoppingCart, CarFront } from "lucide-react";
 import { CarPlaceHolderImageUrl } from "@icat/features/common";
-import { NavigationUrls } from "@icat/features/header";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { CarCardProps } from "./carcard.types";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,13 +28,13 @@ export function CarCard({ car }: CarCardProps) {
     <div className="border border-border rounded-xl hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal overflow-hidden">
       <div className="h-56 relative">
         <Image
-          fill
+          width={250}
+          height={250}
+          alt={car?.name ?? ""}
           src={imageUrl || CarPlaceHolderImageUrl}
-          alt=""
-          style={{
-            objectFit: "cover",
-            objectPosition: "center",
-          }}
+          className="w-full h-full object-cover object-center"
+          sizes="(max-width: 768px) 150px, 250px"
+          quality={70}
         />
       </div>
 

@@ -8,7 +8,7 @@ import {
   CreateUserBodyDto,
   SignInBodyDto,
 } from "@icat/contracts";
-import { NavigationUrls } from "@icat/features";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { redirect, RedirectType } from "next/navigation";
 
 export const logInUser = handlerFormActionWithError({

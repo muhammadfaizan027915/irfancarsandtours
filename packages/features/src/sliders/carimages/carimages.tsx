@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { SliderContainer } from "@icat/ui";
+import { SliderContainer } from "@icat/ui/components/slider-container";
 import { CarImagesProps } from "./carimages.types";
 import Image from "next/image";
 
@@ -34,6 +34,8 @@ export function CarImages({ imageUrls }: CarImagesProps) {
             height={200}
             width={480}
             className="w-full h-120 object-cover rounded-xl"
+            sizes="(max-width: 768px) 50px, 100px"
+            quality={70}
           />
         ))}
       </SliderContainer>

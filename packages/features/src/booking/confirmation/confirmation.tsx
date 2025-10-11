@@ -2,7 +2,7 @@ import { Button } from "@icat/ui/components/button";
 import { Card, CardHeader, CardContent } from "@icat/ui/components/card";
 import { CheckCircle2, MapPin } from "lucide-react";
 import { BookingConfirmationProps } from "./confirmation.types";
-import { NavigationUrls } from "@icat/features";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import Link from "next/link";
 
 export function BookingConfirmation({ booking }: BookingConfirmationProps) {

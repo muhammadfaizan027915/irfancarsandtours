@@ -1,7 +1,14 @@
-import { BookingConfirmation } from "@icat/features/booking/confirmation";
 import { NavigationUrls } from "@icat/features/header/header.constants";
 import { getUserBooking } from "@icat/web/data/bookings";
 import { redirect } from "next/navigation";
+
+import dynamic from "next/dynamic";
+
+const BookingConfirmation = dynamic(() =>
+  import("@icat/features/booking/confirmation").then(
+    (m) => m.BookingConfirmation
+  )
+);
 
 type BookingConfirmationPageProps = {
   params: Promise<{ bookingId: string }>;

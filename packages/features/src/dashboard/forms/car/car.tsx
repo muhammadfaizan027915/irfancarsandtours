@@ -51,7 +51,7 @@ export function CarForm({ car, mode }: CarFormProps) {
       );
     }
 
-    resetFiles()
+    resetFiles();
   }, [result]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -222,11 +222,13 @@ export function CarForm({ car, mode }: CarFormProps) {
               className="relative border rounded-lg overflow-hidden"
             >
               <Image
-                src={f.previewUrl || "/placeholder.jpg"}
-                alt={f?.file?.name || "Car Image Preview"}
                 width={200}
                 height={150}
+                src={f.previewUrl || "/placeholder.jpg"}
+                alt={f?.file?.name || "Car Image Preview"}
                 className="object-cover w-full h-40"
+                sizes="(max-width: 768px) 150px, 200px"
+                quality={70}
               />
               {f.isUploading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40">

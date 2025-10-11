@@ -2,7 +2,7 @@ import { BaseApiErrorOptions, ErrorCode } from "./errors.types";
 import { ErrorMessages } from "./errors.constants";
 
 export class BaseApiError<
-  TCause extends object = object,
+  TCause extends Record<string, any> = {},
   TArgs extends any[] = any[]
 > extends Error {
   status: number;

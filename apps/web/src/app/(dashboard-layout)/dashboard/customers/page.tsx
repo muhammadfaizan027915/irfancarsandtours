@@ -1,5 +1,5 @@
 import { GetUsersBodyDto } from "@icat/contracts";
-import { CustoemrsTable } from "@icat/features";
+import { CustoemrsTable } from "@icat/features/dashboard/tables/customerstable";
 import { getCustomers } from "@icat/web/data/uesrs";
 
 type CustomersPageProps = {

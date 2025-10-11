@@ -1,8 +1,17 @@
-import { BookingDetail } from "@icat/features/booking/detail";
-import { UserBookedCarsTable } from "@icat/features/tables/userbookedcarstable";
 import { getUserBookedCars } from "@icat/web/data/bookedcars";
 import { getUserBooking } from "@icat/web/data/bookings";
 import { notFound } from "next/navigation";
+
+import dynamic from "next/dynamic";
+
+const BookingDetail = dynamic(() =>
+  import("@icat/features/booking/detail").then((m) => m.BookingDetail)
+);
+const UserBookedCarsTable = dynamic(() =>
+  import("@icat/features/tables/userbookedcarstable").then(
+    (m) => m.UserBookedCarsTable
+  )
+);
 
 type UserBookingDetailPageProps = {
   params: Promise<{ bookingId: string }>;

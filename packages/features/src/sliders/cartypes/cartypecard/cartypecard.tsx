@@ -1,7 +1,7 @@
 import { CarPlaceHolderImageUrl } from "@icat/features/common";
-import { NavigationUrls } from "@icat/features/header";
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import { Button } from "@icat/ui/components/button";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@icat/ui";
 
 import { CarTypeCardProps } from "./cartypecard.types";
 import Image from "next/image";
@@ -13,13 +13,13 @@ export function CarTypeCard({ name, image }: CarTypeCardProps) {
       <div className="border border-border rounded-xl p-4 hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal">
         <div className="h-30 relative rounded-lg overflow-hidden">
           <Image
-            fill
-            src={image ?? CarPlaceHolderImageUrl}
-            alt=""
-            style={{
-              objectFit: "cover",
-              objectPosition: "center",
-            }}
+            width={150}
+            height={150}
+            src={CarPlaceHolderImageUrl}
+            alt={name ?? ""}
+            className="w-full h-full object-cover object-center"
+            sizes="(max-width: 768px) 150px, 250px"
+            quality={70}
           />
         </div>
 

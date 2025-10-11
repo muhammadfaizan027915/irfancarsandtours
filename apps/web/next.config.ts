@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
+import analyzer from "@next/bundle-analyzer";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizeCss: true,
+  },
   transpilePackages: [
     "@icat/contracts",
     "@icat/database",
@@ -15,4 +19,8 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withBundleAnalyzer = analyzer({
+  enabled: process.env.ANALYZE === "true",
+});
+
+export default withBundleAnalyzer(nextConfig);

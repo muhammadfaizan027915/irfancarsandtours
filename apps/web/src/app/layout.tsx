@@ -7,6 +7,7 @@ import "@icat/ui/globals.css";
 const urbansist = Urbanist({
   weight: "500",
   preload: true,
+  display: "swap",
   subsets: ["latin"],
 });
 

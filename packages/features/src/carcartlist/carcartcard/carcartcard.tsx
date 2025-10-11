@@ -38,10 +38,11 @@ export function CarCartCard({ car }: CarCartCardProps) {
     <Card className="flex flex-row gap-2 items-center p-3 rounded-xl shadow-none hover:shadow hover:-translate-y-1 duration-300 transition-normal">
       <div className="relative w-24 h-20 rounded-lg overflow-hidden">
         <Image
+          width={100}
+          height={100}
           src={imageUrl || ""}
           alt={`${car.name} ${car.brand}`}
-          fill
-          style={{ objectFit: "cover", objectPosition: "center" }}
+          className="w-full h-full object-cover object-center"
         />
       </div>
 

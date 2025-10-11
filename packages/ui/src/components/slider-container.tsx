@@ -5,6 +5,9 @@ import Slider, { Settings } from "react-slick";
 import { Button } from "@icat/ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 interface SliderContainerProps {
   children: ReactNode;
   settings?: Settings;

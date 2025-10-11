@@ -1,9 +1,16 @@
 import { redirect } from "next/navigation";
-import { CarCartList } from "@icat/features/carcartlist";
-import { CarBooking } from "@icat/features/cardetail/booking";
 import { NavigationUrls } from "@icat/features/header/header.constants";
 import { getCartCars } from "@icat/web/data/cart";
 import { CarCartItem } from "@icat/web/store";
+import dynamic from "next/dynamic";
+
+const CarCartList = dynamic(() =>
+  import("@icat/features/carcartlist").then((m) => m.CarCartList)
+);
+
+const CarBooking = dynamic(() =>
+  import("@icat/features/cardetail/booking").then((m) => m.CarBooking)
+);
 
 export default async function CheckoutPage() {
   const cars = await getCartCars();

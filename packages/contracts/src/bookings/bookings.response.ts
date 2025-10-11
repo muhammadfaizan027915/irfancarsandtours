@@ -1,6 +1,6 @@
 import z from "zod";
-import { PaginatedResponseSchema, toDate } from "@icat/contracts/generic";
-import { DetailedUserResponseSchema } from "@icat/contracts/users";
+import { PaginatedResponseSchema, toDate } from "../generic";
+import { DetailedUserResponseSchema } from "../users";
 
 export const BookingResponseSchema = z.object({
   id: z.uuid(),

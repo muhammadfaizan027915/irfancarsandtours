@@ -1,6 +1,6 @@
 "use server";
 
-import { NavigationUrls } from "@icat/features";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { redirect } from "next/navigation";
 import { auth } from "@icat/lib";
 

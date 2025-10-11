@@ -1,6 +1,6 @@
 "use server";
 
-import { DashboardNavigationUrls } from "@icat/features";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import {
   auth,
   handleServerActionWithError,

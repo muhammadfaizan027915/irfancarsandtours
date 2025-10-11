@@ -7,8 +7,8 @@ import {
 import { Button } from "@icat/ui/components/button";
 import { toast } from "@icat/ui/components/sonner";
 import { CarCellPorps } from "../columns.types";
-import { NavigationUrls } from "@icat/features/header";
-import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar";
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import { MoreHorizontal, Eye, Pencil, Trash2 } from "lucide-react";
 import { deleteCar } from "@icat/web/actions";
 import Link from "next/link";

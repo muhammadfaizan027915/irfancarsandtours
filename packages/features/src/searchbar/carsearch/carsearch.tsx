@@ -4,7 +4,7 @@ import { Label } from "@icat/ui/components/label";
 import { Button } from "@icat/ui/components/button";
 import { GenericSelect } from "@icat/ui/components/select";
 import { CarSerachProps } from "@icat/features/searchbar/searchbar.types";
-import { NavigationUrls } from "@icat/features/header";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { Search } from "lucide-react";
 import Form from "next/form";
 
@@ -16,7 +16,7 @@ export function CarSearchbar({ search, brand }: CarSerachProps) {
       </h1>
       <Form
         action={NavigationUrls.CARS}
-        className="w-full flex items-end gap-4 rounded-2xl border p-6 flex-col lg:flex-row"
+        className="w-full flex items-end gap-4 rounded-2xl flex-col lg:flex-row"
       >
         <div className="space-y-2 flex-1 w-full">
           <Label className="font-bold text-muted-foreground" htmlFor="search">

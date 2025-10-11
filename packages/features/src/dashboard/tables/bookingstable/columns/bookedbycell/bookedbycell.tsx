@@ -13,7 +13,8 @@ import {
 import { BookingCellPorps } from "../columns.types";
 import { getNameInitials } from "@icat/lib/utils";
 import { Mail, IdCard, Phone } from "lucide-react";
-import Link from "next/link";
+import dynamic from "next/dynamic";
+const Link =  dynamic(import("next/link"));
 
 export function BookedByCell({ row }: BookingCellPorps) {
   const bookedBy = row.original.bookedBy;

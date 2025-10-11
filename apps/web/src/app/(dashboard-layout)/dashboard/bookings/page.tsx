@@ -1,5 +1,5 @@
 import { GetBookingsBodyDto } from "@icat/contracts";
-import { BookingsTable } from "@icat/features";
+import { BookingsTable } from "@icat/features/dashboard/tables/bookingstable";
 import { getBookings } from "@icat/web/data/bookings";
 
 type BookingsPageProps = {

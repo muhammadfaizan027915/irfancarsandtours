@@ -1,4 +1,5 @@
-import { Header, Topbar } from "@icat/features";
+import { Header } from "@icat/features/header";
+import { Topbar } from "@icat/features/topbar";
 import { ReactNode } from "react";
 
 type SharedLayoutProps = {

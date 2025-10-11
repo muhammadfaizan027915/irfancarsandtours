@@ -1,5 +1,6 @@
-import { NavigationUrls } from "@icat/features/header";
-import { Button, SliderContainer } from "@icat/ui";
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import { SliderContainer } from "@icat/ui/components/slider-container";
+import { Button } from "@icat/ui/components/button";
 import { CarTypesLibrary } from "./cartypes.constants";
 import { CarTypeCard } from "./cartypecard";
 import { ArrowRight } from "lucide-react";

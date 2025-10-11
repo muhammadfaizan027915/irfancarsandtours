@@ -1,14 +1,14 @@
 "use client";
 
 import {
-  Button,
   Sheet,
   SheetClose,
   SheetContent,
   SheetFooter,
   SheetTrigger,
-} from "@icat/ui";
-import { NavigationUrls } from "@icat/features/header";
+} from "@icat/ui/components/sheet";
+import { Button } from "@icat/ui/components/button";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 

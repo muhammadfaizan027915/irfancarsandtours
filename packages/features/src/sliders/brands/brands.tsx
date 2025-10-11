@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@icat/ui/components/button";
-import { NavigationUrls } from "@icat/features/header";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { BrandLibrary } from "./brands.constants";
 import { BrandCard } from "./brandcard";
 import Link from "next/link";

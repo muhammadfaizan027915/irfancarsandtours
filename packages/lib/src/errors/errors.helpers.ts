@@ -1,11 +1,9 @@
-import z, { ZodError } from "zod";
+import { ZodError, formatError } from "zod";
 import { BaseApiError } from "./errors";
 import { InternalServerError, ValidationError } from "./errors";
 import { CredentialsSignin } from "next-auth";
 
 export function handleError(error: unknown) {
-  console.log(error);
-
   if ((error as any).digest?.startsWith("NEXT_REDIRECT")) {
     throw error;
   }
@@ -27,7 +25,7 @@ export function handleError(error: unknown) {
 
   if (error instanceof ZodError) {
     const validationError = new ValidationError({
-      cause: z.formatError(error),
+      cause: formatError(error),
     });
     return validationError.toJSON();
   }

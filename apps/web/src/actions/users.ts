@@ -6,7 +6,7 @@ import {
   ChangePasswordBodySchema,
   ChangePasswordBodyDto,
 } from "@icat/contracts";
-import { NavigationUrls } from "@icat/features";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { auth, handlerFormActionWithError, UnauthorizedError } from "@icat/lib";
 import { UserService } from "@icat/services";
 import { revalidatePath } from "next/cache";
