@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["zod"],
   experimental: {
     optimizeCss: true,
+    optimizeServerReact: true,
     optimizePackageImports: [
       "axios",
       "@radix/ui",
@@ -24,6 +25,7 @@ const nextConfig: NextConfig = {
   ],
   images: {
     remotePatterns: [{ protocol: "https", hostname: "storage.googleapis.com" }],
+    qualities: [50, 60, 70, 80, 90, 100],
   },
 };
 

@@ -18,7 +18,7 @@ export function SecondaryHero({
         fill
         priority
         sizes="100vw"
-        quality={85}
+        quality={80}
         className="object-cover object-center -z-10"
       />
 
