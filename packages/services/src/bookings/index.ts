@@ -13,7 +13,7 @@ import {
   PaginatedBookingWithUserResponseSchema,
 } from "@icat/contracts";
 import { BookedCarService, CarService, UserService } from "@icat/services";
-import { auth } from "@icat/lib";
+import { getSessionUser } from "@icat/web/actions/users";
 
 export class BookingService {
   private bookingRepository: BookingRepository;
@@ -60,8 +60,7 @@ export class BookingService {
     cars,
     ...data
   }: BookingRequestDto): Promise<BookingResponseDto> {
-    const session = await auth();
-    const sessionUser = session?.user;
+    const sessionUser = await getSessionUser();
 
     const booking = await this.bookingRepository.create({
       ...data,
@@ -73,7 +72,9 @@ export class BookingService {
     this.userService.updateUser(sessionUser?.id as string, data);
 
     const carIds = cars?.map((car) => car?.carId);
-    const carsWithDriverRules = await this.carService.getCarsDriverRules(carIds);
+    const carsWithDriverRules = await this.carService.getCarsDriverRules(
+      carIds
+    );
 
     for await (const car of cars) {
       const carWithDriverRule = carsWithDriverRules.find(

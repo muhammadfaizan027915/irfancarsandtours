@@ -1,21 +1,20 @@
 import { UserRound, LogOut } from "lucide-react";
-import { lougOutUser } from "@icat/web/actions";
-import { Button } from "@icat/ui/components/button";
+import { getSessionUser, lougOutUser } from "@icat/web/actions";
 import { NavigationUrls } from "@icat/features/header/header.constants";
+import { Button } from "@icat/ui/components/button";
 import { ProfileSigninProps } from "./profilesignin.types";
-import { auth } from "@icat/lib/auth";
 import { cn } from "@icat/ui/lib/utils";
 import Link from "next/link";
 
 export async function ProfileSigin({ className }: ProfileSigninProps) {
-  const session = await auth();
+  const sessionUser = await getSessionUser();
 
-  return session?.user?.id ? (
-    <div className={cn("flex gap-4",className)}>
+  return sessionUser?.id ? (
+    <div className={cn("flex gap-4", className)}>
       <Button asChild size={"lg"} variant={"ghost"}>
         <Link href={NavigationUrls.PROFILE}>
           <UserRound size={18} className="inline" />{" "}
-          {session?.user?.name?.split(" ")?.[0] || "Profile"}
+          {sessionUser?.name?.split(" ")?.[0] || "Profile"}
         </Link>
       </Button>
 

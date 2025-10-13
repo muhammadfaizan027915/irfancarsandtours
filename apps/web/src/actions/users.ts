@@ -7,15 +7,21 @@ import {
   ChangePasswordBodyDto,
 } from "@icat/contracts";
 import { NavigationUrls } from "@icat/features/header/header.constants";
-import { auth, handlerFormActionWithError, UnauthorizedError } from "@icat/lib";
+import { auth, handlerFormActionWithError } from "@icat/lib";
 import { UserService } from "@icat/services";
 import { revalidatePath } from "next/cache";
+
+export async function getSessionUser() {
+  const session = await auth();
+  return session?.user;
+}
 
 export const updateUser = handlerFormActionWithError({
   schema: UpdateUserBodySchema,
   action: async (data: UpdateUserBodyDto) => {
+    const sessionUser = await getSessionUser();
     const userService = new UserService();
-    const user = await userService.updateUser(sessionUser?.id, data);
+    const user = await userService.updateUser(sessionUser?.id as string, data);
 
     revalidatePath(NavigationUrls.PROFILE);
     return user;
@@ -25,7 +31,8 @@ export const updateUser = handlerFormActionWithError({
 export const changeUserPassword = handlerFormActionWithError({
   schema: ChangePasswordBodySchema,
   action: async (data: ChangePasswordBodyDto) => {
+    const sessionUser = await getSessionUser();
     const userService = new UserService();
-    await userService.changePassword(sessionUser?.id, data);
+    await userService.changePassword(sessionUser?.id as string, data);
   },
 });

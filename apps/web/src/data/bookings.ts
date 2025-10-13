@@ -5,19 +5,18 @@ import {
   GetBookingsBodySchema,
   GetBookingsByUserIdBodyDto,
 } from "@icat/contracts";
-import { auth } from "@icat/lib/auth";
+import { getSessionUser } from "../actions";
 
 export async function getUserBookings(arg?: GetBookingsByUserIdBodyDto) {
-  const session = await auth();
-
+  const sessionUser = await getSessionUser();
   const args = GetBookingByUserIdBodySchema.parse({
-    userId: session?.user?.id,
+    userId: sessionUser?.id,
     ...arg,
   });
 
   const bookingService = new BookingService();
   const result = await bookingService.getAllByUserId(args);
-  
+
   return result;
 }
 
