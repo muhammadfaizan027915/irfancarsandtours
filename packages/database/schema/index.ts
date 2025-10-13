@@ -1,6 +1,6 @@
 if (!process.env.NEXT_RUNTIME) {
-  const path = await import("path");
-  const dotenv = await import("dotenv");
+  const path = require("path");
+  const dotenv = require("dotenv");
   dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 }
 

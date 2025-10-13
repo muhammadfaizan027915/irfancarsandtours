@@ -5,7 +5,7 @@ import {
 } from "./session";
 
 export async function getUserBookedCars(bookingId: string) {
-  await getAuthenticatedUserSession();
+  // await getAuthenticatedUserSession();
 
   const bookedCarService = new BookedCarService();
   const bookedCars = await bookedCarService.getByBookingIdWithCars(bookingId);
@@ -13,7 +13,7 @@ export async function getUserBookedCars(bookingId: string) {
 }
 
 export async function getBookedCars(bookingId: string) {
-  await getAuthenticatedAdminSession();
+  // await getAuthenticatedAdminSession();
 
   const bookedCarService = new BookedCarService();
   const bookedCars = await bookedCarService.getByBookingIdWithCars(bookingId);

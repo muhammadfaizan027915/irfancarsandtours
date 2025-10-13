@@ -43,6 +43,13 @@
       "when": 1759755395954,
       "tag": "0005_cloudy_vector",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1760339526490,
+      "tag": "0006_lame_ricochet",
+      "breakpoints": true
     }
   ]
 }

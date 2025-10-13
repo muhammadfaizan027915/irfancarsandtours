@@ -1,5 +1,10 @@
 import { pgEnum } from "drizzle-orm/pg-core";
 
+export const UserRolesList = ["admin", "user"] as const;
+
+export const userRolesEnum = pgEnum("user_roles_enum", UserRolesList);
+export type UserRoles = (typeof UserRolesList)[number];
+
 export const BrandNamesList = [
   "",
   "use",
@@ -107,3 +112,11 @@ export const AmenitiesList = [
 
 export const amenitiesEnum = pgEnum("amenities_enum", AmenitiesList);
 export type Amenities = (typeof AmenitiesList)[number];
+
+export const BookingStatusList = ["pending", "confirmed", "cancelled"] as const;
+
+export const bookingStatusEnum = pgEnum(
+  "booking_status_enum",
+  BookingStatusList
+);
+export type BookingStatus = (typeof BookingStatusList)[number];

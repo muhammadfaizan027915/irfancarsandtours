@@ -1,6 +1,7 @@
 "use server";
 
 import { NavigationUrls } from "@icat/features/header/header.constants";
+import { UserRolesList } from "@icat/database/enums";
 import { redirect } from "next/navigation";
 import { auth } from "@icat/lib";
 
@@ -21,9 +22,9 @@ export async function getAuthenticatedUserSession() {
 export async function getAuthenticatedAdminSession() {
   const session = await getSession();
 
-//   if (!session || session?.user?.role !== "Admin") {
-//     return redirect(NavigationUrls.HOME);
-//   }
+  if (!session || session?.user?.role !== UserRolesList[0]) {
+    return redirect(NavigationUrls.HOME);
+  }
 
   return session;
 }

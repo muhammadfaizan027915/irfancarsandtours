@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 
 import { Searchbar } from "@icat/features/searchbar";
 import { PrimrayHero } from "@icat/features/hero/primary";
+import { Footer } from "@icat/features/footer";
 
 const BrandSlider = dynamic(() =>
   import("@icat/features/sliders/brands").then((m) => m.BrandSlider)
@@ -44,6 +45,8 @@ export default function HomePage() {
           <SearchedCars />
         </div>
       </main>
+
+      <Footer />
     </>
   );
 }

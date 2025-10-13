@@ -6,8 +6,8 @@
   "author": "Muhammad Faizan",
   "packageManager": "npm@11.6.1",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
     "clean": "rm -rf .next .turbo",
     "lint": "eslint"

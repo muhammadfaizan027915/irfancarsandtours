@@ -1,19 +1,15 @@
-import type { NextConfig } from "next";
+import path from "path";
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  serverExternalPackages: ["zod"],
-  experimental: {
-    optimizeCss: true,
-    optimizeServerReact: true,
-    optimizePackageImports: [
-      "axios",
-      "@radix/ui",
-      "react-slick",
-      "react-day-picker",
-      "lucide-react",
-    ],
+
+  outputFileTracingRoot: path.join(__dirname, "../../"),
+
+  outputFileTracingIncludes: {
+    "/**": ["packages/**"],
   },
+
   transpilePackages: [
     "@icat/contracts",
     "@icat/database",
@@ -23,9 +19,14 @@ const nextConfig: NextConfig = {
     "@icat/services",
     "@icat/ui",
   ],
+
+  experimental: {
+    optimizeCss: true,
+  },
+
   images: {
     remotePatterns: [{ protocol: "https", hostname: "storage.googleapis.com" }],
-    qualities: [50, 60, 70, 80, 90, 100],
+    qualities: [50, 60, 70, 80]
   },
 };
 

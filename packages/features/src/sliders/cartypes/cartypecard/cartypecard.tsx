@@ -1,3 +1,4 @@
+import { Card } from "@icat/ui";
 import { CarPlaceHolderImageUrl } from "@icat/features/common";
 import { NavigationUrls } from "@icat/features/header/header.constants";
 import { Button } from "@icat/ui/components/button";
@@ -10,7 +11,7 @@ import Link from "next/link";
 export function CarTypeCard({ name, image }: CarTypeCardProps) {
   return (
     <Link href={`${NavigationUrls.CARS}?carType=${name}`}>
-      <div className="border border-border rounded-xl p-4 hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal">
+      <Card className="border shadow-none rounded-xl p-4 hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal">
         <div className="h-30 relative rounded-lg overflow-hidden">
           <Image
             width={150}
@@ -34,7 +35,7 @@ export function CarTypeCard({ name, image }: CarTypeCardProps) {
             </Button>
           </div>
         </div>
-      </div>
+      </Card>
     </Link>
   );
 }

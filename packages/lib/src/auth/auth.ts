@@ -80,7 +80,7 @@ export const {
     async session({ session, token }) {
       const { jti, exp, iat, sub, ...user } = token;
       session.user = user as any;
-      
+
       return session;
     },
   },

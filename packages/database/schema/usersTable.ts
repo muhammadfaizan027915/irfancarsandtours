@@ -1,11 +1,13 @@
 import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { timestampColumns } from "../utils";
+import { userRolesEnum } from "./enums";
 
 export const usersTable = pgTable("users", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
+  role: userRolesEnum().default("user"),
   image: text("image"),
   email: text("email").unique().notNull(),
   phone: text("phone"),

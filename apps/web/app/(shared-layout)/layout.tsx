@@ -1,3 +1,4 @@
+import { Footer } from "@icat/features/footer";
 import { Header } from "@icat/features/header";
 import { Topbar } from "@icat/features/topbar";
 import { ReactNode } from "react";
@@ -13,6 +14,7 @@ export default function SharedLayout({ children }: SharedLayoutProps) {
       <Header varient={"secondary"} />
 
       <div className="px-4 sm:px-8 lg:px-16 py-8">{children}</div>
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { text, pgTable, varchar, date } from "drizzle-orm/pg-core";
 import { timestampColumns } from "../utils";
 import { usersTable } from "./usersTable";
+import { bookingStatusEnum } from "./enums";
 
 export const bookingsTable = pgTable("bookings", {
   id: text("id")
@@ -10,6 +11,7 @@ export const bookingsTable = pgTable("bookings", {
   pickupDate: date("pickup_date", { mode: "date" }).notNull(),
   dropoffAddress: varchar("dropoff_address", { length: 255 }).notNull(),
   dropoffDate: date("dropoff_date", { mode: "date" }).notNull(),
+  status: bookingStatusEnum("status").default("pending").notNull(),
   userId: text("user_id")
     .notNull()
     .references(() => usersTable.id),
