@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader } from "@icat/ui/components/card";
 import { CarBookingForm } from "@icat/features/forms/carbooking";
 import { BookingRequestDto } from "@icat/contracts";
-import { getSession } from "@icat/web/data/session";
+import { auth } from "@icat/lib/auth";
 import { CarBookingProps } from "./booking.types";
 
 export async function CarBooking({ cars }: CarBookingProps) {
-  const session = await getSession();
+  const session = await auth();
 
   return (
     <Card className="shadow-none rounded-xl">

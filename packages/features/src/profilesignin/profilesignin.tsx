@@ -1,14 +1,14 @@
-import { getSession } from "@icat/web/data/session";
 import { UserRound, LogOut } from "lucide-react";
 import { lougOutUser } from "@icat/web/actions";
 import { Button } from "@icat/ui/components/button";
 import { NavigationUrls } from "@icat/features/header/header.constants";
 import { ProfileSigninProps } from "./profilesignin.types";
+import { auth } from "@icat/lib/auth";
 import { cn } from "@icat/ui/lib/utils";
 import Link from "next/link";
 
 export async function ProfileSigin({ className }: ProfileSigninProps) {
-  const session = await getSession();
+  const session = await auth();
 
   return session?.user?.id ? (
     <div className={cn("flex gap-4",className)}>

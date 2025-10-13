@@ -1,6 +1,14 @@
 import { NavigationUrls } from "@icat/features/header/header.constants";
-import { Avatar, AvatarFallback, AvatarImage } from "@icat/ui/components/avatar";
-import { SidebarMenu, SidebarMenuAction, SidebarMenuItem } from "@icat/ui/components/sidebar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@icat/ui/components/avatar";
+import {
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuItem,
+} from "@icat/ui/components/sidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,6 +17,7 @@ import {
 } from "@icat/ui/components/dropdown-menu";
 import { lougOutUser } from "@icat/web/actions";
 import { MoreHorizontal, UserRound, LogOut } from "lucide-react";
+import { Button } from "@icat/ui/components/button";
 import Link from "next/link";
 
 export function DashboardSidebarFooter() {
@@ -34,8 +43,10 @@ export function DashboardSidebarFooter() {
               </Link>
             </DropdownMenuItem>
             <form action={lougOutUser}>
-              <DropdownMenuItem>
-                <LogOut className="text-foreground" /> Logout
+              <DropdownMenuItem asChild>
+                <Button variant="ghost" className="w-full rounded-sm justify-start" size="icon">
+                  <LogOut className="text-foreground" /> Logout
+                </Button>
               </DropdownMenuItem>
             </form>
           </DropdownMenuContent>

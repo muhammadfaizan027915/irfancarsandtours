@@ -1,11 +1,13 @@
 import z from "zod";
 import { PaginatedResponseSchema } from "@icat/contracts/generic";
+import { UserRolesList } from "@icat/database/enums";
 
 export const UserResponseSchema = z.object({
   id: z.uuid(),
   name: z.string().min(1),
   email: z.email(),
   image: z.url().nullish(),
+  role: z.enum(UserRolesList),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });

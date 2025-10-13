@@ -14,13 +14,6 @@ import { revalidatePath } from "next/cache";
 export const updateUser = handlerFormActionWithError({
   schema: UpdateUserBodySchema,
   action: async (data: UpdateUserBodyDto) => {
-    const session = await auth();
-    const sessionUser = session?.user;
-
-    if (!sessionUser?.id) {
-      throw new UnauthorizedError({ message: "Unauthorized to update user." });
-    }
-
     const userService = new UserService();
     const user = await userService.updateUser(sessionUser?.id, data);
 
@@ -32,15 +25,6 @@ export const updateUser = handlerFormActionWithError({
 export const changeUserPassword = handlerFormActionWithError({
   schema: ChangePasswordBodySchema,
   action: async (data: ChangePasswordBodyDto) => {
-    const session = await auth();
-    const sessionUser = session?.user;
-
-    if (!sessionUser?.id) {
-      throw new UnauthorizedError({
-        message: "Unauthorized to change password.",
-      });
-    }
-
     const userService = new UserService();
     await userService.changePassword(sessionUser?.id, data);
   },

@@ -11,13 +11,6 @@ import { redirect } from "next/navigation";
 export const bookCar = handlerFormActionWithError({
   schema: CarBookingRequestSchema,
   action: async (data: BookingRequestDto) => {
-    const session = await auth();
-    const sessionUser = session?.user;
-
-    if (!sessionUser?.id) {
-      throw new UnauthorizedError({ message: "Unauthorized to book car." });
-    }
-
     const bookingService = new BookingService();
     const booking = await bookingService.createBooking(data);
 

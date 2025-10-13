@@ -1,17 +1,14 @@
 import { BookingService } from "@icat/services";
 import {
-  getAuthenticatedAdminSession,
-  getAuthenticatedUserSession,
-} from "./session";
-import {
   GetBookingByUserIdBodySchema,
   GetBookingsBodyDto,
   GetBookingsBodySchema,
   GetBookingsByUserIdBodyDto,
 } from "@icat/contracts";
+import { auth } from "@icat/lib/auth";
 
 export async function getUserBookings(arg?: GetBookingsByUserIdBodyDto) {
-  const session = await getAuthenticatedUserSession();
+  const session = await auth();
 
   const args = GetBookingByUserIdBodySchema.parse({
     userId: session?.user?.id,
@@ -25,8 +22,6 @@ export async function getUserBookings(arg?: GetBookingsByUserIdBodyDto) {
 }
 
 export async function getBookings(arg?: GetBookingsBodyDto) {
-  await getAuthenticatedAdminSession();
-
   const args = GetBookingsBodySchema.parse(arg);
   const bookingService = new BookingService();
   const result = await bookingService.getAll(args);
@@ -35,8 +30,6 @@ export async function getBookings(arg?: GetBookingsBodyDto) {
 }
 
 export async function getUserBooking(bookingId: string) {
-  await getAuthenticatedUserSession();
-
   const bookingService = new BookingService();
   const booking = await bookingService.getBookingByIdWithUser(bookingId);
 
@@ -44,8 +37,6 @@ export async function getUserBooking(bookingId: string) {
 }
 
 export async function getBooking(bookingId: string) {
-  await getAuthenticatedAdminSession();
-
   const bookingService = new BookingService();
   const booking = await bookingService.getBookingByIdWithUser(bookingId);
 
