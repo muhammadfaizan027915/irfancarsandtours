@@ -1,5 +1,6 @@
 import { UserRound, LogOut } from "lucide-react";
-import { getSessionUser, lougOutUser } from "@icat/web/actions";
+import { lougOutUser } from "@icat/web/actions";
+import { getSessionUser } from "@icat/web/data/uesrs";
 import { NavigationUrls } from "@icat/features/header/header.constants";
 import { Button } from "@icat/ui/components/button";
 import { ProfileSigninProps } from "./profilesignin.types";

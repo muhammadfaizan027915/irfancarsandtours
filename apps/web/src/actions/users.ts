@@ -7,14 +7,10 @@ import {
   ChangePasswordBodyDto,
 } from "@icat/contracts";
 import { NavigationUrls } from "@icat/features/header/header.constants";
-import { auth, handlerFormActionWithError } from "@icat/lib";
+import { handlerFormActionWithError } from "@icat/lib";
+import { getSessionUser } from "@icat/web/data/uesrs";
 import { UserService } from "@icat/services";
 import { revalidatePath } from "next/cache";
-
-export async function getSessionUser() {
-  const session = await auth();
-  return session?.user;
-}
 
 export const updateUser = handlerFormActionWithError({
   schema: UpdateUserBodySchema,

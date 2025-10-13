@@ -5,7 +5,7 @@ import {
   GetBookingsBodySchema,
   GetBookingsByUserIdBodyDto,
 } from "@icat/contracts";
-import { getSessionUser } from "../actions";
+import { getSessionUser } from "./uesrs";
 
 export async function getUserBookings(arg?: GetBookingsByUserIdBodyDto) {
   const sessionUser = await getSessionUser();

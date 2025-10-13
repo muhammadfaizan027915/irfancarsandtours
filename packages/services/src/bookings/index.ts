@@ -13,7 +13,7 @@ import {
   PaginatedBookingWithUserResponseSchema,
 } from "@icat/contracts";
 import { BookedCarService, CarService, UserService } from "@icat/services";
-import { getSessionUser } from "@icat/web/actions/users";
+import { getSessionUser } from "@icat/web/data/uesrs";
 
 export class BookingService {
   private bookingRepository: BookingRepository;
