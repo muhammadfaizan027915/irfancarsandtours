@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { NavigationUrls } from "@icat/features/header/header.constants";
 import { auth } from "@icat/lib/auth/auth";
 
-const UserProtectedRoutes = ["/profile", "/bookings"];
+const UserProtectedRoutes = [NavigationUrls.PROFILE, NavigationUrls.BOOKINGS, NavigationUrls.CHECKOUT];
 const AdminProtectedRoutes = ["/dashboard"];
 const ProtectedRoutes = [...UserProtectedRoutes, ...AdminProtectedRoutes];
 
@@ -40,6 +40,7 @@ export const config = {
     "/dashboard/:path*",
     "/bookings/:path*",
     "/profile",
+    "/checkout",
   ],
 
   runtime: "nodejs",
