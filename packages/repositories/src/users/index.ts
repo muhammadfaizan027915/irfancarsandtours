@@ -8,6 +8,7 @@ export const UserItemSelect = {
   phone: usersTable.phone,
   cnic: usersTable.cnic,
   image: usersTable.image,
+  role: usersTable.role,
   createdAt: usersTable.createdAt,
   updatedAt: usersTable.updatedAt,
 };
