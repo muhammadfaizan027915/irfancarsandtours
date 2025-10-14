@@ -13,7 +13,7 @@ import { CarBookingFormProps } from "./carbooking.types";
 import { bookCar } from "@icat/web/actions";
 
 export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
-  const [result, action] = useActionState(bookCar, null);
+  const [result, action, pending] = useActionState(bookCar, null);
 
   const success = result?.success;
   const error = result?.error;
@@ -130,6 +130,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
         size="lg"
         className="font-bold shadow-none group mt-2"
         type="submit"
+        disabled={pending}
       >
         Confirm Booking
         <ArrowRight className="group-hover:translate-x-1 transition-transform" />

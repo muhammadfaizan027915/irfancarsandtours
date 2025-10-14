@@ -11,7 +11,7 @@ import { useActionState, useEffect } from "react";
 import { sendMessage } from "@icat/web/actions/contact";
 
 export function ContactForm() {
-  const [result, action] = useActionState(sendMessage, null);
+  const [result, action, pending] = useActionState(sendMessage, null);
 
   const success = result?.success;
   const error = result?.error;
@@ -69,7 +69,7 @@ export function ContactForm() {
           errors={error?.cause?.message?._errors}
         />
 
-        <Button size="lg" className="font-bold shadow-none group mt-4">
+        <Button size="lg" className="font-bold shadow-none group mt-4" disabled={pending}>
           Send Message
           <ArrowRight className="group-hover:translate-x-1 transition-transform" />
         </Button>

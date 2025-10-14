@@ -19,7 +19,7 @@ import { ProfileFormProps } from "./profile.types";
 import { useActionState, useEffect } from "react";
 
 export function ProfileForm({ user }: ProfileFormProps) {
-  const [result, action] = useActionState(updateUser, null);
+  const [result, action, pending] = useActionState(updateUser, null);
 
   const success = result?.success;
   const error = result?.error;
@@ -88,7 +88,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
           errors={error?.cause?.address?._errors}
         />
 
-        <Button size={"lg"} className="font-bold shadow-none group mt-4">
+        <Button size={"lg"} className="font-bold shadow-none group mt-4" disabled={pending}>
           Update Profile
           <ArrowRight className="group-hover:translate-x-1 transition-transform" />
         </Button>

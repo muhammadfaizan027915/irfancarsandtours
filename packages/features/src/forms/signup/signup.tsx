@@ -12,7 +12,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 
 export function SignUpForm() {
-  const [result, action] = useActionState(signUpUser, null);
+  const [result, action, pending] = useActionState(signUpUser, null);
 
   const success = result?.success;
   const error = result?.error;
@@ -65,7 +65,11 @@ export function SignUpForm() {
           errors={error?.cause?.confirmPassword?._errors}
         />
 
-        <Button size={"lg"} className="font-bold shadow-none group mt-4">
+        <Button
+          size={"lg"}
+          className="font-bold shadow-none group mt-4"
+          disabled={pending}
+        >
           Sign Up
           <ArrowRight className="group-hover:translate-x-1 transition-transform" />
         </Button>

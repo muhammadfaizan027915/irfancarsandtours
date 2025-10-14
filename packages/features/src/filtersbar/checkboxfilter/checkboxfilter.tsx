@@ -36,10 +36,9 @@ export function CheckboxFilter<S extends string, T extends string>({
         {filtersList?.map((filter) => (
           <div key={filter} className="flex items-center">
             <Checkbox
-              className=""
               id={filter}
               name={filter}
-              defaultChecked={existingSearchParams?.includes(filter)}
+              checked={existingSearchParams.includes(filter)}
               onCheckedChange={handleApplyFilters(filter)}
             />{" "}
             <Label className="ml-2" htmlFor={filter}>

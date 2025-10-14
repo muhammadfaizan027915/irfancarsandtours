@@ -47,7 +47,7 @@ export const CarTypesLibrary = [
   },
   {
     name: CarTypesList[11],
-    image: "/assets/cartypes/crossover.png",
+    image: "",
   },
   {
     name: CarTypesList[12],

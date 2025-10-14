@@ -67,14 +67,16 @@ export function mergeObjectToFormData(
 
     if (value === null || value === undefined) {
       form.append(formKey, "");
-    } else if (typeof value === "object" && !(value instanceof File)) {
-      if (Array.isArray(value)) {
-        value.forEach((v, i) => {
+    } else if (Array.isArray(value)) {
+      value.forEach((v, i) => {
+        if (typeof v === "object" && !(v instanceof File)) {
           mergeObjectToFormData(form, v, `${formKey}[${i}]`);
-        });
-      } else {
-        mergeObjectToFormData(form, value, formKey);
-      }
+        } else {
+          form.append(`${formKey}[${i}]`, v);
+        }
+      });
+    } else if (typeof value === "object" && !(value instanceof File)) {
+      mergeObjectToFormData(form, value, formKey);
     } else {
       form.append(formKey, String(value));
     }

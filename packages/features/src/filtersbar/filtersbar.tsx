@@ -3,14 +3,13 @@ import {
   TransmissionTypesList,
   FuelTypesList,
   AmenitiesList,
-} from "@icat/database";
+} from "@icat/database/enums";
 import { CheckboxFilter } from "./checkboxfilter";
 
 export function FiltersBar() {
   return (
     <section>
       <aside className="flex flex-col gap-4">
-        {/* <PriceFilter /> */}
         <CheckboxFilter
           title="Car Type"
           filterName="carType"

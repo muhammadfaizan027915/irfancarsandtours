@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
-import { CarImages } from "@icat/features/sliders/carimages";
+import { getSessionUser } from "@icat/web/data/uesrs";
 import { getUserCar } from "@icat/web/data/cars";
 
 import dynamic from "next/dynamic";
 
-const CarBooking = dynamic(() =>
-  import("@icat/features/cardetail/booking").then((m) => m.CarBooking)
+const CarImages = dynamic(() =>
+  import("@icat/features/sliders/carimages").then((m) => m.CarImages)
 );
 
 const CarDescription = dynamic(() =>
@@ -24,6 +24,14 @@ const CarGetStarted = dynamic(() =>
   import("@icat/features/cardetail/getstarted").then((m) => m.CarGetStarted)
 );
 
+const CarBooking = dynamic(() =>
+  import("@icat/features/cardetail/booking").then((m) => m.CarBooking)
+);
+
+const LoginNotice = dynamic(() =>
+  import("@icat/features/loginnotice").then((m) => m.LoginNotice)
+);
+
 type CarDetailPageProps = {
   params: Promise<{ carId: string }>;
 };
@@ -31,6 +39,7 @@ type CarDetailPageProps = {
 export default async function CarDetailPage({ params }: CarDetailPageProps) {
   const { carId } = await params;
 
+  const user = await getSessionUser();
   const car = await getUserCar(carId);
 
   const _cars = [
@@ -61,7 +70,8 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
         </div>
         <div className="grid gap-6 col-span-2">
           <CarGetStarted />
-          <CarBooking cars={_cars} />
+
+          {user ? <CarBooking cars={_cars} /> : <LoginNotice />}
         </div>
       </div>
     </div>

@@ -11,7 +11,9 @@ export function SecondaryHero({
   heroImageUrl = "/assets/hero_bakground_secondary.jpg",
 }: SecondaryHeroProps) {
   return (
-    <section className="relative flex overflow-hidden rounded-2xl min-h-[320px] md:min-h-[400px] p-4 md:p-8 items-center justify-center">
+    <section
+      className={`relative flex overflow-hidden rounded-2xl min-h-[320px] md:min-h-[400px] p-4 md:p-8 items-center justify-${FlexToTextPositionMap[position]}`}
+    >
       <Image
         src={heroImageUrl}
         alt={title || "Secondary hero background"}

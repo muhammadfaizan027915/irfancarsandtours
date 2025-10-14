@@ -32,5 +32,6 @@ export const config = {
     "/dashboard/:path*",
     "/profile/:path*",
     "/bookings/:path*",
+    "/checkout"
   ],
 };

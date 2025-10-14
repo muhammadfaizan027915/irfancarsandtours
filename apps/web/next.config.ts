@@ -26,7 +26,7 @@ const nextConfig: NextConfig = {
 
   images: {
     remotePatterns: [{ protocol: "https", hostname: "storage.googleapis.com" }],
-    qualities: [50, 60, 70, 80]
+    qualities: [50, 60, 70, 80, 90, 100]
   },
 };
 

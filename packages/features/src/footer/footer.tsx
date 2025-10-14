@@ -87,7 +87,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex justify-between border-t pt-8 mt-16 text-sm text-muted-foreground">
+        <div className="flex flex-col md:flex-row justify-between gap-2 border-t pt-8 mt-16 text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} ICAT. All rights reserved.</p>
 
           <p>

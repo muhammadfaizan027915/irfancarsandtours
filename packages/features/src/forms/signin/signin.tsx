@@ -12,7 +12,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 
 export function SignInFrom() {
-  const [result, action] = useActionState(logInUser, null);
+  const [result, action, pending] = useActionState(logInUser, null);
 
   const success = result?.success;
   const error = result?.error;
@@ -49,7 +49,7 @@ export function SignInFrom() {
           errors={error?.cause?.password?._errors}
         />
 
-        <Button size={"lg"} className="font-bold shadow-none group mt-4">
+        <Button size={"lg"} className="font-bold shadow-none group mt-4" disabled={pending}>
           Sign In
           <ArrowRight className="group-hover:translate-x-1 transition-transform" />
         </Button>

@@ -13,6 +13,8 @@ export * from "./components/checkbox";
 export * from "./components/data-table";
 export * from "./components/collapsible";
 export * from "./components/dark-mode-toggler";
+export * from "./components/pagination-info";
+export * from "./components/pagination-info";
 export * from "./components/slider-container";
 export * from "./components/date-time-picker";
 export * from "./components/theme-provider";

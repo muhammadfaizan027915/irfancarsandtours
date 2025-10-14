@@ -29,7 +29,7 @@ import Image from "next/image";
 export function CarForm({ car, mode }: CarFormProps) {
   const isUpdateMode = mode === "update";
 
-  const [result, action] = useActionState(
+  const [result, action, pending] = useActionState(
     isUpdateMode ? updateCar : registerCar,
     null
   );
@@ -49,9 +49,11 @@ export function CarForm({ car, mode }: CarFormProps) {
           position: "top-center",
         }
       );
-    }
 
-    resetFiles();
+      if (!isUpdateMode) {
+        resetFiles();
+      }
+    }
   }, [result]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -259,7 +261,7 @@ export function CarForm({ car, mode }: CarFormProps) {
           <Label className="ml-2">Force booking with driver</Label>
         </div>
 
-        <Button type="submit" size={"lg"} className="ml-auto">
+        <Button type="submit" size={"lg"} className="ml-auto" disabled={pending}>
           {isUpdateMode ? "Update Car" : "Register Car"}
         </Button>
       </div>

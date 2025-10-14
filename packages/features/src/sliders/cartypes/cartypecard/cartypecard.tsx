@@ -16,7 +16,7 @@ export function CarTypeCard({ name, image }: CarTypeCardProps) {
           <Image
             width={150}
             height={150}
-            src={CarPlaceHolderImageUrl}
+            src={image || CarPlaceHolderImageUrl}
             alt={name ?? ""}
             className="w-full h-full object-cover object-center"
             sizes="(max-width: 768px) 150px, 250px"

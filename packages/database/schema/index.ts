@@ -5,6 +5,7 @@ if (!process.env.NEXT_RUNTIME) {
 }
 
 import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
 
 import { carsTable } from "./carsTable";
 import { usersTable } from "./usersTable";
@@ -25,7 +26,15 @@ export * from "./contactsTable";
 export * from "./bookingsTable";
 export * from "./bookedCarsTable";
 
-export const db = drizzle({
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+  idleTimeoutMillis: 10000,
+  connectionTimeoutMillis: 5000,
+});
+
+export const db = drizzle(pool, {
   schema: {
     carsTable,
     usersTable,
@@ -35,12 +44,5 @@ export const db = drizzle({
     contactsTable,
     bookingsTable,
     bookedCarsTable,
-  },
-
-  connection: {
-    connectionString: process.env.DATABASE_URL,
-    ssl: false,
-    query_timeout: 0,
-    statement_timeout: 0,
   },
 });

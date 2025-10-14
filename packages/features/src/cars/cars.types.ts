@@ -1,3 +1,5 @@
-import { GetCarsBodyDto } from "@icat/contracts";
+import { CarsListResponseDto } from "@icat/contracts";
 
-export type CarsProps = GetCarsBodyDto;
+export type CarsProps = {
+  cars: CarsListResponseDto;
+};

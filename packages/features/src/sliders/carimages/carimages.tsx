@@ -34,8 +34,8 @@ export function CarImages({ imageUrls }: CarImagesProps) {
             height={200}
             width={480}
             className="w-full h-120 object-cover rounded-xl"
-            sizes="(max-width: 768px) 50px, 100px"
-            quality={70}
+            sizes="(max-width: 768px) 80vw, 100vw"
+            quality={90}
           />
         ))}
       </SliderContainer>

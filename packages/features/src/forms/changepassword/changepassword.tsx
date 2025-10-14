@@ -10,7 +10,7 @@ import { changeUserPassword } from "@icat/web/actions";
 import { useActionState, useEffect } from "react";
 
 export function ChangePasswordForm() {
-  const [result, action] = useActionState(changeUserPassword, null);
+  const [result, action, pending] = useActionState(changeUserPassword, null);
 
   const success = result?.success;
   const error = result?.error;
@@ -60,7 +60,11 @@ export function ChangePasswordForm() {
           errors={error?.cause?.confirmPassword?._errors}
         />
 
-        <Button size={"lg"} className="font-bold shadow-none group mt-4">
+        <Button
+          size={"lg"}
+          className="font-bold shadow-none group mt-4"
+          disabled={pending}
+        >
           Change Password
           <ArrowRight className="group-hover:translate-x-1 transition-transform" />
         </Button>
