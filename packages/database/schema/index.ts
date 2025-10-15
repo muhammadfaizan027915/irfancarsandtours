@@ -26,12 +26,11 @@ export * from "./contactsTable";
 export * from "./bookingsTable";
 export * from "./bookedCarsTable";
 
-
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
-  idleTimeoutMillis: 10000,
-  connectionTimeoutMillis: 5000,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 20000,
 });
 
 export const db = drizzle(pool, {

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { NavigationUrls } from "@icat/features/header/header.constants";
+import { UserResponseDto } from "@icat/contracts";
 import { auth } from "@icat/lib/auth/auth";
 
 const UserProtectedRoutes = [NavigationUrls.PROFILE, NavigationUrls.BOOKINGS, NavigationUrls.CHECKOUT];
@@ -9,8 +10,8 @@ const ProtectedRoutes = [...UserProtectedRoutes, ...AdminProtectedRoutes];
 export default auth((req) => {
   const { pathname, origin } = req.nextUrl;
 
-  const session = req.auth;
-  const isAdmin = session?.user?.role === "admin";
+  const sessionUser = req.auth?.user as UserResponseDto;
+  const isAdmin = sessionUser?.role === "admin";
 
   const isProtected = ProtectedRoutes.some((route) =>
     pathname.startsWith(route)

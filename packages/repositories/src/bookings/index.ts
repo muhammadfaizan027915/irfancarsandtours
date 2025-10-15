@@ -69,7 +69,7 @@ export class BookingRepository {
     limit?: number;
     userId: string;
   }) {
-    const { page = 1, limit = 10, userId } = args || {};
+    const { page = 1, limit = 50, userId } = args || {};
     const offset = (page - 1) * limit;
 
     const conditions = [isNull(bookingsTable.deletedAt)];
@@ -84,6 +84,7 @@ export class BookingRepository {
       .select(BookingItemSelect)
       .from(bookingsTable)
       .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
+      .orderBy(desc(bookingsTable.createdAt))
       .where(whereClause)
       .limit(limit)
       .offset(offset);

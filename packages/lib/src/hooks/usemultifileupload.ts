@@ -111,5 +111,6 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
     deleteFile,
     updateFile,
     resetFiles,
+    isUploading: files?.some((file) => file?.isUploading),
   };
 }

@@ -2,8 +2,8 @@
 
 import { cookies } from "next/headers";
 import { CarBookingRequestSchema, BookingRequestDto } from "@icat/contracts";
-import { auth, handlerFormActionWithError, UnauthorizedError } from "@icat/lib";
 import { NavigationUrls } from "@icat/features/header/header.constants";
+import { handlerFormActionWithError } from "@icat/lib";
 import { carCartKey } from "@icat/web/store";
 import { BookingService } from "@icat/services";
 import { redirect } from "next/navigation";

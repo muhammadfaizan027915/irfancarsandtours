@@ -13,6 +13,9 @@
     },
     "clean": {
       "dependsOn": ["^clean"]
+    },
+    "postbuild":{
+      "dependsOn": ["@icat/web#build"]
     }
   }
 }

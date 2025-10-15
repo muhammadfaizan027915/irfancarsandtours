@@ -8,10 +8,8 @@ import {
   UpdateCarBodyDto,
 } from "@icat/contracts";
 import {
-  auth,
   handlerFormActionWithError,
   handleServerActionWithError,
-  UnauthorizedError,
 } from "@icat/lib";
 import { CarService } from "@icat/services";
 import { revalidatePath } from "next/cache";

@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader } from "@icat/ui/components/card";
 import { CarBookingForm } from "@icat/features/forms/carbooking";
 import { getSessionUser } from "@icat/web/data/uesrs";
-import { BookingRequestDto } from "@icat/contracts";
 import { CarBookingProps } from "./booking.types";
 
 export async function CarBooking({ cars }: CarBookingProps) {
@@ -14,7 +13,7 @@ export async function CarBooking({ cars }: CarBookingProps) {
       </CardHeader>
       <CardContent>
         <CarBookingForm
-          defaultValue={{ ...sessionUser, cars } as BookingRequestDto}
+          defaultValue={{ ...sessionUser, cars }}
         />
       </CardContent>
     </Card>

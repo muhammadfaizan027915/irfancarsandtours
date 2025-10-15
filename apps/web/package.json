@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "clean": "rm -rf .next .turbo",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postbuild": "cp -r public .next/standalone/apps/web/ && cp -r .next/static .next/standalone/apps/web/.next/"
   },
   "dependencies": {
     "@icat/contracts": "*",

@@ -1,10 +1,14 @@
 import { UserService } from "@icat/services";
-import { GetUsersBodyDto, GetUsersBodySchema } from "@icat/contracts";
+import {
+  GetUsersBodyDto,
+  GetUsersBodySchema,
+  UserResponseDto,
+} from "@icat/contracts";
 import { auth } from "@icat/lib/auth";
 
 export async function getSessionUser() {
   const session = await auth();
-  return session?.user;
+  return session?.user as UserResponseDto;
 }
 
 export async function getUserProfile() {

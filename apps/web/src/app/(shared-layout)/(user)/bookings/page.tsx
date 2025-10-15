@@ -1,3 +1,4 @@
+import { GetBookingsBodyDto } from "@icat/contracts";
 import { getUserBookings } from "@icat/web/data/bookings";
 
 import dynamic from "next/dynamic";
@@ -8,7 +9,16 @@ const UserBookingsTable = dynamic(() =>
   )
 );
 
-export default async function UserBookingsPage() {
-  const result = await getUserBookings();
-  return <UserBookingsTable bookings={result.data} />;
+type UserBookingsPageProps = {
+  searchParams: Promise<GetBookingsBodyDto>;
+};
+
+export default async function UserBookingsPage({
+  searchParams,
+}: UserBookingsPageProps) {
+  const result = await getUserBookings(await searchParams);
+  const bookings = result?.data;
+  const pagination = result?.pagination;
+
+  return <UserBookingsTable bookings={bookings} pagination={pagination} />;
 }

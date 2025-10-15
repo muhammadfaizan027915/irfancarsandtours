@@ -37,7 +37,7 @@ export function CarForm({ car, mode }: CarFormProps) {
   const success = result?.success;
   const error = result?.error;
 
-  const { files, uploadFiles, deleteFile, resetFiles } = useMultiFileUpload({
+  const { files, uploadFiles, deleteFile, resetFiles, isUploading } = useMultiFileUpload({
     initialUrls: car?.imageUrls,
   });
 
@@ -237,13 +237,13 @@ export function CarForm({ car, mode }: CarFormProps) {
                   <Progress value={f.progress} className="w-3/4" />
                 </div>
               )}
-              <button
+              <Button
                 type="button"
                 onClick={() => deleteFile(f.id)}
                 className="absolute top-1 right-1 bg-white/80 rounded-full p-1"
               >
                 <X size={14} />
-              </button>
+              </Button>
             </div>
           ))}
         </div>
@@ -261,7 +261,7 @@ export function CarForm({ car, mode }: CarFormProps) {
           <Label className="ml-2">Force booking with driver</Label>
         </div>
 
-        <Button type="submit" size={"lg"} className="ml-auto" disabled={pending}>
+        <Button type="submit" size={"lg"} className="ml-auto" disabled={pending || isUploading}>
           {isUpdateMode ? "Update Car" : "Register Car"}
         </Button>
       </div>
