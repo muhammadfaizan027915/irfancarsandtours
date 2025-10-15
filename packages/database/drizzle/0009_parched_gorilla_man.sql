@@ -1,0 +1,2 @@
+ALTER TABLE "bookings" ALTER COLUMN "pickup_date" SET DATA TYPE timestamp with time zone;--> statement-breakpoint
+ALTER TABLE "bookings" ALTER COLUMN "dropoff_date" SET DATA TYPE timestamp with time zone;

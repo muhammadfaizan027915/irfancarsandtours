@@ -3,7 +3,7 @@ import { PaginatedResponseSchema, toDate } from "../generic";
 import { DetailedUserResponseSchema } from "../users";
 
 export const BookingResponseSchema = z.object({
-  id: z.uuid(),
+  id: z.string(),
   userId: z.string(),
   pickupAddress: z.string().min(1),
   pickupDate: toDate(z.date()),

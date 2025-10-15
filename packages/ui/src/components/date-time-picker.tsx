@@ -1,13 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { ChevronDownIcon } from "lucide-react";
 
 import { cn } from "@icat/ui/lib/utils";
-import { Button } from "@icat/ui/components/button";
 import { Calendar } from "@icat/ui/components/calendar";
 import { Input } from "@icat/ui/components/input";
-import { Label } from "@icat/ui/components/label";
+import { ChevronDownIcon } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -33,7 +31,7 @@ export function DateTimePicker({
   );
   const [time, setTime] = React.useState<string>(
     defaultValue
-      ? new Date(defaultValue).toLocaleTimeString("en-GB")
+      ? new Date(defaultValue).toLocaleTimeString("en-GB", { hour12: false })
       : "10:30:00"
   );
 
@@ -42,6 +40,7 @@ export function DateTimePicker({
   const combinedValue = React.useMemo(() => {
     if (!date || !time) return "";
     const [h, m, s] = time.split(":").map(Number);
+    if (isNaN(h) || isNaN(m)) return "";
     const final = new Date(date);
     final.setHours(h, m, s ?? 0);
     return final.toISOString();
@@ -52,7 +51,6 @@ export function DateTimePicker({
       {name && <input type="hidden" name={name} value={combinedValue} />}
 
       <div className="flex gap-4">
-        {/* Date Picker (50%) */}
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <button
@@ -68,29 +66,51 @@ export function DateTimePicker({
                   : ""
               )}
             >
-              {date ? date.toLocaleDateString() : "Select date"}
+              {date
+                ? date.toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })
+                : "Select date"}
               <ChevronDownIcon className="ml-2 h-4 w-4 opacity-70" />
             </button>
           </PopoverTrigger>
+
           <PopoverContent className="w-auto overflow-hidden p-0" align="start">
             <Calendar
               mode="single"
               selected={date}
               captionLayout="dropdown"
               onSelect={(d) => {
-                setDate(d);
+                if (!d) return;
+                const [h, m, s] = time.split(":").map(Number);
+                const newDate = new Date(d);
+                newDate.setHours(isNaN(h) ? 0 : h, isNaN(m) ? 0 : m, isNaN(s) ? 0 : s);
+                setDate(newDate);
                 setOpen(false);
               }}
             />
           </PopoverContent>
         </Popover>
 
-        {/* Time Picker (50%) */}
         <Input
           type="time"
           step="1"
           value={time}
-          onChange={(e) => setTime(e.target.value)}
+          onChange={(e) => {
+            const newTime = e.target.value;
+            setTime(newTime || ""); // allow empty
+
+            if (date && newTime) {
+              const [h, m, s] = newTime.split(":").map(Number);
+              if (!isNaN(h) && !isNaN(m)) {
+                const updatedDate = new Date(date);
+                updatedDate.setHours(h, m, s ?? 0);
+                setDate(updatedDate);
+              }
+            }
+          }}
           aria-invalid={hasError ? "true" : undefined}
           className={cn(
             "h-11 w-full min-w-[50%]",

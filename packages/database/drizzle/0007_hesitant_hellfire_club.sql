@@ -1,0 +1,24 @@
+ALTER TABLE "cars" DROP COLUMN "deleted_at";--> statement-breakpoint
+ALTER TABLE "cars" DROP COLUMN "created_at";--> statement-breakpoint
+ALTER TABLE "cars" DROP COLUMN "updated_at";--> statement-breakpoint
+ALTER TABLE "users" DROP COLUMN "deleted_at";--> statement-breakpoint
+ALTER TABLE "users" DROP COLUMN "created_at";--> statement-breakpoint
+ALTER TABLE "users" DROP COLUMN "updated_at";--> statement-breakpoint
+ALTER TABLE "sessions" DROP COLUMN "deleted_at";--> statement-breakpoint
+ALTER TABLE "sessions" DROP COLUMN "created_at";--> statement-breakpoint
+ALTER TABLE "sessions" DROP COLUMN "updated_at";--> statement-breakpoint
+ALTER TABLE "account" DROP COLUMN "deleted_at";--> statement-breakpoint
+ALTER TABLE "account" DROP COLUMN "created_at";--> statement-breakpoint
+ALTER TABLE "account" DROP COLUMN "updated_at";--> statement-breakpoint
+ALTER TABLE "verification_tokens" DROP COLUMN "deleted_at";--> statement-breakpoint
+ALTER TABLE "verification_tokens" DROP COLUMN "created_at";--> statement-breakpoint
+ALTER TABLE "verification_tokens" DROP COLUMN "updated_at";--> statement-breakpoint
+ALTER TABLE "contacts" DROP COLUMN "deleted_at";--> statement-breakpoint
+ALTER TABLE "contacts" DROP COLUMN "created_at";--> statement-breakpoint
+ALTER TABLE "contacts" DROP COLUMN "updated_at";--> statement-breakpoint
+ALTER TABLE "bookings" DROP COLUMN "deleted_at";--> statement-breakpoint
+ALTER TABLE "bookings" DROP COLUMN "created_at";--> statement-breakpoint
+ALTER TABLE "bookings" DROP COLUMN "updated_at";--> statement-breakpoint
+ALTER TABLE "booked_cars" DROP COLUMN "deleted_at";--> statement-breakpoint
+ALTER TABLE "booked_cars" DROP COLUMN "created_at";--> statement-breakpoint
+ALTER TABLE "booked_cars" DROP COLUMN "updated_at";

@@ -28,10 +28,18 @@ export const CarBookingRequestSchema = z
       })
     ),
   })
-  .refine((obj) => obj.dropoffDate >= obj.pickupDate, {
-    message: "dropoffDate must be the same or after pickupDate",
-    path: ["dropoffDate"],
-  });
+  .refine(
+    (obj) => {
+      const pickup = new Date(obj.pickupDate);
+      const dropoff = new Date(obj.dropoffDate);
+
+      return dropoff > pickup;
+    },
+    {
+      message: "Drop-off time must be after pickup time (even if same day)",
+      path: ["dropoffDate"],
+    }
+  );
 
 export type BookingRequestDto = z.infer<typeof CarBookingRequestSchema>;
 
