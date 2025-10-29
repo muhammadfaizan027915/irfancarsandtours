@@ -1,0 +1,60 @@
+
+# Dependency directories
+node_modules
+**/node_modules
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Build output
+dist
+build
+.next
+.out
+/.vercel
+/.vercel_build_output
+/.turbo
+.turbo
+.cache
+coverage
+public/.cache
+
+# TypeScript
+*.tsbuildinfo
+
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+*.swp
+
+# Keys, credentials and local files
+*.pem
+*.key
+*.local
+
+# Monorepo specifics (ignore local node_modules/cache across packages/apps)
+packages/*/node_modules
+apps/*/node_modules
+
+# Misc
+tmp
+temp
+logs
+.cache
+
