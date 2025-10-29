@@ -23,7 +23,8 @@
   "devDependencies": {
     "@types/react-slick": "^0.23.13",
     "critters": "^0.0.23",
-    "turbo": "^2.5.8"
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.17.1",
