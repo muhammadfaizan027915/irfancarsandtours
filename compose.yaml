@@ -1,0 +1,44 @@
+services:
+  database:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend_database
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+      - GCP_PROJECT_ID=${GCP_PROJECT_ID}
+      - GCP_CLIENT_EMAIL=${GCP_CLIENT_EMAIL}
+      - GCP_PRIVATE_KEY=${GCP_PRIVATE_KEY}
+      - GCS_BUCKET_NAME=${GCS_BUCKET_NAME}
+    networks:
+      - frontend_backend
+      - backend_database
+    depends_on:
+      - database
+    restart: always
+    
+volumes:
+  db_data: {}
+
+
+networks:
+  frontend_backend:
+    driver: bridge
+
+  backend_database:
+    driver: bridge

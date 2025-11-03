@@ -30,7 +30,6 @@
   "author": "Muhammad Faizan",
   "packageManager": "npm@11.6.1",
   "dependencies": {
-    "dotenv": "^17.2.2",
     "drizzle-orm": "^0.44.5",
     "pg": "^8.16.3"
   },

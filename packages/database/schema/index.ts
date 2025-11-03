@@ -1,9 +1,3 @@
-if (!process.env.NEXT_RUNTIME) {
-  const path = require("path");
-  const dotenv = require("dotenv");
-  dotenv.config({ path: path.resolve(process.cwd(), ".env") });
-}
-
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 

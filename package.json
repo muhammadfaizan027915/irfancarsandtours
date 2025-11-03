@@ -5,9 +5,11 @@
   "name": "irfancarsandtours",
   "description": "A comprehensive platform for booking cars and tours with Irfan Cars And Tours.",
   "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "clean": "turbo clean"
+    "env": "dotenv -e .env -- turbo env",
+    "dev": "dotenv -e .env -- turbo dev",
+    "build": "dotenv -e .env -- turbo build",
+    "clean": "dotenv -e .env -- turbo clean",
+    "migrate": "dotenv -e .env -- turbo run migrate"
   },
   "keywords": [
     "Cars",
@@ -21,6 +23,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "dotenv-cli": "^11.0.0",
     "@types/react-slick": "^0.23.13",
     "critters": "^0.0.23",
     "turbo": "^2.5.8",

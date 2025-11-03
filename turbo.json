@@ -1,10 +1,13 @@
 {
-  "globalEnv": [],
+  "globalEnv": [".env"],
   "globalDependencies": [],
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
+    "migrate": {
+      "cache": false
+    },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["migrate", "^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "dev": {

@@ -35,4 +35,6 @@ COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/.next/standa
 COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/.next/static ./apps/web/.next/static
 COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/public ./apps/web/public
 
+EXPOSE 3000
+
 CMD ["node", "apps/web/server.js"]
