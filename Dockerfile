@@ -21,8 +21,9 @@ RUN npm ci
 
 COPY --from=builder /app/tsconfig.base.json ./tsconfig.base.json
 COPY --from=builder /app/out/full/ ./
-RUN npm run build
+COPY --from=builder /app/.env ./.env
 
+RUN npm run build
 
 FROM base AS runner
 WORKDIR /app

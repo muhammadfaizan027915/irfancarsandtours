@@ -1,16 +1,23 @@
 {
-  "globalEnv": [".env"],
-  "globalDependencies": [],
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "DATABASE_URL",
+    "POSTGRES_USER",
+    "POSTGRES_PASSWORD",
+    "POSTGRES_DB",
+    "GCP_PROJECT_ID",
+    "GCP_CLIENT_EMAIL",
+    "GCP_PRIVATE_KEY",
+    "GCS_BUCKET_NAME"
+  ],
   "tasks": {
-    "migrate": {
-      "cache": false
-    },
+    "migrate": { "cache": false },
     "build": {
       "dependsOn": ["migrate", "^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "dev": {
+      "dependsOn": ["migrate", "^dev"],
       "cache": false,
       "persistent": true
     },
