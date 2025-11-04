@@ -36,13 +36,6 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    command: >
-      sh -c "
-      echo 'Waiting for database...' &&
-      until nc -z database 5432; do sleep 1; done &&
-      echo 'Database ready! Starting app...' &&
-      npm run migrate && npm start
-      "
     restart: always
 
 volumes:

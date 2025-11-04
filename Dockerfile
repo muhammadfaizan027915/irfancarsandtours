@@ -35,7 +35,10 @@ USER irfan
 COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/.next/standalone ./
 COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/.next/static ./apps/web/.next/static
 COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/public ./apps/web/public
+COPY --from=builder   --chown=irfan:irfancarsandtours /app/docker-entrypoint.sh ./
 
 EXPOSE 3000
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
 
 CMD ["node", "apps/web/server.js"]
