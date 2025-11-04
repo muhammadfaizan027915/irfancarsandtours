@@ -6,10 +6,9 @@ RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
-RUN npm install turbo --global
 COPY . .
 
-RUN turbo prune @icat/web --docker
+RUN npx turbo prune @icat/web --docker
 
 FROM base AS installer
 RUN apk update
@@ -33,12 +32,7 @@ RUN adduser --system --uid 1001 irfan
 USER irfan
 
 COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/.next/standalone ./
-COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/.next/static ./apps/web/.next/static
-COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/public ./apps/web/public
-COPY --from=builder   --chown=irfan:irfancarsandtours /app/docker-entrypoint.sh ./
 
 EXPOSE 3000
-
-ENTRYPOINT ["./docker-entrypoint.sh"]
 
 CMD ["node", "apps/web/server.js"]

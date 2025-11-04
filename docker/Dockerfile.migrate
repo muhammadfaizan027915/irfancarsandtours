@@ -1,0 +1,27 @@
+FROM node:24-alpine AS base
+RUN apk update
+RUN apk add --no-cache libc6-compat
+
+WORKDIR /app
+
+FROM base AS pruner
+COPY . .
+RUN npx turbo prune @icat/database --docker
+
+FROM base AS installer
+COPY --from=pruner /app/out/json/ ./
+RUN npm ci
+
+FROM base AS runner
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 irfancarsandtours
+RUN adduser --system --uid 1001 irfan
+USER irfan
+
+COPY --from=installer /app/node_modules ./node_modules
+COPY --from=pruner --chown=irfan:irfancarsandtours /app/out/full/packages/database ./
+
+EXPOSE 3000
+
+CMD ["npm", "run", "migrate"]

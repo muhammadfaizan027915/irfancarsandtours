@@ -5,11 +5,10 @@
   "name": "irfancarsandtours",
   "description": "A comprehensive platform for booking cars and tours with Irfan Cars And Tours.",
   "scripts": {
-    "env": "dotenv -e .env -- turbo env",
     "dev": "dotenv -e .env -- turbo dev",
     "build": "dotenv -e .env -- turbo build",
-    "clean": "dotenv -e .env -- turbo clean",
-    "migrate": "dotenv -e .env -- turbo run migrate"
+    "migrate": "turbo run migrate",
+    "clean": "turbo clean"
   },
   "keywords": [
     "Cars",

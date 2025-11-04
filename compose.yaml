@@ -9,20 +9,34 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/18/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     networks:
       - backend_database
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  migrate:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.migrate
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    networks:
+      - backend_database
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: "no"
 
   web:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile.web
     ports:
-      - "3000:3000"
+      - "443:3000"
     environment:
       - NODE_ENV=production
       - DATABASE_URL=${DATABASE_URL}
@@ -34,6 +48,8 @@ services:
       - frontend_backend
       - backend_database
     depends_on:
+      migrate:
+        condition: service_completed_successfully
       database:
         condition: service_healthy
     restart: always
