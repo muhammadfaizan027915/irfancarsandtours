@@ -11,13 +11,15 @@
     "GCS_BUCKET_NAME"
   ],
   "tasks": {
-    "migrate": { "cache": false },
+    "migrate": {
+      "cache": false
+    },
     "build": {
-      "dependsOn": ["migrate", "^build"],
+      "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "dev": {
-      "dependsOn": ["migrate", "^dev"],
+      "dependsOn": ["^dev"],
       "cache": false,
       "persistent": true
     },
