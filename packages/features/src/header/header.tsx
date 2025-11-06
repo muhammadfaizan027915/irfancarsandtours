@@ -6,7 +6,7 @@ import { cn } from "@icat/ui/lib/utils";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-const ProfileSigin = dynamic(() =>
+const ProfileSignin = dynamic(() =>
   import("@icat/features/profilesignin").then((m) => m.ProfileSigin)
 );
 
@@ -33,7 +33,7 @@ export async function Header({ varient = "primary" }: HeaderProps) {
           <div className="lg:w-2/8">
             <Logo />
           </div>
-          <div className="lg:w-4/8 hidden lg:block">
+          <div className="hidden lg:max-w-4/8 lg:!block">
             <nav className="flex items-stretch gap-8">
               <Link href={NavigationUrls.HOME}>Home</Link>
               <Link href={NavigationUrls.CARS}>Cars</Link>
@@ -43,7 +43,7 @@ export async function Header({ varient = "primary" }: HeaderProps) {
             </nav>
           </div>
           <div className="lg:w-2/8 flex items-stretch justify-end gap-2">
-            <ProfileSigin className="hidden md:flex" />
+            <ProfileSignin className="hidden md:!flex" />
             <CarCartSidebar />
             <NavigationBar />
           </div>

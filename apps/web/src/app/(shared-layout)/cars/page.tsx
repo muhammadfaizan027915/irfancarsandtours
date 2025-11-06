@@ -51,7 +51,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
           <p className="text-muted-foreground">Cars That Fit Your Lifestyle</p>
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-[300px_1fr] items-start xl:gap-4">
-          <div className="hidden xl:block">
+          <div className="hidden xl:!block">
             <FiltersBar />
           </div>
           <div className="grid gap-4">
