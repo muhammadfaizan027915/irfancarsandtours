@@ -8,7 +8,7 @@ export function Topbar({ varient = "primary" }: TopbarProps) {
   return (
     <div
       className={cn(
-        "w-full items-center px-8 h-10 text-white text-sm hidden md:flex",
+        "w-full items-center px-8 h-10 text-white text-sm hidden md:!flex",
         "border-b border-muted/50 dark:border-sidebar-foreground/50",
         varient === "primary" ? "bg-transparent" : "bg-secondary/90"
       )}
@@ -16,14 +16,17 @@ export function Topbar({ varient = "primary" }: TopbarProps) {
       <div className="xl:w-1/3 flex gap-8">
         <span className={"flex items-center gap-2"}>
           <Phone size={14} className="inline" />
-          <a href="tel:090078601" className="hidden xl:inline">
+          <a href="tel:090078601" className="hidden xl:!inline">
             +0900 - 78601
           </a>
         </span>
         <span className={"flex items-center gap-2"}>
           <Mail size={14} className="inline" />
-          <a href="tel:090078601" className="hidden xl:inline">
-            help@irfancarsandtours.pk
+          <a
+            href="mailto:contact@irfancarsandtours.com"
+            className="hidden xl:!inline"
+          >
+            contact@irfancarsandtours.com
           </a>
         </span>
       </div>
