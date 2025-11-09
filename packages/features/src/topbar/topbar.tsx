@@ -16,8 +16,8 @@ export function Topbar({ varient = "primary" }: TopbarProps) {
       <div className="xl:w-1/3 flex gap-8">
         <span className={"flex items-center gap-2"}>
           <Phone size={14} className="inline" />
-          <a href="tel:090078601" className="hidden xl:!inline">
-            +0900 - 78601
+          <a href="tel:+923165192708" className="hidden xl:!inline">
+            +92-3165192708
           </a>
         </span>
         <span className={"flex items-center gap-2"}>
