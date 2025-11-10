@@ -11,7 +11,7 @@ import Link from "next/link";
 export function CarTypeCard({ name, image }: CarTypeCardProps) {
   return (
     <Link href={`${NavigationUrls.CARS}?carType=${name}`}>
-      <Card className="border shadow-none rounded-xl p-4 hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal">
+      <Card className="w-full h-full border shadow-none rounded-xl p-4 hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal">
         <div className="h-30 relative rounded-lg overflow-hidden">
           <Image
             width={150}
