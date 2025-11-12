@@ -33,6 +33,9 @@ USER irfan
 
 COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/.next/standalone ./
 
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+
 EXPOSE 3000
 
-CMD ["node", "apps/web/server.js", "--hostname", "0.0.0.0", "--port", "3000"]
+CMD ["node", "apps/web/server.js"]

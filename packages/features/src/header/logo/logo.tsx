@@ -4,15 +4,15 @@ import { NavigationUrls } from "@icat/features/header/header.constants";
 
 export function Logo() {
   return (
-    <h1 className={"font-bold text-6xl uppercase"}>
-      <Link href={NavigationUrls.HOME}>
+    <Link href={NavigationUrls.HOME}>
+      <div className="overflow-hidden w-18 h-18">
         <Image
           alt="Irfan Cars And Tours"
           src={"/assets/logo.png"}
           height={150}
           width={150}
         />
-      </Link>
-    </h1>
+      </div>
+    </Link>
   );
 }
