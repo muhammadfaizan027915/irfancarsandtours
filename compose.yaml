@@ -58,12 +58,25 @@ services:
       - 443:443
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certbot/letsencrypt:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     depends_on:
-      web:
-        condition: service_started
+      - web
     networks:
       - frontend_backend
     restart: always
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/letsencrypt:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    environment:
+      - CERT_EMAIL=${CERT_EMAIL}
+      - CERT_DOMAIN=${CERT_DOMAIN}
+      - CERT_DOMAIN_WWW=${CERT_DOMAIN_WWW}
+    entrypoint: >
+      sh -c "certbot certonly --non-interactive --agree-tos --email $CERT_EMAIL --webroot --webroot-path=/var/www/certbot -d $CERT_DOMAIN -d $CERT_DOMAIN_WWW"
 
 volumes:
   pg_data:
