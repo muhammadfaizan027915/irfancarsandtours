@@ -77,6 +77,10 @@ services:
       - CERT_DOMAIN_WWW=${CERT_DOMAIN_WWW}
     entrypoint: >
       sh -c "certbot certonly --non-interactive --agree-tos --email $CERT_EMAIL --webroot --webroot-path=/var/www/certbot -d $CERT_DOMAIN -d $CERT_DOMAIN_WWW"
+    depends_on:
+      proxy:
+        service_started 
+      
 
 volumes:
   pg_data:
