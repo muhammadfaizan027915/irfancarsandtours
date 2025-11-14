@@ -71,15 +71,15 @@ services:
     volumes:
       - ./certbot/letsencrypt:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
+    depends_on:
+      proxy:
+        condition: service_started
     environment:
       - CERT_EMAIL=${CERT_EMAIL}
       - CERT_DOMAIN=${CERT_DOMAIN}
       - CERT_DOMAIN_WWW=${CERT_DOMAIN_WWW}
     entrypoint: >
       sh -c "certbot certonly --non-interactive --agree-tos --email $CERT_EMAIL --webroot --webroot-path=/var/www/certbot -d $CERT_DOMAIN -d $CERT_DOMAIN_WWW"
-    depends_on:
-      proxy:
-        service_started 
       
 
 volumes:
