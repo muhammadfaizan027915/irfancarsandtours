@@ -2,6 +2,7 @@ import { UserRound, LogOut, LayoutDashboard } from "lucide-react";
 import { lougOutUser } from "@icat/web/actions";
 import { getSessionUser } from "@icat/web/data/uesrs";
 import { NavigationUrls } from "@icat/features/header/header.constants";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import { Button } from "@icat/ui/components/button";
 import { ProfileSigninProps } from "./profilesignin.types";
 import { UserRolesList } from "@icat/database";
@@ -14,7 +15,7 @@ export async function ProfileSigin({ className }: ProfileSigninProps) {
   return sessionUser?.id ? (
     <div className={cn("flex gap-4", className)}>
       {sessionUser?.role === UserRolesList[0] && <Button asChild size={"lg"} variant={"ghost"}>
-        <Link href={NavigationUrls.BOOKINGS}>
+        <Link href={DashboardNavigationUrls.BOOKINGS}>
           <LayoutDashboard size={18} className="inline" /> Dashboard
         </Link>
       </Button>}
