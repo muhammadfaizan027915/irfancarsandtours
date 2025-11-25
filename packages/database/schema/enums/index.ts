@@ -49,6 +49,7 @@ export const BrandNamesList = [
   "RAM",
   "RollsRoyce",
   "Subaru",
+  "Suzuki",
   "Tesla",
   "Toyota",
   "Vinfast",

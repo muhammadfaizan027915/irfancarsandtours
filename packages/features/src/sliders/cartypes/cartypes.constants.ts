@@ -13,10 +13,10 @@ export const CarTypesLibrary = [
     name: CarTypesList[2],
     image: "/assets/cartypes/hatchback.png",
   },
-  {
-    name: CarTypesList[3],
-    image: "/assets/cartypes/convertible.png",
-  },
+  // {
+  //   name: CarTypesList[3],
+  //   image: "/assets/cartypes/convertible.png",
+  // },
   {
     name: CarTypesList[4],
     image: "/assets/cartypes/sports_car.png",
@@ -37,18 +37,18 @@ export const CarTypesLibrary = [
     name: CarTypesList[8],
     image: "/assets/cartypes/pickup_truck.png",
   },
-  {
-    name: CarTypesList[9],
-    image: "/assets/cartypes/station_wagon.png",
-  },
+  // {
+  //   name: CarTypesList[9],
+  //   image: "/assets/cartypes/station_wagon.png",
+  // },
   {
     name: CarTypesList[10],
     image: "/assets/cartypes/luxury.png",
   },
-  {
-    name: CarTypesList[11],
-    image: "",
-  },
+  // {
+  //   name: CarTypesList[11],
+  //   image: "",
+  // },
   {
     name: CarTypesList[12],
     image: "",

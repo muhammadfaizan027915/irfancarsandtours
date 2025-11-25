@@ -3,7 +3,7 @@ export function Map() {
     <div className="px-2">
       <h1 className="text-4xl font-bold">Our Location</h1>
       <p className="text-sm text-muted-foreground">
-        Raja Bazar, Rawalpindi, Punjab, Pakistan
+        Near Bloachistan Marble Facotry, Shaheen Town, Service Road West, Rawalpindi, Punjab, Pakistan
       </p>
 
       <iframe
