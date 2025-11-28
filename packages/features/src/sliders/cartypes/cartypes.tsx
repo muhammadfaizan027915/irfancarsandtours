@@ -9,7 +9,7 @@ import Link from "next/link";
 export function CarTypes() {
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex flex-col md:flex-row items-start md:items-center md:justify-between">
         <div>
           <h3 className="text-3xl font-bold">Find By Car Type</h3>
           <p className="text-muted-foreground">

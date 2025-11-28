@@ -1,24 +1,15 @@
 import dynamic from "next/dynamic";
 
 import { Searchbar } from "@icat/features/searchbar";
+import { BrandSlider } from "@icat/features/sliders/brands";
+import { CarTypes } from "@icat/features/sliders/cartypes";
+import { FeaturedCars } from "@icat/features/sliders/featuredcars";
+import { SearchedCars } from "@icat/features/sliders/searchedcars";
 import { PrimrayHero } from "@icat/features/hero/primary";
 import { HowItWork } from "@icat/features/howitwork";
-import { Footer } from "@icat/features/footer";
 
-const BrandSlider = dynamic(() =>
-  import("@icat/features/sliders/brands").then((m) => m.BrandSlider)
-);
-
-const CarTypes = dynamic(() =>
-  import("@icat/features/sliders/cartypes").then((m) => m.CarTypes)
-);
-
-const FeaturedCars = dynamic(() =>
-  import("@icat/features/sliders/featuredcars").then((m) => m.FeaturedCars)
-);
-
-const SearchedCars = dynamic(() =>
-  import("@icat/features/sliders/searchedcars").then((m) => m.SearchedCars)
+const Footer = dynamic(() =>
+  import("@icat/features/footer").then((m) => m.Footer)
 );
 
 export default function HomePage() {

@@ -1,8 +1,10 @@
+import { NavigationUrls } from "@icat/features/header";
 import { Button } from "@icat/ui/components/button";
 import { DarkModeToggler } from "@icat/ui/components/dark-mode-toggler";
 import { Phone, CarFront, Mail, MoveRight } from "lucide-react";
 import { TopbarProps } from "./topbar.types";
 import { cn } from "@icat/ui/lib/utils";
+import Link from "next/link";
 
 export function Topbar({ varient = "primary" }: TopbarProps) {
   return (
@@ -35,8 +37,10 @@ export function Topbar({ varient = "primary" }: TopbarProps) {
         <p className="text-white text-center">
           Your choice — explore special cars today.
         </p>
-        <Button size="sm" className="rounded-full h-7">
-          Access Now <MoveRight />
+        <Button size="sm" className="rounded-full h-7" asChild>
+          <Link href={NavigationUrls.CARS}>
+            Access Now <MoveRight />
+          </Link>
         </Button>
       </div>
       <div className="xl:w-1/3 flex justify-end items-center gap-2">

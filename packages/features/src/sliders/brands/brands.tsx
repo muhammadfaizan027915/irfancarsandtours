@@ -9,7 +9,7 @@ export function BrandSlider() {
   return (
     <div>
       <h3 className="text-4xl font-bold">Premium Brands</h3>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col md:flex-row items-start md:items-center md:justify-between">
         <p className="text-muted-foreground">
           Discover a Handpicked Collection of Luxury Cars
         </p>

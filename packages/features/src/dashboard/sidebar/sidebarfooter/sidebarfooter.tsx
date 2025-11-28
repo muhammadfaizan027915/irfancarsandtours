@@ -18,15 +18,19 @@ import {
 import { lougOutUser } from "@icat/web/actions";
 import { MoreHorizontal, UserRound, LogOut } from "lucide-react";
 import { Button } from "@icat/ui/components/button";
+import { getSessionUser } from "@icat/web/data/uesrs";
+import { getNameInitials } from "@icat/lib";
 import Link from "next/link";
 
-export function DashboardSidebarFooter() {
+export async function DashboardSidebarFooter() {
+  const sessionUser = await getSessionUser()
+  const nameInitials = getNameInitials(sessionUser?.name);
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <Avatar>
-          <AvatarImage src="/user.png" alt="User" />
-          <AvatarFallback>MF</AvatarFallback>
+          <AvatarImage src={sessionUser.image || ""} alt="User" />
+          <AvatarFallback>{nameInitials}</AvatarFallback>
         </Avatar>
 
         <DropdownMenu>

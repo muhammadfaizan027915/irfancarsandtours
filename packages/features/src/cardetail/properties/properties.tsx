@@ -11,7 +11,7 @@ export function CarProperties({
 }: CarPropertiesProps) {
   return (
     <Card className="shadow-none rounded-xl">
-      <CardContent className=" flex flex-row gap-4">
+      <CardContent className=" flex flex-row flex-wrap gap-4">
         <Button
           size="lg"
           className="shadow-none rounded-lg py-7 bg-accent flex-1 pointer-events-none font-semibold"

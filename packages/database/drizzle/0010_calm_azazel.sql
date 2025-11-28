@@ -1,0 +1,1 @@
+ALTER TYPE "public"."brand_enum" ADD VALUE 'Suzuki' BEFORE 'Tesla';

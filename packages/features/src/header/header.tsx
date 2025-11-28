@@ -30,10 +30,10 @@ export async function Header({ varient = "primary" }: HeaderProps) {
         )}
       >
         <div className="h-16 flex justify-between items-center w-full">
-          <div className="lg:w-2/8">
+          <div className="lg:w-1/8">
             <Logo />
           </div>
-          <div className="hidden lg:max-w-4/8 lg:!block">
+          <div className="hidden lg:w-4/8 lg:!block">
             <nav className="flex items-stretch gap-8">
               <Link href={NavigationUrls.HOME}>Home</Link>
               <Link href={NavigationUrls.CARS}>Cars</Link>
@@ -42,7 +42,7 @@ export async function Header({ varient = "primary" }: HeaderProps) {
               <Link href={NavigationUrls.CONTACT}>Contact</Link>
             </nav>
           </div>
-          <div className="lg:w-2/8 flex items-stretch justify-end gap-2">
+          <div className="lg:w-3/8 flex items-stretch justify-end gap-2">
             <ProfileSignin className="hidden md:!flex" />
             <CarCartSidebar />
             <NavigationBar />

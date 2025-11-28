@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Sheet,
   SheetClose,
@@ -8,6 +6,7 @@ import {
   SheetTrigger,
 } from "@icat/ui/components/sheet";
 import { Button } from "@icat/ui/components/button";
+import { DashboardSidebarFooter } from "@icat/features/dashboard";
 import { NavigationUrls } from "@icat/features/header/header.constants";
 import { Menu } from "lucide-react";
 import Link from "next/link";
@@ -34,7 +33,9 @@ export function NavigationBar() {
           <Link href={NavigationUrls.CONTACT}>Contact</Link>
         </nav>
 
-        <SheetFooter className="flex flex-row gap-2 border-t w-full"></SheetFooter>
+          <SheetFooter className="flex flex-row gap-2 border-t w-full">
+            <DashboardSidebarFooter />
+          </SheetFooter>
       </SheetContent>
     </Sheet>
   );
