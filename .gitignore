@@ -8,6 +8,8 @@ yarn-error.log*
 pnpm-debug.log*
 .pnpm-debug.log*
 
+pg_data
+
 # -------------------------
 # Build outputs
 # -------------------------

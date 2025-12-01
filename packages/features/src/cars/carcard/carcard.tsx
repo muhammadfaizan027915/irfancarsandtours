@@ -39,7 +39,7 @@ export function CarCard({ car }: CarCardProps) {
       </div>
 
       <div className="p-6 pt-8 bg-card rounded-2xl flex flex-col gap-6">
-        <h4 className="text-2xl font-bold">{`${car?.name} ${car?.brand}`}</h4>
+        <h4 className="text-2xl font-bold">{`${car?.brand} ${car?.name}`}</h4>
         <hr className="border-t border-border" />
         <div className="grid grid-cols-2 gap-4 text-sm">
           <span className="flex items-center">

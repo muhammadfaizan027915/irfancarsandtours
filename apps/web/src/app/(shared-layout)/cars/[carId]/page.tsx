@@ -58,7 +58,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
     <div className="grid gap-6">
       <CarImages imageUrls={car?.imageUrls || []} />
       <h1 className="font-bold text-5xl">
-        {car?.name} {car?.brand} {car?.year}
+        {car?.brand} {car?.name} {car?.year}
       </h1>
       <div className="grid grid-cols-6 items-start gap-6">
         <div className="grid gap-6 col-span-6 lg:col-span-4">

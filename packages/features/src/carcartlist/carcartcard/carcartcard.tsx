@@ -41,7 +41,7 @@ export function CarCartCard({ car }: CarCartCardProps) {
           width={100}
           height={100}
           src={imageUrl || ""}
-          alt={`${car.name} ${car.brand}`}
+          alt={`${car.brand} ${car?.name}`}
           className="w-full h-full object-cover object-center"
         />
       </div>
@@ -49,7 +49,7 @@ export function CarCartCard({ car }: CarCartCardProps) {
       <CardContent className="flex-1 p-0">
         <CardHeader className="p-0">
           <CardTitle className="text-lg font-bold">
-            {car.name} {car.brand}
+            {car?.brand} {car?.name}
           </CardTitle>
         </CardHeader>
 
