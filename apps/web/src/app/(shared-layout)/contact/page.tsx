@@ -1,4 +1,5 @@
 import { SecondaryHero } from "@icat/features/hero/secondary";
+import { ContactDetails } from "@icat/features/contactdetails";
 
 import dynamic from "next/dynamic";
 
@@ -17,9 +18,12 @@ export default function ContactPage() {
         subtitle="Reach out us at anytime"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-2 py-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-8">
         <ContactForm />
-        <Map />
+        <div className="flex flex-col gap-4">
+          <ContactDetails />
+          <Map />
+        </div>
       </div>
     </>
   );

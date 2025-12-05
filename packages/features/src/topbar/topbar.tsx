@@ -5,6 +5,10 @@ import { Phone, CarFront, Mail, MoveRight } from "lucide-react";
 import { TopbarProps } from "./topbar.types";
 import { cn } from "@icat/ui/lib/utils";
 import Link from "next/link";
+import {
+  PHONE_NUMBER_1,
+  EMAIL_ADDRESS,
+} from "../contactdetails/contactdetails.constants";
 
 export function Topbar({ varient = "primary" }: TopbarProps) {
   return (
@@ -18,17 +22,14 @@ export function Topbar({ varient = "primary" }: TopbarProps) {
       <div className="xl:w-1/3 flex gap-8">
         <span className={"flex items-center gap-2"}>
           <Phone size={14} className="inline" />
-          <a href="tel:+923165192708" className="hidden xl:!inline">
-            +92-3165192708
+          <a href={`tel:${PHONE_NUMBER_1}`} className="hidden xl:!inline">
+            {PHONE_NUMBER_1}
           </a>
         </span>
         <span className={"flex items-center gap-2"}>
           <Mail size={14} className="inline" />
-          <a
-            href="mailto:contact@irfancarsandtours.com"
-            className="hidden xl:!inline"
-          >
-            contact@irfancarsandtours.com
+          <a href={`mailto:${EMAIL_ADDRESS}`} className="hidden xl:!inline">
+            {EMAIL_ADDRESS}
           </a>
         </span>
       </div>

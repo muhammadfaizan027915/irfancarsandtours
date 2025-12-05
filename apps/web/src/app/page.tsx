@@ -4,9 +4,11 @@ import { Searchbar } from "@icat/features/searchbar";
 import { BrandSlider } from "@icat/features/sliders/brands";
 import { CarTypes } from "@icat/features/sliders/cartypes";
 import { FeaturedCars } from "@icat/features/sliders/featuredcars";
+import { FloatingWhatsApp } from "@icat/features/floatingwhatsapp";
 import { SearchedCars } from "@icat/features/sliders/searchedcars";
 import { PrimrayHero } from "@icat/features/hero/primary";
 import { HowItWork } from "@icat/features/howitwork";
+
 
 const Footer = dynamic(() =>
   import("@icat/features/footer").then((m) => m.Footer)
@@ -47,6 +49,8 @@ export default function HomePage() {
       </main>
 
       <Footer />
+
+      <FloatingWhatsApp />
     </>
   );
 }

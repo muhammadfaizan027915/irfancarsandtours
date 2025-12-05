@@ -26,20 +26,26 @@ export function CarCard({ car }: CarCardProps) {
 
   return (
     <div className="border border-border rounded-xl hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal overflow-hidden">
-      <div className="h-56 relative">
-        <Image
-          width={250}
-          height={250}
-          alt={car?.name ?? ""}
-          src={imageUrl || CarPlaceHolderImageUrl}
-          className="w-full h-full object-cover object-center"
-          sizes="(max-width: 768px) 150px, 250px"
-          quality={70}
-        />
-      </div>
+      <Link href={`${NavigationUrls.CARS}/${car?.id}`}>
+        <div className="h-56 relative">
+          <Image
+            width={250}
+            height={250}
+            alt={car?.name ?? ""}
+            src={imageUrl || CarPlaceHolderImageUrl}
+            className="w-full h-full object-cover object-center"
+            sizes="(max-width: 768px) 150px, 250px"
+            quality={70}
+          />
+        </div>
+      </Link>
 
       <div className="p-6 pt-8 bg-card rounded-2xl flex flex-col gap-6">
-        <h4 className="text-2xl font-bold">{`${car?.brand} ${car?.name}`}</h4>
+        <h4 className="text-2xl font-bold">
+          <Link href={`${NavigationUrls.CARS}/${car?.id}`} className="hover:underline">
+            {`${car?.brand} ${car?.name}`}
+          </Link>
+        </h4>
         <hr className="border-t border-border" />
         <div className="grid grid-cols-2 gap-4 text-sm">
           <span className="flex items-center">

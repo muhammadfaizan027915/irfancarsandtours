@@ -1,7 +1,8 @@
+import { ReactNode } from "react";
 import { Footer } from "@icat/features/footer";
 import { Header } from "@icat/features/header";
 import { Topbar } from "@icat/features/topbar";
-import { ReactNode } from "react";
+import { FloatingWhatsApp } from "@icat/features/floatingwhatsapp";
 
 type SharedLayoutProps = {
   children: ReactNode;
@@ -15,6 +16,8 @@ export default function SharedLayout({ children }: SharedLayoutProps) {
 
       <div className="px-4 sm:px-8 lg:px-16 py-8">{children}</div>
       <Footer />
+
+      <FloatingWhatsApp />
     </div>
   );
 }

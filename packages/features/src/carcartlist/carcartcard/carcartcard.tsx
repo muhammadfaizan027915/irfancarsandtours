@@ -10,10 +10,12 @@ import { Checkbox } from "@icat/ui/components/checkbox";
 import { Button } from "@icat/ui/components/button";
 import { CarCartCardProps } from "./carcartcard.types";
 import { Armchair, Fuel, Minus, Plus } from "lucide-react";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { useCarCart } from "@icat/web/store";
 import { MouseEvent } from "react";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export function CarCartCard({ car }: CarCartCardProps) {
   const { incrementQuantity, decrementQuantity, toggleDriver } = useCarCart();
@@ -36,20 +38,25 @@ export function CarCartCard({ car }: CarCartCardProps) {
 
   return (
     <Card className="flex flex-row gap-2 items-center p-3 rounded-xl shadow-none hover:shadow hover:-translate-y-1 duration-300 transition-normal">
-      <div className="relative w-24 h-20 rounded-lg overflow-hidden">
-        <Image
-          width={100}
-          height={100}
-          src={imageUrl || ""}
-          alt={`${car.brand} ${car?.name}`}
-          className="w-full h-full object-cover object-center"
-        />
-      </div>
+
+      <Link href={`${NavigationUrls.CARS}/${car?.id}`}>
+        <div className="relative w-24 h-20 rounded-lg overflow-hidden">
+          <Image
+            width={100}
+            height={100}
+            src={imageUrl || ""}
+            alt={`${car.brand} ${car?.name}`}
+            className="w-full h-full object-cover object-center"
+          />
+        </div>
+      </Link>
 
       <CardContent className="flex-1 p-0">
         <CardHeader className="p-0">
           <CardTitle className="text-lg font-bold">
-            {car?.brand} {car?.name}
+            <Link href={`${NavigationUrls.CARS}/${car?.id}`} className="hover:underline">
+              {car?.brand} {car?.name}
+            </Link>
           </CardTitle>
         </CardHeader>
 
