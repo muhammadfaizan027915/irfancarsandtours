@@ -26,7 +26,7 @@ export function FloatingWhatsApp({
         className="flex items-center gap-2 justify-center w-auto h-14 px-5 rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 transition-all duration-200 hover:scale-105"
       >
         <MessageCircle className="w-6 h-6" />
-        <span className="text-sm font-medium">WhatsApp Us</span>
+        <span className="text-sm font-bold">WhatsApp Us</span>
       </a>
     </div>
   );
