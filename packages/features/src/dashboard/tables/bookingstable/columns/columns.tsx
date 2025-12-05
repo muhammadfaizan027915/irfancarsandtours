@@ -63,7 +63,7 @@ export const bookingsColumns: ColumnDef<BookingWithUserListItemResponseDto>[] =
     },
     {
       accessorKey: "createdAt",
-      header: "Created",
+      header: "Created At",
       size: 180,
       cell: ({ row }) =>
         format(new Date(row.original.createdAt!), "dd MMM yyyy hh:mm a"),

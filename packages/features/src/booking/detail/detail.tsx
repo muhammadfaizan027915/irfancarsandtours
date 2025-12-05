@@ -12,6 +12,7 @@ import {
 import { Calendar, MapPin, User, Mail, Phone, IdCard } from "lucide-react";
 import { BookingDetailProps } from "./detail.types";
 import { format } from "date-fns";
+import Link from "next/link";
 
 export function BookingDetail({ booking }: BookingDetailProps) {
   return (
@@ -82,7 +83,10 @@ export function BookingDetail({ booking }: BookingDetailProps) {
         </CardHeader>
         <CardContent className="space-y-6">
           <Avatar className="h-24 w-24 mx-auto">
-            <AvatarImage src={booking.bookedBy?.image || ""} />
+            <AvatarImage
+              className="object-cover"
+              src={booking.bookedBy?.image || ""}
+            />
             <AvatarFallback>
               {booking.bookedBy?.name?.[0] ?? "U"}
             </AvatarFallback>
@@ -95,11 +99,15 @@ export function BookingDetail({ booking }: BookingDetailProps) {
             </div>
             <div className="flex items-center gap-2">
               <Mail className="w-5 h-5 text-primary" />
-              <p>{booking.bookedBy?.email}</p>
+              <Link href={`mailto:${booking.bookedBy?.email}`}>
+                {booking.bookedBy?.email}
+              </Link>
             </div>
             <div className="flex items-center gap-2">
               <Phone className="w-5 h-5 text-primary" />
-              <p>{booking.bookedBy?.phone}</p>
+              <Link href={`tel:${booking.bookedBy?.phone}`}>
+                {booking.bookedBy?.phone}
+              </Link>
             </div>
             <div className="flex items-center gap-2">
               <IdCard className="w-5 h-5 text-primary" />

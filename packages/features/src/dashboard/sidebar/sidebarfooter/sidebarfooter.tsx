@@ -23,13 +23,17 @@ import { getNameInitials } from "@icat/lib";
 import Link from "next/link";
 
 export async function DashboardSidebarFooter() {
-  const sessionUser = await getSessionUser()
+  const sessionUser = await getSessionUser();
   const nameInitials = getNameInitials(sessionUser?.name);
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <Avatar>
-          <AvatarImage src={sessionUser.image || ""} alt="User" />
+          <AvatarImage
+            className="object-cover"
+            src={sessionUser.image || ""}
+            alt="User"
+          />
           <AvatarFallback>{nameInitials}</AvatarFallback>
         </Avatar>
 
@@ -48,7 +52,11 @@ export async function DashboardSidebarFooter() {
             </DropdownMenuItem>
             <form action={lougOutUser}>
               <DropdownMenuItem asChild>
-                <Button variant="ghost" className="w-full rounded-sm justify-start" size="icon">
+                <Button
+                  variant="ghost"
+                  className="w-full rounded-sm justify-start"
+                  size="icon"
+                >
                   <LogOut className="text-foreground" /> Logout
                 </Button>
               </DropdownMenuItem>

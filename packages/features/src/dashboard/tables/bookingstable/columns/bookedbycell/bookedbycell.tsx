@@ -13,10 +13,10 @@ import {
 import { BookingCellPorps } from "../columns.types";
 import { getNameInitials } from "@icat/lib/utils";
 import { Mail, IdCard, Phone } from "lucide-react";
-import dynamic from "next/dynamic";
-const Link =  dynamic(import("next/link"));
+import Link from "next/link";
 
 export function BookedByCell({ row }: BookingCellPorps) {
+  console.log(row.original.bookedBy);
   const bookedBy = row.original.bookedBy;
   const nameInitials = getNameInitials(bookedBy?.name);
 
@@ -24,7 +24,11 @@ export function BookedByCell({ row }: BookingCellPorps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer transition-all mx-auto">
-          <AvatarImage src={bookedBy?.image || ""} alt={bookedBy?.name} />
+          <AvatarImage
+            className="object-cover"
+            src={bookedBy?.image || ""}
+            alt={bookedBy?.name}
+          />
           <AvatarFallback className="bg-primary/10 text-primary font-medium">
             {nameInitials}
           </AvatarFallback>
@@ -37,7 +41,11 @@ export function BookedByCell({ row }: BookingCellPorps) {
       >
         <div className="flex items-center gap-3 px-3 py-2">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={bookedBy?.image || ""} alt={bookedBy?.name} />
+            <AvatarImage
+              className="object-cover"
+              src={bookedBy?.image || ""}
+              alt={bookedBy?.name}
+            />
             <AvatarFallback className="bg-primary/10 text-primary">
               {nameInitials}
             </AvatarFallback>
