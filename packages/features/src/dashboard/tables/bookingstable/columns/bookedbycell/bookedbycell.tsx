@@ -16,7 +16,6 @@ import { Mail, IdCard, Phone } from "lucide-react";
 import Link from "next/link";
 
 export function BookedByCell({ row }: BookingCellPorps) {
-  console.log(row.original.bookedBy);
   const bookedBy = row.original.bookedBy;
   const nameInitials = getNameInitials(bookedBy?.name);
 
