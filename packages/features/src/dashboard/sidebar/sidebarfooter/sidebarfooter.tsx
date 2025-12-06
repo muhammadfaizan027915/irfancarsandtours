@@ -25,6 +25,9 @@ import Link from "next/link";
 export async function DashboardSidebarFooter() {
   const sessionUser = await getSessionUser();
   const nameInitials = getNameInitials(sessionUser?.name);
+
+  if (!sessionUser) return null;
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
