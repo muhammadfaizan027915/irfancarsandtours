@@ -50,6 +50,12 @@ services:
       database:
         condition: service_healthy
     restart: always
+    mem_limit: "256m"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: 3
 
   proxy:
     image: nginx:alpine
@@ -80,7 +86,6 @@ services:
       - CERT_DOMAIN_WWW=${CERT_DOMAIN_WWW}
     entrypoint: >
       sh -c "certbot certonly --non-interactive --agree-tos --email $CERT_EMAIL --webroot --webroot-path=/var/www/certbot -d $CERT_DOMAIN -d $CERT_DOMAIN_WWW"
-      
 
 volumes:
   pg_data:

@@ -35,6 +35,7 @@ COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/.next/standa
 
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
+ENV NODE_OPTIONS=--max-old-space-size=256
 
 EXPOSE 3000
 
