@@ -26,46 +26,54 @@ export async function DashboardSidebarFooter() {
   const sessionUser = await getSessionUser();
   const nameInitials = getNameInitials(sessionUser?.name);
 
-  if (!sessionUser) return null;
-
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <Avatar>
-          <AvatarImage
-            className="object-cover"
-            src={sessionUser.image || ""}
-            alt="User"
-          />
-          <AvatarFallback>{nameInitials}</AvatarFallback>
-        </Avatar>
+        {sessionUser ? (
+          <>
+            <Avatar>
+              <AvatarImage
+                className="object-cover"
+                src={sessionUser.image || ""}
+                alt="User"
+              />
+              <AvatarFallback>{nameInitials}</AvatarFallback>
+            </Avatar>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuAction>
-              <MoreHorizontal />
-            </SidebarMenuAction>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent side="right">
-            <DropdownMenuItem asChild>
-              <Link href={NavigationUrls.PROFILE}>
-                <UserRound className="text-foreground" />
-                <span>Go to Profile</span>
-              </Link>
-            </DropdownMenuItem>
-            <form action={lougOutUser}>
-              <DropdownMenuItem asChild>
-                <Button
-                  variant="ghost"
-                  className="w-full rounded-sm justify-start"
-                  size="icon"
-                >
-                  <LogOut className="text-foreground" /> Logout
-                </Button>
-              </DropdownMenuItem>
-            </form>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuAction>
+                  <MoreHorizontal />
+                </SidebarMenuAction>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent side="right">
+                <DropdownMenuItem asChild>
+                  <Link href={NavigationUrls.PROFILE}>
+                    <UserRound className="text-foreground" />
+                    <span>Go to Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+                <form action={lougOutUser}>
+                  <DropdownMenuItem asChild>
+                    <Button
+                      variant="ghost"
+                      className="w-full rounded-sm justify-start"
+                      size="icon"
+                    >
+                      <LogOut className="text-foreground" /> Logout
+                    </Button>
+                  </DropdownMenuItem>
+                </form>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        ) : (
+          <Link href={NavigationUrls.SIGNIN}>
+            <span className="flex items-center gap-1">
+              <UserRound size={18} className="inline" /> Sign in
+            </span>
+          </Link>
+        )}
       </SidebarMenuItem>
     </SidebarMenu>
   );
