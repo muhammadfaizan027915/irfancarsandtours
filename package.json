@@ -22,19 +22,19 @@
     "packages/*"
   ],
   "devDependencies": {
-    "dotenv-cli": "^11.0.0",
     "@types/react-slick": "^0.23.13",
     "critters": "^0.0.23",
+    "dotenv-cli": "^11.0.0",
     "turbo": "^2.5.8",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.17.1",
     "axios": "^1.12.2",
-    "next": "15.5.4",
+    "next": "^15.5.7",
     "next-auth": "^5.0.0-beta.29",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
     "react-slick": "^0.31.0",
     "slick-carousel": "^1.8.1",
     "zod": "^4.1.11"
