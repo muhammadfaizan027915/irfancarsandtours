@@ -1,4 +1,4 @@
-FROM node:24-alpine AS base
+FROM node:latest-alpine AS base
 
 FROM base AS builder
 RUN apk update
@@ -35,7 +35,7 @@ COPY --from=installer --chown=irfan:irfancarsandtours /app/apps/web/.next/standa
 
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
-ENV NODE_OPTIONS=--max-old-space-size=256
+ENV NODE_OPTIONS=--max-old-space-size=384
 ENV NODE_ENV=production
 
 EXPOSE 3000
