@@ -57,21 +57,23 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
   return (
     <div className="grid gap-6">
       <CarImages imageUrls={car?.imageUrls || []} />
-      <h1 className="font-bold text-5xl">
-        {car?.brand} {car?.name} {car?.year}
-      </h1>
-      <div className="container mx-auto grid grid-cols-6 items-start gap-6">
-        <div className="grid gap-6 col-span-6 lg:col-span-4">
-          <CarProperties {...car} />
-          <CarDescription
-            description={car?.description || "No description available"}
-          />
-          <CarAmenities amenities={car?.amenities || []} />
-        </div>
-        <div className="grid gap-6 col-span-6 lg:col-span-2">
-          <CarGetStarted />
+      <div className="container mx-auto grid gap-6">
+        <h1 className="font-bold text-5xl">
+          {car?.brand} {car?.name} {car?.year}
+        </h1>
+        <div className="grid grid-cols-6 items-start gap-6">
+          <div className="grid gap-6 col-span-6 lg:col-span-4">
+            <CarProperties {...car} />
+            <CarDescription
+              description={car?.description || "No description available"}
+            />
+            <CarAmenities amenities={car?.amenities || []} />
+          </div>
+          <div className="grid gap-6 col-span-6 lg:col-span-2">
+            <CarGetStarted />
 
-          {user ? <CarBooking cars={_cars} /> : <LoginNotice />}
+            {user ? <CarBooking cars={_cars} /> : <LoginNotice />}
+          </div>
         </div>
       </div>
     </div>
