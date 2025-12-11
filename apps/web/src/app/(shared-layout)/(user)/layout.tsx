@@ -14,7 +14,7 @@ export default function SharedLayout({ children }: UserLayoutProps) {
   const pathname = usePathname();
 
   return (
-    <div className="py-8">
+    <div className="container mx-auto py-8">
       <Tabs defaultValue={pathname}>
         <TabsList>
           <TabsTrigger value={NavigationUrls.BOOKINGS} className="w-20">

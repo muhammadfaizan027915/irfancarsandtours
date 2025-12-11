@@ -28,7 +28,7 @@ export default async function CheckoutPage() {
   return (
     <>
       <h1 className="text-start text-4xl font-bold mb-4">Checkout</h1>
-      <div className="grid grid-cols-[1fr_450px] items-start gap-6">
+      <div className="container mx-auto grid grid-cols-[1fr_450px] items-start gap-6">
         <CarBooking cars={_cars} />
         <CarCartList />
       </div>

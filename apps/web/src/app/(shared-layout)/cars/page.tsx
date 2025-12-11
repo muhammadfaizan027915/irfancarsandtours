@@ -45,7 +45,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
       <div className="container mx-auto px-4 md:px-8">
         <Searchbar type="cars" {...filters} />
       </div>
-      <div className="flex flex-col gap-8 md:px-4">
+      <div className="container mx-auto flex flex-col gap-8 md:px-4">
         <div className="flex flex-col gap-2">
           <h3 className="text-4xl font-bold">Our Cars Fleet</h3>
           <p className="text-muted-foreground">Cars That Fit Your Lifestyle</p>
@@ -59,7 +59,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
               <div className="xl:hidden">
                 <FiltersSidebar />
               </div>
-              <PaginationInfo pagination={pagination} label="cars"/>
+              <PaginationInfo pagination={pagination} label="cars" />
               <FiltersClearer />
             </div>
             <Cars cars={cars} />

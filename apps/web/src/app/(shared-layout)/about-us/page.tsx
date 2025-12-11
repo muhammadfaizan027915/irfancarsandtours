@@ -10,7 +10,9 @@ export default function AboutUsPage() {
         subtitle="Get to know us, What we do ?"
       />
 
-      <HowItWork />
+      <div className="container mx-auto">
+        <HowItWork />
+      </div>
     </>
   );
 }

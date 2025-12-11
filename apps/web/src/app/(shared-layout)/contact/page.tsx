@@ -18,7 +18,7 @@ export default function ContactPage() {
         subtitle="Reach out us at anytime"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-8">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 py-8">
         <ContactForm />
         <div className="flex flex-col gap-4">
           <ContactDetails />
