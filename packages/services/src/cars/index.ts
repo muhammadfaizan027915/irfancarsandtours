@@ -42,11 +42,13 @@ export class CarService {
 
   async getFeaturedCars(): Promise<CarsListResponseDto> {
     const cars = await this.carRepository.findFeatured();
+    console.log({ cars });
     return CarsListResponseSchema.parse(cars);
   }
 
   async getMostSearchedCars(limit = 10): Promise<CarsListResponseDto> {
     const cars = await this.carRepository.findMostSearched(limit);
+    console.log({ cars });
     return CarsListResponseSchema.parse(cars);
   }
 
@@ -62,8 +64,9 @@ export class CarService {
 
   async updateCar(
     id: string,
-    updates: UpdateCarBodyDto
+    updates: UpdateCarBodyDto,
   ): Promise<CarResponseDto | null> {
+    console.log(updates)
     const car = await this.carRepository.update(id, updates);
     return car ? CarResponseSchema.parse(car) : null;
   }

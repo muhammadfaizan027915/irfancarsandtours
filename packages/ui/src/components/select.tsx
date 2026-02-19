@@ -2,204 +2,142 @@
 
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { ChevronDownIcon, ChevronUpIcon, CheckIcon } from "lucide-react";
-import { Badge } from "@icat/ui/components/badge";
+import { ChevronDownIcon, ChevronUpIcon, CheckIcon, XIcon } from "lucide-react";
 import { cn } from "@icat/ui/lib/utils";
 
-export type GenericSelectProps<T> = {
-  options: readonly T[];
-  placeholder?: string;
-  multiple?: boolean;
-
-  /** Controlled */
-  value?: string | string[];
-
-  /** Uncontrolled */
-  defaultValue?: string | (string | undefined)[];
-
-  /** Controlled handler */
-  onValueChange?: (value: string | string[]) => void;
-
-  /** Extracts unique value from option (default: String(opt)) */
-  getOptionValue?: (option: T) => string;
-
-  /** Render option label (default: String(opt)) */
-  renderOption?: (option: T, selected: boolean) => React.ReactNode;
-
-  errors?: string[];
-  size?: "sm" | "default";
-  className?: string;
+type SingleSelectProps<T> = {
   name?: string;
   id?: string;
+  options: readonly T[];
+  defaultValue?: T;
+  placeholder?: string;
+  required?: boolean;
+  disabled?: boolean;
+  errors?: string[];
+  className?: string;
 };
 
-function GenericSelect<T>({
-  options,
-  placeholder = "Select…",
-  multiple = false,
-  value,
-  defaultValue,
-  onValueChange,
-  getOptionValue,
-  renderOption,
-  errors,
-  size = "default",
-  className,
+function SingleSelect<T extends string>({
   name,
   id,
-}: GenericSelectProps<T>) {
-  const hasError = errors && errors.length > 0;
-
-  const extractValue = React.useCallback(
-    (opt: T): string => {
-      const raw = getOptionValue ? getOptionValue(opt) : String(opt);
-      return raw && raw.trim() !== "" ? raw : JSON.stringify(opt);
-    },
-    [getOptionValue]
-  );
-
-  const controlledValues = multiple
-    ? (value as string[] | undefined) ?? []
-    : value
-    ? [value as string]
-    : [];
-
-  const uncontrolledValues = multiple
-    ? (defaultValue as string[] | undefined) ?? []
-    : defaultValue
-    ? [defaultValue as string]
-    : [];
-
-  const [internalValues, setInternalValues] = React.useState<string[]>(
-    controlledValues.length > 0 ? controlledValues : uncontrolledValues
-  );
-
-  React.useEffect(() => {
-    if (value !== undefined) {
-      if (multiple) {
-        setInternalValues(
-          Array.isArray(value) ? (value as string[]) : [value as string]
-        );
-      } else {
-        setInternalValues(value ? [value as string] : []);
-      }
-    }
-  }, [value, multiple]);
-
-  const handleChange = (val: string) => {
-    let newValues: string[];
-    if (multiple) {
-      newValues = internalValues.includes(val)
-        ? internalValues.filter((v) => v !== val)
-        : [...internalValues, val];
-    } else {
-      newValues = [val];
-    }
-
-    if (value === undefined) {
-      setInternalValues(newValues);
-    }
-    onValueChange?.(multiple ? newValues : newValues[0]);
-  };
-
-  const values = value !== undefined ? controlledValues : internalValues;
+  options,
+  defaultValue,
+  placeholder = "Select…",
+  required,
+  disabled,
+  errors,
+  className,
+}: SingleSelectProps<T>) {
+  const hasError = !!errors?.length;
 
   return (
-    <div className="w-full" id={id}>
-      <SelectPrimitive.Root
-        value={values[0] ?? ""}
-        onValueChange={handleChange}
+    <div id={id} className="w-full">
+      <Select
+        name={name}
+        required={required}
+        defaultValue={defaultValue}
+        disabled={disabled}
       >
         <SelectTrigger
-          size={size}
-          hasError={hasError}
-          className={cn(
-            "max-w-full overflow-hidden truncate",
-            hasError && "border-destructive text-destructive",
-            className
-          )}
+          aria-invalid={hasError}
+          className={`w-full ${className}`}
         >
-          {multiple ? (
-            values.length > 0 ? (
-              <div className="flex items-center gap-1 overflow-hidden">
-                {values.slice(0, 3).map((v) => {
-                  const opt = options.find((o) => extractValue(o) === v);
-                  return (
-                    <Badge key={v} className="text-xs">
-                      {opt
-                        ? renderOption?.(opt, true) ??
-                          (typeof opt === "string" ? opt : extractValue(opt))
-                        : v}
-                    </Badge>
-                  );
-                })}
-                {values.length > 3 && (
-                  <Badge className="text-xs">+{values.length - 3}</Badge>
-                )}
-              </div>
-            ) : (
-              <SelectValue placeholder={placeholder} />
-            )
-          ) : values.length > 0 ? (
-            (() => {
-              const opt = options.find((o) => extractValue(o) === values[0]);
-              return opt
-                ? renderOption?.(opt, true) ??
-                    (typeof opt === "string"
-                      ? (opt as string)
-                      : extractValue(opt))
-                : values[0];
-            })()
-          ) : (
-            <SelectValue placeholder={placeholder} />
-          )}
+          <SelectValue placeholder={placeholder} />
         </SelectTrigger>
 
-        <SelectPrimitive.Portal>
-          <SelectPrimitive.Content
-            className="bg-popover text-popover-foreground z-50 min-w-[8rem] max-h-64 overflow-y-auto rounded-md border shadow-md"
-            position="popper"
-          >
-            <SelectPrimitive.Viewport className="p-1">
-              {options.map((opt) => {
-                const val = extractValue(opt);
-                const selected = values.includes(val);
-
-                return (
-                  <SelectPrimitive.Item
-                    key={val}
-                    value={val}
-                    className={cn(
-                      "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground",
-                      selected && "bg-accent text-accent-foreground"
-                    )}
-                  >
-                    <SelectPrimitive.ItemText>
-                      {renderOption?.(opt, selected) ??
-                        (typeof opt === "string" ? (opt as string) : val)}
-                    </SelectPrimitive.ItemText>
-                  </SelectPrimitive.Item>
-                );
-              })}
-            </SelectPrimitive.Viewport>
-          </SelectPrimitive.Content>
-        </SelectPrimitive.Portal>
-      </SelectPrimitive.Root>
-
-      {name &&
-        values.map((v, i) => (
-          <input
-            key={i}
-            type="hidden"
-            name={name}
-            value={v}
-          />
-        ))}
+        <SelectContent>
+          {options.map((opt) => (
+            <SelectItem key={opt} value={opt}>
+              {opt}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       {hasError && (
         <div className="mt-1 text-sm text-destructive">
-          {errors.map((err, i) => (
-            <p key={i}>{err}</p>
+          {errors!.map((e, i) => (
+            <p key={i}>{e}</p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+type MultiSelectProps<T extends string> = {
+  name?: string;
+  id?: string;
+  options: readonly T[];
+  defaultValue?: T[];
+  placeholder?: string;
+  required?: boolean;
+  disabled?: boolean;
+  errors?: string[];
+  className?: string;
+};
+
+function MultiSelect<T extends string>({
+  name,
+  id,
+  options,
+  defaultValue = [],
+  placeholder = "Select…",
+  required,
+  disabled,
+  errors,
+  className,
+}: MultiSelectProps<T>) {
+  const [values, setValues] = React.useState<T[]>(defaultValue);
+  const hasError = !!errors?.length;
+
+  const toggle = (val: T) => {
+    setValues((prev) =>
+      prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val],
+    );
+  };
+
+  return (
+    <div id={id} className="w-full">
+      {/* Hidden inputs for form submission */}
+      {name &&
+        values.map((v, i) => (
+          <input key={v} type="hidden" name={`${name}[${i}]`} value={v} />
+        ))}
+
+      {/* Required fallback */}
+      {name && required && values.length === 0 && (
+        <input type="hidden" name={name} value="" required />
+      )}
+
+      <Select
+        disabled={disabled}
+        // value={values.length > 0 ? values.join(", ") : ""}
+        onValueChange={toggle}
+      >
+        <SelectTrigger className={`w-full ${className}`}>
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+
+        <SelectContent>
+          {options.map((opt) => {
+            const selected = values.includes(opt);
+            return (
+              <SelectItem key={opt} value={opt}>
+                <div className="flex items-center justify-between">
+                  <span>{opt}</span>
+                  {selected && <XIcon className="size-4" />}
+                </div>
+              </SelectItem>
+            );
+          })}
+        </SelectContent>
+      </Select>
+
+      {hasError && (
+        <div className="mt-1 text-sm text-destructive">
+          {errors!.map((e, i) => (
+            <p key={i}>{e}</p>
           ))}
         </div>
       )}
@@ -216,13 +154,13 @@ function Select(props: React.ComponentProps<typeof SelectPrimitive.Root>) {
 }
 
 function SelectGroup(
-  props: React.ComponentProps<typeof SelectPrimitive.Group>
+  props: React.ComponentProps<typeof SelectPrimitive.Group>,
 ) {
   return <SelectPrimitive.Group data-slot="select-group" {...props} />;
 }
 
 function SelectValue(
-  props: React.ComponentProps<typeof SelectPrimitive.Value>
+  props: React.ComponentProps<typeof SelectPrimitive.Value>,
 ) {
   return (
     <SelectPrimitive.Value
@@ -259,7 +197,7 @@ function SelectTrigger({
         "[&_svg:not([class*='text-'])]:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         "*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2",
         hasError && "border-destructive text-destructive",
-        className
+        className,
       )}
       {...props}
     >
@@ -285,7 +223,7 @@ function SelectContent({
           "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border",
           position === "popper" &&
             "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-          className
+          className,
         )}
         position={position}
         {...props}
@@ -295,7 +233,7 @@ function SelectContent({
           className={cn(
             "p-1",
             position === "popper" &&
-              "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1"
+              "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1",
           )}
         >
           {children}
@@ -329,7 +267,7 @@ function SelectItem({
       data-slot="select-item"
       className={cn(
         "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
-        className
+        className,
       )}
       {...props}
     >
@@ -365,7 +303,7 @@ function SelectScrollUpButton({
       data-slot="select-scroll-up-button"
       className={cn(
         "flex cursor-default items-center justify-center py-1",
-        className
+        className,
       )}
       {...props}
     >
@@ -383,7 +321,7 @@ function SelectScrollDownButton({
       data-slot="select-scroll-down-button"
       className={cn(
         "flex cursor-default items-center justify-center py-1",
-        className
+        className,
       )}
       {...props}
     >
@@ -403,5 +341,6 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-  GenericSelect,
+  SingleSelect,
+  MultiSelect,
 };

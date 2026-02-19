@@ -7,7 +7,8 @@ import {
   Input,
   Label,
   Textarea,
-  GenericSelect,
+  MultiSelect,
+  SingleSelect,
   toast,
   Progress,
 } from "@icat/ui";
@@ -31,15 +32,16 @@ export function CarForm({ car, mode }: CarFormProps) {
 
   const [result, action, pending] = useActionState(
     isUpdateMode ? updateCar : registerCar,
-    null
+    null,
   );
 
   const success = result?.success;
   const error = result?.error;
 
-  const { files, uploadFiles, deleteFile, resetFiles, isUploading } = useMultiFileUpload({
-    initialUrls: car?.imageUrls,
-  });
+  const { files, uploadFiles, deleteFile, resetFiles, isUploading } =
+    useMultiFileUpload({
+      initialUrls: car?.imageUrls,
+    });
 
   useEffect(() => {
     if (result?.success) {
@@ -47,7 +49,7 @@ export function CarForm({ car, mode }: CarFormProps) {
         `Car ${isUpdateMode ? "updated" : "registered"} successfully.`,
         {
           position: "top-center",
-        }
+        },
       );
 
       if (!isUpdateMode) {
@@ -63,12 +65,16 @@ export function CarForm({ car, mode }: CarFormProps) {
   };
 
   const actionWithImageUrls = (formData: FormData) => {
+    console.log(Object.fromEntries(formData));
+
     const imageUrls = files?.map((file) => file.previewUrl);
 
     const formDataWithImageUrls = mergeObjectToFormData(formData, {
       ...(isUpdateMode ? { id: car?.id } : {}),
       imageUrls,
     });
+
+    console.log(Object.fromEntries(formDataWithImageUrls));
 
     action(formDataWithImageUrls);
   };
@@ -132,7 +138,7 @@ export function CarForm({ car, mode }: CarFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="brand">Brand</Label>
-          <GenericSelect
+          <SingleSelect
             id="brand"
             options={BrandNamesList}
             placeholder="Select brand name"
@@ -144,7 +150,7 @@ export function CarForm({ car, mode }: CarFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="carType">Car Type</Label>
-          <GenericSelect
+          <SingleSelect
             id="carType"
             options={CarTypesList}
             placeholder="Select car type"
@@ -156,7 +162,7 @@ export function CarForm({ car, mode }: CarFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="fuelType">Fuel Type</Label>
-          <GenericSelect
+          <SingleSelect
             id="fuelType"
             options={FuelTypesList}
             placeholder="Select fuel type"
@@ -168,7 +174,7 @@ export function CarForm({ car, mode }: CarFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="transmissionType">Transmission Type</Label>
-          <GenericSelect
+          <SingleSelect
             id="transmissionType"
             options={TransmissionTypesList}
             placeholder="Select transmission type"
@@ -182,9 +188,7 @@ export function CarForm({ car, mode }: CarFormProps) {
       <div className="grid gap-6">
         <div className="space-y-2">
           <Label htmlFor="amenities">Amenities</Label>
-          <GenericSelect
-            multiple
-            id="amenities"
+          <MultiSelect
             options={AmenitiesList}
             placeholder="Select amenities"
             name={"amenities"}
@@ -261,7 +265,12 @@ export function CarForm({ car, mode }: CarFormProps) {
           <Label className="ml-2">Force booking with driver</Label>
         </div>
 
-        <Button type="submit" size={"lg"} className="ml-auto" disabled={pending || isUploading}>
+        <Button
+          type="submit"
+          size={"lg"}
+          className="ml-auto"
+          disabled={pending || isUploading}
+        >
           {isUpdateMode ? "Update Car" : "Register Car"}
         </Button>
       </div>

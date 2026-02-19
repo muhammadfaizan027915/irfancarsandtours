@@ -16,7 +16,7 @@ export function CheckboxFilter<S extends string, T extends string>({
   filterName,
   filtersList,
 }: CheckBoxFilterProps<S, T>) {
-  const { getSearchParams, pushSearchParams } = useSearchRouter();
+  const { getSearchParams, updateSearchParams } = useSearchRouter();
   const existingSearchParams: string[] = getSearchParams(filterName) ?? [];
 
   const handleApplyFilters = (filter: string) => (checked: boolean) => {
@@ -24,7 +24,7 @@ export function CheckboxFilter<S extends string, T extends string>({
       ? [...new Set([...existingSearchParams, filter])]
       : existingSearchParams.filter((f) => f !== filter);
 
-    pushSearchParams(filterName, updated);
+    updateSearchParams({ filterName: updated });
   };
 
   return (

@@ -17,6 +17,7 @@ export * from "./components/pagination-info";
 export * from "./components/pagination-info";
 export * from "./components/slider-container";
 export * from "./components/date-time-picker";
+export * from "./components/date-range-picker";
 export * from "./components/theme-provider";
 export * from "./components/dropdown-menu";
 export * from "./components/pagination";

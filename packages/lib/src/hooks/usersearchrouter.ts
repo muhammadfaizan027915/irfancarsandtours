@@ -1,32 +1,32 @@
 "use client";
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { useCallback } from "react";
 
 export function useSearchRouter() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const createSearchParams = useCallback(
-    (name: string, value: string | string[]) => {
-      const params = new URLSearchParams(searchParams.toString());
+  const updateSearchParams = (
+    updates: Record<string, string | string[] | undefined>
+  ) => {
+    const params = new URLSearchParams(searchParams.toString());
 
-      params.delete(name);
+    Object.entries(updates).forEach(([key, value]) => {
+      params.delete(key);
+
+      if (!value) return;
 
       if (Array.isArray(value)) {
-        value.forEach((v) => params.append(name, v));
-      } else if (value) {
-        params.set(name, value);
+        value.forEach((v) => v && params.append(key, v));
+      } else {
+        params.set(key, value);
       }
+    });
 
-      return params;
-    },
-    [searchParams]
-  );
+    const query = params.toString();
 
-  const pushSearchParams = (name: string, value: string | string[]) => {
-    router.push(pathname + "?" + createSearchParams(name, value), {
+    router.push(query ? `${pathname}?${query}` : pathname, {
       scroll: false,
     });
   };
@@ -34,8 +34,7 @@ export function useSearchRouter() {
   const getSearchParams = (name: string) => searchParams.getAll(name);
 
   return {
-    pushSearchParams,
-    createSearchParams,
+    updateSearchParams,
     getSearchParams,
   };
 }

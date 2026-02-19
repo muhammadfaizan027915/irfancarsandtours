@@ -2,7 +2,7 @@ import { BrandNamesList } from "@icat/database";
 import { Input } from "@icat/ui/components/input";
 import { Label } from "@icat/ui/components/label";
 import { Button } from "@icat/ui/components/button";
-import { GenericSelect } from "@icat/ui/components/select";
+import { SingleSelect } from "@icat/ui/components/select";
 import { CarSerachProps } from "@icat/features/searchbar/searchbar.types";
 import { NavigationUrls } from "@icat/features/header/header.constants";
 import { Search } from "lucide-react";
@@ -35,7 +35,7 @@ export function CarSearchbar({ search, brand }: CarSerachProps) {
           <Label className="font-bold text-muted-foreground" htmlFor="brand">
             Car Brand
           </Label>
-          <GenericSelect
+          <SingleSelect
             id="brand"
             name={"brand"}
             options={BrandNamesList}
