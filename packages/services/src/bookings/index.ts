@@ -13,7 +13,6 @@ import {
   PaginatedBookingWithUserResponseSchema,
 } from "@icat/contracts";
 import { BookedCarService, CarService, UserService } from "@icat/services";
-import { getSessionUser } from "@icat/web/data/uesrs";
 
 export class BookingService {
   private bookingRepository: BookingRepository;
@@ -56,20 +55,18 @@ export class BookingService {
       : null;
   }
 
-  async createBooking({
-    cars,
-    ...data
-  }: BookingRequestDto): Promise<BookingResponseDto> {
-    const sessionUser = await getSessionUser();
-
+  async createBooking(
+    userId: string,
+    { cars, ...data }: BookingRequestDto
+  ): Promise<BookingResponseDto> {
     const booking = await this.bookingRepository.create({
       ...data,
-      userId: sessionUser?.id as string,
+      userId,
       pickupDate: new Date(data.pickupDate),
       dropoffDate: new Date(data.dropoffDate),
     });
 
-    this.userService.updateUser(sessionUser?.id as string, data);
+    this.userService.updateUser(userId, data);
 
     const carIds = cars?.map((car) => car?.carId);
     const carsWithDriverRules = await this.carService.getCarsDriverRules(

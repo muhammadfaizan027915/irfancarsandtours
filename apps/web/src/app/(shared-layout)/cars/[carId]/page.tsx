@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getSessionUser } from "@icat/web/data/uesrs";
+import { getSessionUser } from "@icat/lib/auth";
 import { getUserCar } from "@icat/web/data/cars";
 
 import dynamic from "next/dynamic";

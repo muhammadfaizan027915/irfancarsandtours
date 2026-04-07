@@ -1,6 +1,6 @@
 import { UserRound, LogOut, LayoutDashboard } from "lucide-react";
 import { lougOutUser } from "@icat/web/actions";
-import { getSessionUser } from "@icat/web/data/uesrs";
+import { getSessionUser } from "@icat/lib/auth";
 import { NavigationUrls } from "@icat/features/header/header.constants";
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import { Button } from "@icat/ui/components/button";

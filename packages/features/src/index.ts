@@ -22,3 +22,4 @@ export * from "./useravatar";
 export * from "./booking";
 export * from "./tables";
 export * from "./footer";
+export * from "./usertabs";

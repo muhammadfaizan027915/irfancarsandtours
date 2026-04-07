@@ -18,7 +18,7 @@ import {
 import { lougOutUser } from "@icat/web/actions";
 import { MoreHorizontal, UserRound, LogOut } from "lucide-react";
 import { Button } from "@icat/ui/components/button";
-import { getSessionUser } from "@icat/web/data/uesrs";
+import { getSessionUser } from "@icat/lib/auth";
 import { getNameInitials } from "@icat/lib";
 import Link from "next/link";
 

@@ -4,9 +4,11 @@ import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sideba
 import { handleServerActionWithError } from "@icat/lib";
 import { BookedCarService } from "@icat/services";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@icat/lib/auth";
 
 export const qoutePrice = handleServerActionWithError(
   async (bookedCarId: string, quotedPrice: number) => {
+    await requireAdmin();
     const bookedCarService = new BookedCarService();
     const updatedBookedCar = await bookedCarService.update(bookedCarId, {
       quotedPrice,

@@ -4,10 +4,10 @@ import {
   GetBookingsBodyDto,
   GetBookingsBodySchema,
 } from "@icat/contracts";
-import { getSessionUser } from "./uesrs";
+import { requireAdmin, requireAuth } from "@icat/lib/auth";
 
 export async function getUserBookings(arg?: GetBookingsBodyDto) {
-  const sessionUser = await getSessionUser();
+  const sessionUser = await requireAuth();
   const args = GetBookingByUserIdBodySchema.parse({
     userId: sessionUser?.id,
     ...arg,
@@ -20,6 +20,7 @@ export async function getUserBookings(arg?: GetBookingsBodyDto) {
 }
 
 export async function getBookings(arg?: GetBookingsBodyDto) {
+  await requireAdmin();
   const args = GetBookingsBodySchema.parse(arg);
   const bookingService = new BookingService();
   const result = await bookingService.getAll(args);
@@ -28,6 +29,7 @@ export async function getBookings(arg?: GetBookingsBodyDto) {
 }
 
 export async function getUserBooking(bookingId: string) {
+  await requireAuth();
   const bookingService = new BookingService();
   const booking = await bookingService.getBookingByIdWithUser(bookingId);
 
@@ -35,6 +37,7 @@ export async function getUserBooking(bookingId: string) {
 }
 
 export async function getBooking(bookingId: string) {
+  await requireAdmin();
   const bookingService = new BookingService();
   const booking = await bookingService.getBookingByIdWithUser(bookingId);
 

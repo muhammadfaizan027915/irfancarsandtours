@@ -1,4 +1,4 @@
-import { getUserProfile } from "@icat/web/data/uesrs";
+import { getUserProfile } from "@icat/web/data/users";
 import dynamic from "next/dynamic";
 
 const UserAvatar = dynamic(() =>

@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
 
   experimental: {
     optimizeCss: true,
+    cacheComponents: true,
   },
 
   images: {

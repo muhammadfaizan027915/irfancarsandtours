@@ -1,5 +1,6 @@
 import { GetCarsBodyDto, GetCarsBodySchema } from "@icat/contracts";
 import { CarService } from "@icat/services";
+import { requireAdmin } from "@icat/lib/auth";
 
 export async function getUserCars(arg: GetCarsBodyDto) {
   const args = GetCarsBodySchema.parse(arg);
@@ -9,6 +10,7 @@ export async function getUserCars(arg: GetCarsBodyDto) {
 }
 
 export async function getCars(arg?: GetCarsBodyDto) {
+  await requireAdmin();
   const args = GetCarsBodySchema.parse(arg);
   const carService = new CarService();
   const result = await carService.getAll(args);
@@ -35,6 +37,7 @@ export async function getUserCar(carId: string) {
 
 
 export async function getCar(carId: string) {
+  await requireAdmin();
   const carService = new CarService();
   const car = await carService.getCarById(carId);
   return car;

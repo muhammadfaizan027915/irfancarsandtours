@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from "@icat/ui/components/card";
 import { CarBookingForm } from "@icat/features/forms/carbooking";
-import { getSessionUser } from "@icat/web/data/uesrs";
+import { getSessionUser } from "@icat/lib/auth";
 import { CarBookingProps } from "./booking.types";
 
 export async function CarBooking({ cars }: CarBookingProps) {

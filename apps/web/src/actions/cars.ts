@@ -13,10 +13,12 @@ import {
 } from "@icat/lib";
 import { CarService } from "@icat/services";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@icat/lib/auth";
 
 export const registerCar = handlerFormActionWithError({
   schema: RegisterCarBodySchema,
   action: async (data: RegisterCarBodyDto) => {
+    await requireAdmin();
     const carService = new CarService();
     const car = await carService.createCar(data);
 
@@ -27,6 +29,7 @@ export const registerCar = handlerFormActionWithError({
 export const updateCar = handlerFormActionWithError({
   schema: UpdateCarBodySchema,
   action: async (data: UpdateCarBodyDto) => {
+    await requireAdmin();
     const carService = new CarService();
     const car = await carService.updateCar(data.id, data);
 
@@ -36,6 +39,7 @@ export const updateCar = handlerFormActionWithError({
 });
 
 export const deleteCar = handleServerActionWithError(async (id: string) => {
+  await requireAdmin();
   const carService = new CarService();
   const car = await carService.deleteCar({ id });
 
