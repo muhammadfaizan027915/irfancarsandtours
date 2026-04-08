@@ -31,8 +31,8 @@
   "dependencies": {
     "@google-cloud/storage": "^7.17.1",
     "axios": "^1.12.2",
-    "next": "^16.0.0",
-    "next-auth": "^5.0.0-beta.29",
+    "next": "^16.2.2",
+    "next-auth": "^5.0.0-beta.30",
     "react": "^19.2.2",
     "react-dom": "^19.2.2",
     "react-slick": "^0.31.0",

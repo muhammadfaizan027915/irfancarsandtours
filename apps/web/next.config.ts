@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
 
   outputFileTracingRoot: path.join(__dirname, "../../"),
 
+  cacheComponents: true,
+
   outputFileTracingIncludes: {
     "/**": ["packages/**"],
   },
@@ -21,8 +23,7 @@ const nextConfig: NextConfig = {
   ],
 
   experimental: {
-    optimizeCss: true,
-    cacheComponents: true,
+    optimizeCss: true
   },
 
   images: {
