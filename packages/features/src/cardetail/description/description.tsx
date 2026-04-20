@@ -31,7 +31,9 @@ export function CarDescription({ description }: CarDescriptionProps) {
             />
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-4 w-[inherit]">
-            <Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown>
+            <div className="prose prose-slate dark:prose-invert max-w-none">
+              <Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown>
+            </div>
           </CollapsibleContent>
         </Collapsible>
       </CardContent>

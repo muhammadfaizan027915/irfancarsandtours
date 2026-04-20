@@ -1,8 +1,8 @@
 import { MessageCircle } from "lucide-react";
-import { PHONE_NUMBER_2 } from "@icat/features/contactdetails/contactdetails.constants";
+import { PHONE_NUMBER_1 } from "@icat/features/contactdetails/contactdetails.constants";
 
 export function FloatingWhatsApp({
-  phone = PHONE_NUMBER_2,
+  phone = PHONE_NUMBER_1,
   message = "Hi! I’m looking for a rental car. Can you help me with the details?",
   position = "bottom-right",
   className = "",

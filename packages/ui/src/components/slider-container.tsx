@@ -1,70 +1,86 @@
 "use client";
 
-import { useRef, ReactNode } from "react";
-import Slider, { Settings } from "react-slick";
+import { useCallback, Children, ReactNode } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import { Button } from "@icat/ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
 interface SliderContainerProps {
-  children: ReactNode;
-  settings?: Settings;
+  children: ReactNode | ReactNode[];
+  slidesPerView?: [number, number, number];
   className?: string;
   arrows?: boolean;
+  autoplay?: boolean;
+  loop?: boolean;
 }
 
 export function SliderContainer({
   children,
-  settings,
+  slidesPerView = [1, 2, 4],
   className = "",
   arrows = true,
+  autoplay = true,
+  loop = true,
 }: SliderContainerProps) {
-  const sliderRef = useRef<Slider>(null);
+  const [mobile, tablet, desktop] = slidesPerView;
 
-  const defaultSettings: Settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
+  const options = {
+    loop,
+    align: "start",
     slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false,
-    responsive: [
-      { breakpoint: 1048, settings: { slidesToShow: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 1 } },
-    ],
-    ...settings,
-  };
+  } as const;
+
+  const plugins = autoplay
+    ? [
+      Autoplay({
+        delay: 3000,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+      }),
+    ]
+    : [];
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, plugins);
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
+  const cssVars = {
+    "--slides-mobile": `${100 / mobile}%`,
+    "--slides-tablet": `${100 / tablet}%`,
+    "--slides-desktop": `${100 / desktop}%`,
+  } as React.CSSProperties;
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${className}`} style={cssVars}>
       {arrows && (
         <Button
           size="icon"
           variant="secondary"
           aria-label="Previous"
-          className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 rounded-full"
-          onClick={() => sliderRef.current?.slickPrev()}
+          className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 rounded-full hidden sm:flex"
+          onClick={scrollPrev}
         >
           <ChevronLeft />
         </Button>
       )}
 
-      <Slider ref={sliderRef} {...defaultSettings}>
-        {children}
-      </Slider>
+      <div className="embla-viewport overflow-hidden" ref={emblaRef}>
+        <div className="embla-container flex">
+          {Children.toArray(children).map((child) => (
+            <div className="embla-slide shrink-0 min-w-0">{child}</div>
+          ))}
+        </div>
+      </div>
 
       {arrows && (
         <Button
           size="icon"
           variant="secondary"
           aria-label="Next"
-          className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 rounded-full"
-          onClick={() => sliderRef.current?.slickNext()}
+          className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 rounded-full hidden sm:flex"
+          onClick={scrollNext}
         >
           <ChevronRight />
         </Button>

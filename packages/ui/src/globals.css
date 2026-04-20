@@ -5,6 +5,7 @@
 @source "../**/*.{ts,tsx}";
 
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -203,4 +204,28 @@
 
 .scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
+}
+
+/* ── Embla Carousel ─────────────────────────────────────────── */
+.embla-container {
+  backface-visibility: hidden;
+  touch-action: pan-y pinch-zoom;
+}
+
+.embla-slide {
+  /* Mobile first: use --slides-mobile custom prop set on parent */
+  flex: 0 0 var(--slides-mobile, 100%);
+  padding: 0 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .embla-slide {
+    flex: 0 0 var(--slides-tablet, 50%);
+  }
+}
+
+@media (min-width: 1024px) {
+  .embla-slide {
+    flex: 0 0 var(--slides-desktop, 25%);
+  }
 }

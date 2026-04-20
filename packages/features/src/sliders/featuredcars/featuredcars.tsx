@@ -16,9 +16,7 @@ export async function FeaturedCars() {
       </div>
       <SliderContainer>
         {cars?.map((car) => (
-          <div key={car?.id} className="p-2">
-            <CarCard car={car} />
-          </div>
+          <CarCard key={car?.id} car={car} />
         ))}
       </SliderContainer>
     </div>

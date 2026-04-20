@@ -9,14 +9,6 @@ import Link from "next/link";
 export async function SearchedCars() {
   const cars = await getMostSearchedCars();
 
-  const settings = {
-    slidesToShow: 3,
-    responsive: [
-      { breakpoint: 1048, settings: { slidesToShow: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 1 } },
-    ],
-  };
 
   if (!cars?.length) return null;
 
@@ -28,11 +20,9 @@ export async function SearchedCars() {
           Choosen and trusted by most of the people
         </p>
       </div>
-      <SliderContainer settings={settings}>
+      <SliderContainer slidesPerView={[1, 2, 3]}>
         {cars?.map((car) => (
-          <div key={car?.id} className="p-2">
-            <CarCard car={car} />
-          </div>
+          <CarCard key={car?.id} car={car} />
         ))}
       </SliderContainer>
       <Button

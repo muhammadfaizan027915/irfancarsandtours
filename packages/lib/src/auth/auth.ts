@@ -1,4 +1,4 @@
-import NextAuth, { CredentialsSignin } from "next-auth";
+import NextAuth, { CredentialsSignin, NextAuthResult } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import {
@@ -12,12 +12,7 @@ import { UserService } from "@icat/services";
 import { SignInBodyDto } from "@icat/contracts";
 import { handleError } from "../errors";
 
-export const {
-  handlers: authHandlers,
-  auth,
-  signIn,
-  signOut,
-} = NextAuth({
+const result = NextAuth({
   trustHost: true,
 
   adapter: DrizzleAdapter(db, {
@@ -85,3 +80,8 @@ export const {
     },
   },
 });
+
+export const authHandlers: NextAuthResult['handlers'] = result.handlers;
+export const auth: NextAuthResult['auth'] = result.auth;
+export const signIn: NextAuthResult['signIn'] = result.signIn;
+export const signOut: NextAuthResult['signOut'] = result.signOut;

@@ -27,9 +27,7 @@ export function CarTypes() {
 
       <SliderContainer>
         {CarTypesLibrary?.map((carType) => (
-          <div key={carType?.name} className="p-2 w-full max-w-full">
-            <CarTypeCard name={carType?.name} image={carType?.image} />
-          </div>
+          <CarTypeCard key={carType?.name} name={carType?.name} image={carType?.image} />
         ))}
       </SliderContainer>
     </div>

@@ -24,10 +24,10 @@
   ],
   "license": "MIT",
   "author": "Muhammad Faizan",
-  "packageManager": "npm@11.6.1",
+  "packageManager": "npm@11.12.1",
   "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "@auth/drizzle-adapter": "^1.10.0",
+    "bcryptjs": "^3.0.3",
+    "@auth/drizzle-adapter": "^1.11.1",
     "@icat/repositories": "*",
     "@icat/contracts": "*",
     "@icat/lib": "*"

@@ -25,7 +25,7 @@ export function CarImages({ imageUrls }: CarImagesProps) {
 
   return (
     <div className="relative w-full min-w-0">
-      <SliderContainer settings={settings}>
+      <SliderContainer slidesPerView={[1, 1, 1]}>
         {imageUrls?.map((url) => (
           <Image
             key={url}
