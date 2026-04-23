@@ -26,7 +26,7 @@ export function PrimrayHero() {
           <p className="text-primary font-medium">Find Your Perfect Car</p>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl md:leading-20 mb-4 md:mb-6 font-bold">
             Looking for a car? <br />
-            You're at the right place.
+            You&apos;re at the right place.
           </h1>
 
           <div className="flex gap-4 md:gap-8 flex-col sm:flex-row">

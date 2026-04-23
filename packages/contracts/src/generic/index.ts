@@ -30,7 +30,9 @@ export function toArray<T extends core.SomeType>(schema: T) {
         try {
           const parsed = JSON.parse(s);
           if (Array.isArray(parsed)) return parsed;
-        } catch {}
+        } catch {
+          // If JSON parse fails, we continue to other parsing methods
+        }
       }
 
       if (s.includes(",")) {

@@ -13,9 +13,7 @@ export function SearchFilter({
   const { getSearchParams, updateSearchParams } = useSearchRouter();
 
   const searchValue = getSearchParams("search")?.[0] || "";
-  const [search, setSearch] = useState<string>("");
-
-  useEffect(() => setSearch(searchValue), [searchValue]);
+  const [search, setSearch] = useState<string>(searchValue);
 
   const handleSearch = () => {
     updateSearchParams({

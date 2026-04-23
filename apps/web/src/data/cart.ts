@@ -6,6 +6,5 @@ export async function getCartCars() {
   const cartCookie = cookieStore.get(carCartKey);
   const cart = cartCookie ? JSON.parse(cartCookie.value) : [];
   const carsList = cart?.carsList ?? [];
-  
   return carsList;
 }

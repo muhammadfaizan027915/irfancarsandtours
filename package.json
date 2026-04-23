@@ -8,7 +8,8 @@
     "dev": "dotenv -e .env -- turbo dev",
     "build": "dotenv -e .env -- turbo build",
     "migrate": "turbo run migrate",
-    "clean": "turbo clean"
+    "clean": "turbo clean",
+    "lint": "turbo run lint"
   },
   "keywords": [
     "Cars",
@@ -22,10 +23,14 @@
     "packages/*"
   ],
   "devDependencies": {
-
     "dotenv-cli": "^11.0.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.5.0",
     "turbo": "^2.9.5",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.59.0"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.17.1",
@@ -33,12 +38,12 @@
     "critters": "^0.0.23",
     "drizzle-kit": "^0.31.10",
     "drizzle-orm": "0.45.2",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "next": "^16.2.2",
     "next-auth": "^5.0.0-beta.30",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "embla-carousel-react": "^8.6.0",
-    "embla-carousel-autoplay": "^8.6.0",
     "zod": "^4.3.6"
   },
   "resolutions": {

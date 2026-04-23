@@ -1,7 +1,7 @@
 import { GetBookingsBodyDto } from "@icat/contracts";
-import { BookingsTable } from "@icat/features/dashboard/tables/bookingstable";
 import { BookingsFilterBar } from "@icat/features/dashboard/filtersbars/bookings";
-import { getBookings } from "@icat/web/data/bookings";
+import { DashboardBookingsContent, DashboardBookingsContentSkeleton } from "@icat/features/contents/dashboard/bookings";
+import { Suspense } from "react";
 
 type BookingsPageProps = {
   searchParams: Promise<GetBookingsBodyDto>;
@@ -10,11 +10,7 @@ type BookingsPageProps = {
 export default async function BookingsPage({
   searchParams,
 }: BookingsPageProps) {
-  const { page, limit } = await searchParams;
-
-  const result = await getBookings({ page, limit });
-  const bookings = result?.data;
-  const pagination = result?.pagination;
+  const params = await searchParams;
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -25,7 +21,9 @@ export default async function BookingsPage({
 
       <BookingsFilterBar />
 
-      <BookingsTable bookings={bookings} pagination={pagination} />
+      <Suspense fallback={<DashboardBookingsContentSkeleton />}>
+        <DashboardBookingsContent searchParams={params} />
+      </Suspense>
     </div>
   );
 }

@@ -18,6 +18,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
+    "lint": "eslint .",
     "clean": "rm -rf dist .turbo"
   },
   "keywords": [

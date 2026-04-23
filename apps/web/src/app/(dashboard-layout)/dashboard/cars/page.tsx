@@ -1,9 +1,9 @@
 import { GetCarsBodyDto } from "@icat/contracts";
-import { CarsTable } from "@icat/features/dashboard/tables/carstable";
+import { DashboardCarsContent, DashboardCarsContentSkeleton } from "@icat/features/contents/dashboard/cars";
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import { Button } from "@icat/ui/components/button";
-import { getCars } from "@icat/web/data/cars";
 import { Plus } from "lucide-react";
+import { Suspense } from "react";
 import Link from "next/link";
 
 type CarsPageProps = {
@@ -11,11 +11,7 @@ type CarsPageProps = {
 };
 
 export default async function CarsPage({ searchParams }: CarsPageProps) {
-  const { page, limit } = await searchParams;
-
-  const result = await getCars({ page, limit });
-  const cars = result.data;
-  const pagination = result.pagination;
+  const params = await searchParams;
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -34,7 +30,9 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
         </Button>
       </div>
 
-      <CarsTable cars={cars} pagination={pagination} />
+      <Suspense fallback={<DashboardCarsContentSkeleton />}>
+        <DashboardCarsContent searchParams={params} />
+      </Suspense>
     </div>
   );
 }

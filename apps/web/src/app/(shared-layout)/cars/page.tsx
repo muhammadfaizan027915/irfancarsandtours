@@ -1,8 +1,7 @@
 import { SecondaryHero } from "@icat/features/hero/secondary";
-import { PaginationBar } from "@icat/ui/components/pagination";
-import { PaginationInfo } from "@icat/ui/components/pagination-info";
 import { GetCarsBodyDto } from "@icat/contracts";
-import { getUserCars } from "@icat/web/data/cars";
+import { Suspense } from "react";
+import { CarsContent, CarsContentSkeleton } from "@icat/features/contents/cars";
 
 import dynamic from "next/dynamic";
 
@@ -14,26 +13,12 @@ const FiltersBar = dynamic(() =>
   import("@icat/features/filtersbar").then((m) => m.FiltersBar)
 );
 
-const FiltersSidebar = dynamic(() =>
-  import("@icat/features/sidebars/filterssidebar").then((m) => m.FiltersSidebar)
-);
-
-const FiltersClearer = dynamic(() =>
-  import("@icat/features/filtersclearer").then((m) => m.FiltersClearer)
-);
-
-const Cars = dynamic(() => import("@icat/features/cars").then((m) => m.Cars));
-
 type CarsPageProps = {
   searchParams: Promise<GetCarsBodyDto>;
 };
 
 export default async function CarsPage({ searchParams }: CarsPageProps) {
   const filters = await searchParams;
-  const result = await getUserCars(filters);
-
-  const cars = result.data;
-  const pagination = result.pagination;
 
   return (
     <>
@@ -54,19 +39,9 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
           <div className="hidden xl:!block">
             <FiltersBar />
           </div>
-          <div className="grid gap-4">
-            <div className="flex flex-wrap items-center gap-2 w-full border-b pb-4">
-              <div className="xl:hidden">
-                <FiltersSidebar />
-              </div>
-              <PaginationInfo pagination={pagination} label="cars" />
-              <FiltersClearer />
-            </div>
-            <Cars cars={cars} />
-            <PaginationBar
-              pagination={{ ...pagination, limit: filters.limit }}
-            />
-          </div>
+          <Suspense fallback={<CarsContentSkeleton />}>
+            <CarsContent filters={filters} />
+          </Suspense>
         </div>
       </div>
     </>

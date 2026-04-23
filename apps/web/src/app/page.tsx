@@ -1,13 +1,18 @@
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 import { Searchbar } from "@icat/features/searchbar";
 import { BrandSlider } from "@icat/features/sliders/brands";
 import { CarTypes } from "@icat/features/sliders/cartypes";
-import { FeaturedCars } from "@icat/features/sliders/featuredcars";
 import { FloatingWhatsApp } from "@icat/features/floatingwhatsapp";
-import { SearchedCars } from "@icat/features/sliders/searchedcars";
 import { PrimrayHero } from "@icat/features/hero/primary";
 import { HowItWork } from "@icat/features/howitwork";
+import {
+  HomeFeaturedCars,
+  HomeFeaturedCarsSkeleton,
+  HomeSearchedCars,
+  HomeSearchedCarsSkeleton
+} from "@icat/features/contents/home";
 
 
 const Footer = dynamic(() =>
@@ -34,11 +39,15 @@ export default function HomePage() {
         </div>
 
         <div className="pb-16 container mx-auto px-4 md:px-8">
-          <FeaturedCars />
+          <Suspense fallback={<HomeFeaturedCarsSkeleton />}>
+            <HomeFeaturedCars />
+          </Suspense>
         </div>
 
         <div className="pb-16 container mx-auto px-4 md:px-8">
-          <SearchedCars />
+          <Suspense fallback={<HomeSearchedCarsSkeleton />}>
+            <HomeSearchedCars />
+          </Suspense>
         </div>
 
         <div className="bg-muted pb-16">

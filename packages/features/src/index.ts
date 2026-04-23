@@ -23,3 +23,17 @@ export * from "./booking";
 export * from "./tables";
 export * from "./footer";
 export * from "./usertabs";
+
+/* Contents */
+export * from "./contents/cars";
+export * from "./contents/profile";
+export * from "./contents/checkout";
+export * from "./contents/bookings";
+export * from "./contents/cardetail";
+export * from "./contents/bookingdetail";
+export * from "./contents/dashboard/cars";
+export * from "./contents/dashboard/bookings";
+export * from "./contents/dashboard/customers";
+export * from "./contents/dashboard/bookingdetail";
+export * from "./contents/dashboard/caredit";
+export * from "./contents/home";

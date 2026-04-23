@@ -1,13 +1,6 @@
 import { GetBookingsBodyDto } from "@icat/contracts";
-import { getUserBookings } from "@icat/web/data/bookings";
-
-import dynamic from "next/dynamic";
-
-const UserBookingsTable = dynamic(() =>
-  import("@icat/features/tables/userbookingstable").then(
-    (m) => m.UserBookingsTable
-  )
-);
+import { Suspense } from "react";
+import { BookingsContent, BookingsContentSkeleton } from "@icat/features/contents/bookings";
 
 type UserBookingsPageProps = {
   searchParams: Promise<GetBookingsBodyDto>;
@@ -16,9 +9,11 @@ type UserBookingsPageProps = {
 export default async function UserBookingsPage({
   searchParams,
 }: UserBookingsPageProps) {
-  const result = await getUserBookings(await searchParams);
-  const bookings = result?.data;
-  const pagination = result?.pagination;
+  const filters = await searchParams;
 
-  return <UserBookingsTable bookings={bookings} pagination={pagination} />;
+  return (
+    <Suspense fallback={<BookingsContentSkeleton />}>
+      <BookingsContent searchParams={filters} />
+    </Suspense>
+  );
 }

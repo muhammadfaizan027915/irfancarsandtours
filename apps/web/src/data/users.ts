@@ -1,8 +1,5 @@
 import { UserService } from "@icat/services";
-import {
-  GetUsersBodyDto,
-  GetUsersBodySchema,
-} from "@icat/contracts";
+import { GetUsersBodyDto, GetUsersBodySchema } from "@icat/contracts";
 import { requireAdmin, requireAuth } from "@icat/lib/auth";
 
 export async function getUserProfile() {
