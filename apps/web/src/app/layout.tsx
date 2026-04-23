@@ -4,6 +4,7 @@ import { ThemeProvider } from "@icat/ui/components/theme-provider";
 import { Toaster } from "@icat/ui/components/sonner";
 import { CarCartProvider } from "@icat/web/store";
 import "@icat/ui/globals.css";
+import { Suspense } from "react";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -39,7 +40,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <CarCartProvider>{children}</CarCartProvider>
+            <Suspense fallback={null}>
+              <CarCartProvider>{children}</CarCartProvider>
+            </Suspense>
           </ThemeProvider>
           <Toaster />
         </body>

@@ -2,7 +2,7 @@ import { BaseApiErrorOptions, ErrorCode } from "./errors.types";
 import { ErrorMessages } from "./errors.constants";
 
 export class BaseApiError<
-  TCause extends Record<string, any> = Record<string, unknown>,
+  TCause extends object = object,
   TArgs extends any[] = any[]
 > extends Error {
   status: number;
@@ -47,8 +47,8 @@ export class BaseApiError<
   }
 }
 
-export class ValidationError extends BaseApiError<{ field?: string }> {
-  constructor(options: BaseApiErrorOptions = {}) {
+export class ValidationError extends BaseApiError<object> {
+  constructor(options: BaseApiErrorOptions<object> = {}) {
     super(ErrorCode.VALIDATION_ERROR, 400, options);
   }
 }
@@ -66,16 +66,16 @@ export class ForbiddenError extends BaseApiError {
 }
 
 export class NotFoundError extends BaseApiError<object, [string]> {
-  constructor(resource: string, options: BaseApiErrorOptions = {}) {
+  constructor(resource: string, options: BaseApiErrorOptions<object, [string]> = {}) {
     super(ErrorCode.NOT_FOUND, 404, { ...options, args: [resource] });
   }
 }
 
 export class DuplicateEmailError extends BaseApiError<{ email: string }> {
-  constructor(email: string, options: BaseApiErrorOptions = {}) {
+  constructor(email: string, options: BaseApiErrorOptions<{ email: string }> = {}) {
     super(ErrorCode.DUPLICATE_EMAIL, 409, {
       ...options,
-      cause: { email, ...(options.cause as object) },
+      cause: { email, ...(options.cause ?? {}) },
     });
   }
 }

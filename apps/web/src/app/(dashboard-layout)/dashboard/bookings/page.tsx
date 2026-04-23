@@ -19,7 +19,9 @@ export default async function BookingsPage({
         <p className="text-muted-foreground">Manage all customer bookings</p>
       </div>
 
-      <BookingsFilterBar />
+      <Suspense fallback={null}>
+        <BookingsFilterBar />
+      </Suspense>
 
       <Suspense fallback={<DashboardBookingsContentSkeleton />}>
         <DashboardBookingsContent searchParams={params} />
