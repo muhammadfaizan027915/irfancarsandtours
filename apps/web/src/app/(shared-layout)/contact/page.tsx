@@ -3,11 +3,18 @@ import { ContactDetails } from "@icat/features/contactdetails";
 
 import dynamic from "next/dynamic";
 
-const ContactForm = dynamic(() =>
-  import("@icat/features/forms/contact").then((m) => m.ContactForm)
+import { Skeleton } from "@icat/ui/components/skeleton";
+
+const ContactForm = dynamic(
+  () => import("@icat/features/forms/contact").then((m) => m.ContactForm),
+  {
+    loading: () => <Skeleton className="h-[400px] w-full rounded-xl" />,
+  }
 );
 
-const Map = dynamic(() => import("@icat/features/map").then((m) => m.Map));
+const Map = dynamic(() => import("@icat/features/map").then((m) => m.Map), {
+  loading: () => <Skeleton className="h-[400px] w-full rounded-xl" />,
+});
 
 export default function ContactPage() {
   return (

@@ -5,12 +5,20 @@ import { CarsContent, CarsContentSkeleton } from "@icat/features/contents/cars";
 
 import dynamic from "next/dynamic";
 
-const Searchbar = dynamic(() =>
-  import("@icat/features/searchbar").then((m) => m.Searchbar)
+import { Skeleton } from "@icat/ui/components/skeleton";
+
+const Searchbar = dynamic(
+  () => import("@icat/features/searchbar").then((m) => m.Searchbar),
+  {
+    loading: () => <Skeleton className="h-20 w-full rounded-xl" />,
+  }
 );
 
-const FiltersBar = dynamic(() =>
-  import("@icat/features/filtersbar").then((m) => m.FiltersBar)
+const FiltersBar = dynamic(
+  () => import("@icat/features/filtersbar").then((m) => m.FiltersBar),
+  {
+    loading: () => <Skeleton className="h-[600px] w-full rounded-xl" />,
+  }
 );
 
 type CarsPageProps = {

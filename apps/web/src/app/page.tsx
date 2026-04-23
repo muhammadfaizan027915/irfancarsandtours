@@ -15,9 +15,11 @@ import {
 } from "@icat/features/contents/home";
 
 
-const Footer = dynamic(() =>
-  import("@icat/features/footer").then((m) => m.Footer)
-);
+import { Skeleton } from "@icat/ui/components/skeleton";
+
+const Footer = dynamic(() => import("@icat/features/footer").then((m) => m.Footer), {
+  loading: () => <Skeleton className="h-40 w-full" />,
+});
 
 export default function HomePage() {
   return (

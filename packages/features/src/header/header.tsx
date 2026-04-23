@@ -6,16 +6,27 @@ import { cn } from "@icat/ui/lib/utils";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-const ProfileSignin = dynamic(() =>
-  import("@icat/features/profilesignin").then((m) => m.ProfileSigin)
+import { Skeleton } from "@icat/ui/components/skeleton";
+
+const ProfileSignin = dynamic(
+  () => import("@icat/features/profilesignin").then((m) => m.ProfileSigin),
+  {
+    loading: () => <Skeleton className="h-10 w-24 rounded-xl" />,
+  }
 );
 
-const CarCartSidebar = dynamic(() =>
-  import("@icat/features/sidebars/carcartsidebar").then((m) => m.CarCartSidebar)
+const CarCartSidebar = dynamic(
+  () => import("@icat/features/sidebars/carcartsidebar").then((m) => m.CarCartSidebar),
+  {
+    loading: () => <Skeleton className="h-10 w-10 rounded-xl" />,
+  }
 );
 
-const NavigationBar = dynamic(() =>
-  import("@icat/features/sidebars/navigationbar").then((m) => m.NavigationBar)
+const NavigationBar = dynamic(
+  () => import("@icat/features/sidebars/navigationbar").then((m) => m.NavigationBar),
+  {
+    loading: () => <Skeleton className="h-10 w-10 rounded-xl" />,
+  }
 );
 
 export async function Header({ varient = "primary" }: HeaderProps) {
