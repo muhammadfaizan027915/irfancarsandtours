@@ -13,5 +13,9 @@ export function useDisclosure(defaultValue: boolean = false) {
     setOpen(false);
   };
 
-  return [open, onOpen, onClose] as const;
+  const onToggle = () => {
+    setOpen((prev) => !prev);
+  };
+
+  return [open, onOpen, onClose, onToggle] as const;
 }

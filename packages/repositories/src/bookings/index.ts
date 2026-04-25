@@ -5,8 +5,9 @@ import {
   BookingSelect,
   usersTable,
 } from "@icat/database";
-import { and, desc, eq, isNull, sql } from "drizzle-orm";
+import { and, desc, eq, isNull, sql, ilike, gte, lte } from "drizzle-orm";
 import { UserItemSelect } from "../users";
+import { GetBookingsBodyDto } from "@icat/contracts";
 
 export const BookingItemSelect = {
   id: bookingsTable.id,
@@ -25,14 +26,48 @@ export const BookingItemWithUserSelect = {
 };
 
 export class BookingRepository {
-  async findAll(args?: { page?: number; limit?: number; userId?: string }) {
-    const { page = 1, limit = 50, userId } = args || {};
+  async findAll(args?: GetBookingsBodyDto & { userId?: string }) {
+    const {
+      page = 1,
+      limit = 50,
+      userId,
+      id,
+      name,
+      address,
+      startDate,
+      endDate,
+    } = args || {};
     const offset = (page - 1) * limit;
 
     const conditions = [isNull(bookingsTable.deletedAt)];
 
     if (userId) {
       conditions.push(eq(bookingsTable.userId, userId));
+    }
+
+    if (id) {
+      conditions.push(eq(bookingsTable.id, id));
+    }
+
+    if (name) {
+      conditions.push(ilike(usersTable.name, `%${name}%`));
+    }
+
+    if (address) {
+      conditions.push(
+        sql`(${ilike(bookingsTable.pickupAddress, `%${address}%`)} OR ${ilike(
+          bookingsTable.dropoffAddress,
+          `%${address}%`
+        )})`
+      );
+    }
+
+    if (startDate) {
+      conditions.push(gte(bookingsTable.createdAt, new Date(startDate)));
+    }
+
+    if (endDate) {
+      conditions.push(lte(bookingsTable.createdAt, new Date(endDate)));
     }
 
     const whereClause = and(...conditions);
@@ -49,6 +84,7 @@ export class BookingRepository {
     const [result] = await db
       .select({ total: sql<number>`count(*)` })
       .from(bookingsTable)
+      .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
       .where(whereClause);
 
     const total = bookings.length > 0 ? Number(result.total) : 0;
@@ -64,18 +100,48 @@ export class BookingRepository {
     };
   }
 
-  async findAllByUserId(args: {
-    page?: number;
-    limit?: number;
-    userId: string;
-  }) {
-    const { page = 1, limit = 50, userId } = args || {};
+  async findAllByUserId(args: GetBookingsBodyDto & { userId: string }) {
+    const {
+      page = 1,
+      limit = 50,
+      userId,
+      id,
+      name,
+      address,
+      startDate,
+      endDate,
+    } = args || {};
     const offset = (page - 1) * limit;
 
     const conditions = [isNull(bookingsTable.deletedAt)];
 
     if (userId) {
       conditions.push(eq(bookingsTable.userId, userId));
+    }
+
+    if (id) {
+      conditions.push(eq(bookingsTable.id, id));
+    }
+
+    if (name) {
+      conditions.push(ilike(usersTable.name, `%${name}%`));
+    }
+
+    if (address) {
+      conditions.push(
+        sql`(${ilike(bookingsTable.pickupAddress, `%${address}%`)} OR ${ilike(
+          bookingsTable.dropoffAddress,
+          `%${address}%`
+        )})`
+      );
+    }
+
+    if (startDate) {
+      conditions.push(gte(bookingsTable.createdAt, new Date(startDate)));
+    }
+
+    if (endDate) {
+      conditions.push(lte(bookingsTable.createdAt, new Date(endDate)));
     }
 
     const whereClause = and(...conditions);
@@ -92,6 +158,7 @@ export class BookingRepository {
     const [result] = await db
       .select({ total: sql<number>`count(*)` })
       .from(bookingsTable)
+      .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
       .where(whereClause);
 
     const total = bookings.length > 0 ? Number(result.total) : 0;

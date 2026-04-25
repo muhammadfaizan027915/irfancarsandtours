@@ -10,6 +10,8 @@ import {
   PaginatedCarResponseSchema,
   PaginatedCarResponseDto,
   GetCarsBodyDto,
+  CarWithSeoResponseDto,
+  CarWithSeoResponseSchema,
 } from "@icat/contracts";
 
 import { after } from "next/server";
@@ -50,22 +52,22 @@ export class CarService {
     return CarsListResponseSchema.parse(cars);
   }
 
-  async getCarById(id: string): Promise<CarResponseDto | null> {
+  async getCarById(id: string): Promise<CarWithSeoResponseDto | null> {
     const car = await this.carRepository.findById(id);
-    return car ? CarResponseSchema.parse(car) : null;
+    return car ? CarWithSeoResponseSchema.parse(car) : null;
   }
 
-  async createCar(data: RegisterCarBodyDto): Promise<CarResponseDto> {
+  async createCar(data: RegisterCarBodyDto): Promise<CarWithSeoResponseDto> {
     const car = await this.carRepository.create(data);
-    return CarResponseSchema.parse(car);
+    return CarWithSeoResponseSchema.parse(car);
   }
 
   async updateCar(
     id: string,
     updates: UpdateCarBodyDto,
-  ): Promise<CarResponseDto | null> {
+  ): Promise<CarWithSeoResponseDto | null> {
     const car = await this.carRepository.update(id, updates);
-    return car ? CarResponseSchema.parse(car) : null;
+    return car ? CarWithSeoResponseSchema.parse(car) : null;
   }
 
   async deleteCar(data: DeleteCarBodyDto): Promise<CarResponseDto | null> {

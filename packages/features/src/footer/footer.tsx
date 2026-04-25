@@ -42,10 +42,10 @@ export function Footer() {
                 About Us
               </Link>
               <Link
-                href={NavigationUrls.CONTACT}
+                href={NavigationUrls.COMPLAINTS}
                 className="hover:text-background dark:hover:text-foreground transition-colors"
               >
-                Contact
+                Complaints
               </Link>
             </nav>
           </div>

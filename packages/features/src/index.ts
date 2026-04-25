@@ -34,6 +34,7 @@ export * from "./contents/bookingdetail";
 export * from "./contents/dashboard/cars";
 export * from "./contents/dashboard/bookings";
 export * from "./contents/dashboard/customers";
+export * from "./contents/dashboard/complaints";
 export * from "./contents/dashboard/bookingdetail";
 export * from "./contents/dashboard/caredit";
 export * from "./contents/home";

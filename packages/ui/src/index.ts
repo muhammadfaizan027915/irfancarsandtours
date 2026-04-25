@@ -11,6 +11,7 @@ export * from "./components/slider";
 export * from "./components/textarea";
 export * from "./components/checkbox";
 export * from "./components/data-table";
+export * from "./components/data-table-skeleton";
 export * from "./components/collapsible";
 export * from "./components/dark-mode-toggler";
 export * from "./components/pagination-info";
@@ -28,6 +29,7 @@ export * from "./components/progress";
 export * from "./components/sidebar";
 export * from "./components/tooltip";
 export * from "./components/select";
+export * from "./components/autocomplete";
 export * from "./components/sonner";
 export * from "./components/sheet";
 

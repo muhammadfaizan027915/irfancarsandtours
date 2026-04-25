@@ -1,5 +1,6 @@
 import { db, usersTable, UserInsert, UserSelect } from "@icat/database";
-import { and, desc, eq, isNull, sql } from "drizzle-orm";
+import { and, desc, eq, isNull, sql, ilike, gte, lte } from "drizzle-orm";
+import { GetUsersBodyDto } from "@icat/contracts";
 
 export const UserItemSelect = {
   id: usersTable.id,
@@ -14,11 +15,45 @@ export const UserItemSelect = {
 };
 
 export class UserRepository {
-  async findAll(args?: { page?: number; limit?: number }) {
-    const { page = 1, limit = 50 } = args || {};
-    
+  async findAll(args?: GetUsersBodyDto) {
+    const {
+      page = 1,
+      limit = 50,
+      name,
+      email,
+      phone,
+      cnic,
+      startDate,
+      endDate,
+    } = args || {};
+
     const offset = (page - 1) * limit;
     const conditions = [isNull(usersTable.deletedAt)];
+
+    if (name) {
+      conditions.push(ilike(usersTable.name, `%${name}%`));
+    }
+
+    if (email) {
+      conditions.push(ilike(usersTable.email, `%${email}%`));
+    }
+
+    if (phone) {
+      conditions.push(ilike(usersTable.phone, `%${phone}%`));
+    }
+
+    if (cnic) {
+      conditions.push(ilike(usersTable.cnic, `%${cnic}%`));
+    }
+
+    if (startDate) {
+      conditions.push(gte(usersTable.createdAt, new Date(startDate)));
+    }
+
+    if (endDate) {
+      conditions.push(lte(usersTable.createdAt, new Date(endDate)));
+    }
+
     const whereClause = and(...conditions);
 
     const users = await db
@@ -27,7 +62,8 @@ export class UserRepository {
       .where(whereClause)
       .orderBy(desc(usersTable.createdAt))
       .limit(limit)
-      .offset(offset)
+      .offset(offset);
+
 
     const [result] = await db
       .select({ total: sql<number>`count(*)` })

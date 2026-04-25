@@ -6,6 +6,7 @@ import {
   CarTypesList,
   TransmissionTypesList,
 } from "@icat/database/enums";
+import { SeoFieldsSchema } from "../seo";
 
 export const RegisterCarBodySchema = z.object({
   name: z.string("Name is required").min(1, "Name cannot be empty"),
@@ -23,6 +24,7 @@ export const RegisterCarBodySchema = z.object({
     "Please select a valid transmission type"
   ),
   amenities: z.preprocess((val) => {
+    if (val === "") return [];
     if (!val) return undefined;
     return Array.isArray(val) ? val : [val];
   }, z.array(z.enum(AmenitiesList, "Please select a valid amenities"))),
@@ -38,34 +40,33 @@ export const RegisterCarBodySchema = z.object({
     .min(1, "Seating capacity must be at least 1"),
   isFeatured: z.coerce.boolean().optional().default(false),
   forceWithDriver: z.coerce.boolean().optional().default(false),
+  seo: SeoFieldsSchema.optional(),
 });
 
 export type RegisterCarBodyDto = z.infer<typeof RegisterCarBodySchema>;
 
 export const UpdateCarBodySchema = RegisterCarBodySchema.partial().extend({
-  id: z.uuid("Invalid car ID"),
+  id: z.string().uuid("Invalid car ID"),
 });
 
 export type UpdateCarBodyDto = z.infer<typeof UpdateCarBodySchema>;
 
 export const DeleteCarBodySchema = z.object({
-  id: z.uuid("Invalid car ID"),
+  id: z.string().uuid("Invalid car ID"),
 });
 
 export type DeleteCarBodyDto = z.infer<typeof DeleteCarBodySchema>;
 
 export const GetCarsBodySchema = z.object({
-  page: z
-    .string()
-    .optional()
-    .transform((val) => (val ? parseInt(val, 10) : 1)),
+  page: z.coerce.number().optional().default(1),
 
-  limit: z
-    .string()
-    .optional()
-    .transform((val) => (val ? parseInt(val, 10) : 50)),
+  limit: z.coerce.number().optional().default(50),
 
   search: z.string().optional(),
+
+  name: z.string().optional(),
+
+  model: z.string().optional(),
 
   brand: z.enum(BrandNamesList).optional(),
 

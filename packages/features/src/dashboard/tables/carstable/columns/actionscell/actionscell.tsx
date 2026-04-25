@@ -1,3 +1,5 @@
+"use client";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,27 +33,29 @@ export function CarActionsCell({ row }: CarCellPorps) {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-8 w-8 p-0">
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem asChild>
-          <Link href={`${NavigationUrls.CARS}/${carId}`} target="_blank">
-            <Eye size={18} className="inline" /> View
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={`${DashboardNavigationUrls.CARS}/${carId}/edit`}>
-            <Pencil size={18} className="inline" /> Edit
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem variant="destructive" onClick={handleDeleteCar}>
-          <Trash2 size={18} className="inline" /> Delete
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon" className="h-8 w-8 p-0">
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem asChild>
+            <Link href={`${NavigationUrls.CARS}/${carId}`} target="_blank">
+              <Eye size={18} className="inline mr-2" /> View
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={`${DashboardNavigationUrls.CARS}/${carId}/edit`}>
+              <Pencil size={18} className="inline mr-2" /> Edit
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem variant="destructive" onClick={handleDeleteCar}>
+            <Trash2 size={18} className="inline mr-2" /> Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 }
