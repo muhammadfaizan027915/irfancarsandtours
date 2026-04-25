@@ -4,7 +4,7 @@ export const NavigationUrls = {
   SIGNIN: "/signin",
   SIGNUP: "/signup",
   ABOUT_US: "/about-us",
-  CONTACT: "/contact",
+  COMPLAINTS: "/complaints",
   PROFILE: "/profile",
   BOOKINGS: "/bookings",
   CHECKOUT: "/checkout",

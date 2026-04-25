@@ -21,7 +21,7 @@ export function handlerFormActionWithError<
   TArgs,
   TResult
 >(args: {
-  schema: ZodObject<any>;
+  schema: ZodObject<any, any>;
   action: (args: TArgs) => Promise<TResult> | void;
   shouldResetForm?: boolean;
 }) {

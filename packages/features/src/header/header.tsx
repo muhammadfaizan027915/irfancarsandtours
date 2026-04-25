@@ -50,7 +50,7 @@ export async function Header({ varient = "primary" }: HeaderProps) {
               <Link href={NavigationUrls.CARS}>Cars</Link>
               <a>Tours</a>
               <Link href={NavigationUrls.ABOUT_US}>About Us</Link>
-              <Link href={NavigationUrls.CONTACT}>Contact</Link>
+              <Link href={NavigationUrls.COMPLAINTS}>Complaints</Link>
             </nav>
           </div>
           <div className="lg:w-3/8 flex items-stretch justify-end gap-2">

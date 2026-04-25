@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "dotenv -e .env -- turbo dev",
     "build": "dotenv -e .env -- turbo build",
-    "migrate": "turbo run migrate",
+    "db:migrate": "dotenv -e .env -- turbo run migrate",
+    "db:push": "dotenv -e .env -- turbo run push",
+    "db:generate": "dotenv -e .env -- turbo run generate",
+    "db:studio": "dotenv -e .env -- turbo run studio",
     "clean": "turbo clean",
     "lint": "turbo run lint"
   },

@@ -4,20 +4,26 @@ import { X } from "lucide-react";
 import { Button } from "@icat/ui/components/button";
 import { Card, CardHeader, CardContent } from "@icat/ui/components/card";
 import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
-import { DateRangeFilter, SearchFilter } from "../filters";
+import { DateRangeFilter, TextFilter } from "../filters";
 
 export function BookingsFilterBar() {
   const { getSearchParams, updateSearchParams } = useSearchRouter();
 
-  const searchValue = getSearchParams("search")?.[0] || "";
+  const idValue = getSearchParams("id")?.[0];
+  const nameValue = getSearchParams("name")?.[0];
+  const addressValue = getSearchParams("address")?.[0];
   const startDateValue = getSearchParams("startDate")?.[0];
   const endDateValue = getSearchParams("endDate")?.[0];
 
-  const hasFilters = Boolean(searchValue || startDateValue || endDateValue);
+  const hasFilters = Boolean(
+    idValue || nameValue || addressValue || startDateValue || endDateValue
+  );
 
   const handleClearFilters = () => {
     updateSearchParams({
-      search: undefined,
+      id: undefined,
+      name: undefined,
+      address: undefined,
       startDate: undefined,
       endDate: undefined,
     });
@@ -25,7 +31,7 @@ export function BookingsFilterBar() {
 
   return (
     <Card className="py-4 shadow-none rounded-xl gap-2">
-      <CardHeader className="px-4 h-8 flex flex-row gap-2 justify-between">
+      <CardHeader className="px-4 h-8 flex flex-row gap-2 justify-between items-center">
         <h3 className="font-semibold text-lg">Filter Bookings</h3>
         {hasFilters && (
           <Button
@@ -40,9 +46,15 @@ export function BookingsFilterBar() {
         )}
       </CardHeader>
 
-      <CardContent className="px-4 flex flex-col md:flex-row gap-4 items-end">
-        <DateRangeFilter />
-        <SearchFilter />
+      <CardContent className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+        <TextFilter label="Booking ID" paramName="id" placeholder="BK..." />
+        <TextFilter label="Customer Name" paramName="name" placeholder="Name" />
+        <TextFilter
+          label="Address"
+          paramName="address"
+          placeholder="Pickup/Dropoff"
+        />
+        <DateRangeFilter label="Date Range" />
       </CardContent>
     </Card>
   );

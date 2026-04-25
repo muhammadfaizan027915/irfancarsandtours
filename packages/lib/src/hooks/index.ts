@@ -4,3 +4,4 @@ export * from "./usepersistedreducer";
 export * from "./usecookiereducer";
 export * from "./usemultifileupload";
 export * from "./usefileupload";
+export * from "./use-debounce";

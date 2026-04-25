@@ -1,6 +1,6 @@
 export * from "./signin";
 export * from "./signup";
 export * from "./profile";
-export * from "./contact";
+export * from "./complaint";
 export * from "./changepassword";
 export * from "./carbooking";
