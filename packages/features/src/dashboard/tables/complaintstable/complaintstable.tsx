@@ -1,4 +1,5 @@
 import { DataTable } from "@icat/ui/components/data-table";
+
 import { complaintColumns } from "./columns";
 import { ComplaintsTableProps } from "./complaintstable.types";
 

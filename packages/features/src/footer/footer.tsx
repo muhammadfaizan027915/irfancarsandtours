@@ -1,9 +1,10 @@
 "use client";
 
+import { Facebook, Instagram, Linkedin,Twitter } from "lucide-react";
 import Link from "next/link";
-import { Logo } from "@icat/features/header/logo";
+
 import { NavigationUrls } from "@icat/features/header/header.constants";
-import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Logo } from "@icat/features/header/logo";
 
 export function Footer() {
   return (

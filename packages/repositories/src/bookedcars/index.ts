@@ -1,12 +1,13 @@
+import { and, eq, isNull } from "drizzle-orm";
+
 import {
-  db,
-  bookedCarsTable,
   BookedCarInsert,
   BookedCarSelect,
+  bookedCarsTable,
   carsTable,
+  db,
 } from "@icat/database";
 
-import { eq, and, isNull } from "drizzle-orm";
 import { CarItemSelect } from "../cars";
 
 export const BookedCarItemSelect = {

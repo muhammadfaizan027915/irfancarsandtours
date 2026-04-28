@@ -1,16 +1,18 @@
 "use client";
 
+import { MoreHorizontal, Trash2 } from "lucide-react";
+
+import { Button } from "@icat/ui/components/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@icat/ui/components/dropdown-menu";
-import { Button } from "@icat/ui/components/button";
 import { toast } from "@icat/ui/components/sonner";
-import { ComplaintCellProps } from "../columns.types";
-import { MoreHorizontal, Trash2 } from "lucide-react";
 import { deleteComplaint } from "@icat/web/actions";
+
+import { ComplaintCellProps } from "../columns.types";
 
 export function ComplaintActionsCell({ row }: ComplaintCellProps) {
   const complaintId = row.original.id;

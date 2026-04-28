@@ -1,29 +1,28 @@
 import { drizzle, NodePgDatabase } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
-import * as schema from "./index";
 
-import { carsTable } from "./carsTable";
-import { usersTable } from "./usersTable";
-import { sessionsTable } from "./sessionsTable";
 import { accountsTable } from "./accountsTable";
-import { verificationTokensTable } from "./verificationTokensTable";
-import { complaintsTable } from "./complaintsTable";
-import { bookingsTable } from "./bookingsTable";
 import { bookedCarsTable } from "./bookedCarsTable";
-import { seoTable } from "./seoTable";
+import { bookingsTable } from "./bookingsTable";
+import { carsTable } from "./carsTable";
+import { complaintsTable } from "./complaintsTable";
 import * as relations from "./relations";
+import { seoTable } from "./seoTable";
+import { sessionsTable } from "./sessionsTable";
+import { usersTable } from "./usersTable";
+import { verificationTokensTable } from "./verificationTokensTable";
 
-export * from "./enums";
-export * from "./carsTable";
-export * from "./usersTable";
-export * from "./sessionsTable";
 export * from "./accountsTable";
-export * from "./verificationTokensTable";
-export * from "./complaintsTable";
-export * from "./bookingsTable";
 export * from "./bookedCarsTable";
-export * from "./seoTable";
+export * from "./bookingsTable";
+export * from "./carsTable";
+export * from "./complaintsTable";
+export * from "./enums";
 export * from "./relations";
+export * from "./seoTable";
+export * from "./sessionsTable";
+export * from "./usersTable";
+export * from "./verificationTokensTable";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,

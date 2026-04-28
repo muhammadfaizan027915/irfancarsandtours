@@ -1,17 +1,19 @@
 "use client";
 
 import { X } from "lucide-react";
-import { Button } from "@icat/ui/components/button";
-import { Card, CardHeader, CardContent } from "@icat/ui/components/card";
-import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
-import { TextFilter, SelectFilter, MultiSelectFilter } from "../filters";
+
 import {
-  BrandNamesList,
-  FuelTypesList,
   AmenitiesList,
+  BrandNamesList,
   CarTypesList,
+  FuelTypesList,
   TransmissionTypesList,
 } from "@icat/database/enums";
+import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
+import { Button } from "@icat/ui/components/button";
+import { Card, CardContent,CardHeader } from "@icat/ui/components/card";
+
+import { MultiSelectFilter,SelectFilter, TextFilter } from "../filters";
 
 export function CarsFilterBar() {
   const { getSearchParams, updateSearchParams } = useSearchRouter();

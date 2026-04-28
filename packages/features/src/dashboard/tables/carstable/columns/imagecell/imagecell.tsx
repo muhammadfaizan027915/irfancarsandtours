@@ -1,4 +1,5 @@
 import { SmallImage } from "@icat/ui/components/small-image";
+
 import { CarCellPorps } from "../columns.types";
 
 export function CarImageCell({ row }: CarCellPorps) {

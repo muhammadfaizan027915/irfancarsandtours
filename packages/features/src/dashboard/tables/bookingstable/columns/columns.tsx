@@ -1,12 +1,14 @@
 "use client";
 
-import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
-import { BookingWithUserListItemResponseDto } from "@icat/contracts";
 import { ColumnDef } from "@tanstack/react-table";
-import { BookedByCell } from "./bookedbycell";
-import { ExternalLink } from "lucide-react";
 import { format } from "date-fns";
+import { ExternalLink } from "lucide-react";
 import Link from "next/link";
+
+import { BookingWithUserListItemResponseDto } from "@icat/contracts";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
+
+import { BookedByCell } from "./bookedbycell";
 
 export const bookingsColumns: ColumnDef<BookingWithUserListItemResponseDto>[] =
   [

@@ -1,7 +1,8 @@
 "use client";
 
+import { usePathname,useRouter, useSearchParams } from "next/navigation";
+
 import { Button } from "@icat/ui";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 export function FiltersClearer() {
   const router = useRouter();

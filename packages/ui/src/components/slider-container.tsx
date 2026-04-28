@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, Children, ReactNode } from "react";
-import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { Button } from "@icat/ui";
+import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Children, ReactNode,useCallback } from "react";
+
+import { Button } from "@icat/ui";
 
 interface SliderContainerProps {
   children: ReactNode | ReactNode[];

@@ -1,8 +1,8 @@
 "use client";
 
+import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 import { Autocomplete } from "@icat/ui";
 import { Label } from "@icat/ui/components/label";
-import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 
 interface MultiSelectFilterProps {
   label: string;

@@ -1,9 +1,10 @@
+import axios from "axios";
+
 import {
+  deleteFileFromCloudStorage,
   getPublicFileUrl,
   getSignedUploadUrl,
-  deleteFileFromCloudStorage,
 } from "@icat/web/actions/file";
-import axios from "axios";
 
 export async function uploadFile(arg: {
   file: File;

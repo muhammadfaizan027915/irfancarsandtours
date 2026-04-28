@@ -1,21 +1,9 @@
 "use client";
 
-import {
-  AlertBox,
-  Button,
-  Checkbox,
-  Input,
-  Label,
-  Textarea,
-  Autocomplete,
-  SingleSelect,
-  toast,
-  Progress,
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "@icat/ui";
-import { registerCar, updateCar } from "@icat/web/actions";
+import { Car, ChevronDown, Globe, Image as ImageIcon, Info, Settings2,X } from "lucide-react";
+import Image from "next/image";
+import { useActionState, useEffect, useState } from "react";
+
 import {
   AmenitiesList,
   BrandNamesList,
@@ -23,14 +11,28 @@ import {
   FuelTypesList,
   TransmissionTypesList,
 } from "@icat/database/enums";
-import { CarFormProps } from "./car.types";
-import { useActionState, useEffect, useState } from "react";
-import { useMultiFileUpload, useDisclosure } from "@icat/lib/hooks";
+import { useDisclosure,useMultiFileUpload } from "@icat/lib/hooks";
 import { mergeObjectToFormData } from "@icat/lib/utils";
+import {
+  AlertBox,
+  Autocomplete,
+  Button,
+  Checkbox,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+  Input,
+  Label,
+  Progress,
+  SingleSelect,
+  Textarea,
+  toast,
+} from "@icat/ui";
 import { cn } from "@icat/ui/lib/utils";
-import { ChevronDown, X, Globe, Car, Info, Image as ImageIcon, Settings2 } from "lucide-react";
-import Image from "next/image";
+import { registerCar, updateCar } from "@icat/web/actions";
+
 import { SeoFields } from "../seo";
+import { CarFormProps } from "./car.types";
 
 export function CarForm({ car, seo, mode }: CarFormProps) {
   const isUpdateMode = mode === "update";

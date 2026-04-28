@@ -1,13 +1,15 @@
 "use client";
 
+import { ChevronDownIcon, Plus,SearchIcon, X } from "lucide-react";
 import * as React from "react";
-import { ChevronDownIcon, SearchIcon, X, Plus } from "lucide-react";
+
 import { cn } from "@icat/ui/lib/utils";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+
 import { Badge } from "./badge";
+import { Button } from "./button";
 import { Checkbox } from "./checkbox";
 import { Input } from "./input";
-import { Button } from "./button";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 export type AutocompleteProps<T extends string> = {
   name?: string;

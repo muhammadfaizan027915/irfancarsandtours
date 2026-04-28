@@ -1,12 +1,13 @@
-import { integer, text, pgTable, boolean, varchar } from "drizzle-orm/pg-core";
+import { boolean, integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
+
+import { timestampColumns } from "../utils";
 import {
-  brandEnum,
-  fuelTypeEnum,
   amenitiesEnum,
+  brandEnum,
   carTypeEnum,
+  fuelTypeEnum,
   transmissionTypeEnum,
 } from "./enums";
-import { timestampColumns } from "../utils";
 import { seoTable } from "./seoTable";
 
 export const carsTable = pgTable("cars", {

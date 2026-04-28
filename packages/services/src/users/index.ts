@@ -1,19 +1,20 @@
-import { UserRepository } from "@icat/repositories";
 import {
-  CreateUserBodyDto,
-  UserResponseSchema,
-  UserResponseDto,
-  SignInBodyDto,
-  DetailedUserResponseSchema,
-  DetailedUserResponseDto,
-  UserResponseWithPasswordSchema,
-  UpdateUserBodyDto,
   ChangePasswordBodyDto,
+  CreateUserBodyDto,
+  DetailedUserResponseDto,
+  DetailedUserResponseSchema,
+  GetUsersBodyDto,
   PaginatedUserResponseDto,
   PaginatedUserResponseSchema,
-  GetUsersBodyDto,
+  SignInBodyDto,
+  UpdateUserBodyDto,
+  UserResponseDto,
+  UserResponseSchema,
+  UserResponseWithPasswordSchema,
 } from "@icat/contracts";
 import { DuplicateEmailError, NotFoundError, ValidationError } from "@icat/lib";
+import { UserRepository } from "@icat/repositories";
+
 import { AuthService } from "../auth";
 
 export class UserService {

@@ -1,5 +1,6 @@
-import { db, seoTable, SeoInsert, SeoSelect, Transaction } from "@icat/database";
 import { eq } from "drizzle-orm";
+
+import { db, SeoInsert, SeoSelect, seoTable, Transaction } from "@icat/database";
 
 export class SeoRepository {
   async findById(id: string, tx: Transaction = db as any): Promise<SeoSelect | null> {

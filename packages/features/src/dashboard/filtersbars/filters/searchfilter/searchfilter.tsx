@@ -1,12 +1,14 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { Input } from "@icat/ui/components/input";
-import { Button } from "@icat/ui/components/button";
-import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
-import { SearchFilterProps } from "./searchfilter.types";
 import { useEffect, useState } from "react";
+
+import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
+import { Button } from "@icat/ui/components/button";
+import { Input } from "@icat/ui/components/input";
 import { Label } from "@icat/ui/components/label";
+
+import { SearchFilterProps } from "./searchfilter.types";
 
 export function SearchFilter({
   placeholder = "Search (ID, Address, Name)",

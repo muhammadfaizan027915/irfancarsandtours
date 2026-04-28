@@ -1,24 +1,25 @@
 import {
-  db,
-  carsTable,
-  CarInsert,
-  CarSelect,
-  seoTable,
-  Transaction,
-  SeoInsert,
-} from "@icat/database";
-import {
   and,
+  arrayOverlaps,
   desc,
   eq,
+  ilike,
+  inArray,
   isNull,
   sql,
-  inArray,
-  arrayOverlaps,
-  ilike,
 } from "drizzle-orm";
 
-import { GetCarsBodyDto, RegisterCarBodyDto, UpdateCarBodyDto, CarWithSeoResponseDto } from "@icat/contracts";
+import { CarWithSeoResponseDto,GetCarsBodyDto, RegisterCarBodyDto, UpdateCarBodyDto } from "@icat/contracts";
+import {
+  CarInsert,
+  CarSelect,
+  carsTable,
+  db,
+  SeoInsert,
+  seoTable,
+  Transaction,
+} from "@icat/database";
+
 import { SeoRepository } from "../seo";
 
 export const CarItemSelect = {

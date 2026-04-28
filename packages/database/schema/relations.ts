@@ -1,4 +1,5 @@
 import { relations } from "drizzle-orm";
+
 import { carsTable } from "./carsTable";
 import { seoTable } from "./seoTable";
 

@@ -1,4 +1,3 @@
-import { BookingRepository } from "@icat/repositories";
 import {
   BookingRequestDto,
   BookingResponseDto,
@@ -12,6 +11,7 @@ import {
   PaginatedBookingWithUserResponseDto,
   PaginatedBookingWithUserResponseSchema,
 } from "@icat/contracts";
+import { BookingRepository } from "@icat/repositories";
 import { BookedCarService, CarService, UserService } from "@icat/services";
 
 export class BookingService {

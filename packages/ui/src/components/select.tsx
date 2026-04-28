@@ -1,8 +1,9 @@
 "use client";
 
-import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { ChevronDownIcon, ChevronUpIcon, CheckIcon, XIcon } from "lucide-react";
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon, XIcon } from "lucide-react";
+import * as React from "react";
+
 import { cn } from "@icat/ui/lib/utils";
 
 type SingleSelectProps<T> = {

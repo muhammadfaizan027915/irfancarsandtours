@@ -1,4 +1,3 @@
-import { ComplaintRepository } from "@icat/repositories";
 import {
   ComplaintResponseDto,
   ComplaintResponseSchema,
@@ -6,6 +5,7 @@ import {
   PaginatedComplaintResponseDto,
   PaginatedComplaintResponseSchema,
 } from "@icat/contracts";
+import { ComplaintRepository } from "@icat/repositories";
 
 export class ComplaintService {
   private complaintRepository: ComplaintRepository;

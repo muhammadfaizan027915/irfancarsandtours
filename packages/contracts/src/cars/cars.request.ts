@@ -1,11 +1,13 @@
 import { z } from "zod";
+
 import {
-  BrandNamesList,
-  FuelTypesList,
   AmenitiesList,
+  BrandNamesList,
   CarTypesList,
+  FuelTypesList,
   TransmissionTypesList,
 } from "@icat/database/enums";
+
 import { SeoFieldsSchema } from "../seo";
 
 export const RegisterCarBodySchema = z.object({

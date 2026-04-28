@@ -1,10 +1,12 @@
-import { Phone, Mail } from "lucide-react";
+import { Mail,Phone } from "lucide-react";
+
+import { Card, CardContent,CardTitle } from "@icat/ui/components/card";
+
 import {
+  EMAIL_ADDRESS,
   PHONE_NUMBER_1,
   PHONE_NUMBER_2,
-  EMAIL_ADDRESS,
 } from "./contactdetails.constants";
-import { Card, CardTitle, CardContent } from "@icat/ui/components/card";
 
 export function ContactDetails() {
   return (

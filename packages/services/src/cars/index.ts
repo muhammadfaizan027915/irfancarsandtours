@@ -1,20 +1,20 @@
-import { CarRepository } from "@icat/repositories";
+import { after } from "next/server";
+
 import {
   CarResponseDto,
   CarResponseSchema,
-  CarsListResponseSchema,
   CarsListResponseDto,
-  RegisterCarBodyDto,
-  UpdateCarBodyDto,
-  DeleteCarBodyDto,
-  PaginatedCarResponseSchema,
-  PaginatedCarResponseDto,
-  GetCarsBodyDto,
+  CarsListResponseSchema,
   CarWithSeoResponseDto,
   CarWithSeoResponseSchema,
+  DeleteCarBodyDto,
+  GetCarsBodyDto,
+  PaginatedCarResponseDto,
+  PaginatedCarResponseSchema,
+  RegisterCarBodyDto,
+  UpdateCarBodyDto,
 } from "@icat/contracts";
-
-import { after } from "next/server";
+import { CarRepository } from "@icat/repositories";
 
 export class CarService {
   private carRepository: CarRepository;

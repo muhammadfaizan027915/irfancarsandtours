@@ -1,5 +1,6 @@
-import { CarForm } from "@icat/features/dashboard/forms/car";
 import { notFound } from "next/navigation";
+
+import { CarForm } from "@icat/features/dashboard/forms/car";
 import { getCar } from "@icat/web/data/cars";
 import { getCarSeo } from "@icat/web/data/seo";
 

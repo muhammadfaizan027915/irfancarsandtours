@@ -1,10 +1,10 @@
-import { CarRepository } from "@icat/repositories";
 import {
+  CarWithSeoResponseDto,
   SeoResponseDto,
   SeoResponseSchema,
   UpsertSeoBodyDto,
-  CarWithSeoResponseDto,
 } from "@icat/contracts";
+import { CarRepository } from "@icat/repositories";
 
 export class SeoService {
   private carRepository: CarRepository;

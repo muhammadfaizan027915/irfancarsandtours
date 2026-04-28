@@ -1,10 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
+import { useDebounce } from "@icat/lib/hooks";
+import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 import { Input } from "@icat/ui/components/input";
 import { Label } from "@icat/ui/components/label";
-import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
-import { useEffect, useState } from "react";
-import { useDebounce } from "@icat/lib/hooks";
 
 interface TextFilterProps {
   label: string;

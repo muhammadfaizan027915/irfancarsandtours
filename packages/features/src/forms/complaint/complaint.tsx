@@ -1,14 +1,15 @@
 "use client";
 
+import { ArrowRight, Mail, Phone, UserRound } from "lucide-react";
+import { useActionState, useEffect } from "react";
+
+import { AlertBox } from "@icat/ui/components/alert";
+import { Button } from "@icat/ui/components/button";
+import { Card, CardContent,CardTitle } from "@icat/ui/components/card";
 import { Input } from "@icat/ui/components/input";
 import { Label } from "@icat/ui/components/label";
 import { toast } from "@icat/ui/components/sonner";
-import { AlertBox } from "@icat/ui/components/alert";
-import { Button } from "@icat/ui/components/button";
 import { Textarea } from "@icat/ui/components/textarea";
-import { Card, CardTitle, CardContent } from "@icat/ui/components/card";
-import { ArrowRight, Mail, Phone, UserRound } from "lucide-react";
-import { useActionState, useEffect } from "react";
 import { sendComplaint } from "@icat/web/actions";
 
 export function ComplaintForm() {

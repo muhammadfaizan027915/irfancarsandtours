@@ -1,6 +1,7 @@
-import { Card, CardHeader } from "@icat/ui/components/card";
-import { Button } from "@icat/ui/components/button";
 import { ArrowRight } from "lucide-react";
+
+import { Button } from "@icat/ui/components/button";
+import { Card, CardHeader } from "@icat/ui/components/card";
 
 export function CarGetStarted() {
   return (

@@ -1,7 +1,9 @@
 import Image from "next/image";
-import { Badge } from "@icat/ui/components/badge";
-import { SecondaryHeroProps } from "./secondary.types";
+
 import { FlexToTextPositionMap } from "@icat/features/common";
+import { Badge } from "@icat/ui/components/badge";
+
+import { SecondaryHeroProps } from "./secondary.types";
 
 export function SecondaryHero({
   position = "center",

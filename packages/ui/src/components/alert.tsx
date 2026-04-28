@@ -1,6 +1,6 @@
-import * as React from "react";
-import { type LucideIcon } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { type LucideIcon } from "lucide-react";
+import * as React from "react";
 
 import { cn } from "@icat/ui/lib/utils";
 
@@ -88,4 +88,4 @@ function AlertBox({
   );
 }
 
-export { Alert, AlertTitle, AlertDescription, AlertBox };
+export { Alert, AlertBox,AlertDescription, AlertTitle };

@@ -1,14 +1,16 @@
 "use client";
 
 import { ChevronUp } from "lucide-react";
+
 import { useDisclosure } from "@icat/lib/hooks";
+import { Button } from "@icat/ui/components/button";
+import { Card, CardContent } from "@icat/ui/components/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@icat/ui/components/collapsible";
-import { Button } from "@icat/ui/components/button";
-import { Card, CardContent } from "@icat/ui/components/card";
+
 import { CarAmenitiesProps } from "./amenities.types";
 
 export function CarAmenities({ amenities }: CarAmenitiesProps) {

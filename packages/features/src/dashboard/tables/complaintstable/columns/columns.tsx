@@ -1,9 +1,11 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ComplaintResponseDto } from "@icat/contracts";
-import { ComplaintActionsCell } from "./actionscell";
 import { format } from "date-fns";
+
+import { ComplaintResponseDto } from "@icat/contracts";
+
+import { ComplaintActionsCell } from "./actionscell";
 
 export const complaintColumns: ColumnDef<ComplaintResponseDto>[] = [
   {

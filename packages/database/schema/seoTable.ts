@@ -1,4 +1,5 @@
-import { text, pgTable, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+
 import { timestampColumns } from "../utils";
 
 export const seoTable = pgTable("seo", {

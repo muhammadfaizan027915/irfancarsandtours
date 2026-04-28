@@ -1,6 +1,7 @@
-import { db, usersTable, UserInsert, UserSelect } from "@icat/database";
-import { and, desc, eq, isNull, sql, ilike, gte, lte } from "drizzle-orm";
+import { and, desc, eq, gte, ilike, isNull, lte,sql } from "drizzle-orm";
+
 import { GetUsersBodyDto } from "@icat/contracts";
+import { db, UserInsert, UserSelect,usersTable } from "@icat/database";
 
 export const UserItemSelect = {
   id: usersTable.id,

@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { DetailedUserResponseSchema } from "./user.response";
 
 const PasswordSchema = z.stringFormat(

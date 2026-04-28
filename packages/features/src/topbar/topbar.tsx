@@ -1,14 +1,16 @@
+import { CarFront, Mail, MoveRight,Phone } from "lucide-react";
+import Link from "next/link";
+
 import { NavigationUrls } from "@icat/features/header";
 import { Button } from "@icat/ui/components/button";
 import { DarkModeToggler } from "@icat/ui/components/dark-mode-toggler";
-import { Phone, CarFront, Mail, MoveRight } from "lucide-react";
-import { TopbarProps } from "./topbar.types";
 import { cn } from "@icat/ui/lib/utils";
-import Link from "next/link";
+
 import {
-  PHONE_NUMBER_1,
   EMAIL_ADDRESS,
+  PHONE_NUMBER_1,
 } from "../contactdetails/contactdetails.constants";
+import { TopbarProps } from "./topbar.types";
 
 export function Topbar({ varient = "primary" }: TopbarProps) {
   return (

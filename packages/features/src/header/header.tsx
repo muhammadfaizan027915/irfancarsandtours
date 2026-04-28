@@ -1,12 +1,12 @@
-import { Logo } from "./logo";
-import { HeaderProps } from "./header.types";
-import { NavigationUrls } from "./header.constants";
-import { cn } from "@icat/ui/lib/utils";
-
-import Link from "next/link";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 import { Skeleton } from "@icat/ui/components/skeleton";
+import { cn } from "@icat/ui/lib/utils";
+
+import { NavigationUrls } from "./header.constants";
+import { HeaderProps } from "./header.types";
+import { Logo } from "./logo";
 
 const ProfileSignin = dynamic(
   () => import("@icat/features/profilesignin").then((m) => m.ProfileSigin),

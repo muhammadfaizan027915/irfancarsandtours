@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { PaginatedResponseSchema } from "@icat/contracts/generic";
 
 export const ComplaintResponseSchema = z.object({

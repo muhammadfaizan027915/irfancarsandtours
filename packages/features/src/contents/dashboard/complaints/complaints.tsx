@@ -1,6 +1,6 @@
 import { GetComplaintsQueryDto } from "@icat/contracts";
-import { getComplaints } from "@icat/web/data/complaints";
 import { ComplaintsTable } from "@icat/features/dashboard/tables/complaintstable";
+import { getComplaints } from "@icat/web/data/complaints";
 
 export async function DashboardComplaintsContent({
   searchParams,

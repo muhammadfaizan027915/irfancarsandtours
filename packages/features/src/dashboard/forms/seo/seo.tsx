@@ -1,13 +1,14 @@
 "use client";
 
+import { z } from "zod";
+
+import { SeoResponseDto, UpsertSeoBodyDto } from "@icat/contracts";
 import {
+  Autocomplete,
   Input,
   Label,
   Textarea,
-  Autocomplete,
 } from "@icat/ui";
-import { SeoResponseDto, UpsertSeoBodyDto } from "@icat/contracts";
-import { z } from "zod";
 
 export interface SeoFieldsProps {
   seo?: SeoResponseDto | null;

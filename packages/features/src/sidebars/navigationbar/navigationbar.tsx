@@ -1,15 +1,16 @@
+import { Menu } from "lucide-react";
+import Link from "next/link";
+import { Suspense } from "react";
+
+import { DashboardSidebarFooter } from "@icat/features/dashboard";
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import { Button } from "@icat/ui/components/button";
 import {
   Sheet,
   SheetContent,
   SheetFooter,
   SheetTrigger,
 } from "@icat/ui/components/sheet";
-import { Button } from "@icat/ui/components/button";
-import { DashboardSidebarFooter } from "@icat/features/dashboard";
-import { NavigationUrls } from "@icat/features/header/header.constants";
-import { Menu } from "lucide-react";
-import Link from "next/link";
-import { Suspense } from "react";
 
 export function NavigationBar() {
   return (

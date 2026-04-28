@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
+
+import { CarAmenities } from "@icat/features/cardetail/amenities";
+import { CarBooking } from "@icat/features/cardetail/booking";
+import { CarDescription } from "@icat/features/cardetail/description";
+import { CarGetStarted } from "@icat/features/cardetail/getstarted";
+import { CarProperties } from "@icat/features/cardetail/properties";
+import { LoginNotice } from "@icat/features/loginnotice";
+import { CarImages } from "@icat/features/sliders/carimages";
 import { getSessionUser } from "@icat/lib/auth";
 import { getUserCar } from "@icat/web/data/cars";
-import { CarImages } from "@icat/features/sliders/carimages";
-import { CarDescription } from "@icat/features/cardetail/description";
-import { CarProperties } from "@icat/features/cardetail/properties";
-import { CarAmenities } from "@icat/features/cardetail/amenities";
-import { CarGetStarted } from "@icat/features/cardetail/getstarted";
-import { CarBooking } from "@icat/features/cardetail/booking";
-import { LoginNotice } from "@icat/features/loginnotice";
 
 export async function CarDetailContent({ carId }: { carId: string }) {
   const user = await getSessionUser();
