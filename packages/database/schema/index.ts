@@ -1,4 +1,7 @@
-import { drizzle, NodePgDatabase } from "drizzle-orm/node-postgres";
+import { ExtractTablesWithRelations } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { PgTransaction } from "drizzle-orm/pg-core";
+import { PostgresJsQueryResultHKT } from "drizzle-orm/postgres-js";
 import { Pool } from "pg";
 
 import { accountsTable } from "./accountsTable";
@@ -6,6 +9,7 @@ import { bookedCarsTable } from "./bookedCarsTable";
 import { bookingsTable } from "./bookingsTable";
 import { carsTable } from "./carsTable";
 import { complaintsTable } from "./complaintsTable";
+import * as schema from "./index";
 import * as relations from "./relations";
 import { seoTable } from "./seoTable";
 import { sessionsTable } from "./sessionsTable";
@@ -47,4 +51,11 @@ export const db = drizzle(pool, {
 });
 
 export type Database = typeof db;
-export type Transaction = NodePgDatabase<any>;
+
+export type Transaction = PgTransaction<
+  PostgresJsQueryResultHKT,
+  typeof schema,
+  ExtractTablesWithRelations<typeof schema>
+>;
+
+export type DbOrTransaction = Database | Transaction;

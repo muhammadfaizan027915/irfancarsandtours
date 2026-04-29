@@ -2,7 +2,6 @@ import { z } from "zod";
 
 export const SeoResponseSchema = z.object({
   id: z.string(),
-  carId: z.string(),
   title: z.string().nullable(),
   description: z.string().nullable(),
   keywords: z.array(z.string()).nullable().default([]),

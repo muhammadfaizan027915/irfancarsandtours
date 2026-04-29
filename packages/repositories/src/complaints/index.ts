@@ -1,10 +1,11 @@
-import { and, desc, eq, gte, ilike, isNull, lte,sql } from "drizzle-orm";
+import { and, desc, eq, gte, ilike, isNull, lte, sql } from "drizzle-orm";
 
 import {
   ComplaintInsert,
   ComplaintSelect,
   complaintsTable,
   db,
+  DbOrTransaction,
 } from "@icat/database";
 
 export const ComplaintListSelect = {
@@ -18,16 +19,19 @@ export const ComplaintListSelect = {
 };
 
 export class ComplaintRepository {
-  async findAll(args: {
-    page?: number;
-    limit?: number;
-    search?: string;
-    name?: string;
-    email?: string;
-    phone?: string;
-    startDate?: string;
-    endDate?: string;
-  }) {
+  async findAll(
+    args: {
+      page?: number;
+      limit?: number;
+      search?: string;
+      name?: string;
+      email?: string;
+      phone?: string;
+      startDate?: string;
+      endDate?: string;
+    },
+    tx: DbOrTransaction = db,
+  ) {
     const {
       page = 1,
       limit = 50,
@@ -46,11 +50,11 @@ export class ComplaintRepository {
       conditions.push(
         sql`(${ilike(complaintsTable.name, `%${search}%`)} OR ${ilike(
           complaintsTable.email,
-          `%${search}%`
+          `%${search}%`,
         )} OR ${ilike(complaintsTable.phone, `%${search}%`)} OR ${ilike(
           complaintsTable.message,
-          `%${search}%`
-        )})`
+          `%${search}%`,
+        )})`,
       );
     }
 
@@ -76,7 +80,7 @@ export class ComplaintRepository {
 
     const whereClause = and(...conditions);
 
-    const complaints = await db
+    const complaints = await tx
       .select(ComplaintListSelect)
       .from(complaintsTable)
       .where(whereClause)
@@ -84,7 +88,7 @@ export class ComplaintRepository {
       .limit(limit)
       .offset(offset);
 
-    const [result] = await db
+    const [result] = await tx
       .select({ total: sql<number>`count(*)` })
       .from(complaintsTable)
       .where(whereClause);
@@ -102,20 +106,32 @@ export class ComplaintRepository {
     };
   }
 
-  async create(data: ComplaintInsert): Promise<ComplaintSelect> {
-    const [complaint] = await db.insert(complaintsTable).values(data).returning();
+  async create(
+    data: ComplaintInsert,
+    tx: DbOrTransaction = db,
+  ): Promise<ComplaintSelect> {
+    const [complaint] = await tx
+      .insert(complaintsTable)
+      .values(data)
+      .returning();
     return complaint;
   }
 
-  async findById(id: string): Promise<ComplaintSelect | null> {
-    const complaint = await db.query.complaintsTable.findFirst({
+  async findById(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<ComplaintSelect | null> {
+    const complaint = await tx.query.complaintsTable.findFirst({
       where: eq(complaintsTable.id, id),
     });
     return complaint ?? null;
   }
 
-  async delete(id: string): Promise<ComplaintSelect | null> {
-    const [complaint] = await db
+  async delete(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<ComplaintSelect | null> {
+    const [complaint] = await tx
       .update(complaintsTable)
       .set({ deletedAt: new Date() })
       .where(eq(complaintsTable.id, id))
@@ -124,7 +140,7 @@ export class ComplaintRepository {
     return complaint ?? null;
   }
 
-  async hardDelete(id: string): Promise<void> {
-    await db.delete(complaintsTable).where(eq(complaintsTable.id, id));
+  async hardDelete(id: string, tx: DbOrTransaction = db): Promise<void> {
+    await tx.delete(complaintsTable).where(eq(complaintsTable.id, id));
   }
 }

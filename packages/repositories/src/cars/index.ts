@@ -9,18 +9,18 @@ import {
   sql,
 } from "drizzle-orm";
 
-import { CarWithSeoResponseDto,GetCarsBodyDto, RegisterCarBodyDto, UpdateCarBodyDto } from "@icat/contracts";
 import {
+  Amenities,
+  BrandNames,
   CarInsert,
   CarSelect,
   carsTable,
+  CarTypes,
   db,
-  SeoInsert,
-  seoTable,
-  Transaction,
+  DbOrTransaction,
+  FuelTypes,
+  TransmissionTypes,
 } from "@icat/database";
-
-import { SeoRepository } from "../seo";
 
 export const CarItemSelect = {
   id: carsTable.id,
@@ -41,13 +41,18 @@ export const CarItemSelect = {
 };
 
 export class CarRepository {
-  private seoRepository: SeoRepository;
-
-  constructor() {
-    this.seoRepository = new SeoRepository();
-  }
-
-  async findAll(args?: GetCarsBodyDto) {
+  async findAll(args?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    name?: string;
+    model?: string;
+    brand?: BrandNames;
+    carType?: CarTypes[];
+    fuelType?: FuelTypes[];
+    transmissionType?: TransmissionTypes[];
+    amenities?: Amenities[];
+  }) {
     const {
       page = 1,
       limit = 50,
@@ -80,15 +85,15 @@ export class CarRepository {
       conditions.push(eq(carsTable.brand, brand));
     }
 
-    if (carType) {
+    if (carType && carType.length > 0) {
       conditions.push(inArray(carsTable.carType, carType));
     }
 
-    if (fuelType) {
+    if (fuelType && fuelType.length > 0) {
       conditions.push(inArray(carsTable.fuelType, fuelType));
     }
 
-    if (transmissionType) {
+    if (transmissionType && transmissionType.length > 0) {
       conditions.push(inArray(carsTable.transmissionType, transmissionType));
     }
 
@@ -144,104 +149,42 @@ export class CarRepository {
       .limit(limit);
   }
 
-  async findById(id: string): Promise<CarWithSeoResponseDto | null> {
-    const rows = await db
-      .select({
-        car: carsTable,
-        seo: seoTable,
-      })
+  async findById(id: string): Promise<CarSelect | null> {
+    const [car] = await db
+      .select()
       .from(carsTable)
-      .leftJoin(seoTable, eq(carsTable.seoId, seoTable.id))
       .where(and(eq(carsTable.id, id), isNull(carsTable.deletedAt)))
       .limit(1);
 
-    if (rows.length === 0) return null;
-
-    const { car, seo } = rows[0];
-    return { ...car, seo } as unknown as CarWithSeoResponseDto;
+    return car ?? null;
   }
 
-  async create(data: RegisterCarBodyDto): Promise<CarWithSeoResponseDto> {
-    const { seo, ...carData } = data;
-
-    return await db.transaction(async (tx: Transaction) => {
-      let seoId: string | undefined;
-
-      if (seo) {
-        const newSeo = await this.seoRepository.create(seo as SeoInsert, tx);
-        seoId = newSeo.id;
-      }
-
-      const [car] = await tx.insert(carsTable).values({
-        ...carData,
-        seoId,
-      } as CarInsert).returning();
-
-      // Return with SEO
-      const rows = await tx
-        .select({
-          car: carsTable,
-          seo: seoTable,
-        })
-        .from(carsTable)
-        .leftJoin(seoTable, eq(carsTable.seoId, seoTable.id))
-        .where(eq(carsTable.id, car.id))
-        .limit(1);
-
-      const { car: createdCar, seo: createdSeo } = rows[0];
-      return { ...createdCar, seo: createdSeo } as unknown as CarWithSeoResponseDto;
-    });
+  async create(
+    data: Omit<CarInsert, "id" | "createdAt" | "updatedAt">,
+  ): Promise<CarSelect> {
+    const [car] = await db
+      .insert(carsTable)
+      .values(data as CarInsert)
+      .returning();
+    return car;
   }
 
   async update(
     id: string,
-    data: UpdateCarBodyDto
-  ): Promise<CarWithSeoResponseDto | null> {
-    const { seo, id: _, ...carData } = data;
+    data: Partial<Omit<CarInsert, "id" | "createdAt" | "updatedAt">>,
+    tx?: DbOrTransaction,
+  ): Promise<CarSelect | null> {
+    const connection = tx || db;
+    const [updatedCar] = await connection
+      .update(carsTable)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+      })
+      .where(eq(carsTable.id, id))
+      .returning();
 
-    return await db.transaction(async (tx: Transaction) => {
-      const carResult = await tx
-        .select({ seoId: carsTable.seoId })
-        .from(carsTable)
-        .where(eq(carsTable.id, id))
-        .limit(1);
-
-      let seoId = carResult[0]?.seoId;
-
-      if (seo) {
-        if (seoId) {
-          await this.seoRepository.update(seoId, seo as Partial<SeoInsert>, tx);
-        } else {
-          const newSeo = await this.seoRepository.create(seo as SeoInsert, tx);
-          seoId = newSeo.id;
-        }
-      }
-
-      await tx
-        .update(carsTable)
-        .set({
-          ...carData,
-          seoId,
-          updatedAt: new Date(),
-        })
-        .where(eq(carsTable.id, id));
-
-      // Return updated with SEO
-      const rows = await tx
-        .select({
-          car: carsTable,
-          seo: seoTable,
-        })
-        .from(carsTable)
-        .leftJoin(seoTable, eq(carsTable.seoId, seoTable.id))
-        .where(eq(carsTable.id, id))
-        .limit(1);
-
-      if (rows.length === 0) return null;
-
-      const { car: updatedCar, seo: updatedSeo } = rows[0];
-      return { ...updatedCar, seo: updatedSeo } as unknown as CarWithSeoResponseDto;
-    });
+    return updatedCar ?? null;
   }
 
   async findCarsDriverRules(carIds: string[]) {
@@ -263,7 +206,7 @@ export class CarRepository {
       .where(sql`${carsTable.id} in ${carIds}`);
   }
 
-  async delete(id: string): Promise<CarSelect> {
+  async delete(id: string): Promise<CarSelect | null> {
     const [car] = await db
       .update(carsTable)
       .set({ deletedAt: new Date() })

@@ -5,8 +5,6 @@ import {
   CarResponseSchema,
   CarsListResponseDto,
   CarsListResponseSchema,
-  CarWithSeoResponseDto,
-  CarWithSeoResponseSchema,
   DeleteCarBodyDto,
   GetCarsBodyDto,
   PaginatedCarResponseDto,
@@ -52,22 +50,22 @@ export class CarService {
     return CarsListResponseSchema.parse(cars);
   }
 
-  async getCarById(id: string): Promise<CarWithSeoResponseDto | null> {
+  async getCarById(id: string): Promise<CarResponseDto | null> {
     const car = await this.carRepository.findById(id);
-    return car ? CarWithSeoResponseSchema.parse(car) : null;
+    return car ? CarResponseSchema.parse(car) : null;
   }
 
-  async createCar(data: RegisterCarBodyDto): Promise<CarWithSeoResponseDto> {
+  async createCar(data: RegisterCarBodyDto): Promise<CarResponseDto> {
     const car = await this.carRepository.create(data);
-    return CarWithSeoResponseSchema.parse(car);
+    return CarResponseSchema.parse(car);
   }
 
   async updateCar(
     id: string,
     updates: UpdateCarBodyDto,
-  ): Promise<CarWithSeoResponseDto | null> {
+  ): Promise<CarResponseDto | null> {
     const car = await this.carRepository.update(id, updates);
-    return car ? CarWithSeoResponseSchema.parse(car) : null;
+    return car ? CarResponseSchema.parse(car) : null;
   }
 
   async deleteCar(data: DeleteCarBodyDto): Promise<CarResponseDto | null> {

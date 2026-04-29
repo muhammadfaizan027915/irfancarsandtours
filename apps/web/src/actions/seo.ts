@@ -1,5 +1,6 @@
 "use server";
 
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import { UpsertSeoBodyDto, UpsertSeoBodySchema } from "@icat/contracts";
 import { SeoService } from "@icat/services";
 import { handlerFormActionWithError } from "@icat/lib";
@@ -10,12 +11,7 @@ export const upsertCarSeo = handlerFormActionWithError({
   action: async (data: UpsertSeoBodyDto) => {
     const seoService = new SeoService();
     const result = await seoService.upsertSeo(data);
-    revalidatePath("/dashboard/cars");
+    revalidatePath(`${DashboardNavigationUrls.CARS}/${data.carId}/edit`);
     return result;
   },
 });
-
-export const getSeoByCarId = async (carId: string) => {
-  const seoService = new SeoService();
-  return await seoService.getByCarId(carId);
-};

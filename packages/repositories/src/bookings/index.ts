@@ -1,10 +1,11 @@
-import { and, desc, eq, gte, ilike, isNull, lte,sql } from "drizzle-orm";
+import { and, desc, eq, gte, ilike, isNull, lte, sql } from "drizzle-orm";
 
 import {
   BookingInsert,
   BookingSelect,
   bookingsTable,
   db,
+  DbOrTransaction,
   usersTable,
 } from "@icat/database";
 
@@ -27,16 +28,19 @@ export const BookingItemWithUserSelect = {
 };
 
 export class BookingRepository {
-  async findAll(args?: {
-    page?: number;
-    limit?: number;
-    userId?: string;
-    id?: string;
-    name?: string;
-    address?: string;
-    startDate?: string;
-    endDate?: string;
-  }) {
+  async findAll(
+    args?: {
+      page?: number;
+      limit?: number;
+      userId?: string;
+      id?: string;
+      name?: string;
+      address?: string;
+      startDate?: string;
+      endDate?: string;
+    },
+    tx: DbOrTransaction = db,
+  ) {
     const {
       page = 1,
       limit = 50,
@@ -67,8 +71,8 @@ export class BookingRepository {
       conditions.push(
         sql`(${ilike(bookingsTable.pickupAddress, `%${address}%`)} OR ${ilike(
           bookingsTable.dropoffAddress,
-          `%${address}%`
-        )})`
+          `%${address}%`,
+        )})`,
       );
     }
 
@@ -82,7 +86,7 @@ export class BookingRepository {
 
     const whereClause = and(...conditions);
 
-    const bookings = await db
+    const bookings = await tx
       .select(BookingItemWithUserSelect)
       .from(bookingsTable)
       .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
@@ -91,7 +95,7 @@ export class BookingRepository {
       .limit(limit)
       .offset(offset);
 
-    const [result] = await db
+    const [result] = await tx
       .select({ total: sql<number>`count(*)` })
       .from(bookingsTable)
       .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
@@ -110,16 +114,19 @@ export class BookingRepository {
     };
   }
 
-  async findAllByUserId(args: {
-    page?: number;
-    limit?: number;
-    userId: string;
-    id?: string;
-    name?: string;
-    address?: string;
-    startDate?: string;
-    endDate?: string;
-  }) {
+  async findAllByUserId(
+    args: {
+      page?: number;
+      limit?: number;
+      userId: string;
+      id?: string;
+      name?: string;
+      address?: string;
+      startDate?: string;
+      endDate?: string;
+    },
+    tx: DbOrTransaction = db,
+  ) {
     const {
       page = 1,
       limit = 50,
@@ -150,8 +157,8 @@ export class BookingRepository {
       conditions.push(
         sql`(${ilike(bookingsTable.pickupAddress, `%${address}%`)} OR ${ilike(
           bookingsTable.dropoffAddress,
-          `%${address}%`
-        )})`
+          `%${address}%`,
+        )})`,
       );
     }
 
@@ -165,7 +172,7 @@ export class BookingRepository {
 
     const whereClause = and(...conditions);
 
-    const bookings = await db
+    const bookings = await tx
       .select(BookingItemSelect)
       .from(bookingsTable)
       .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
@@ -174,7 +181,7 @@ export class BookingRepository {
       .limit(limit)
       .offset(offset);
 
-    const [result] = await db
+    const [result] = await tx
       .select({ total: sql<number>`count(*)` })
       .from(bookingsTable)
       .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
@@ -193,7 +200,7 @@ export class BookingRepository {
     };
   }
 
-  async findById(id: string) {
+  async findById(id: string, tx: DbOrTransaction = db) {
     const conditions = [
       isNull(bookingsTable.deletedAt),
       eq(bookingsTable.id, id),
@@ -201,7 +208,7 @@ export class BookingRepository {
 
     const whereClause = and(...conditions);
 
-    const [booking] = await db
+    const [booking] = await tx
       .select(BookingItemSelect)
       .from(bookingsTable)
       .where(whereClause);
@@ -209,7 +216,7 @@ export class BookingRepository {
     return booking;
   }
 
-  async findByIdWithUser(id: string) {
+  async findByIdWithUser(id: string, tx: DbOrTransaction = db) {
     const conditions = [
       isNull(bookingsTable.deletedAt),
       eq(bookingsTable.id, id),
@@ -217,7 +224,7 @@ export class BookingRepository {
 
     const whereClause = and(...conditions);
 
-    const [bookingWithUser] = await db
+    const [bookingWithUser] = await tx
       .select(BookingItemWithUserSelect)
       .from(bookingsTable)
       .leftJoin(usersTable, eq(usersTable.id, bookingsTable.userId))
@@ -226,16 +233,20 @@ export class BookingRepository {
     return bookingWithUser;
   }
 
-  async create(data: BookingInsert): Promise<BookingSelect> {
-    const [booking] = await db.insert(bookingsTable).values(data).returning();
+  async create(
+    data: BookingInsert,
+    tx: DbOrTransaction = db,
+  ): Promise<BookingSelect> {
+    const [booking] = await tx.insert(bookingsTable).values(data).returning();
     return booking;
   }
 
   async update(
     id: string,
-    data: Partial<BookingInsert>
+    data: Partial<BookingInsert>,
+    tx: DbOrTransaction = db,
   ): Promise<BookingSelect | null> {
-    const [booking] = await db
+    const [booking] = await tx
       .update(bookingsTable)
       .set(data)
       .where(eq(bookingsTable.id, id))
@@ -244,8 +255,11 @@ export class BookingRepository {
     return booking ?? null;
   }
 
-  async delete(id: string): Promise<BookingSelect | null> {
-    const [booking] = await db
+  async delete(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<BookingSelect | null> {
+    const [booking] = await tx
       .update(bookingsTable)
       .set({ deletedAt: new Date() })
       .where(eq(bookingsTable.id, id))
@@ -254,7 +268,7 @@ export class BookingRepository {
     return booking ?? null;
   }
 
-  async hardDelete(id: string): Promise<void> {
-    await db.delete(bookingsTable).where(eq(bookingsTable.id, id));
+  async hardDelete(id: string, tx: DbOrTransaction = db): Promise<void> {
+    await tx.delete(bookingsTable).where(eq(bookingsTable.id, id));
   }
 }

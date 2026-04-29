@@ -6,6 +6,7 @@ import {
   bookedCarsTable,
   carsTable,
   db,
+  DbOrTransaction,
 } from "@icat/database";
 
 import { CarItemSelect } from "../cars";
@@ -24,33 +25,39 @@ export const BookedCarWithCarSelect = {
 };
 
 export class BookedCarRepository {
-  async create(data: BookedCarInsert): Promise<BookedCarSelect> {
-    const [bookedcar] = await db
+  async create(
+    data: BookedCarInsert,
+    tx: DbOrTransaction = db,
+  ): Promise<BookedCarSelect> {
+    const [bookedcar] = await tx
       .insert(bookedCarsTable)
       .values(data)
       .returning();
     return bookedcar;
   }
 
-  async findAll(): Promise<BookedCarSelect[]> {
-    return db
+  async findAll(tx: DbOrTransaction = db): Promise<BookedCarSelect[]> {
+    return tx
       .select()
       .from(bookedCarsTable)
       .where(isNull(bookedCarsTable.deletedAt));
   }
 
-  async findById(id: string): Promise<BookedCarSelect | undefined> {
-    const [bookedcar] = await db
+  async findById(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<BookedCarSelect | undefined> {
+    const [bookedcar] = await tx
       .select()
       .from(bookedCarsTable)
       .where(
-        and(eq(bookedCarsTable.id, id), isNull(bookedCarsTable.deletedAt))
+        and(eq(bookedCarsTable.id, id), isNull(bookedCarsTable.deletedAt)),
       );
 
     return bookedcar;
   }
 
-  async findByBookingIdWithCars(id: string) {
+  async findByBookingIdWithCars(id: string, tx: DbOrTransaction = db) {
     const conditions = [
       isNull(bookedCarsTable.deletedAt),
       eq(bookedCarsTable.bookingId, id),
@@ -58,7 +65,7 @@ export class BookedCarRepository {
 
     const whereClause = and(...conditions);
 
-    const bookedCars = await db
+    const bookedCars = await tx
       .select(BookedCarWithCarSelect)
       .from(bookedCarsTable)
       .leftJoin(carsTable, eq(carsTable.id, bookedCarsTable.carId))
@@ -69,9 +76,10 @@ export class BookedCarRepository {
 
   async update(
     id: string,
-    data: Partial<BookedCarInsert>
+    data: Partial<BookedCarInsert>,
+    tx: DbOrTransaction = db,
   ): Promise<BookedCarSelect | undefined> {
-    const [updated] = await db
+    const [updated] = await tx
       .update(bookedCarsTable)
       .set(data)
       .where(and(eq(bookedCarsTable.id, id), isNull(bookedCarsTable.deletedAt)))
@@ -79,8 +87,11 @@ export class BookedCarRepository {
     return updated;
   }
 
-  async delete(id: string): Promise<BookedCarSelect | undefined> {
-    const [deleted] = await db
+  async delete(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<BookedCarSelect | undefined> {
+    const [deleted] = await tx
       .update(bookedCarsTable)
       .set({ deletedAt: new Date() })
       .where(and(eq(bookedCarsTable.id, id), isNull(bookedCarsTable.deletedAt)))

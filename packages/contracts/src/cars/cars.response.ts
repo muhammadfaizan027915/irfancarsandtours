@@ -9,8 +9,6 @@ import {
   TransmissionTypesList,
 } from "@icat/database/enums";
 
-import { SeoResponseSchema } from "../seo";
-
 export const CarResponseSchema = z.object({
   id: z.uuid(),
   name: z.string(),
@@ -42,12 +40,6 @@ export const CarResponseSchema = z.object({
 });
 
 export type CarResponseDto = z.infer<typeof CarResponseSchema>;
-
-export const CarWithSeoResponseSchema = CarResponseSchema.extend({
-  seo: SeoResponseSchema.nullish(),
-});
-
-export type CarWithSeoResponseDto = z.infer<typeof CarWithSeoResponseSchema>;
 
 export const CarListItemResponseSchema = CarResponseSchema.omit({
   description: true,

@@ -1,6 +1,12 @@
-import { and, desc, eq, gte, ilike, isNull, lte,sql } from "drizzle-orm";
+import { and, desc, eq, gte, ilike, isNull, lte, sql } from "drizzle-orm";
 
-import { db, UserInsert, UserSelect,usersTable } from "@icat/database";
+import {
+  db,
+  DbOrTransaction,
+  UserInsert,
+  UserSelect,
+  usersTable,
+} from "@icat/database";
 
 export const UserItemSelect = {
   id: usersTable.id,
@@ -15,16 +21,19 @@ export const UserItemSelect = {
 };
 
 export class UserRepository {
-  async findAll(args?: {
-    page?: number;
-    limit?: number;
-    name?: string;
-    email?: string;
-    phone?: string;
-    cnic?: string;
-    startDate?: string;
-    endDate?: string;
-  }) {
+  async findAll(
+    args?: {
+      page?: number;
+      limit?: number;
+      name?: string;
+      email?: string;
+      phone?: string;
+      cnic?: string;
+      startDate?: string;
+      endDate?: string;
+    },
+    tx: DbOrTransaction = db,
+  ) {
     const {
       page = 1,
       limit = 50,
@@ -65,7 +74,7 @@ export class UserRepository {
 
     const whereClause = and(...conditions);
 
-    const users = await db
+    const users = await tx
       .select(UserItemSelect)
       .from(usersTable)
       .where(whereClause)
@@ -73,8 +82,7 @@ export class UserRepository {
       .limit(limit)
       .offset(offset);
 
-
-    const [result] = await db
+    const [result] = await tx
       .select({ total: sql<number>`count(*)` })
       .from(usersTable)
       .where(whereClause);
@@ -92,32 +100,42 @@ export class UserRepository {
     };
   }
 
-  async findById(id: string): Promise<UserSelect | null> {
-    const user = await db.query.usersTable.findFirst({
+  async findById(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<UserSelect | null> {
+    const user = await tx.query.usersTable.findFirst({
       where: eq(usersTable.id, id),
     });
 
     return user ?? null;
   }
 
-  async findByEmail(email: string): Promise<UserSelect | null> {
-    const user = await db.query.usersTable.findFirst({
+  async findByEmail(
+    email: string,
+    tx: DbOrTransaction = db,
+  ): Promise<UserSelect | null> {
+    const user = await tx.query.usersTable.findFirst({
       where: eq(usersTable.email, email),
     });
 
     return user ?? null;
   }
 
-  async create(user: UserInsert): Promise<UserSelect> {
-    const [createdUser] = await db.insert(usersTable).values(user).returning();
+  async create(
+    user: UserInsert,
+    tx: DbOrTransaction = db,
+  ): Promise<UserSelect> {
+    const [createdUser] = await tx.insert(usersTable).values(user).returning();
     return createdUser;
   }
 
   async update(
     id: string,
-    data: Partial<UserInsert>
+    data: Partial<UserInsert>,
+    tx: DbOrTransaction = db,
   ): Promise<UserSelect | null> {
-    const [updatedUser] = await db
+    const [updatedUser] = await tx
       .update(usersTable)
       .set(data)
       .where(eq(usersTable.id, id))
@@ -126,8 +144,11 @@ export class UserRepository {
     return updatedUser ?? null;
   }
 
-  async delete(id: string): Promise<UserSelect | null> {
-    const [deletedUser] = await db
+  async delete(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<UserSelect | null> {
+    const [deletedUser] = await tx
       .delete(usersTable)
       .where(eq(usersTable.id, id))
       .returning();
