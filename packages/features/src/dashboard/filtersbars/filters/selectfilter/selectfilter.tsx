@@ -4,33 +4,33 @@ import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 import { SingleSelect } from "@icat/ui";
 import { Label } from "@icat/ui/components/label";
 
-interface SelectFilterProps {
+type SelectFilterProps = {
   label: string;
-  paramName: string;
+  name: string;
   options: readonly string[];
   placeholder?: string;
 }
 
 export function SelectFilter({
   label,
-  paramName,
+  name,
   options,
   placeholder,
 }: SelectFilterProps) {
   const { getSearchParams, updateSearchParams } = useSearchRouter();
-  const value = getSearchParams(paramName)?.[0] || "";
+  const value = getSearchParams(name)?.[0] || "";
 
   const handleChange = (val: string) => {
     updateSearchParams({
-      [paramName]: val || undefined,
+      [name]: val || undefined,
     });
   };
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Label htmlFor={paramName}>{label}</Label>
+      <Label htmlFor={name}>{label}</Label>
       <SingleSelect
-        id={paramName}
+        id={name}
         options={options}
         value={value}
         placeholder={placeholder}

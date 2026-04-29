@@ -4,7 +4,13 @@ import { CarForm } from "@icat/features/dashboard/forms/car";
 import { getCar } from "@icat/web/data/cars";
 import { getCarSeo } from "@icat/web/data/seo";
 
-export async function DashboardCarEditContent({ carId }: { carId: string }) {
+type DashboardCarEditContentProps = {
+  carId: string;
+};
+
+export async function DashboardCarEditContent({
+  carId,
+}: DashboardCarEditContentProps) {
   const car = await getCar(carId);
   const seo = await getCarSeo(carId);
 

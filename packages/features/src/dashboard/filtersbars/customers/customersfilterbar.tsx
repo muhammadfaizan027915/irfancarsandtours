@@ -56,18 +56,18 @@ export function CustomersFilterBar() {
       </CardHeader>
 
       <CardContent className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
-        <TextFilter label="Name" paramName="name" placeholder="Search by name" />
+        <TextFilter label="Name" name="name" placeholder="Search by name" />
         <TextFilter
           label="Email"
-          paramName="email"
+          name="email"
           placeholder="Search by email"
         />
         <TextFilter
           label="Phone"
-          paramName="phone"
+          name="phone"
           placeholder="Search by phone"
         />
-        <TextFilter label="CNIC" paramName="cnic" placeholder="Search by CNIC" />
+        <TextFilter label="CNIC" name="cnic" placeholder="Search by CNIC" />
         <DateRangeFilter label="Joined On" />
       </CardContent>
     </Card>

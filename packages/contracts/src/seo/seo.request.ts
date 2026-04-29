@@ -8,13 +8,13 @@ export const SeoFieldsSchema = z.object({
     if (typeof val === "string") return val.split(",").map((v) => v.trim());
     return Array.isArray(val) ? val : [val];
   }, z.array(z.string())).optional(),
-  ogImage: z.string().url("Invalid image URL").optional().or(z.literal("")),
+  ogImage: z.url("Invalid image URL").optional().or(z.literal("")),
   robots: z.string().max(50).optional(),
-  canonicalUrl: z.string().url("Invalid URL").optional().or(z.literal("")),
+  canonicalUrl: z.url("Invalid URL").optional().or(z.literal("")),
 });
 
 export const UpsertSeoBodySchema = SeoFieldsSchema.extend({
-  carId: z.string().uuid("Invalid car ID"),
+  carId: z.uuid("Invalid car ID"),
 });
 
 export type UpsertSeoBodyDto = z.infer<typeof UpsertSeoBodySchema>;

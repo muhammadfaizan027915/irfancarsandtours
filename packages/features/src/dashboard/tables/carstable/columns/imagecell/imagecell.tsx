@@ -1,8 +1,8 @@
 import { SmallImage } from "@icat/ui/components/small-image";
 
-import { CarCellPorps } from "../columns.types";
+import { CarCellProps } from "../columns.types";
 
-export function CarImageCell({ row }: CarCellPorps) {
+export function CarImageCell({ row }: CarCellProps) {
   const carName = row.original?.name || "Car Image";
   const imageUrl = row.original.imageUrls?.[0];
 

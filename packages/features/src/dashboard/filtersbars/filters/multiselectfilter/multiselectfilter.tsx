@@ -4,33 +4,33 @@ import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 import { Autocomplete } from "@icat/ui";
 import { Label } from "@icat/ui/components/label";
 
-interface MultiSelectFilterProps {
+type MultiSelectFilterProps = {
   label: string;
-  paramName: string;
+  name: string;
   options: readonly string[];
   placeholder?: string;
 }
 
 export function MultiSelectFilter({
   label,
-  paramName,
+  name,
   options,
   placeholder,
 }: MultiSelectFilterProps) {
   const { getSearchParams, updateSearchParams } = useSearchRouter();
-  const values = getSearchParams(paramName) || [];
+  const values = getSearchParams(name) || [];
 
   const handleChange = (vals: string[]) => {
     updateSearchParams({
-      [paramName]: vals.length > 0 ? vals : undefined,
+      [name]: vals.length > 0 ? vals : undefined,
     });
   };
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Label htmlFor={paramName}>{label}</Label>
+      <Label htmlFor={name}>{label}</Label>
       <Autocomplete
-        id={paramName}
+        id={name}
         options={options}
         value={values}
         placeholder={placeholder}

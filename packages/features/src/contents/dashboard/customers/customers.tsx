@@ -2,7 +2,13 @@ import { GetUsersBodyDto } from "@icat/contracts";
 import { CustoemrsTable } from "@icat/features/dashboard/tables/customerstable";
 import { getCustomers } from "@icat/web/data/users";
 
-export async function DashboardCustomersContent({ searchParams }: { searchParams: GetUsersBodyDto }) {
+type DashboardCustomersContentProps = {
+  searchParams: GetUsersBodyDto;
+};
+
+export async function DashboardCustomersContent({
+  searchParams,
+}: DashboardCustomersContentProps) {
   const result = await getCustomers(searchParams);
   const customers = result.data;
   const pagination = result?.pagination;

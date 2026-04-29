@@ -3,11 +3,11 @@
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Children, ReactNode,useCallback } from "react";
+import { Children, ReactNode, useCallback } from "react";
 
 import { Button } from "@icat/ui";
 
-interface SliderContainerProps {
+type SliderContainerProps = {
   children: ReactNode | ReactNode[];
   slidesPerView?: [number, number, number];
   className?: string;

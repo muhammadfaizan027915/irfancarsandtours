@@ -1,6 +1,10 @@
 import { Skeleton } from "./skeleton";
 
-export function DataTableSkeleton({ rows = 5 }: { rows?: number }) {
+type DataTableSkeletonProps = {
+  rows?: number;
+};
+
+export function DataTableSkeleton({ rows = 5 }: DataTableSkeletonProps) {
   return (
     <div className="border border-border rounded-xl p-4 bg-card">
       <div className="space-y-4">

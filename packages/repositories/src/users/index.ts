@@ -1,6 +1,5 @@
 import { and, desc, eq, gte, ilike, isNull, lte,sql } from "drizzle-orm";
 
-import { GetUsersBodyDto } from "@icat/contracts";
 import { db, UserInsert, UserSelect,usersTable } from "@icat/database";
 
 export const UserItemSelect = {
@@ -16,7 +15,16 @@ export const UserItemSelect = {
 };
 
 export class UserRepository {
-  async findAll(args?: GetUsersBodyDto) {
+  async findAll(args?: {
+    page?: number;
+    limit?: number;
+    name?: string;
+    email?: string;
+    phone?: string;
+    cnic?: string;
+    startDate?: string;
+    endDate?: string;
+  }) {
     const {
       page = 1,
       limit = 50,

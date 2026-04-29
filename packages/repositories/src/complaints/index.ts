@@ -1,6 +1,5 @@
 import { and, desc, eq, gte, ilike, isNull, lte,sql } from "drizzle-orm";
 
-import { GetComplaintsQueryDto } from "@icat/contracts";
 import {
   ComplaintInsert,
   ComplaintSelect,
@@ -19,7 +18,16 @@ export const ComplaintListSelect = {
 };
 
 export class ComplaintRepository {
-  async findAll(args: GetComplaintsQueryDto) {
+  async findAll(args: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    name?: string;
+    email?: string;
+    phone?: string;
+    startDate?: string;
+    endDate?: string;
+  }) {
     const {
       page = 1,
       limit = 50,

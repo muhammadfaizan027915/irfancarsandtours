@@ -1,5 +1,6 @@
 "use server";
 
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import {
   ComplaintRequestBodyDto,
   ComplaintRequestBodySchema,
@@ -23,5 +24,5 @@ export const sendComplaint = handlerFormActionWithError({
 export const deleteComplaint = handleServerActionWithError(async (id: string) => {
   const complaintService = new ComplaintService();
   await complaintService.deleteComplaint(id);
-  revalidatePath("/dashboard/complaints");
+  revalidatePath(DashboardNavigationUrls.COMPLAINTS);
 });

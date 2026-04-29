@@ -16,10 +16,9 @@ import {
   TableRow,
 } from "@icat/ui/components/table";
 
-import { Button } from "./button";
 import { PaginationBar } from "./pagination";
 
-interface DataTableProps<TData, TValue> {
+type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   pagination?: {
@@ -54,9 +53,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}

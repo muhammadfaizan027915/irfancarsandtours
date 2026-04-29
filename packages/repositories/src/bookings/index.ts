@@ -1,6 +1,5 @@
 import { and, desc, eq, gte, ilike, isNull, lte,sql } from "drizzle-orm";
 
-import { GetBookingsBodyDto } from "@icat/contracts";
 import {
   BookingInsert,
   BookingSelect,
@@ -28,7 +27,16 @@ export const BookingItemWithUserSelect = {
 };
 
 export class BookingRepository {
-  async findAll(args?: GetBookingsBodyDto & { userId?: string }) {
+  async findAll(args?: {
+    page?: number;
+    limit?: number;
+    userId?: string;
+    id?: string;
+    name?: string;
+    address?: string;
+    startDate?: string;
+    endDate?: string;
+  }) {
     const {
       page = 1,
       limit = 50,
@@ -102,7 +110,16 @@ export class BookingRepository {
     };
   }
 
-  async findAllByUserId(args: GetBookingsBodyDto & { userId: string }) {
+  async findAllByUserId(args: {
+    page?: number;
+    limit?: number;
+    userId: string;
+    id?: string;
+    name?: string;
+    address?: string;
+    startDate?: string;
+    endDate?: string;
+  }) {
     const {
       page = 1,
       limit = 50,

@@ -66,35 +66,35 @@ export function CarsFilterBar() {
       </CardHeader>
 
       <CardContent className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
-        <TextFilter label="Name" paramName="name" placeholder="Car Name" />
-        <TextFilter label="Model" paramName="model" placeholder="Car Model" />
+        <TextFilter label="Name" name="name" placeholder="Car Name" />
+        <TextFilter label="Model" name="model" placeholder="Car Model" />
         <SelectFilter
           label="Brand"
-          paramName="brand"
+          name="brand"
           options={BrandNamesList}
           placeholder="Select Brand"
         />
         <MultiSelectFilter
           label="Car Type"
-          paramName="carType"
+          name="carType"
           options={CarTypesList}
           placeholder="Select Type"
         />
         <MultiSelectFilter
           label="Fuel Type"
-          paramName="fuelType"
+          name="fuelType"
           options={FuelTypesList}
           placeholder="Select Fuel"
         />
         <MultiSelectFilter
           label="Transmission"
-          paramName="transmissionType"
+          name="transmissionType"
           options={TransmissionTypesList}
           placeholder="Select Transmission"
         />
         <MultiSelectFilter
           label="Amenities"
-          paramName="amenities"
+          name="amenities"
           options={AmenitiesList}
           placeholder="Select Amenities"
         />

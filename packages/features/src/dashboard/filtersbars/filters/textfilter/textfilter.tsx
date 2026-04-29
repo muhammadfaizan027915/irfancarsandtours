@@ -7,15 +7,15 @@ import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 import { Input } from "@icat/ui/components/input";
 import { Label } from "@icat/ui/components/label";
 
-interface TextFilterProps {
+type TextFilterProps = {
   label: string;
-  paramName: string;
+  name: string;
   placeholder?: string;
-}
+};
 
-export function TextFilter({ label, paramName, placeholder }: TextFilterProps) {
+export function TextFilter({ label, name, placeholder }: TextFilterProps) {
   const { getSearchParams, updateSearchParams } = useSearchRouter();
-  const externalValue = getSearchParams(paramName)?.[0] || "";
+  const externalValue = getSearchParams(name)?.[0] || "";
 
   const [value, setValue] = useState(externalValue);
   const [prevExternalValue, setPrevExternalValue] = useState(externalValue);
@@ -29,15 +29,15 @@ export function TextFilter({ label, paramName, placeholder }: TextFilterProps) {
 
   useEffect(() => {
     updateSearchParams({
-      [paramName]: debouncedValue || undefined,
+      [name]: debouncedValue || undefined,
     });
-  }, [debouncedValue, paramName, updateSearchParams]);
+  }, [debouncedValue, name, updateSearchParams]);
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Label htmlFor={paramName}>{label}</Label>
+      <Label htmlFor={name}>{label}</Label>
       <Input
-        id={paramName}
+        id={name}
         value={value}
         placeholder={placeholder}
         onChange={(e) => setValue(e.target.value)}
@@ -45,3 +45,4 @@ export function TextFilter({ label, paramName, placeholder }: TextFilterProps) {
     </div>
   );
 }
+

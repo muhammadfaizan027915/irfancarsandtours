@@ -49,11 +49,11 @@ export function BookingsFilterBar() {
       </CardHeader>
 
       <CardContent className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
-        <TextFilter label="Booking ID" paramName="id" placeholder="BK..." />
-        <TextFilter label="Customer Name" paramName="name" placeholder="Name" />
+        <TextFilter label="Booking ID" name="id" placeholder="BK..." />
+        <TextFilter label="Customer Name" name="name" placeholder="Name" />
         <TextFilter
           label="Address"
-          paramName="address"
+          name="address"
           placeholder="Pickup/Dropoff"
         />
         <DateRangeFilter label="Date Range" />

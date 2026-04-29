@@ -15,9 +15,9 @@ import {
 import { toast } from "@icat/ui/components/sonner";
 import { deleteCar } from "@icat/web/actions";
 
-import { CarCellPorps } from "../columns.types";
+import { CarCellProps } from "../columns.types";
 
-export function CarActionsCell({ row }: CarCellPorps) {
+export function CarActionsCell({ row }: CarCellProps) {
   const carId = row.original.id;
 
   const handleDeleteCar = async () => {
