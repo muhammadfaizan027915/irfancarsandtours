@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "dotenv -e .env -- turbo dev",
     "build": "dotenv -e .env -- turbo build",
-    "migrate": "turbo run migrate",
+    "db:migrate": "dotenv -e .env -- turbo run migrate",
+    "db:push": "dotenv -e .env -- turbo run push",
+    "db:generate": "dotenv -e .env -- turbo run generate",
+    "db:studio": "dotenv -e .env -- turbo run studio",
     "clean": "turbo clean",
     "lint": "turbo run lint"
   },
@@ -27,6 +30,7 @@
     "eslint": "^9.39.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
     "globals": "^17.5.0",
     "shx": "^0.4.0",
     "turbo": "^2.9.5",
@@ -52,7 +56,7 @@
     "react-dom": "^19.2.2"
   },
   "optionalDependencies": {
-    "lightningcss-linux-x64-gnu": "*",
-    "@tailwindcss/oxide-linux-x64-gnu": "*"
+    "@tailwindcss/oxide-linux-x64-gnu": "*",
+    "lightningcss-linux-x64-gnu": "*"
   }
 }

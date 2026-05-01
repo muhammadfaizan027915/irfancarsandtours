@@ -1,12 +1,13 @@
-import { BrandNamesList } from "@icat/database";
-import { Input } from "@icat/ui/components/input";
-import { Label } from "@icat/ui/components/label";
-import { Button } from "@icat/ui/components/button";
-import { SingleSelect } from "@icat/ui/components/select";
-import { CarSerachProps } from "@icat/features/searchbar/searchbar.types";
-import { NavigationUrls } from "@icat/features/header/header.constants";
 import { Search } from "lucide-react";
 import Form from "next/form";
+
+import { BrandNamesList } from "@icat/database";
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import { CarSerachProps } from "@icat/features/searchbar/searchbar.types";
+import { Button } from "@icat/ui/components/button";
+import { Input } from "@icat/ui/components/input";
+import { Label } from "@icat/ui/components/label";
+import { SingleSelect } from "@icat/ui/components/select";
 
 export function CarSearchbar({ search, brand }: CarSerachProps) {
   return (

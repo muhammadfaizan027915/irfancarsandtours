@@ -1,9 +1,11 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+
 import { CarListItemResponseDto } from "@icat/contracts";
-import { CarImageCell } from "./imagecell";
+
 import { CarActionsCell } from "./actionscell";
+import { CarImageCell } from "./imagecell";
 
 export const carsColumns: ColumnDef<CarListItemResponseDto>[] = [
   {

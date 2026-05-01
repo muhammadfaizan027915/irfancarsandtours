@@ -1,4 +1,5 @@
 import { Skeleton } from "@icat/ui/components/skeleton";
+
 import { CarCardSkeleton } from "../cars/cars.skeleton";
 
 export function HomeFeaturedCarsSkeleton() {

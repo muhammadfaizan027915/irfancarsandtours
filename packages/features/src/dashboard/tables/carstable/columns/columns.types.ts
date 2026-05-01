@@ -1,4 +1,5 @@
-import { CarListItemResponseDto } from "@icat/contracts";
 import { CellContext } from "@tanstack/react-table";
 
-export type CarCellPorps = CellContext<CarListItemResponseDto, unknown>;
+import { CarListItemResponseDto } from "@icat/contracts";
+
+export type CarCellProps = CellContext<CarListItemResponseDto, unknown>;

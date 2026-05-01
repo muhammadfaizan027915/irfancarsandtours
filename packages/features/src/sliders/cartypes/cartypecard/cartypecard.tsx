@@ -1,12 +1,13 @@
-import { Card } from "@icat/ui";
-import { CarPlaceHolderImageUrl } from "@icat/features/common";
-import { NavigationUrls } from "@icat/features/header/header.constants";
-import { Button } from "@icat/ui/components/button";
 import { ArrowRight } from "lucide-react";
-
-import { CarTypeCardProps } from "./cartypecard.types";
 import Image from "next/image";
 import Link from "next/link";
+
+import { CarPlaceHolderImageUrl } from "@icat/features/common";
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import { Card } from "@icat/ui";
+import { Button } from "@icat/ui/components/button";
+
+import { CarTypeCardProps } from "./cartypecard.types";
 
 export function CarTypeCard({ name, image }: CarTypeCardProps) {
   return (

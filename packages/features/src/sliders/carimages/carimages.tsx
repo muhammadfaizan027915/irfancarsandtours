@@ -1,8 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
-import { SliderContainer } from "@icat/ui/components/slider-container";
-import { CarImagesProps } from "./carimages.types";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+
+import { SliderContainer } from "@icat/ui/components/slider-container";
+
+import { CarImagesProps } from "./carimages.types";
 
 export function CarImages({ imageUrls }: CarImagesProps) {
   const [ready, setReady] = useState(false);

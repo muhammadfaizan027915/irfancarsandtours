@@ -1,11 +1,12 @@
 "use client";
 
-import { BookedCarWithCarResponseDto } from "@icat/contracts";
-import { NavigationUrls } from "@icat/features/header/header.constants";
-import { SmallImage } from "@icat/ui/components/small-image";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import Link from "next/link";
+
+import { BookedCarWithCarResponseDto } from "@icat/contracts";
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import { SmallImage } from "@icat/ui/components/small-image";
 
 export const userBookedCarsColumns: ColumnDef<BookedCarWithCarResponseDto>[] = [
   {

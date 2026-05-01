@@ -1,11 +1,11 @@
-import { BookedCarRepository } from "@icat/repositories";
-import { BookedCarInsert } from "@icat/database";
 import {
   BookedCarResponseDto,
   BookedCarResponseSchema,
   BookedCarWithCarListResponseDto,
   BookedCarWithCarListResponseSchema,
 } from "@icat/contracts";
+import { BookedCarInsert } from "@icat/database";
+import { BookedCarRepository } from "@icat/repositories";
 
 export class BookedCarService {
   private bookedCarRepository: BookedCarRepository;

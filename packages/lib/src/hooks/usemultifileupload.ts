@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+
 import {
-  uploadFile as uploadFileUtil,
   deleteFile as deleteFileUtil,
+  uploadFile as uploadFileUtil,
 } from "@icat/lib/utils";
 
 type UploadedFile = {

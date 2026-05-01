@@ -1,7 +1,8 @@
-import { text, pgTable, varchar, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp,varchar } from "drizzle-orm/pg-core";
+
 import { timestampColumns } from "../utils";
-import { usersTable } from "./usersTable";
 import { bookingStatusEnum } from "./enums";
+import { usersTable } from "./usersTable";
 
 export const bookingsTable = pgTable("bookings", {
   id: text("id")

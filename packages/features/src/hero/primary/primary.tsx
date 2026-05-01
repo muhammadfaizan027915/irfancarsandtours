@@ -1,7 +1,8 @@
+import { CircleCheck } from "lucide-react";
 import Image from "next/image";
+
 import { Header } from "@icat/features/header";
 import { Topbar } from "@icat/features/topbar";
-import { CircleCheck } from "lucide-react";
 
 export function PrimrayHero() {
   return (

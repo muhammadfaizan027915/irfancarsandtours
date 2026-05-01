@@ -1,5 +1,11 @@
 "use client";
 
+import { LayoutGrid } from "lucide-react";
+import Link from "next/link";
+
+import { CarCartCard } from "@icat/features/carcartlist/carcartcard";
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import { Button } from "@icat/ui/components/button";
 import {
   Sheet,
   SheetClose,
@@ -9,14 +15,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@icat/ui/components/sheet";
-import { Button } from "@icat/ui/components/button";
 import { toast } from "@icat/ui/components/sonner";
 import { useCarCart } from "@icat/web/store";
-import { CarCartCard } from "@icat/features/carcartlist/carcartcard";
-import { NavigationUrls } from "@icat/features/header/header.constants";
+
 import { EmptyCarCartMessage } from "./emptycarcartmessage";
-import { LayoutGrid } from "lucide-react";
-import Link from "next/link";
 
 export function CarCartSidebar() {
   const { carsList, clearCart } = useCarCart();

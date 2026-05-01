@@ -1,17 +1,17 @@
 "use client";
 
-import * as React from "react";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon, ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
+import * as React from "react";
 import { DateRange } from "react-day-picker";
 
-import { cn } from "@icat/ui/lib/utils";
 import { Calendar } from "@icat/ui/components/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@icat/ui/components/popover";
+import { cn } from "@icat/ui/lib/utils";
 
 type DateRangePickerProps = {
   id?: string;

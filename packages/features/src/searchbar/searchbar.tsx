@@ -1,6 +1,7 @@
+import { Card } from "@icat/ui/components/card";
+
 import { CarSearchbar } from "./carsearch";
 import { SearchbarProps } from "./searchbar.types";
-import { Card } from "@icat/ui/components/card";
 
 export function Searchbar({ type = "cars", brand, search }: SearchbarProps) {
   const SearchPanel = SearchbarMap[type];

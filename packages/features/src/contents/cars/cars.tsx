@@ -1,10 +1,10 @@
-import { getUserCars } from "@icat/web/data/cars";
 import { GetCarsBodyDto } from "@icat/contracts";
 import { Cars } from "@icat/features/cars";
+import { FiltersClearer } from "@icat/features/filtersclearer";
+import { FiltersSidebar } from "@icat/features/sidebars/filterssidebar";
 import { PaginationBar } from "@icat/ui/components/pagination";
 import { PaginationInfo } from "@icat/ui/components/pagination-info";
-import { FiltersSidebar } from "@icat/features/sidebars/filterssidebar";
-import { FiltersClearer } from "@icat/features/filtersclearer";
+import { getUserCars } from "@icat/web/data/cars";
 
 export async function CarsContent({ filters }: { filters: GetCarsBodyDto }) {
   const result = await getUserCars(filters);

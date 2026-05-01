@@ -1,9 +1,10 @@
 import { z } from "zod";
+
 import {
-  BrandNamesList,
-  FuelTypesList,
   AmenitiesList,
+  BrandNamesList,
   CarTypesList,
+  FuelTypesList,
   TransmissionTypesList,
 } from "@icat/database/enums";
 
@@ -20,17 +21,24 @@ export const RegisterCarBodySchema = z.object({
   fuelType: z.enum(FuelTypesList, "Please select a valid fuel type"),
   transmissionType: z.enum(
     TransmissionTypesList,
-    "Please select a valid transmission type"
+    "Please select a valid transmission type",
   ),
-  amenities: z.preprocess((val) => {
-    if (!val) return undefined;
-    return Array.isArray(val) ? val : [val];
-  }, z.array(z.enum(AmenitiesList, "Please select a valid amenities"))),
-  imageUrls: z
-    .preprocess((val) => {
+  amenities: z.preprocess(
+    (val) => {
+      if (val === "") return [];
       if (!val) return undefined;
       return Array.isArray(val) ? val : [val];
-    }, z.array(z.url("Each image must be a valid URL")))
+    },
+    z.array(z.enum(AmenitiesList, "Please select a valid amenities")),
+  ),
+  imageUrls: z
+    .preprocess(
+      (val) => {
+        if (!val) return undefined;
+        return Array.isArray(val) ? val : [val];
+      },
+      z.array(z.url("Each image must be a valid URL")),
+    )
     .optional(),
   seatingCapacity: z.coerce
     .number("Seating capacity is required")
@@ -55,39 +63,49 @@ export const DeleteCarBodySchema = z.object({
 export type DeleteCarBodyDto = z.infer<typeof DeleteCarBodySchema>;
 
 export const GetCarsBodySchema = z.object({
-  page: z
-    .string()
-    .optional()
-    .transform((val) => (val ? parseInt(val, 10) : 1)),
+  page: z.coerce.number().optional().default(1),
 
-  limit: z
-    .string()
-    .optional()
-    .transform((val) => (val ? parseInt(val, 10) : 50)),
+  limit: z.coerce.number().optional().default(50),
 
   search: z.string().optional(),
 
+  name: z.string().optional(),
+
+  model: z.string().optional(),
+
   brand: z.enum(BrandNamesList).optional(),
 
-  carType: z.preprocess((val) => {
-    if (!val) return undefined;
-    return Array.isArray(val) ? val : [val];
-  }, z.array(z.enum(CarTypesList)).optional()),
+  carType: z.preprocess(
+    (val) => {
+      if (!val) return undefined;
+      return Array.isArray(val) ? val : [val];
+    },
+    z.array(z.enum(CarTypesList)).optional(),
+  ),
 
-  fuelType: z.preprocess((val) => {
-    if (!val) return undefined;
-    return Array.isArray(val) ? val : [val];
-  }, z.array(z.enum(FuelTypesList)).optional()),
+  fuelType: z.preprocess(
+    (val) => {
+      if (!val) return undefined;
+      return Array.isArray(val) ? val : [val];
+    },
+    z.array(z.enum(FuelTypesList)).optional(),
+  ),
 
-  transmissionType: z.preprocess((val) => {
-    if (!val) return undefined;
-    return Array.isArray(val) ? val : [val];
-  }, z.array(z.enum(TransmissionTypesList)).optional()),
+  transmissionType: z.preprocess(
+    (val) => {
+      if (!val) return undefined;
+      return Array.isArray(val) ? val : [val];
+    },
+    z.array(z.enum(TransmissionTypesList)).optional(),
+  ),
 
-  amenities: z.preprocess((val) => {
-    if (!val) return undefined;
-    return Array.isArray(val) ? val : [val];
-  }, z.array(z.enum(AmenitiesList)).optional()),
+  amenities: z.preprocess(
+    (val) => {
+      if (!val) return undefined;
+      return Array.isArray(val) ? val : [val];
+    },
+    z.array(z.enum(AmenitiesList)).optional(),
+  ),
 });
 
 export type GetCarsBodyDto = z.infer<typeof GetCarsBodySchema>;

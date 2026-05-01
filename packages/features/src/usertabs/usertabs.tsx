@@ -1,9 +1,10 @@
 "use client";
 
-import { Tabs, TabsList, TabsTrigger } from "@icat/ui/components/tabs";
-import { NavigationUrls } from "@icat/features/header/header.constants";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import { Tabs, TabsList, TabsTrigger } from "@icat/ui/components/tabs";
 
 export function UserTabs() {
   const pathname = usePathname();

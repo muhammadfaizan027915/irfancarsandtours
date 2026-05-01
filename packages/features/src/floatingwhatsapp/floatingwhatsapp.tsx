@@ -1,4 +1,5 @@
 import { MessageCircle } from "lucide-react";
+
 import { PHONE_NUMBER_1 } from "@icat/features/contactdetails/contactdetails.constants";
 
 export function FloatingWhatsApp({

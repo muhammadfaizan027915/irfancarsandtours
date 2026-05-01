@@ -1,24 +1,26 @@
 import {
-  db,
-  carsTable,
-  CarInsert,
-  CarSelect,
-  CarTypes,
-  FuelTypes,
-  TransmissionTypes,
-  Amenities,
-  BrandNames,
-} from "@icat/database";
-import {
   and,
+  arrayOverlaps,
   desc,
   eq,
+  ilike,
+  inArray,
   isNull,
   sql,
-  inArray,
-  arrayOverlaps,
-  ilike,
 } from "drizzle-orm";
+
+import {
+  Amenities,
+  BrandNames,
+  CarInsert,
+  CarSelect,
+  carsTable,
+  CarTypes,
+  db,
+  DbOrTransaction,
+  FuelTypes,
+  TransmissionTypes,
+} from "@icat/database";
 
 export const CarItemSelect = {
   id: carsTable.id,
@@ -43,6 +45,8 @@ export class CarRepository {
     page?: number;
     limit?: number;
     search?: string;
+    name?: string;
+    model?: string;
     brand?: BrandNames;
     carType?: CarTypes[];
     fuelType?: FuelTypes[];
@@ -53,6 +57,8 @@ export class CarRepository {
       page = 1,
       limit = 50,
       search,
+      name,
+      model,
       brand,
       carType,
       fuelType,
@@ -67,19 +73,27 @@ export class CarRepository {
       conditions.push(ilike(carsTable.name, `%${search}%`));
     }
 
+    if (name) {
+      conditions.push(ilike(carsTable.name, `%${name}%`));
+    }
+
+    if (model) {
+      conditions.push(ilike(carsTable.model, `%${model}%`));
+    }
+
     if (brand) {
       conditions.push(eq(carsTable.brand, brand));
     }
 
-    if (carType) {
+    if (carType && carType.length > 0) {
       conditions.push(inArray(carsTable.carType, carType));
     }
 
-    if (fuelType) {
+    if (fuelType && fuelType.length > 0) {
       conditions.push(inArray(carsTable.fuelType, fuelType));
     }
 
-    if (transmissionType) {
+    if (transmissionType && transmissionType.length > 0) {
       conditions.push(inArray(carsTable.transmissionType, transmissionType));
     }
 
@@ -136,29 +150,41 @@ export class CarRepository {
   }
 
   async findById(id: string): Promise<CarSelect | null> {
-    const car = await db.query.carsTable.findFirst({
-      where: and(eq(carsTable.id, id), isNull(carsTable.deletedAt)),
-    });
+    const [car] = await db
+      .select()
+      .from(carsTable)
+      .where(and(eq(carsTable.id, id), isNull(carsTable.deletedAt)))
+      .limit(1);
 
     return car ?? null;
   }
 
-  async create(data: CarInsert): Promise<CarSelect> {
-    const [car] = await db.insert(carsTable).values(data).returning();
+  async create(
+    data: Omit<CarInsert, "id" | "createdAt" | "updatedAt">,
+  ): Promise<CarSelect> {
+    const [car] = await db
+      .insert(carsTable)
+      .values(data as CarInsert)
+      .returning();
     return car;
   }
 
   async update(
     id: string,
-    data: Partial<CarInsert>
+    data: Partial<Omit<CarInsert, "id" | "createdAt" | "updatedAt">>,
+    tx?: DbOrTransaction,
   ): Promise<CarSelect | null> {
-    const [car] = await db
+    const connection = tx || db;
+    const [updatedCar] = await connection
       .update(carsTable)
-      .set(data)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+      })
       .where(eq(carsTable.id, id))
       .returning();
 
-    return car ?? null;
+    return updatedCar ?? null;
   }
 
   async findCarsDriverRules(carIds: string[]) {
@@ -180,7 +206,7 @@ export class CarRepository {
       .where(sql`${carsTable.id} in ${carIds}`);
   }
 
-  async delete(id: string): Promise<CarSelect> {
+  async delete(id: string): Promise<CarSelect | null> {
     const [car] = await db
       .update(carsTable)
       .set({ deletedAt: new Date() })
