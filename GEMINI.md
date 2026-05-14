@@ -78,12 +78,19 @@ Each feature is housed in its own directory within `packages/features/src/[featu
 
 ## Development Workflows
 
+### Environment-Specific Commands
+The project uses `dotenv-cli` to run commands with specific environment variables.
+- **Development (uses `.env`):** `npm run env:dev -- <task>`
+- **Production (uses `.env.dev`):** `npm run env:prod -- <task>`
+
 ### Database Management
-Database commands use `npm run db <task>` (for `.env`) or `npm run db:dev <task>` (for `.env.dev`).
-- Generate migrations: `npm run db generate`
-- Push schema changes: `npm run db push`
-- Run migrations: `npm run db migrate`
-- Open Drizzle Studio: `npm run db studio`
+Database commands should be executed within an environment context. These commands use Turbo to trigger the corresponding scripts in `packages/database`.
+- Generate migrations: `npm run env:dev generate`
+- Push schema changes: `npm run env:dev push`
+- Run migrations: `npm run env:dev migrate`
+- Open Drizzle Studio: `npm run env:dev studio`
+
+*Note: Replace `env:dev` with `env:prod` to run these against the production-equivalent environment.*
 
 ### Docker Support
 
@@ -110,6 +117,7 @@ docker compose up -d
 - Development mode: `npm run dev`
 - Build the project: `npm run build`
 - Lint the codebase: `npm run lint`
+- Clean build artifacts: `npm run clean`
 
 ## Coding Conventions
 
