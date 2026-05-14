@@ -32,13 +32,4 @@ export class ComplaintService {
     const complaint = await this.complaintRepository.create(data);
     return ComplaintResponseSchema.parse(complaint);
   }
-
-  async deleteComplaint(id: string): Promise<ComplaintResponseDto | null> {
-    const complaint = await this.complaintRepository.delete(id);
-    return complaint ? ComplaintResponseSchema.parse(complaint) : null;
-  }
-
-  async hardDeleteComplaint(id: string): Promise<void> {
-    await this.complaintRepository.hardDelete(id);
-  }
 }

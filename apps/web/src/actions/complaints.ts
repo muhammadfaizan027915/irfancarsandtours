@@ -1,16 +1,11 @@
 "use server";
 
-import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import {
   ComplaintRequestBodyDto,
   ComplaintRequestBodySchema,
 } from "@icat/contracts";
 import { ComplaintService } from "@icat/services";
-import {
-  handlerFormActionWithError,
-  handleServerActionWithError,
-} from "@icat/lib";
-import { revalidatePath } from "next/cache";
+import { handlerFormActionWithError } from "@icat/lib";
 
 export const sendComplaint = handlerFormActionWithError({
   schema: ComplaintRequestBodySchema,
@@ -19,10 +14,4 @@ export const sendComplaint = handlerFormActionWithError({
     const complaint = await complaintService.createComplaint(data);
     return complaint;
   },
-});
-
-export const deleteComplaint = handleServerActionWithError(async (id: string) => {
-  const complaintService = new ComplaintService();
-  await complaintService.deleteComplaint(id);
-  revalidatePath(DashboardNavigationUrls.COMPLAINTS);
 });

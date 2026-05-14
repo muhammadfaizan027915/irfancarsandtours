@@ -126,21 +126,4 @@ export class ComplaintRepository {
     });
     return complaint ?? null;
   }
-
-  async delete(
-    id: string,
-    tx: DbOrTransaction = db,
-  ): Promise<ComplaintSelect | null> {
-    const [complaint] = await tx
-      .update(complaintsTable)
-      .set({ deletedAt: new Date() })
-      .where(eq(complaintsTable.id, id))
-      .returning();
-
-    return complaint ?? null;
-  }
-
-  async hardDelete(id: string, tx: DbOrTransaction = db): Promise<void> {
-    await tx.delete(complaintsTable).where(eq(complaintsTable.id, id));
-  }
 }

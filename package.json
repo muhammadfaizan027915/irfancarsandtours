@@ -8,9 +8,13 @@
     "dev": "dotenv -e .env -- turbo dev",
     "build": "dotenv -e .env -- turbo build",
     "db:migrate": "dotenv -e .env -- turbo run migrate",
+    "db:migrate:dev": "dotenv -e .env.dev -- turbo run migrate",
     "db:push": "dotenv -e .env -- turbo run push",
+    "db:push:dev": "dotenv -e .env.dev -- turbo run push",
     "db:generate": "dotenv -e .env -- turbo run generate",
+    "db:generate:dev": "dotenv -e .env.dev -- turbo run generate",
     "db:studio": "dotenv -e .env -- turbo run studio",
+    "db:studio:dev": "dotenv -e .env.dev -- turbo run studio",
     "clean": "turbo clean",
     "lint": "turbo run lint"
   },

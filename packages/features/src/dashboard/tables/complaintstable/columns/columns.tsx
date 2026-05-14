@@ -5,8 +5,6 @@ import { format } from "date-fns";
 
 import { ComplaintResponseDto } from "@icat/contracts";
 
-import { ComplaintActionsCell } from "./actionscell";
-
 export const complaintColumns: ColumnDef<ComplaintResponseDto>[] = [
   {
     accessorKey: "name",
@@ -38,9 +36,5 @@ export const complaintColumns: ColumnDef<ComplaintResponseDto>[] = [
     cell: ({ row }) => {
       return format(new Date(row.original.createdAt), "PPP");
     },
-  },
-  {
-    id: "actions",
-    cell: ComplaintActionsCell,
   },
 ];
