@@ -79,10 +79,11 @@ Each feature is housed in its own directory within `packages/features/src/[featu
 ## Development Workflows
 
 ### Database Management
-- Generate migrations: `npm run db:generate`
-- Push schema changes (for development): `npm run db:push`
-- Run migrations: `npm run db:migrate`
-- Open Drizzle Studio: `npm run db:studio`
+Database commands use `npm run db <task>` (for `.env`) or `npm run db:dev <task>` (for `.env.dev`).
+- Generate migrations: `npm run db generate`
+- Push schema changes: `npm run db push`
+- Run migrations: `npm run db migrate`
+- Open Drizzle Studio: `npm run db studio`
 
 ### Docker Support
 
