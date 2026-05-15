@@ -1,7 +1,8 @@
 import { GetBookingsBodyDto } from "@icat/contracts";
 import { BookingsFilterBar } from "@icat/features/dashboard/filtersbars/bookings";
-import { DashboardBookingsContent, DashboardBookingsContentSkeleton } from "@icat/features/contents/dashboard/bookings";
+import { DashboardBookingsContent } from "@icat/features/contents/dashboard/bookings";
 import { Suspense } from "react";
+import { DataTableSkeleton } from "@icat/ui";
 
 type BookingsPageProps = {
   searchParams: Promise<GetBookingsBodyDto>;
@@ -23,7 +24,7 @@ export default async function BookingsPage({
         <BookingsFilterBar />
       </Suspense>
 
-      <Suspense fallback={<DashboardBookingsContentSkeleton />}>
+      <Suspense fallback={<DataTableSkeleton />}>
         <DashboardBookingsContent searchParams={params} />
       </Suspense>
     </div>

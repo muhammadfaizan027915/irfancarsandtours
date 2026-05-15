@@ -1,3 +1,12 @@
+import { IdCard, Mail, Phone } from "lucide-react";
+import Link from "next/link";
+
+import { getNameInitials } from "@icat/lib/utils";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@icat/ui/components/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -5,15 +14,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@icat/ui/components/dropdown-menu";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@icat/ui/components/avatar";
+
 import { BookingCellPorps } from "../columns.types";
-import { getNameInitials } from "@icat/lib/utils";
-import { Mail, IdCard, Phone } from "lucide-react";
-import Link from "next/link";
 
 export function BookedByCell({ row }: BookingCellPorps) {
   const bookedBy = row.original.bookedBy;

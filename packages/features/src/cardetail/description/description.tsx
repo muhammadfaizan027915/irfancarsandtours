@@ -1,16 +1,18 @@
 "use client";
 
 import { ChevronUp } from "lucide-react";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 import { useDisclosure } from "@icat/lib/hooks";
+import { Card, CardContent } from "@icat/ui/components/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@icat/ui/components/collapsible";
-import { Card, CardContent } from "@icat/ui/components/card";
+
 import { CarDescriptionProps } from "./description.types";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 export function CarDescription({ description }: CarDescriptionProps) {
   const [open, onOpen, onClose] = useDisclosure(true);

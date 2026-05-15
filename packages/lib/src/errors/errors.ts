@@ -1,5 +1,5 @@
-import { BaseApiErrorOptions, ErrorCode } from "./errors.types";
 import { ErrorMessages } from "./errors.constants";
+import { BaseApiErrorOptions, ErrorCode } from "./errors.types";
 
 export class BaseApiError<
   TCause extends object = object,

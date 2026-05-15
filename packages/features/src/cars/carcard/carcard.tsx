@@ -1,14 +1,16 @@
 "use client";
 
+import { Armchair, CarFront,Cog, Fuel, ShoppingCart } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+import { CarPlaceHolderImageUrl } from "@icat/features/common";
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { Button } from "@icat/ui/components/button";
 import { toast } from "@icat/ui/components/sonner";
 import { useCarCart } from "@icat/web/store";
-import { Fuel, Armchair, Cog, ShoppingCart, CarFront } from "lucide-react";
-import { CarPlaceHolderImageUrl } from "@icat/features/common";
-import { NavigationUrls } from "@icat/features/header/header.constants";
+
 import { CarCardProps } from "./carcard.types";
-import Image from "next/image";
-import Link from "next/link";
 
 export function CarCard({ car }: CarCardProps) {
   const { addToCart } = useCarCart();

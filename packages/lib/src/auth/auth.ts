@@ -1,15 +1,17 @@
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth, { CredentialsSignin, NextAuthResult } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
+
+import { SignInBodyDto } from "@icat/contracts";
 import {
-  db,
-  usersTable,
-  sessionsTable,
-  verificationTokensTable,
   accountsTable,
+  db,
+  sessionsTable,
+  usersTable,
+  verificationTokensTable,
 } from "@icat/database";
 import { UserService } from "@icat/services";
-import { SignInBodyDto } from "@icat/contracts";
+
 import { handleError } from "../errors";
 
 const result = NextAuth({

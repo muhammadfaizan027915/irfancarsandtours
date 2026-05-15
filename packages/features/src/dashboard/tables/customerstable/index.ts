@@ -1,2 +1,2 @@
-export * from "./customerstable";
 export * from "./columns"
+export * from "./customerstable";

@@ -1,7 +1,7 @@
 
-interface PaginationInfoProps {
-  pagination?: { page?: number; limit?: number; total?: number };
+type PaginationInfoProps = {
   label?: string;
+  pagination?: { page?: number; limit?: number; total?: number };
 }
 
 export function PaginationInfo({

@@ -1,11 +1,12 @@
 "use client";
 
+import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+
 import { BookingListItemResponseDto } from "@icat/contracts";
 import { NavigationUrls } from "@icat/features/header/header.constants";
-import { ColumnDef } from "@tanstack/react-table";
-import { ExternalLink } from "lucide-react";
-import { format } from "date-fns";
-import Link from "next/link";
 
 export const userBookingsColumns: ColumnDef<BookingListItemResponseDto>[] = [
   {

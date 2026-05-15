@@ -1,7 +1,8 @@
 import { ZodObject } from "zod";
+
 import { handleError } from "../errors";
-import { ServerAction } from "./handlers.types";
 import { formDataToObject } from "../utils/form-to-object";
+import { ServerAction } from "./handlers.types";
 
 export function handleServerActionWithError<TArgs extends unknown[], TResult>(
   action: ServerAction<TArgs, TResult>
@@ -21,7 +22,7 @@ export function handlerFormActionWithError<
   TArgs,
   TResult
 >(args: {
-  schema: ZodObject<any>;
+  schema: ZodObject<any, any>;
   action: (args: TArgs) => Promise<TResult> | void;
   shouldResetForm?: boolean;
 }) {

@@ -1,10 +1,12 @@
 "use client";
 
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@icat/ui/components/sidebar";
-import { usePathname } from "next/navigation";
-import { DashboardNavigation } from "./sidebarnavigation.constants";
-import { cn } from "@icat/ui/lib/utils";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@icat/ui/components/sidebar";
+import { cn } from "@icat/ui/lib/utils";
+
+import { DashboardNavigation } from "./sidebarnavigation.constants";
 
 export function DashboardSidebarNavigation() {
   const pathname = usePathname();

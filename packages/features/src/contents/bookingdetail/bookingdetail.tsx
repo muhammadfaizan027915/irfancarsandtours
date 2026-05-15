@@ -1,8 +1,9 @@
-import { getUserBookedCars } from "@icat/web/data/bookedcars";
-import { getUserBooking } from "@icat/web/data/bookings";
 import { notFound } from "next/navigation";
+
 import { BookingDetail } from "@icat/features/booking/detail";
 import { UserBookedCarsTable } from "@icat/features/tables/userbookedcarstable";
+import { getUserBookedCars } from "@icat/web/data/bookedcars";
+import { getUserBooking } from "@icat/web/data/bookings";
 
 export async function BookingDetailContent({ bookingId }: { bookingId: string }) {
   const booking = await getUserBooking(bookingId);

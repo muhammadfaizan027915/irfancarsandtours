@@ -1,7 +1,8 @@
 "use client";
 
+import { usePathname,useRouter, useSearchParams } from "next/navigation";
+
 import { Button } from "@icat/ui";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 export function FiltersClearer() {
   const router = useRouter();
@@ -14,5 +15,5 @@ export function FiltersClearer() {
     router.push(pathname, { scroll: false });
   };
 
-  return <Button onClick={handleClear} size={"lg"} className="ml-auto shadow-none">Clear Filters</Button>;
+  return <Button onClick={handleClear} size={"lg"} className="ml-auto shadow-none" disabled={!hasParams}>Clear Filters</Button>;
 }

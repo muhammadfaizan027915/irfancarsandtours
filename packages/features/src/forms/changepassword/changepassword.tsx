@@ -1,13 +1,14 @@
 "use client";
 
-import { Card } from "@icat/ui/components/card";
-import { toast } from "@icat/ui/components/sonner";
-import { Input } from "@icat/ui/components/input";
-import { Button } from "@icat/ui/components/button";
-import { AlertBox } from "@icat/ui/components/alert";
 import { ArrowRight, Lock } from "lucide-react";
-import { changeUserPassword } from "@icat/web/actions";
 import { useActionState, useEffect } from "react";
+
+import { AlertBox } from "@icat/ui/components/alert";
+import { Button } from "@icat/ui/components/button";
+import { Card } from "@icat/ui/components/card";
+import { Input } from "@icat/ui/components/input";
+import { toast } from "@icat/ui/components/sonner";
+import { changeUserPassword } from "@icat/web/actions";
 
 export function ChangePasswordForm() {
   const [result, action, pending] = useActionState(changeUserPassword, null);

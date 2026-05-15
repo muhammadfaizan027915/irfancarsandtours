@@ -1,5 +1,5 @@
 export function objectToFormData(
-  obj: any,
+  obj: Record<string, unknown>,
   form: FormData = new FormData(),
   namespace?: string
 ): FormData {
@@ -14,10 +14,10 @@ export function objectToFormData(
       if (Array.isArray(value)) {
         value.forEach((v, i) => {
           const arrayKey = `${formKey}[${i}]`;
-          objectToFormData(v, form, arrayKey);
+          objectToFormData(v as Record<string, unknown>, form, arrayKey);
         });
       } else {
-        objectToFormData(value, form, formKey);
+        objectToFormData(value as Record<string, unknown>, form, formKey);
       }
     } else {
       form.append(formKey, String(value));
@@ -26,8 +26,8 @@ export function objectToFormData(
   return form;
 }
 
-export function formDataToObject(formData: FormData): any {
-  const result: any = {};
+export function formDataToObject(formData: FormData): Record<string, any> {
+  const result: Record<string, any> = {};
 
   for (const [key, value] of formData.entries()) {
     const path = key.replace(/\]/g, "").split("[").filter(Boolean);
@@ -38,7 +38,15 @@ export function formDataToObject(formData: FormData): any {
       const nextPart = path[i + 1];
 
       if (i === path.length - 1) {
-        current[part] = value;
+        if (current[part] !== undefined) {
+          if (Array.isArray(current[part])) {
+            current[part].push(value);
+          } else {
+            current[part] = [current[part], value];
+          }
+        } else {
+          current[part] = value;
+        }
       } else {
         if (!current[part]) {
           current[part] = /^\d+$/.test(nextPart) ? [] : {};
@@ -53,7 +61,7 @@ export function formDataToObject(formData: FormData): any {
 
 export function mergeObjectToFormData(
   formData: FormData | undefined,
-  obj: any,
+  obj: Record<string, unknown>,
   namespace?: string
 ): FormData {
   const form = formData ?? new FormData();
@@ -70,13 +78,13 @@ export function mergeObjectToFormData(
     } else if (Array.isArray(value)) {
       value.forEach((v, i) => {
         if (typeof v === "object" && !(v instanceof File)) {
-          mergeObjectToFormData(form, v, `${formKey}[${i}]`);
+          mergeObjectToFormData(form, v as Record<string, unknown>, `${formKey}[${i}]`);
         } else {
-          form.append(`${formKey}[${i}]`, v);
+          form.append(`${formKey}[${i}]`, String(v));
         }
       });
     } else if (typeof value === "object" && !(value instanceof File)) {
-      mergeObjectToFormData(form, value, formKey);
+      mergeObjectToFormData(form, value as Record<string, unknown>, formKey);
     } else {
       form.append(formKey, String(value));
     }
@@ -84,4 +92,3 @@ export function mergeObjectToFormData(
 
   return form;
 }
-

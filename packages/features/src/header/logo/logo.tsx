@@ -1,5 +1,6 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+
 import { NavigationUrls } from "@icat/features/header/header.constants";
 
 export function Logo() {

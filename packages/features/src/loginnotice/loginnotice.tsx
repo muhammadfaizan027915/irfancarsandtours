@@ -1,9 +1,11 @@
 import { ArrowRight, Car } from "lucide-react";
+import Link from "next/link";
+
+import { NavigationUrls } from "@icat/features/header/header.constants";
 import { Button } from "@icat/ui/components/button";
 import { Card, CardContent } from "@icat/ui/components/card";
-import { NavigationUrls } from "@icat/features/header/header.constants";
+
 import { LoginNoticeProps } from "./loginnotice.types";
-import Link from "next/link";
 
 export function LoginNotice({ tagline, ctaTitle }: LoginNoticeProps) {
   return (

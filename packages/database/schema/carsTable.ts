@@ -1,12 +1,14 @@
-import { integer, text, pgTable, boolean, varchar } from "drizzle-orm/pg-core";
+import { boolean, integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
+
+import { timestampColumns } from "../utils";
 import {
-  brandEnum,
-  fuelTypeEnum,
   amenitiesEnum,
+  brandEnum,
   carTypeEnum,
+  fuelTypeEnum,
   transmissionTypeEnum,
 } from "./enums";
-import { timestampColumns } from "../utils";
+import { seoTable } from "./seoTable";
 
 export const carsTable = pgTable("cars", {
   id: text("id")
@@ -26,6 +28,7 @@ export const carsTable = pgTable("cars", {
   isFeatured: boolean("is_featured").default(false),
   timesSearched: integer("times_searched").default(0),
   forceWithDriver: boolean("force_with_driver").default(false),
+  seoId: text("seo_id").unique().references(() => seoTable.id, { onDelete: "set null" }),
 
   ...timestampColumns,
 });

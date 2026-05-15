@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { DetailedUserResponseSchema } from "./user.response";
 
 const PasswordSchema = z.stringFormat(
@@ -49,15 +50,14 @@ export const ChangePasswordBodySchema = z
 export type ChangePasswordBodyDto = z.infer<typeof ChangePasswordBodySchema>;
 
 export const GetUsersBodySchema = z.object({
-  page: z
-    .string()
-    .transform((val) => (val ? parseInt(val, 10) : 1))
-    .optional(),
-
-  limit: z
-    .string()
-    .transform((val) => (val ? parseInt(val, 10) : 50))
-    .optional(),
+  page: z.coerce.number().optional().default(1),
+  limit: z.coerce.number().optional().default(50),
+  name: z.string().optional(),
+  email: z.string().optional(),
+  phone: z.string().optional(),
+  cnic: z.string().optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional(),
 });
 
 export type GetUsersBodyDto = z.infer<typeof GetUsersBodySchema>;

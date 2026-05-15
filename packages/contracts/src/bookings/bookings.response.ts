@@ -1,4 +1,5 @@
 import z from "zod";
+
 import { PaginatedResponseSchema, toDate } from "../generic";
 import { DetailedUserResponseSchema } from "../users";
 

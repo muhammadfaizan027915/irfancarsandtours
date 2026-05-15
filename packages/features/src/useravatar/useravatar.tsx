@@ -1,5 +1,10 @@
 "use client";
 
+import { Pencil, UploadCloud } from "lucide-react";
+import { useRef } from "react";
+
+import { useFileUpload } from "@icat/lib/hooks/usefileupload";
+import { getNameInitials } from "@icat/lib/utils/nameinitials";
 import {
   Avatar,
   AvatarFallback,
@@ -9,13 +14,9 @@ import { Badge } from "@icat/ui/components/badge";
 import { Button } from "@icat/ui/components/button";
 import { Progress } from "@icat/ui/components/progress";
 import { toast } from "@icat/ui/components/sonner";
+import { updateUser } from "@icat/web/actions";
 
 import { UserAvatarProps } from "./useravatar.types";
-import { Pencil, UploadCloud } from "lucide-react";
-import { getNameInitials } from "@icat/lib/utils/nameinitials";
-import { useFileUpload } from "@icat/lib/hooks/usefileupload";
-import { updateUser } from "@icat/web/actions";
-import { useRef } from "react";
 
 export function UserAvatar({ user }: UserAvatarProps) {
   const { isUploading, previewUrl, progress, uploadFile } = useFileUpload();

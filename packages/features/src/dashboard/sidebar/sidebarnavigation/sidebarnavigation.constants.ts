@@ -1,8 +1,8 @@
 import {
   CarFront,
   ClipboardList,
-  Users,
   MessageSquareWarning,
+  Users,
 } from "lucide-react";
 
 export const DashboardNavigationUrls = {

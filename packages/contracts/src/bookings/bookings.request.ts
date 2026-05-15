@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { toDate } from "@icat/contracts/generic";
 
 export const CarBookingRequestSchema = z
@@ -44,15 +45,13 @@ export const CarBookingRequestSchema = z
 export type BookingRequestDto = z.infer<typeof CarBookingRequestSchema>;
 
 export const GetBookingsBodySchema = z.object({
-  page: z
-    .string()
-    .transform((val) => (val ? parseInt(val, 10) : 1))
-    .optional(),
-
-  limit: z
-    .string()
-    .transform((val) => (val ? parseInt(val, 10) : 50))
-    .optional(),
+  page: z.coerce.number().optional().default(1),
+  limit: z.coerce.number().optional().default(50),
+  id: z.string().optional(),
+  name: z.string().optional(),
+  address: z.string().optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional(),
 });
 
 export type GetBookingsBodyDto = z.infer<typeof GetBookingsBodySchema>;

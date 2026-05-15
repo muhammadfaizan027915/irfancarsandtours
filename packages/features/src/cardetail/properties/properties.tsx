@@ -1,7 +1,9 @@
-import { Card, CardContent } from "@icat/ui/components/card";
-import { Button } from "@icat/ui/components/button";
-import { CarPropertiesProps } from "./properties.types";
 import { Armchair, CarFront, Cog, Fuel } from "lucide-react";
+
+import { Button } from "@icat/ui/components/button";
+import { Card, CardContent } from "@icat/ui/components/card";
+
+import { CarPropertiesProps } from "./properties.types";
 
 export function CarProperties({
   fuelType,

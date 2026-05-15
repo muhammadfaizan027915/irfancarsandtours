@@ -1,13 +1,13 @@
-import * as React from "react";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MoreHorizontalIcon,
 } from "lucide-react";
-
-import { cn } from "@icat/ui/lib/utils";
-import { Button, buttonVariants } from "@icat/ui/components/button";
 import Link from "next/link";
+import * as React from "react";
+
+import { Button, buttonVariants } from "@icat/ui/components/button";
+import { cn } from "@icat/ui/lib/utils";
 
 type PaginationBarProps = {
   pagination?: { total: number; page: number; pages: number; limit: number };
@@ -190,11 +190,11 @@ function PaginationEllipsis({
 
 export {
   Pagination,
-  PaginationContent,
-  PaginationLink,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationEllipsis,
   PaginationBar,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 };

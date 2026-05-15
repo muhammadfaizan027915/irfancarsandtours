@@ -1,5 +1,12 @@
 "use client";
 
+import { Armchair, Fuel, Minus, Plus } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { MouseEvent } from "react";
+
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import { Button } from "@icat/ui/components/button";
 import {
   Card,
   CardContent,
@@ -7,15 +14,9 @@ import {
   CardTitle,
 } from "@icat/ui/components/card";
 import { Checkbox } from "@icat/ui/components/checkbox";
-import { Button } from "@icat/ui/components/button";
-import { CarCartCardProps } from "./carcartcard.types";
-import { Armchair, Fuel, Minus, Plus } from "lucide-react";
-import { NavigationUrls } from "@icat/features/header/header.constants";
 import { useCarCart } from "@icat/web/store";
-import { MouseEvent } from "react";
 
-import Image from "next/image";
-import Link from "next/link";
+import { CarCartCardProps } from "./carcartcard.types";
 
 export function CarCartCard({ car }: CarCartCardProps) {
   const { incrementQuantity, decrementQuantity, toggleDriver } = useCarCart();

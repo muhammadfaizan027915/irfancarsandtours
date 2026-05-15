@@ -1,4 +1,4 @@
-import { Storage, GetSignedUrlConfig } from "@google-cloud/storage";
+import { GetSignedUrlConfig,Storage } from "@google-cloud/storage";
 
 export class GCSClient {
   private storage: Storage;

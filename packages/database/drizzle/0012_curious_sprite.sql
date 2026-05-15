@@ -1,0 +1,1 @@
+ALTER TABLE "contacts" RENAME TO "complaints";

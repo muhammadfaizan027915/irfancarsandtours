@@ -1,6 +1,7 @@
-import { timestamp, pgTable, text } from "drizzle-orm/pg-core";
-import { usersTable } from "./usersTable";
+import { pgTable, text,timestamp } from "drizzle-orm/pg-core";
+
 import { timestampColumns } from "../utils";
+import { usersTable } from "./usersTable";
 
 export const sessionsTable = pgTable("sessions", {
   sessionToken: text("session_token").primaryKey(),

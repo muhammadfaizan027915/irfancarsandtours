@@ -1,4 +1,5 @@
 import { UserResponseDto } from "@icat/contracts";
+
 import { ForbiddenError, UnauthorizedError } from "../errors";
 import { auth } from "./auth";
 

@@ -1,7 +1,8 @@
-import { text, pgTable, integer, boolean } from "drizzle-orm/pg-core";
+import { boolean,integer, pgTable, text } from "drizzle-orm/pg-core";
+
+import { timestampColumns } from "../utils";
 import { bookingsTable } from "./bookingsTable";
 import { carsTable } from "./carsTable";
-import { timestampColumns } from "../utils";
 
 export const bookedCarsTable = pgTable("booked_cars", {
   id: text("id")

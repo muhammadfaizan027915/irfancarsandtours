@@ -1,10 +1,12 @@
 import { GetCarsBodyDto } from "@icat/contracts";
-import { DashboardCarsContent, DashboardCarsContentSkeleton } from "@icat/features/contents/dashboard/cars";
+import { DashboardCarsContent } from "@icat/features/contents/dashboard/cars";
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
+import { CarsFilterBar } from "@icat/features/dashboard/filtersbars/cars";
 import { Button } from "@icat/ui/components/button";
 import { Plus } from "lucide-react";
 import { Suspense } from "react";
 import Link from "next/link";
+import { DataTableSkeleton } from "@icat/ui";
 
 type CarsPageProps = {
   searchParams: Promise<GetCarsBodyDto>;
@@ -30,7 +32,11 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
         </Button>
       </div>
 
-      <Suspense fallback={<DashboardCarsContentSkeleton />}>
+      <Suspense fallback={null}>
+        <CarsFilterBar />
+      </Suspense>
+
+      <Suspense fallback={<DataTableSkeleton />}>
         <DashboardCarsContent searchParams={params} />
       </Suspense>
     </div>

@@ -1,8 +1,9 @@
 "use client";
 
-import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { ChevronDownIcon, ChevronUpIcon, CheckIcon, XIcon } from "lucide-react";
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon, XIcon } from "lucide-react";
+import * as React from "react";
+
 import { cn } from "@icat/ui/lib/utils";
 
 type SingleSelectProps<T> = {
@@ -10,11 +11,13 @@ type SingleSelectProps<T> = {
   id?: string;
   options: readonly T[];
   defaultValue?: T;
+  value?: T;
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
   errors?: string[];
   className?: string;
+  onChange?: (value: T) => void;
 };
 
 function SingleSelect<T extends string>({
@@ -22,11 +25,13 @@ function SingleSelect<T extends string>({
   id,
   options,
   defaultValue,
+  value,
   placeholder = "Select…",
   required,
   disabled,
   errors,
   className,
+  onChange,
 }: SingleSelectProps<T>) {
   const hasError = !!errors?.length;
 
@@ -36,7 +41,9 @@ function SingleSelect<T extends string>({
         name={name}
         required={required}
         defaultValue={defaultValue}
+        value={value}
         disabled={disabled}
+        onValueChange={onChange}
       >
         <SelectTrigger
           aria-invalid={hasError}
@@ -51,86 +58,6 @@ function SingleSelect<T extends string>({
               {opt}
             </SelectItem>
           ))}
-        </SelectContent>
-      </Select>
-
-      {hasError && (
-        <div className="mt-1 text-sm text-destructive">
-          {errors!.map((e, i) => (
-            <p key={i}>{e}</p>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-type MultiSelectProps<T extends string> = {
-  name?: string;
-  id?: string;
-  options: readonly T[];
-  defaultValue?: T[];
-  placeholder?: string;
-  required?: boolean;
-  disabled?: boolean;
-  errors?: string[];
-  className?: string;
-};
-
-function MultiSelect<T extends string>({
-  name,
-  id,
-  options,
-  defaultValue = [],
-  placeholder = "Select…",
-  required,
-  disabled,
-  errors,
-  className,
-}: MultiSelectProps<T>) {
-  const [values, setValues] = React.useState<T[]>(defaultValue);
-  const hasError = !!errors?.length;
-
-  const toggle = (val: T) => {
-    setValues((prev) =>
-      prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val],
-    );
-  };
-
-  return (
-    <div id={id} className="w-full">
-      {/* Hidden inputs for form submission */}
-      {name &&
-        values.map((v, i) => (
-          <input key={v} type="hidden" name={`${name}[${i}]`} value={v} />
-        ))}
-
-      {/* Required fallback */}
-      {name && required && values.length === 0 && (
-        <input type="hidden" name={name} value="" required />
-      )}
-
-      <Select
-        disabled={disabled}
-        // value={values.length > 0 ? values.join(", ") : ""}
-        onValueChange={toggle}
-      >
-        <SelectTrigger className={`w-full ${className}`}>
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-
-        <SelectContent>
-          {options.map((opt) => {
-            const selected = values.includes(opt);
-            return (
-              <SelectItem key={opt} value={opt}>
-                <div className="flex items-center justify-between">
-                  <span>{opt}</span>
-                  {selected && <XIcon className="size-4" />}
-                </div>
-              </SelectItem>
-            );
-          })}
         </SelectContent>
       </Select>
 
@@ -342,5 +269,4 @@ export {
   SelectTrigger,
   SelectValue,
   SingleSelect,
-  MultiSelect,
 };

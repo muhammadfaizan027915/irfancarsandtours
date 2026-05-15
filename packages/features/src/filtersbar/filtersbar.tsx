@@ -1,9 +1,10 @@
 import {
-  CarTypesList,
-  TransmissionTypesList,
-  FuelTypesList,
   AmenitiesList,
+  CarTypesList,
+  FuelTypesList,
+  TransmissionTypesList,
 } from "@icat/database/enums";
+
 import { CheckboxFilter } from "./checkboxfilter";
 
 export function FiltersBar() {

@@ -1,12 +1,13 @@
 import { z } from "zod";
+
+import { PaginatedResponseSchema } from "@icat/contracts/generic";
 import {
-  BrandNamesList,
-  FuelTypesList,
   AmenitiesList,
+  BrandNamesList,
   CarTypesList,
+  FuelTypesList,
   TransmissionTypesList,
 } from "@icat/database/enums";
-import { PaginatedResponseSchema } from "@icat/contracts/generic";
 
 export const CarResponseSchema = z.object({
   id: z.uuid(),

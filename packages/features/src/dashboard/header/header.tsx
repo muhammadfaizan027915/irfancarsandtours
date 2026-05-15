@@ -1,8 +1,9 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import { DarkModeToggler } from "@icat/ui/components/dark-mode-toggler";
 import { SidebarTrigger } from "@icat/ui/components/sidebar";
-import { usePathname } from "next/navigation";
 
 export function DashboardHeader() {
   const pathname = usePathname();

@@ -1,15 +1,16 @@
 "use client";
 
+import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "@icat/ui/components/card";
-import { Label } from "@icat/ui/components/label";
 import { Checkbox } from "@icat/ui/components/checkbox";
+import { Label } from "@icat/ui/components/label";
+
 import { CheckBoxFilterProps } from "./checkboxfilter.types";
-import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 
 export function CheckboxFilter<S extends string, T extends string>({
   title,

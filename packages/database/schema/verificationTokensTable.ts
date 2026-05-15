@@ -1,4 +1,5 @@
-import { text, timestamp, pgTable, primaryKey } from "drizzle-orm/pg-core";
+import { pgTable, primaryKey,text, timestamp } from "drizzle-orm/pg-core";
+
 import { timestampColumns } from "../utils";
 
 export const verificationTokensTable = pgTable(

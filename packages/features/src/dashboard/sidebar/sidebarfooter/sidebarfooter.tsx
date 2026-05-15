@@ -1,26 +1,27 @@
+import { LogOut,MoreHorizontal, UserRound } from "lucide-react";
+import Link from "next/link";
+
 import { NavigationUrls } from "@icat/features/header/header.constants";
+import { getNameInitials } from "@icat/lib";
+import { getSessionUser } from "@icat/lib/auth";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@icat/ui/components/avatar";
-import {
-  SidebarMenu,
-  SidebarMenuAction,
-  SidebarMenuItem,
-} from "@icat/ui/components/sidebar";
+import { Button } from "@icat/ui/components/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@icat/ui/components/dropdown-menu";
+import {
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuItem,
+} from "@icat/ui/components/sidebar";
 import { lougOutUser } from "@icat/web/actions";
-import { MoreHorizontal, UserRound, LogOut } from "lucide-react";
-import { Button } from "@icat/ui/components/button";
-import { getSessionUser } from "@icat/lib/auth";
-import { getNameInitials } from "@icat/lib";
-import Link from "next/link";
 
 export async function DashboardSidebarFooter() {
   const sessionUser = await getSessionUser();

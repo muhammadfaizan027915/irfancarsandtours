@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, Children, ReactNode } from "react";
-import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { Button } from "@icat/ui";
+import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Children, ReactNode, useCallback } from "react";
 
-interface SliderContainerProps {
+import { Button } from "@icat/ui";
+
+type SliderContainerProps = {
   children: ReactNode | ReactNode[];
   slidesPerView?: [number, number, number];
   className?: string;

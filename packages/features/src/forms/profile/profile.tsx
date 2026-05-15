@@ -1,22 +1,24 @@
 "use client";
 
-import { Card } from "@icat/ui/components/card";
-import { toast } from "@icat/ui/components/sonner";
-import { Input } from "@icat/ui/components/input";
-import { Button } from "@icat/ui/components/button";
-import { AlertBox } from "@icat/ui/components/alert";
-import { Textarea } from "@icat/ui/components/textarea";
 import {
   ArrowRight,
+  IdCard,
   Mail,
+  MapPin,
   Phone,
   UserRound,
-  MapPin,
-  IdCard,
 } from "lucide-react";
-import { updateUser } from "@icat/web/actions";
-import { ProfileFormProps } from "./profile.types";
 import { useActionState, useEffect } from "react";
+
+import { AlertBox } from "@icat/ui/components/alert";
+import { Button } from "@icat/ui/components/button";
+import { Card } from "@icat/ui/components/card";
+import { Input } from "@icat/ui/components/input";
+import { toast } from "@icat/ui/components/sonner";
+import { Textarea } from "@icat/ui/components/textarea";
+import { updateUser } from "@icat/web/actions";
+
+import { ProfileFormProps } from "./profile.types";
 
 export function ProfileForm({ user }: ProfileFormProps) {
   const [result, action, pending] = useActionState(updateUser, null);

@@ -1,6 +1,6 @@
-import { BrandNames } from "@icat/database";
-
 import * as BrandIcons from "@cardog-icons/react";
+
+import { BrandNames } from "@icat/database";
 
 export const BrandLibrary: Partial<
   Record<

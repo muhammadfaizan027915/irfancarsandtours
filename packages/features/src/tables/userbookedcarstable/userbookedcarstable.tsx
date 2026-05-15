@@ -1,5 +1,6 @@
-import { userBookedCarsColumns } from "./columns";
 import { DataTable } from "@icat/ui/components/data-table";
+
+import { userBookedCarsColumns } from "./columns";
 import { UserBookedCarsTableProps } from "./userbookedcarstable.types";
 
 export async function UserBookedCarsTable({

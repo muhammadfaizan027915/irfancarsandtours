@@ -1,15 +1,16 @@
 "use client";
 
+import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import Link from "next/link";
+
+import { DetailedUserResponseDto } from "@icat/contracts";
+import { getNameInitials } from "@icat/lib/utils";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@icat/ui/components/avatar";
-import { ColumnDef } from "@tanstack/react-table";
-import { DetailedUserResponseDto } from "@icat/contracts";
-import { getNameInitials } from "@icat/lib/utils";
-import Link from "next/link";
 
 export const customersColumns: ColumnDef<DetailedUserResponseDto>[] = [
   {

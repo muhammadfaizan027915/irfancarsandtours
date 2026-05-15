@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useEffect, Reducer } from "react";
+import { Reducer,useEffect, useReducer } from "react";
 
 export function usePersistedReducer<State, Action>(
   key: string,

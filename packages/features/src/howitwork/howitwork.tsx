@@ -1,5 +1,6 @@
+import { Car, CheckCircle,Phone, Wallet } from "lucide-react";
+
 import { Card, CardContent } from "@icat/ui/components/card";
-import { Car, Phone, Wallet, CheckCircle } from "lucide-react";
 
 export function HowItWork() {
   const steps = [

@@ -1,5 +1,6 @@
-import { userBookingsColumns } from "./columns";
 import { DataTable } from "@icat/ui/components/data-table";
+
+import { userBookingsColumns } from "./columns";
 import { UserBookingsTableProps } from "./userbookingstable.types";
 
 export async function UserBookingsTable({

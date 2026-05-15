@@ -1,12 +1,16 @@
 "use client";
 
 import { DateRange } from "react-day-picker";
-import { DateRangePicker } from "@icat/ui/components/date-range-picker";
+
 import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
+import { DateRangePicker } from "@icat/ui/components/date-range-picker";
+import { Label } from "@icat/ui/components/label";
+
 import { DateRangeFilterProps } from "./daterangefilter.types";
 
 export function DateRangeFilter({
   placeholder = "Select date range",
+  label,
 }: DateRangeFilterProps) {
   const { getSearchParams, updateSearchParams } = useSearchRouter();
 
@@ -26,7 +30,8 @@ export function DateRangeFilter({
   };
 
   return (
-    <div className="w-full md:w-64">
+    <div className="flex flex-col gap-2 w-full">
+      {label && <Label>{label}</Label>}
       <DateRangePicker
         variant="outline"
         placeholder={placeholder}

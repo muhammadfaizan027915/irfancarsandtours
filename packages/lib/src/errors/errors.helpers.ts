@@ -1,7 +1,8 @@
-import { ZodError, formatError } from "zod";
+import { CredentialsSignin } from "next-auth";
+import { formatError,ZodError } from "zod";
+
 import { BaseApiError } from "./errors";
 import { InternalServerError, ValidationError } from "./errors";
-import { CredentialsSignin } from "next-auth";
 
 export function handleError(error: unknown) {
   if ((error as any).digest?.startsWith("NEXT_REDIRECT")) {

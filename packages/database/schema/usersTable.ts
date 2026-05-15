@@ -1,4 +1,5 @@
 import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+
 import { timestampColumns } from "../utils";
 import { userRolesEnum } from "./enums";
 

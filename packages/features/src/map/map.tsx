@@ -1,4 +1,4 @@
-import { Card, CardTitle, CardContent } from "@icat/ui/components/card";
+import { Card, CardContent,CardTitle } from "@icat/ui/components/card";
 
 export function Map() {
   return (

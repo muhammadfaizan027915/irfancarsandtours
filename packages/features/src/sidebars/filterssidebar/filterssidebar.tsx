@@ -1,3 +1,7 @@
+import { Filter } from "lucide-react";
+
+import { FiltersBar } from "@icat/features/filtersbar";
+import { Button } from "@icat/ui/components/button";
 import {
   Sheet,
   SheetClose,
@@ -5,9 +9,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@icat/ui/components/sheet";
-import { Button } from "@icat/ui/components/button";
-import { FiltersBar } from "@icat/features/filtersbar";
-import { Filter } from "lucide-react";
 
 export function FiltersSidebar() {
   return (
