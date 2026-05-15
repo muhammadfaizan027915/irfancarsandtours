@@ -38,4 +38,4 @@ COPY . .
 EXPOSE 3000
 
 # Start turbo dev
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "env:dev", "dev"]
