@@ -68,7 +68,7 @@ export function SliderContainer({
       )}
 
       <div className="embla-viewport overflow-hidden" ref={emblaRef}>
-        <div className="embla-container flex">
+        <div className="embla-container flex py-2">
           {Children.toArray(children).map((child, index) => (
             <div key={index} className="embla-slide shrink-0 min-w-0">
               {child}

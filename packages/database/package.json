@@ -29,7 +29,7 @@
   ],
   "license": "MIT",
   "author": "Muhammad Faizan",
-  "packageManager": "npm@11.12.1",
+  "packageManager": "npm@11.14.1",
   "dependencies": {
     "drizzle-orm": "^0.45.2",
     "pg": "^8.20.0"
@@ -38,6 +38,6 @@
     "@types/pg": "^8.20.0",
     "dotenv": "^17.4.2",
     "drizzle-kit": "^0.31.10",
-    "tsx": "^4.21.0"
+    "tsx": "^4.22.0"
   }
 }

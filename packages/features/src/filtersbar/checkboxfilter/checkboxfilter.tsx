@@ -25,7 +25,7 @@ export function CheckboxFilter<S extends string, T extends string>({
       ? [...new Set([...existingSearchParams, filter])]
       : existingSearchParams.filter((f) => f !== filter);
 
-    updateSearchParams({ filterName: updated });
+    updateSearchParams({ [filterName]: updated });
   };
 
   return (

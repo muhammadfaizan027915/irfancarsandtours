@@ -31,25 +31,25 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-simple-import-sort": "^13.0.0",
-    "globals": "^17.5.0",
+    "globals": "^17.6.0",
     "shx": "^0.4.0",
-    "turbo": "^2.9.5",
-    "typescript": "^6.0.2",
-    "typescript-eslint": "^8.59.0"
+    "turbo": "^2.9.14",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.3"
   },
   "dependencies": {
-    "@google-cloud/storage": "^7.17.1",
-    "axios": "^1.15.0",
-    "critters": "^0.0.23",
+    "@google-cloud/storage": "^7.19.0",
+    "axios": "^1.16.1",
+    "critters": "^0.0.25",
     "drizzle-kit": "^0.31.10",
     "drizzle-orm": "0.45.2",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
-    "next": "^16.2.2",
+    "next": "^16.2.6",
     "next-auth": "^5.0.0-beta.30",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "zod": "^4.3.6"
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "zod": "^4.4.3"
   },
   "resolutions": {
     "react": "^19.2.2",

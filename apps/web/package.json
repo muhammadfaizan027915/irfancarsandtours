@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "author": "Muhammad Faizan",
-  "packageManager": "npm@11.6.1",
+  "packageManager": "npm@11.14.1",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -23,11 +23,11 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@types/node": "^24",
+    "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.0.0",
-    "typescript": "^5"
+    "eslint": "^10",
+    "eslint-config-next": "16.2.6",
+    "typescript": "^6"
   }
 }
