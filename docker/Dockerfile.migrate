@@ -19,9 +19,7 @@ RUN addgroup --system --gid 1001 irfancarsandtours
 RUN adduser --system --uid 1001 irfan
 USER irfan
 
-COPY --from=installer /app/node_modules ./node_modules
+COPY --from=installer --chown=irfan:irfancarsandtours /app/node_modules ./node_modules
 COPY --from=pruner --chown=irfan:irfancarsandtours /app/out/full/packages/database ./
-
-EXPOSE 3000
 
 CMD ["npm", "run", "migrate"]

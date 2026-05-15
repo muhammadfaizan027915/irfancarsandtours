@@ -5,10 +5,12 @@
   "name": "irfancarsandtours",
   "description": "A comprehensive platform for booking cars and tours with Irfan Cars And Tours.",
   "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "env:dev": "dotenv -e .env -- turbo run",
-    "env:prod": "dotenv -e .env.dev -- turbo run",
+    "dev": "dotenv -e .env.dev -- turbo dev",
+    "build": "dotenv -e .env.prod -- turbo build",
+    "env:dev": "dotenv -e .env.dev -- turbo run",
+    "env:prod": "dotenv -e .env.prod -- turbo run",
+    "docker:up": "docker compose up",
+    "docker:dev": "docker compose -f compose.dev.yaml up",
     "clean": "turbo clean",
     "lint": "turbo run lint"
   },

@@ -7,10 +7,10 @@ export class GCSClient {
 
   constructor() {
     this.storage = new Storage({
-      projectId: process.env.GCP_PROJECT_ID,
+      projectId: process.env.GCS_PROJECT_ID,
       credentials: {
-        client_email: process.env.GCP_CLIENT_EMAIL,
-        private_key: process.env.GCP_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+        client_email: process.env.GCS_CLIENT_EMAIL,
+        private_key: process.env.GCS_PRIVATE_KEY?.replace(/\\n/g, "\n"),
       },
     });
 
