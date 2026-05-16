@@ -20,11 +20,17 @@ export async function uploadFile(arg: {
   onPreview?.(previewUrl);
 
   try {
-    const result = await getSignedUploadUrl(file.name, file.type);
+    const uniqueFileName = generateUniqueFileName(file.name, "temp");
 
-    if (result.error) return null;
+    const result = await getSignedUploadUrl(uniqueFileName, file.type);
+
+    if (result.error) {
+      onError?.(result.error);
+      return null;
+    }
 
     const signedUploadUrl = result.data;
+
     await axios.put(signedUploadUrl, file, {
       headers: { "Content-Type": file.type },
       onUploadProgress: (e) => {
@@ -35,7 +41,7 @@ export async function uploadFile(arg: {
       },
     });
 
-    const downloadUrl = await getPublicFileUrl(file.name);
+    const downloadUrl = await getPublicFileUrl(uniqueFileName);
     onSuccess?.(downloadUrl);
     return downloadUrl;
   } catch (error) {
@@ -70,4 +76,17 @@ export async function deleteFile(arg: {
   onFinally?.();
 
   return true;
+}
+
+export function generateUniqueFileName(
+  fileName: string,
+  prefix?: string,
+): string {
+  const fileExtension = fileName.split(".").pop();
+  const uniqueFileName = `${crypto.randomUUID()}.${fileExtension}`;
+
+  if (!prefix) return uniqueFileName;
+
+  const cleanPrefix = prefix.endsWith("/") ? prefix : `${prefix}/`;
+  return `${cleanPrefix}${uniqueFileName}`;
 }

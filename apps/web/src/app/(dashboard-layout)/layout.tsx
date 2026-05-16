@@ -12,6 +12,7 @@ export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   await requireAdmin();
+
   return (
     <SidebarProvider>
       <DashboardSidebar />

@@ -17,6 +17,7 @@ export const getSignedUploadUrl = handleServerActionWithError(
 );
 
 export async function getPublicFileUrl(fileName: string) {
+  await requireAuth();
   return gcsClient.createPublicUrl(fileName);
 }
 

@@ -10,24 +10,24 @@ export function useFileUpload() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const uploadFile = async (file: File): Promise<string | null> => {
-    if (!file) return null;
+      if (!file) return null;
 
-    const url = uploadFileUtil({
-      file,
-      onPreview: (url) => {
-        setIsUploading(true);
-        setPreviewUrl(url);
-      },
-      onProgress: (progress) => setProgress(progress),
-      onSuccess: () => setIsUploading(false),
-      onError: () => setIsUploading(false),
-      onFinally: () => {
-        setIsUploading(false);
-        setProgress(0);
-      },
-    });
+      const url = await uploadFileUtil({
+        file,
+        onPreview: (url) => {
+          setIsUploading(true);
+          setPreviewUrl(url);
+        },
+        onProgress: (progress) => setProgress(progress),
+        onSuccess: () => setIsUploading(false),
+        onError: () => setIsUploading(false),
+        onFinally: () => {
+          setIsUploading(false);
+          setProgress(0);
+        },
+      });
 
-    return url;
+      return url;
   };
 
   return {

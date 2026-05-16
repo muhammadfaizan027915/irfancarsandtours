@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { UserTabs } from "@icat/features";
-import { requireAuth } from "@icat/lib/auth";
+import { requireAuth } from "@icat/lib";
 
 type UserLayoutProps = {
   children: ReactNode;
@@ -8,7 +8,6 @@ type UserLayoutProps = {
 
 export default async function UserLayout({ children }: UserLayoutProps) {
   await requireAuth();
-
   return (
     <div className="container mx-auto py-8">
       <UserTabs />

@@ -78,13 +78,15 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
     const file = files.find((file) => file.id === id);
     if (!file) return;
 
-    if (file.previewUrl) {
+    const leftFiles = files.filter((f) => f.id !== id);
+
+    if (file.previewUrl && !file.previewUrl.startsWith("blob:")) {
       const prevFiles = getCurrentFiles();
-      const leftFiles = files.filter((f) => f.id !== id);
 
       await deleteFileUtil({
         fileUrl: file.previewUrl,
         onSuccess: () => {
+          setFiles(leftFiles);
           onSuccess?.(leftFiles);
         },
         onError: (error) => {
@@ -92,6 +94,9 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
           onError?.(error);
         },
       });
+    } else {
+      setFiles(leftFiles);
+      onSuccess?.(leftFiles);
     }
   };
 
