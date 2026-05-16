@@ -1,7 +1,7 @@
 import { gcsClient } from "../gcs-client";
 
 export async function finalizeTempFileUrls(
-  tempFileUrls: string[],
+  tempFileUrls: string[] | undefined,
   destinationPrefix: string,
 ): Promise<string[]> {
   if (!tempFileUrls || tempFileUrls.length === 0) return [];
