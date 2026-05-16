@@ -31,7 +31,7 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
       previewUrl: url,
       progress: 100,
       isUploading: false,
-    }))
+    })),
   );
 
   const uploadFiles = (selectedFiles: FileList | File[]) => {
@@ -102,7 +102,7 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
 
   const updateFile = (id: string, updates: Partial<UploadedFile>) => {
     setFiles((prev) =>
-      prev.map((file) => (file.id === id ? { ...file, ...updates } : file))
+      prev.map((file) => (file.id === id ? { ...file, ...updates } : file)),
     );
   };
 

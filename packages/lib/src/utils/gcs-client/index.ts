@@ -6,15 +6,18 @@ export class GCSClient {
   private bucket: ReturnType<Storage["bucket"]>;
 
   constructor() {
-    const getEnv = (key: string) => process.env[key]?.trim().replace(/^["']|["']$/g, "") || "";
-    
+    const getEnv = (key: string) =>
+      process.env[key]?.trim().replace(/^["']|["']$/g, "") || "";
+
     const projectId = getEnv("GCS_PROJECT_ID");
     const clientEmail = getEnv("GCS_CLIENT_EMAIL");
     const rawPrivateKey = getEnv("GCS_PRIVATE_KEY");
     this.bucketName = getEnv("GCS_BUCKET_NAME");
 
     if (!projectId || !clientEmail || !rawPrivateKey || !this.bucketName) {
-      throw new Error("GCS configuration is incomplete. Please check your environment variables.");
+      throw new Error(
+        "GCS configuration is incomplete. Please check your environment variables.",
+      );
     }
 
     const privateKey = rawPrivateKey
@@ -38,17 +41,31 @@ export class GCSClient {
   }
 
   extractFileNameFromUrl(url: string): string {
+    if (!url) return "";
+
     const match = url.match(/https:\/\/storage\.googleapis\.com\/[^/]+\/(.+)/);
     const fileKey = match ? match[1] : url;
-    return decodeURIComponent(fileKey);
+
+    return decodeURIComponent(fileKey?.split("?")[0]);
   }
 
   async createPublicUrl(fileName: string) {
-    const fileKey = encodeURIComponent(this.extractFileNameFromUrl(fileName));
+    if (!fileName) return "";
+
+    const extractedFileName = this.extractFileNameFromUrl(fileName);
+    const fileKey = extractedFileName
+      .split("/")
+      .map((segment) => encodeURIComponent(segment))
+      .join("/");
+
     return `https://storage.googleapis.com/${this.bucketName}/${fileKey}`;
   }
 
-  async createSignedUploadUrl(fileName: string, contentType: string, expiresIn = 15 * 60 * 1000): Promise<string> {
+  async createSignedUploadUrl(
+    fileName: string,
+    contentType: string,
+    expiresIn = 15 * 60 * 1000,
+  ): Promise<string> {
     const options: GetSignedUrlConfig = {
       version: "v4",
       action: "write",
@@ -59,7 +76,10 @@ export class GCSClient {
     return url;
   }
 
-  async createSignedDownloadUrl(identifier: string, expiresIn = 5 * 60 * 1000): Promise<string> {
+  async createSignedDownloadUrl(
+    identifier: string,
+    expiresIn = 5 * 60 * 1000,
+  ): Promise<string> {
     const file = this.getFile(identifier);
     await file.makePublic();
     const [url] = await file.getSignedUrl({
@@ -70,13 +90,17 @@ export class GCSClient {
     return url;
   }
 
-  async uploadFile(fileName: string, buffer: Buffer, contentType = "application/octet-stream"): Promise<string> {
+  async uploadFile(
+    fileName: string,
+    buffer: Buffer,
+    contentType = "application/octet-stream",
+  ): Promise<string> {
     await this.getFile(fileName).save(buffer, {
       contentType,
       resumable: false,
       public: false,
     });
-    return this.createPublicUrl(fileName);
+    return await this.createPublicUrl(fileName);
   }
 
   async deleteFile(identifier: string): Promise<boolean> {
@@ -84,33 +108,60 @@ export class GCSClient {
     return true;
   }
 
-  async moveFile(sourceIdentifier: string, destinationFileName: string): Promise<string> {
+  async moveFile(
+    sourceIdentifier: string,
+    destinationFileName: string,
+  ): Promise<string> {
     const sourceFile = this.getFile(sourceIdentifier);
     const destinationFile = this.bucket.file(destinationFileName);
 
     await sourceFile.copy(destinationFile);
     await sourceFile.delete({ ignoreNotFound: true });
 
-    return this.createPublicUrl(destinationFileName);
+    return await this.createPublicUrl(destinationFileName);
   }
 
-  async moveTempFileUrlToDestinationUrl(fileUrl: string, destinationPrefix: string): Promise<string> {
-    if (!fileUrl || !fileUrl.includes("/temp/")) return fileUrl;
-
-    const prefix = destinationPrefix.endsWith("/") ? destinationPrefix : `${destinationPrefix}/`;
+  async moveTempFileUrlToDestinationUrl(
+    fileUrl: string,
+    destinationPrefix: string,
+  ): Promise<string> {
     const fileName = this.extractFileNameFromUrl(fileUrl);
+    if (!fileName.startsWith("temp/")) {
+      return fileUrl;
+    }
+
+    const prefix = destinationPrefix.endsWith("/")
+      ? destinationPrefix
+      : `${destinationPrefix}/`;
     const newFileName = fileName.replace("temp/", prefix);
 
-    return this.moveFile(fileUrl, newFileName);
+    return await this.moveFile(fileUrl, newFileName);
   }
 
-  async replaceFile(oldIdentifier: string, newFileName: string, buffer: Buffer, contentType = "application/octet-stream"): Promise<string> {
+  async replaceFile(
+    oldIdentifier: string,
+    newFileName: string,
+    buffer: Buffer,
+    contentType = "application/octet-stream",
+  ): Promise<string> {
     await this.deleteFile(oldIdentifier);
-    return this.uploadFile(newFileName, buffer, contentType);
+    return await this.uploadFile(newFileName, buffer, contentType);
   }
 
-  async setBucketCors(origins: string[] = ["*"], methods: string[] = ["GET", "PUT", "POST", "DELETE", "OPTIONS"], responseHeaders: string[] = ["Content-Type", "Authorization"], maxAgeSeconds = 3600): Promise<void> {
-    await this.bucket.setCorsConfiguration([{ origin: origins, method: methods, responseHeader: responseHeaders, maxAgeSeconds }]);
+  async setBucketCors(
+    origins: string[] = ["*"],
+    methods: string[] = ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
+    responseHeaders: string[] = ["Content-Type", "Authorization"],
+    maxAgeSeconds = 3600,
+  ): Promise<void> {
+    await this.bucket.setCorsConfiguration([
+      {
+        origin: origins,
+        method: methods,
+        responseHeader: responseHeaders,
+        maxAgeSeconds,
+      },
+    ]);
   }
 
   async getFileMetadata(identifier: string) {

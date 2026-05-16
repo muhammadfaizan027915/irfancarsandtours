@@ -43,9 +43,10 @@ export function CarForm({ car, mode }: CarFormProps) {
   const success = result?.success;
   const error = result?.error;
 
-  const { files, uploadFiles, deleteFile, resetFiles } = useMultiFileUpload({
-    initialUrls: car?.imageUrls,
-  });
+  const { files, uploadFiles, deleteFile, resetFiles, isUploading } =
+    useMultiFileUpload({
+      initialUrls: car?.imageUrls,
+    });
 
   useEffect(() => {
     if (result?.success) {
@@ -286,7 +287,7 @@ export function CarForm({ car, mode }: CarFormProps) {
                 type="submit"
                 size="lg"
                 className="px-12 font-bold shadow-lg"
-                disabled={pending}
+                disabled={pending || isUploading}
               >
                 {pending
                   ? "Saving..."
