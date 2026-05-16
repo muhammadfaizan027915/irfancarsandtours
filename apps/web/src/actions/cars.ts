@@ -14,23 +14,17 @@ import {
 import { CarService } from "@icat/services";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@icat/lib/auth";
-import { finalizeTempFileUrls } from "@icat/lib/utils/fileupload/finalize-temp-file-urls";
+import { finalizeTempFileUrls } from "@icat/lib/utils/fileupload/finalize-temp-file-url";
 
 export const registerCar = handlerFormActionWithError({
   schema: RegisterCarBodySchema,
   action: async (data: RegisterCarBodyDto) => {
     await requireAdmin();
 
-    const finalizedImageUrls = await finalizeTempFileUrls(
-      data.imageUrls,
-      "cars",
-    );
+    data.imageUrls = await finalizeTempFileUrls(data.imageUrls, "cars");
 
     const carService = new CarService();
-    const car = await carService.createCar({
-      ...data,
-      imageUrls: finalizedImageUrls,
-    });
+    const car = await carService.createCar(data);
 
     return car;
   },
@@ -41,16 +35,10 @@ export const updateCar = handlerFormActionWithError({
   action: async (data: UpdateCarBodyDto) => {
     await requireAdmin();
 
-    const finalizedImageUrls = await finalizeTempFileUrls(
-      data.imageUrls,
-      "cars",
-    );
+    data.imageUrls = await finalizeTempFileUrls(data.imageUrls, "cars");
 
     const carService = new CarService();
-    const car = await carService.updateCar(data.id, {
-      ...data,
-      imageUrls: finalizedImageUrls,
-    });
+    const car = await carService.updateCar(data.id, data);
 
     revalidatePath(`${DashboardNavigationUrls.CARS}/${car?.id}/edit`);
     return car;
