@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDownIcon, Plus,SearchIcon, X } from "lucide-react";
+import { ChevronDownIcon, Plus, SearchIcon, X } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@icat/ui/lib/utils";
@@ -48,6 +48,27 @@ export function Autocomplete<T extends string>({
   const [isOpen, setIsOpen] = React.useState(false);
   const hasError = !!errors?.length;
 
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const onChangeRef = React.useRef(onChange);
+
+  React.useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
+
+  // Handle form reset
+  React.useEffect(() => {
+    const form = containerRef.current?.closest("form");
+    if (!form) return;
+
+    const handleReset = () => {
+      setInternalValues(defaultValue);
+      onChangeRef.current?.(defaultValue);
+    };
+
+    form.addEventListener("reset", handleReset);
+    return () => form.removeEventListener("reset", handleReset);
+  }, [defaultValue]);
+
   const toggle = (val: T) => {
     const newValues = values.includes(val)
       ? values.filter((v) => v !== val)
@@ -88,7 +109,7 @@ export function Autocomplete<T extends string>({
   };
 
   return (
-    <div id={id} className="w-full relative">
+    <div ref={containerRef} id={id} className="w-full relative">
       {/* Hidden inputs for form submission */}
       {name &&
         (values.length > 0 ? (
@@ -98,6 +119,28 @@ export function Autocomplete<T extends string>({
         ) : (
           <input type="hidden" name={name} value="" />
         ))}
+
+      {/* Hidden input for native validation (required) */}
+      {required && (
+        <input
+          tabIndex={-1}
+          autoComplete="off"
+          style={{
+            position: "absolute",
+            width: 1,
+            height: 1,
+            margin: -1,
+            padding: 0,
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            border: 0,
+            pointerEvents: "none",
+          }}
+          value={values.length > 0 ? "filled" : ""}
+          readOnly
+          required={required}
+        />
+      )}
 
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
