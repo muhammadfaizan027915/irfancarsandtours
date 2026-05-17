@@ -1,7 +1,7 @@
 import { ExtractTablesWithRelations } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { PgTransaction } from "drizzle-orm/pg-core";
-import { PostgresJsQueryResultHKT } from "drizzle-orm/postgres-js";
+import { NodePgQueryResultHKT } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 
 import { accountsTable } from "./accountsTable";
@@ -54,7 +54,7 @@ export const db = drizzle(pool, {
 export type Database = typeof db;
 
 export type Transaction = PgTransaction<
-  PostgresJsQueryResultHKT,
+  NodePgQueryResultHKT,
   typeof tables,
   ExtractTablesWithRelations<typeof tables>
 >;

@@ -53,7 +53,7 @@ export async function CarDetailContent({ carId }: { carId: string }) {
           </div>
           <div className="grid gap-6 col-span-6 lg:col-span-2">
             <CarGetStarted />
-            {user ? <CarBooking cars={_cars} /> : <LoginNotice />}
+            <CarBooking cars={_cars} />
           </div>
         </div>
       </div>

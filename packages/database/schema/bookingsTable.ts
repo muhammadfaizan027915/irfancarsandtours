@@ -26,7 +26,7 @@ export const bookingsTable = pgTable("bookings", {
   totalPrice: integer("total_price").default(0),
   userId: text("user_id")
     .notNull()
-    .references(() => usersTable.id),
+    .references(() => usersTable.id, { onDelete: "cascade", onUpdate: "cascade" }),
   ...timestampColumns,
 });
 

@@ -66,14 +66,27 @@ export class BookingService {
   }
 
   async createBooking(
-    userId: string,
     { cars, ...data }: BookingRequestDto,
+    userId?: string,
     tx: DbOrTransaction = db,
   ): Promise<BookingResponseDto> {
-    const carIds = cars.map((car) => car.carId);
-
     const executeCreate = async (transaction: DbOrTransaction) => {
       let totalPrice = 0;
+
+      if (!userId) {
+        try {
+          const user = await this.userService.getUserByEmail(
+            data.email,
+            transaction,
+          );
+          userId = user.id;
+        } catch (error) {
+          const newUser = await this.userService.createUser(data, transaction);
+          userId = newUser.id;
+        }
+      }
+
+      const carIds = cars.map((car) => car.carId);
       const carsWithDriverAndStartingPrice =
         await this.carService.getCarsDriverAndStartingPrice(
           carIds,
@@ -107,7 +120,7 @@ export class BookingService {
         },
         transaction,
       );
-
+      
       await this.userService.updateUser(userId, data, transaction);
 
       await this.bookedCarService.createMany(

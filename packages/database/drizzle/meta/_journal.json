@@ -127,6 +127,48 @@
       "when": 1779010097933,
       "tag": "0017_amazing_dreadnoughts",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1779030998629,
+      "tag": "0018_outgoing_changeling",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1779032720297,
+      "tag": "0019_old_skin",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1779033427069,
+      "tag": "0020_steady_newton_destine",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1779033840058,
+      "tag": "0021_lean_peter_quill",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1779034096924,
+      "tag": "0022_calm_arclight",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1779034500000,
+      "tag": "0023_fix_cnic_typo",
+      "breakpoints": true
     }
   ]
 }

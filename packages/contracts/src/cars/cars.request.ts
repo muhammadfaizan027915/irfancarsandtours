@@ -57,9 +57,7 @@ export const RegisterCarBodySchema = z.object({
 
 export type RegisterCarBodyDto = z.infer<typeof RegisterCarBodySchema>;
 
-export const UpdateCarBodySchema = RegisterCarBodySchema.partial().extend({
-  id: z.uuid("Invalid car ID"),
-});
+export const UpdateCarBodySchema = RegisterCarBodySchema.partial()
 
 export type UpdateCarBodyDto = z.infer<typeof UpdateCarBodySchema>;
 

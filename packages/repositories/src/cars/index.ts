@@ -173,23 +173,22 @@ export class CarRepository {
       .returning();
     return car;
   }
+async update(
+  id: string,
+  data: Partial<Omit<CarInsert, "id" | "createdAt" | "updatedAt">>,
+  tx: DbOrTransaction = db,
+): Promise<CarSelect | null> {
+  const [updatedCar] = await tx
+    .update(carsTable)
+    .set({
+      ...data,
+      updatedAt: new Date(),
+    })
+    .where(eq(carsTable.id, id))
+    .returning();
 
-  async update(
-    id: string,
-    data: Partial<Omit<CarInsert, "id" | "createdAt" | "updatedAt">>,
-    tx: DbOrTransaction = db,
-  ): Promise<CarSelect | null> {
-    const [updatedCar] = await tx
-      .update(carsTable)
-      .set({
-        ...data,
-        updatedAt: new Date(),
-      })
-      .where(eq(carsTable.id, id))
-      .returning();
-
-    return updatedCar ?? null;
-  }
+  return updatedCar ?? null;
+}
 
   async findCarsDriverAndStartingPrice(carIds: string[], tx: DbOrTransaction = db) {
     const cars = await tx

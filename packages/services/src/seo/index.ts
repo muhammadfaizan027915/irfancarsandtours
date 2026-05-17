@@ -45,8 +45,8 @@ export class SeoService {
       if (car && car.seoId !== seo.id) {
         await this.carService.updateCar(
           carId,
-          { id: carId, seoId: seo.id },
-          transaction,
+          { seoId: seo.id },
+          transaction
         );
       }
 

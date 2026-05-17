@@ -36,7 +36,6 @@ export async function getUserCar(carId: string) {
 }
 
 export async function getCar(carId: string) {
-  await requireAdmin();
   const carService = new CarService();
   const car = await carService.getCarById(carId);
   return car;

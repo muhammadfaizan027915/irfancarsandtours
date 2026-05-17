@@ -7,20 +7,20 @@ import { handlerFormActionWithError } from "@icat/lib";
 import { carCartKey } from "@icat/web/store";
 import { BookingService } from "@icat/services";
 import { redirect } from "next/navigation";
-import { requireAuth } from "@icat/lib/auth";
+import { getSessionUser } from "@icat/lib/auth";
 
 export const bookCar = handlerFormActionWithError({
   schema: CarBookingRequestSchema,
   action: async (data: BookingRequestDto) => {
-    const sessionUser = await requireAuth();
+    const sessionUser = await getSessionUser();
     const bookingService = new BookingService();
-    const booking = await bookingService.createBooking(sessionUser.id, data);
+    const booking = await bookingService.createBooking(data, sessionUser?.id);
 
-    if (booking) {
+    if (booking && sessionUser?.id) {
       (await cookies()).delete(carCartKey);
       redirect(`${NavigationUrls.BOOKINGS}/${booking?.id}/confirmation`);
     }
 
-    return booking;
+    return { ...booking, isLoggedIn: !!sessionUser?.id };
   },
 });

@@ -1,6 +1,7 @@
 import {
   ChangePasswordBodyDto,
   CreateUserBodyDto,
+  CreateGuestUserBodyDto,
   DetailedUserResponseDto,
   DetailedUserResponseSchema,
   GetUsersBodyDto,
@@ -29,7 +30,7 @@ export class UserService {
 
   async getAll(
     arg?: GetUsersBodyDto,
-    tx: DbOrTransaction = db
+    tx: DbOrTransaction = db,
   ): Promise<PaginatedUserResponseDto> {
     const result = await this.userRepository.findAll(arg, tx);
     return PaginatedUserResponseSchema.parse(result);
@@ -37,7 +38,7 @@ export class UserService {
 
   async getUserByEmail(
     email: string,
-    tx: DbOrTransaction = db
+    tx: DbOrTransaction = db,
   ): Promise<UserResponseDto> {
     const user = await this.userRepository.findByEmail(email, tx);
 
@@ -59,8 +60,8 @@ export class UserService {
   }
 
   async createUser(
-    data: CreateUserBodyDto,
-    tx: DbOrTransaction = db
+    data: CreateUserBodyDto | CreateGuestUserBodyDto,
+    tx: DbOrTransaction = db,
   ): Promise<UserResponseDto> {
     const existingUser = await this.userRepository.findByEmail(data.email, tx);
 
@@ -68,14 +69,17 @@ export class UserService {
       throw new DuplicateEmailError(data?.email);
     }
 
-    const passwordHash = await this.authService.hashPassword(data.password);
+    const passwordHash =
+      "password" in data && data.password
+        ? await this.authService.hashPassword(data.password)
+        : null;
 
     const createdUser = await this.userRepository.create(
       {
         ...data,
         password: passwordHash,
       },
-      tx
+      tx,
     );
 
     return UserResponseSchema.parse(createdUser);
@@ -83,14 +87,21 @@ export class UserService {
 
   async validateUserCredentials(
     credentials: SignInBodyDto,
-    tx: DbOrTransaction = db
+    tx: DbOrTransaction = db,
   ): Promise<UserResponseDto> {
     const { email, password } = credentials || {};
     const user = await this.getUserByEmailWithPassword(email, tx);
 
+    if (!user.password) {
+      throw new ValidationError({
+        message:
+          "This account was created as a guest. Please reset your password to log in.",
+      });
+    }
+
     const isValid = await this.authService.comparePassword(
       password,
-      user.password
+      user.password,
     );
 
     if (!isValid) {
@@ -102,7 +113,7 @@ export class UserService {
 
   async getDetailedUserByEmail(
     email: string,
-    tx: DbOrTransaction = db
+    tx: DbOrTransaction = db,
   ): Promise<DetailedUserResponseDto> {
     const user = await this.userRepository.findByEmail(email, tx);
 
@@ -116,7 +127,7 @@ export class UserService {
   async updateUser(
     id: string,
     updates: UpdateUserBodyDto,
-    tx: DbOrTransaction = db
+    tx: DbOrTransaction = db,
   ): Promise<DetailedUserResponseDto | null> {
     const existingUser = await this.userRepository.findById(id, tx);
 
@@ -132,7 +143,7 @@ export class UserService {
   async changePassword(
     id: string,
     data: ChangePasswordBodyDto,
-    tx: DbOrTransaction = db
+    tx: DbOrTransaction = db,
   ): Promise<UserResponseDto | null> {
     const user = await this.userRepository.findById(id, tx);
 
@@ -144,7 +155,7 @@ export class UserService {
 
     const isValid = await this.authService.comparePassword(
       data?.currentPassword,
-      userWithPassword.password
+      userWithPassword.password,
     );
 
     if (!isValid) {
@@ -158,7 +169,7 @@ export class UserService {
       {
         password: hashedPassword,
       },
-      tx
+      tx,
     );
 
     return updatedUser ? UserResponseSchema.parse(updatedUser) : null;
