@@ -68,6 +68,7 @@ export function CarForm({ car, mode }: CarFormProps) {
       ...(isUpdateMode ? { id: car?.id } : {}),
       imageUrls,
     });
+
     action(formDataWithImageUrls);
   };
 

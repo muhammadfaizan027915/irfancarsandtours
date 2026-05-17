@@ -35,10 +35,16 @@ export const updateCar = handlerFormActionWithError({
   action: async (data: UpdateCarBodyDto) => {
     await requireAdmin();
 
-    data.imageUrls = await finalizeTempFileUrls(data.imageUrls, "cars");
+    const { id, ...updates } = data;
+
+    if (!id) {
+      throw new Error("Car ID is required for update");
+    }
+
+    updates.imageUrls = await finalizeTempFileUrls(updates.imageUrls, "cars");
 
     const carService = new CarService();
-    const car = await carService.updateCar(data.id, data);
+    const car = await carService.updateCar(id, updates);
 
     revalidatePath(`${DashboardNavigationUrls.CARS}/${car?.id}/edit`);
     return car;

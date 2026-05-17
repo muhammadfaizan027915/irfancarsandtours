@@ -16,7 +16,7 @@ export const UserResponseSchema = z.object({
 export type UserResponseDto = z.infer<typeof UserResponseSchema>;
 
 export const UserResponseWithPasswordSchema = UserResponseSchema.extend({
-  password: z.string(),
+  password: z.string().nullish(),
 });
 
 export type UserResponseWithPasswordDto = z.infer<

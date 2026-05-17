@@ -50,14 +50,16 @@ export const RegisterCarBodySchema = z.object({
     .min(0, "Starting price cannot be negative")
     .optional()
     .default(0),
-  seoId: z.string().uuid("SEO ID must be a valid UUID").optional(),
+  seoId: z.uuid("SEO ID must be a valid UUID").optional(),
   isFeatured: z.coerce.boolean().optional().default(false),
   forceWithDriver: z.coerce.boolean().optional().default(false),
 });
 
 export type RegisterCarBodyDto = z.infer<typeof RegisterCarBodySchema>;
 
-export const UpdateCarBodySchema = RegisterCarBodySchema.partial()
+export const UpdateCarBodySchema = RegisterCarBodySchema.partial().extend({
+  id: z.uuid().optional(),
+});
 
 export type UpdateCarBodyDto = z.infer<typeof UpdateCarBodySchema>;
 

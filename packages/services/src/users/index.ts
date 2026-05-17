@@ -14,7 +14,12 @@ import {
   UserResponseWithPasswordSchema,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
-import { DuplicateEmailError, NotFoundError, ValidationError } from "@icat/lib";
+import {
+  DuplicateEmailError,
+  ForbiddenError,
+  NotFoundError,
+  ValidationError,
+} from "@icat/lib";
 import { UserRepository } from "@icat/repositories";
 
 import { AuthService } from "../auth";
@@ -93,7 +98,7 @@ export class UserService {
     const user = await this.getUserByEmailWithPassword(email, tx);
 
     if (!user.password) {
-      throw new ValidationError({
+      throw new ForbiddenError({
         message:
           "This account was created as a guest. Please reset your password to log in.",
       });
@@ -155,7 +160,7 @@ export class UserService {
 
     const isValid = await this.authService.comparePassword(
       data?.currentPassword,
-      userWithPassword.password,
+      userWithPassword?.password ?? "",
     );
 
     if (!isValid) {
