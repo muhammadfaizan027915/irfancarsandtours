@@ -30,9 +30,19 @@ export async function CarDetailContent({ carId }: { carId: string }) {
     <div className="grid gap-6">
       <CarImages imageUrls={car?.imageUrls || []} />
       <div className="container mx-auto grid gap-6">
-        <h1 className="font-bold text-5xl">
-          {car?.brand} {car?.name} {car?.year}
-        </h1>
+        <div className="flex flex-col gap-2">
+          <h1 className="font-bold text-5xl">
+            {car?.brand} {car?.name} {car?.year}
+          </h1>
+          <div className="flex items-baseline gap-2">
+            <span className="text-sm text-muted-foreground uppercase font-bold tracking-widest">
+              Starting from
+            </span>
+            <span className="text-3xl font-black text-primary leading-none">
+              Rs. {car?.startingPrice?.toLocaleString()}
+            </span>
+          </div>
+        </div>
         <div className="grid grid-cols-6 items-start gap-6">
           <div className="grid gap-6 col-span-6 lg:col-span-4">
             <CarProperties {...car} />

@@ -12,6 +12,7 @@ import {
   UserResponseSchema,
   UserResponseWithPasswordSchema,
 } from "@icat/contracts";
+import { db, DbOrTransaction } from "@icat/database";
 import { DuplicateEmailError, NotFoundError, ValidationError } from "@icat/lib";
 import { UserRepository } from "@icat/repositories";
 
@@ -26,13 +27,19 @@ export class UserService {
     this.authService = new AuthService();
   }
 
-  async getAll(arg?:GetUsersBodyDto): Promise<PaginatedUserResponseDto> {
-    const result = await this.userRepository.findAll(arg);
+  async getAll(
+    arg?: GetUsersBodyDto,
+    tx: DbOrTransaction = db
+  ): Promise<PaginatedUserResponseDto> {
+    const result = await this.userRepository.findAll(arg, tx);
     return PaginatedUserResponseSchema.parse(result);
   }
 
-  async getUserByEmail(email: string): Promise<UserResponseDto> {
-    const user = await this.userRepository.findByEmail(email);
+  async getUserByEmail(
+    email: string,
+    tx: DbOrTransaction = db
+  ): Promise<UserResponseDto> {
+    const user = await this.userRepository.findByEmail(email, tx);
 
     if (!user) {
       throw new NotFoundError("User");
@@ -41,8 +48,8 @@ export class UserService {
     return UserResponseSchema.parse(user);
   }
 
-  async getUserByEmailWithPassword(email: string) {
-    const user = await this.userRepository.findByEmail(email);
+  async getUserByEmailWithPassword(email: string, tx: DbOrTransaction = db) {
+    const user = await this.userRepository.findByEmail(email, tx);
 
     if (!user) {
       throw new NotFoundError("User");
@@ -51,8 +58,11 @@ export class UserService {
     return UserResponseWithPasswordSchema.parse(user);
   }
 
-  async createUser(data: CreateUserBodyDto): Promise<UserResponseDto> {
-    const existingUser = await this.userRepository.findByEmail(data.email);
+  async createUser(
+    data: CreateUserBodyDto,
+    tx: DbOrTransaction = db
+  ): Promise<UserResponseDto> {
+    const existingUser = await this.userRepository.findByEmail(data.email, tx);
 
     if (existingUser) {
       throw new DuplicateEmailError(data?.email);
@@ -60,19 +70,23 @@ export class UserService {
 
     const passwordHash = await this.authService.hashPassword(data.password);
 
-    const createdUser = await this.userRepository.create({
-      ...data,
-      password: passwordHash,
-    });
+    const createdUser = await this.userRepository.create(
+      {
+        ...data,
+        password: passwordHash,
+      },
+      tx
+    );
 
     return UserResponseSchema.parse(createdUser);
   }
 
   async validateUserCredentials(
-    credentials: SignInBodyDto
+    credentials: SignInBodyDto,
+    tx: DbOrTransaction = db
   ): Promise<UserResponseDto> {
     const { email, password } = credentials || {};
-    const user = await this.getUserByEmailWithPassword(email);
+    const user = await this.getUserByEmailWithPassword(email, tx);
 
     const isValid = await this.authService.comparePassword(
       password,
@@ -87,9 +101,10 @@ export class UserService {
   }
 
   async getDetailedUserByEmail(
-    email: string
+    email: string,
+    tx: DbOrTransaction = db
   ): Promise<DetailedUserResponseDto> {
-    const user = await this.userRepository.findByEmail(email);
+    const user = await this.userRepository.findByEmail(email, tx);
 
     if (!user) {
       throw new NotFoundError("User");
@@ -100,24 +115,26 @@ export class UserService {
 
   async updateUser(
     id: string,
-    updates: UpdateUserBodyDto
+    updates: UpdateUserBodyDto,
+    tx: DbOrTransaction = db
   ): Promise<DetailedUserResponseDto | null> {
-    const existingUser = await this.userRepository.findById(id);
+    const existingUser = await this.userRepository.findById(id, tx);
 
     if (!existingUser) {
       throw new NotFoundError("User");
     }
 
-    const updatedUser = await this.userRepository.update(id, updates);
+    const updatedUser = await this.userRepository.update(id, updates, tx);
 
     return updatedUser ? DetailedUserResponseSchema.parse(updatedUser) : null;
   }
 
   async changePassword(
     id: string,
-    data: ChangePasswordBodyDto
+    data: ChangePasswordBodyDto,
+    tx: DbOrTransaction = db
   ): Promise<UserResponseDto | null> {
-    const user = await this.userRepository.findById(id);
+    const user = await this.userRepository.findById(id, tx);
 
     if (!user) {
       throw new NotFoundError("User");
@@ -136,9 +153,13 @@ export class UserService {
 
     const hashedPassword = await this.authService.hashPassword(data?.password);
 
-    const updatedUser = await this.userRepository.update(id, {
-      password: hashedPassword,
-    });
+    const updatedUser = await this.userRepository.update(
+      id,
+      {
+        password: hashedPassword,
+      },
+      tx
+    );
 
     return updatedUser ? UserResponseSchema.parse(updatedUser) : null;
   }

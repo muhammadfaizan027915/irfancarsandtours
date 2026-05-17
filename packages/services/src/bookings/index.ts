@@ -11,6 +11,7 @@ import {
   PaginatedBookingWithUserResponseDto,
   PaginatedBookingWithUserResponseSchema,
 } from "@icat/contracts";
+import { db, DbOrTransaction } from "@icat/database";
 import { BookingRepository } from "@icat/repositories";
 import { BookedCarService, CarService, UserService } from "@icat/services";
 
@@ -28,28 +29,37 @@ export class BookingService {
   }
 
   async getAll(
-    args?: GetBookingsBodyDto
+    args?: GetBookingsBodyDto,
+    tx: DbOrTransaction = db,
   ): Promise<PaginatedBookingWithUserResponseDto> {
-    const result = await this.bookingRepository.findAll(args);
+    const result = await this.bookingRepository.findAll(args, tx);
     return PaginatedBookingWithUserResponseSchema.parse(result);
   }
 
   async getAllByUserId(
-    args: GetBookingsByUserIdBodyDto
+    args: GetBookingsByUserIdBodyDto,
+    tx: DbOrTransaction = db,
   ): Promise<PaginatedBookingResponseDto> {
-    const result = await this.bookingRepository.findAllByUserId(args);
+    const result = await this.bookingRepository.findAllByUserId(args, tx);
     return PaginatedBookingResponseSchema.parse(result);
   }
 
-  async getBookingById(bookingId: string): Promise<BookingResponseDto | null> {
-    const booking = await this.bookingRepository.findById(bookingId);
+  async getBookingById(
+    bookingId: string,
+    tx: DbOrTransaction = db,
+  ): Promise<BookingResponseDto | null> {
+    const booking = await this.bookingRepository.findById(bookingId, tx);
     return booking ? BookingResponseSchema.parse(booking) : null;
   }
 
   async getBookingByIdWithUser(
-    bookingId: string
+    bookingId: string,
+    tx: DbOrTransaction = db,
   ): Promise<BookingWithUserListItemResponseDto | null> {
-    const booking = await this.bookingRepository.findByIdWithUser(bookingId);
+    const booking = await this.bookingRepository.findByIdWithUser(
+      bookingId,
+      tx,
+    );
     return booking
       ? BookingWithUserListItemResponseSchema.parse(booking)
       : null;
@@ -57,36 +67,59 @@ export class BookingService {
 
   async createBooking(
     userId: string,
-    { cars, ...data }: BookingRequestDto
+    { cars, ...data }: BookingRequestDto,
+    tx: DbOrTransaction = db,
   ): Promise<BookingResponseDto> {
-    const booking = await this.bookingRepository.create({
-      ...data,
-      userId,
-      pickupDate: new Date(data.pickupDate),
-      dropoffDate: new Date(data.dropoffDate),
-    });
+    const carIds = cars.map((car) => car.carId);
 
-    this.userService.updateUser(userId, data);
+    const executeCreate = async (transaction: DbOrTransaction) => {
+      let totalPrice = 0;
+      const carsWithDriverAndStartingPrice =
+        await this.carService.getCarsDriverAndStartingPrice(
+          carIds,
+          transaction,
+        );
 
-    const carIds = cars?.map((car) => car?.carId);
-    const carsWithDriverRules = await this.carService.getCarsDriverRules(
-      carIds
-    );
-
-    for await (const car of cars) {
-      const carWithDriverRule = carsWithDriverRules.find(
-        (c) => c.id === car.carId
+      const carDetailsMap = new Map(
+        carsWithDriverAndStartingPrice.map((c) => [c.id, c]),
       );
 
-      await this.bookedCarService.create({
-        ...car,
-        bookingId: booking.id,
-        bookedWithDriver: carWithDriverRule?.forceWithDriver
-          ? carWithDriverRule?.forceWithDriver
-          : car?.bookedWithDriver,
-      });
-    }
+      const bookedCars = cars.map((car) => {
+        const carDetail = carDetailsMap.get(car.carId);
+        const startingPrice = carDetail?.startingPrice ?? 0;
 
-    return BookingResponseSchema.parse(booking);
+        totalPrice += startingPrice * (car.quantity ?? 1);
+
+        return {
+          ...car,
+          bookedWithDriver: carDetail?.forceWithDriver ?? car.bookedWithDriver,
+          quotedPrice: startingPrice,
+        };
+      });
+
+      const booking = await this.bookingRepository.create(
+        {
+          ...data,
+          userId,
+          pickupDate: new Date(data.pickupDate),
+          dropoffDate: new Date(data.dropoffDate),
+          totalPrice,
+        },
+        transaction,
+      );
+
+      await this.userService.updateUser(userId, data, transaction);
+
+      await this.bookedCarService.createMany(
+        bookedCars.map((bc) => ({ ...bc, bookingId: booking.id })),
+        transaction,
+      );
+
+      return BookingResponseSchema.parse(booking);
+    };
+
+    return tx === db
+      ? await db.transaction((newTx) => executeCreate(newTx))
+      : await executeCreate(tx);
   }
 }

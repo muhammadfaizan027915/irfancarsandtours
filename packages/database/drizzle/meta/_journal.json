@@ -113,6 +113,20 @@
       "when": 1777121054425,
       "tag": "0015_slim_echo",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1779006843786,
+      "tag": "0016_lumpy_loki",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1779010097933,
+      "tag": "0017_amazing_dreadnoughts",
+      "breakpoints": true
     }
   ]
 }

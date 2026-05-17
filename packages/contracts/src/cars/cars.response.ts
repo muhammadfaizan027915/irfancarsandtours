@@ -30,7 +30,9 @@ export const CarResponseSchema = z.object({
     z.array(z.url())
   ),
 
+  seoId: z.uuid().nullish(),
   seatingCapacity: z.number().int(),
+  startingPrice: z.number().int().nullish(),
   isFeatured: z.boolean(),
   timesSearched: z.number().int().nullish(),
   forceWithDriver: z.boolean().nullish(),

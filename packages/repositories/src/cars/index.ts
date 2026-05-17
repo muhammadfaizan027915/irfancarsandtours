@@ -33,6 +33,7 @@ export const CarItemSelect = {
   transmissionType: carsTable.transmissionType,
   imageUrls: carsTable.imageUrls,
   seatingCapacity: carsTable.seatingCapacity,
+  startingPrice: carsTable.startingPrice,
   isFeatured: carsTable.isFeatured,
   forceWithDriver: carsTable.forceWithDriver,
   timesSearched: carsTable.timesSearched,
@@ -41,18 +42,21 @@ export const CarItemSelect = {
 };
 
 export class CarRepository {
-  async findAll(args?: {
-    page?: number;
-    limit?: number;
-    search?: string;
-    name?: string;
-    model?: string;
-    brand?: BrandNames;
-    carType?: CarTypes[];
-    fuelType?: FuelTypes[];
-    transmissionType?: TransmissionTypes[];
-    amenities?: Amenities[];
-  }) {
+  async findAll(
+    args?: {
+      page?: number;
+      limit?: number;
+      search?: string;
+      name?: string;
+      model?: string;
+      brand?: BrandNames;
+      carType?: CarTypes[];
+      fuelType?: FuelTypes[];
+      transmissionType?: TransmissionTypes[];
+      amenities?: Amenities[];
+    },
+    tx: DbOrTransaction = db,
+  ) {
     const {
       page = 1,
       limit = 50,
@@ -103,7 +107,7 @@ export class CarRepository {
 
     const whereClause = and(...conditions);
 
-    const cars = await db
+    const cars = await tx
       .select(CarItemSelect)
       .from(carsTable)
       .where(whereClause)
@@ -111,7 +115,7 @@ export class CarRepository {
       .limit(limit)
       .offset(offset);
 
-    const [result] = await db
+    const [result] = await tx
       .select({ total: sql<number>`count(*)` })
       .from(carsTable)
       .where(whereClause);
@@ -129,19 +133,19 @@ export class CarRepository {
     };
   }
 
-  async findFeatured() {
+  async findFeatured(tx: DbOrTransaction = db) {
     const conditions = [
       isNull(carsTable.deletedAt),
       eq(carsTable.isFeatured, true),
     ];
     const whereClause = and(...conditions);
-    return db.select(CarItemSelect).from(carsTable).where(whereClause);
+    return tx.select(CarItemSelect).from(carsTable).where(whereClause);
   }
 
-  async findMostSearched(limit = 10) {
+  async findMostSearched(limit = 10, tx: DbOrTransaction = db) {
     const conditions = [isNull(carsTable.deletedAt)];
     const whereClause = and(...conditions);
-    return db
+    return tx
       .select(CarItemSelect)
       .from(carsTable)
       .where(whereClause)
@@ -149,8 +153,8 @@ export class CarRepository {
       .limit(limit);
   }
 
-  async findById(id: string): Promise<CarSelect | null> {
-    const [car] = await db
+  async findById(id: string, tx: DbOrTransaction = db): Promise<CarSelect | null> {
+    const [car] = await tx
       .select()
       .from(carsTable)
       .where(and(eq(carsTable.id, id), isNull(carsTable.deletedAt)))
@@ -161,8 +165,9 @@ export class CarRepository {
 
   async create(
     data: Omit<CarInsert, "id" | "createdAt" | "updatedAt">,
+    tx: DbOrTransaction = db,
   ): Promise<CarSelect> {
-    const [car] = await db
+    const [car] = await tx
       .insert(carsTable)
       .values(data as CarInsert)
       .returning();
@@ -172,10 +177,9 @@ export class CarRepository {
   async update(
     id: string,
     data: Partial<Omit<CarInsert, "id" | "createdAt" | "updatedAt">>,
-    tx?: DbOrTransaction,
+    tx: DbOrTransaction = db,
   ): Promise<CarSelect | null> {
-    const connection = tx || db;
-    const [updatedCar] = await connection
+    const [updatedCar] = await tx
       .update(carsTable)
       .set({
         ...data,
@@ -187,11 +191,12 @@ export class CarRepository {
     return updatedCar ?? null;
   }
 
-  async findCarsDriverRules(carIds: string[]) {
-    const cars = await db
+  async findCarsDriverAndStartingPrice(carIds: string[], tx: DbOrTransaction = db) {
+    const cars = await tx
       .select({
         id: carsTable.id,
         forceWithDriver: carsTable.forceWithDriver,
+        startingPrice: carsTable.startingPrice,
       })
       .from(carsTable)
       .where(inArray(carsTable.id, carIds));
@@ -199,15 +204,15 @@ export class CarRepository {
     return cars;
   }
 
-  async incrementTimesSearched(carIds: string[]) {
-    await db
+  async incrementTimesSearched(carIds: string[], tx: DbOrTransaction = db) {
+    await tx
       .update(carsTable)
       .set({ timesSearched: sql`times_searched + 1` })
-      .where(sql`${carsTable.id} in ${carIds}`);
+      .where(inArray(carsTable.id, carIds));
   }
 
-  async delete(id: string): Promise<CarSelect | null> {
-    const [car] = await db
+  async delete(id: string, tx: DbOrTransaction = db): Promise<CarSelect | null> {
+    const [car] = await tx
       .update(carsTable)
       .set({ deletedAt: new Date() })
       .where(eq(carsTable.id, id))
@@ -216,7 +221,7 @@ export class CarRepository {
     return car ?? null;
   }
 
-  async hardDelete(id: string): Promise<void> {
-    await db.delete(carsTable).where(eq(carsTable.id, id));
+  async hardDelete(id: string, tx: DbOrTransaction = db): Promise<void> {
+    await tx.delete(carsTable).where(eq(carsTable.id, id));
   }
 }

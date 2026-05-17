@@ -4,41 +4,57 @@ import {
   UpsertSeoBodyDto,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
-import { CarRepository, SeoRepository } from "@icat/repositories";
+import { SeoRepository } from "@icat/repositories";
+
+import { CarService } from "../cars";
 
 export class SeoService {
   private seoRepository: SeoRepository;
-  private carRepository: CarRepository;
+  private carService: CarService;
 
   constructor() {
     this.seoRepository = new SeoRepository();
-    this.carRepository = new CarRepository();
+    this.carService = new CarService();
   }
 
-  async getByCarId(carId: string): Promise<SeoResponseDto | null> {
-    const car = await this.carRepository.findById(carId);
+  async getByCarId(
+    carId: string,
+    tx: DbOrTransaction = db,
+  ): Promise<SeoResponseDto | null> {
+    const car = await this.carService.getCarById(carId, tx);
     if (!car || !car.seoId) return null;
 
-    const result = await this.seoRepository.findById(car.seoId);
+    const result = await this.seoRepository.findById(car.seoId, tx);
     return result ? SeoResponseSchema.parse(result) : null;
   }
 
-  async upsertSeo(data: UpsertSeoBodyDto): Promise<SeoResponseDto> {
-    return await db.transaction(async (tx) => {
-      const car = await this.carRepository.findById(data.carId);
+  async upsertSeo(
+    data: UpsertSeoBodyDto,
+    tx: DbOrTransaction = db,
+  ): Promise<SeoResponseDto> {
+    const executeUpsert = async (transaction: DbOrTransaction) => {
+      const car = await this.carService.getCarById(data.carId, transaction);
       const { carId, ...seoData } = data;
 
       const seo = await this.seoRepository.upsert(
         car?.seoId,
         seoData,
-        tx as DbOrTransaction,
+        transaction,
       );
 
       if (car && car.seoId !== seo.id) {
-        await this.carRepository.update(carId, { seoId: seo.id }, tx as any);
+        await this.carService.updateCar(
+          carId,
+          { id: carId, seoId: seo.id },
+          transaction,
+        );
       }
 
       return SeoResponseSchema.parse(seo);
-    });
+    };
+
+    return tx === db
+      ? await db.transaction((newTx) => executeUpsert(newTx))
+      : await executeUpsert(tx);
   }
 }

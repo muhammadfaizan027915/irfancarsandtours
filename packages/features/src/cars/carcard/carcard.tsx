@@ -1,6 +1,6 @@
 "use client";
 
-import { Armchair, CarFront,Cog, Fuel, ShoppingCart } from "lucide-react";
+import { Armchair, CarFront, Cog, Fuel, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -44,7 +44,7 @@ export function CarCard({ car }: CarCardProps) {
 
       <div className="p-6 pt-8 bg-card rounded-2xl flex flex-col gap-6">
         <h4 className="text-2xl font-bold">
-          <Link href={`${NavigationUrls.CARS}/${car?.id}`} className="hover:underline">
+          <Link href={`${NavigationUrls.CARS}/${car?.id}`}>
             {`${car?.brand} ${car?.name}`}
           </Link>
         </h4>
@@ -55,7 +55,7 @@ export function CarCard({ car }: CarCardProps) {
           </span>
 
           <span className="flex items-center">
-            <Cog size={22} className="inline mr-1" /> {car?.transmissionType}
+            <Cog size={18} className="inline mr-1" /> {car?.transmissionType}
           </span>
 
           <span className="flex items-center">
@@ -68,18 +68,37 @@ export function CarCard({ car }: CarCardProps) {
           </span>
         </div>
 
-        <div className="flex gap-2">
-          <Button className="shadow-none" onClick={handleAddToCart}>
-            <ShoppingCart />
-          </Button>
+        <div className="flex items-end gap-2 pt-2">
+          <div className="flex flex-col w-1/2">
+            <span className="text-[10px] text-muted-foreground uppercase font-black tracking-tighter leading-none mb-1">
+              Starting from
+            </span>
+            <span className="text-2xl font-black text-foreground leading-none">
+              <span className="text-sm font-bold text-muted-foreground mr-1">
+                Rs.
+              </span>
+              {car?.startingPrice?.toLocaleString()}
+            </span>
+          </div>
 
-          <Button
-            asChild
-            className="flex-1 shadow-none font-bold border border-border bg-muted dark:not-[:hover]:text-muted-foreground hover:border-transparent hover:bg-primary"
-            size="lg"
-          >
-            <Link href={`${NavigationUrls.CARS}/${car?.id}`}>Book Now</Link>
-          </Button>
+          <div className="flex gap-2 w-1/2">
+            <Button
+              size="icon"
+              variant="outline"
+              className="shadow-none font-bold border border-border bg-muted dark:not-[:hover]:text-muted-foreground hover:border-transparent hover:bg-primary"
+              onClick={handleAddToCart}
+            >
+              <ShoppingCart size={20} />
+            </Button>
+
+            <Button
+              asChild
+              className="flex-1 shadow-none ont-bold rounded-xl px-6"
+              size="lg"
+            >
+              <Link href={`${NavigationUrls.CARS}/${car?.id}`}>Book Now</Link>
+            </Button>
+          </div>
         </div>
       </div>
     </div>

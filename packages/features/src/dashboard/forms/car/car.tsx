@@ -186,6 +186,17 @@ export function CarForm({ car, mode }: CarFormProps) {
                       errors={error?.cause?.seatingCapacity?._errors}
                     />
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="startingPrice">Starting Price</Label>
+                    <Input
+                      id="startingPrice"
+                      type="number"
+                      placeholder="100"
+                      name="startingPrice"
+                      defaultValue={car?.startingPrice ?? 0}
+                      errors={error?.cause?.startingPrice?._errors}
+                    />
+                  </div>
                 </div>
               </div>
 
