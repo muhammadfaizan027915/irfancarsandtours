@@ -1,11 +1,11 @@
-import { GetComplaintsQueryDto } from "@icat/contracts";
+import { GetComplaintsBodyDto } from "@icat/contracts";
 import { ComplaintsFilterBar } from "@icat/features/dashboard/filtersbars/complaints";
 import { DashboardComplaintsContent } from "@icat/features/contents/dashboard/complaints";
 import { Suspense } from "react";
 import { DataTableSkeleton } from "@icat/ui";
 
 type ComplaintsPageProps = {
-  searchParams: Promise<GetComplaintsQueryDto>;
+  searchParams: Promise<GetComplaintsBodyDto>;
 };
 
 export default async function ComplaintsPage({

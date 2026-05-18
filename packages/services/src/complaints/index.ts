@@ -1,7 +1,7 @@
 import {
   ComplaintResponseDto,
   ComplaintResponseSchema,
-  GetComplaintsQueryDto,
+  GetComplaintsBodyDto,
   PaginatedComplaintResponseDto,
   PaginatedComplaintResponseSchema,
 } from "@icat/contracts";
@@ -16,7 +16,7 @@ export class ComplaintService {
   }
 
   async getAll(
-    args: GetComplaintsQueryDto,
+    args: GetComplaintsBodyDto,
     tx: DbOrTransaction = db
   ): Promise<PaginatedComplaintResponseDto> {
     const result = await this.complaintRepository.findAll(args, tx);
