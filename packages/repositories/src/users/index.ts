@@ -74,18 +74,19 @@ export class UserRepository {
 
     const whereClause = and(...conditions);
 
-    const users = await tx
-      .select(UserItemSelect)
-      .from(usersTable)
-      .where(whereClause)
-      .orderBy(desc(usersTable.createdAt))
-      .limit(limit)
-      .offset(offset);
-
-    const [result] = await tx
-      .select({ total: sql<number>`count(*)` })
-      .from(usersTable)
-      .where(whereClause);
+    const [users, [result]] = await Promise.all([
+      tx
+        .select(UserItemSelect)
+        .from(usersTable)
+        .where(whereClause)
+        .orderBy(desc(usersTable.createdAt))
+        .limit(limit)
+        .offset(offset),
+      tx
+        .select({ total: sql<number>`count(*)` })
+        .from(usersTable)
+        .where(whereClause),
+    ]);
 
     const total = users.length > 0 ? Number(result.total) : 0;
 

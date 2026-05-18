@@ -107,18 +107,19 @@ export class CarRepository {
 
     const whereClause = and(...conditions);
 
-    const cars = await tx
-      .select(CarItemSelect)
-      .from(carsTable)
-      .where(whereClause)
-      .orderBy(desc(carsTable.createdAt))
-      .limit(limit)
-      .offset(offset);
-
-    const [result] = await tx
-      .select({ total: sql<number>`count(*)` })
-      .from(carsTable)
-      .where(whereClause);
+    const [cars, [result]] = await Promise.all([
+      tx
+        .select(CarItemSelect)
+        .from(carsTable)
+        .where(whereClause)
+        .orderBy(desc(carsTable.createdAt))
+        .limit(limit)
+        .offset(offset),
+      tx
+        .select({ total: sql<number>`count(*)` })
+        .from(carsTable)
+        .where(whereClause),
+    ]);
 
     const total = cars.length > 0 ? Number(result.total) : 0;
 

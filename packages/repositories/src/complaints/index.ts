@@ -80,18 +80,19 @@ export class ComplaintRepository {
 
     const whereClause = and(...conditions);
 
-    const complaints = await tx
-      .select(ComplaintListSelect)
-      .from(complaintsTable)
-      .where(whereClause)
-      .orderBy(desc(complaintsTable.createdAt))
-      .limit(limit)
-      .offset(offset);
-
-    const [result] = await tx
-      .select({ total: sql<number>`count(*)` })
-      .from(complaintsTable)
-      .where(whereClause);
+    const [complaints, [result]] = await Promise.all([
+      tx
+        .select(ComplaintListSelect)
+        .from(complaintsTable)
+        .where(whereClause)
+        .orderBy(desc(complaintsTable.createdAt))
+        .limit(limit)
+        .offset(offset),
+      tx
+        .select({ total: sql<number>`count(*)` })
+        .from(complaintsTable)
+        .where(whereClause),
+    ]);
 
     const total = complaints.length > 0 ? Number(result.total) : 0;
 

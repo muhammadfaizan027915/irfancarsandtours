@@ -87,20 +87,21 @@ export class BookingRepository {
 
     const whereClause = and(...conditions);
 
-    const bookings = await tx
-      .select(BookingItemWithUserSelect)
-      .from(bookingsTable)
-      .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
-      .orderBy(desc(bookingsTable.createdAt))
-      .where(whereClause)
-      .limit(limit)
-      .offset(offset);
-
-    const [result] = await tx
-      .select({ total: sql<number>`count(*)` })
-      .from(bookingsTable)
-      .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
-      .where(whereClause);
+    const [bookings, [result]] = await Promise.all([
+      tx
+        .select(BookingItemWithUserSelect)
+        .from(bookingsTable)
+        .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
+        .orderBy(desc(bookingsTable.createdAt))
+        .where(whereClause)
+        .limit(limit)
+        .offset(offset),
+      tx
+        .select({ total: sql<number>`count(*)` })
+        .from(bookingsTable)
+        .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
+        .where(whereClause),
+    ]);
 
     const total = bookings.length > 0 ? Number(result.total) : 0;
 
@@ -173,20 +174,21 @@ export class BookingRepository {
 
     const whereClause = and(...conditions);
 
-    const bookings = await tx
-      .select(BookingItemSelect)
-      .from(bookingsTable)
-      .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
-      .orderBy(desc(bookingsTable.createdAt))
-      .where(whereClause)
-      .limit(limit)
-      .offset(offset);
-
-    const [result] = await tx
-      .select({ total: sql<number>`count(*)` })
-      .from(bookingsTable)
-      .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
-      .where(whereClause);
+    const [bookings, [result]] = await Promise.all([
+      tx
+        .select(BookingItemSelect)
+        .from(bookingsTable)
+        .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
+        .orderBy(desc(bookingsTable.createdAt))
+        .where(whereClause)
+        .limit(limit)
+        .offset(offset),
+      tx
+        .select({ total: sql<number>`count(*)` })
+        .from(bookingsTable)
+        .leftJoin(usersTable, eq(bookingsTable.userId, usersTable.id))
+        .where(whereClause),
+    ]);
 
     const total = bookings.length > 0 ? Number(result.total) : 0;
 
