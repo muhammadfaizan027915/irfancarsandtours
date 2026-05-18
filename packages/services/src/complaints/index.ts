@@ -6,6 +6,7 @@ import {
   PaginatedComplaintResponseSchema,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
+import { sendComplaintCreatedAdminEmail } from "@icat/lib";
 import { ComplaintRepository } from "@icat/repositories";
 
 export class ComplaintService {
@@ -36,6 +37,19 @@ export class ComplaintService {
     tx: DbOrTransaction = db
   ): Promise<ComplaintResponseDto> {
     const complaint = await this.complaintRepository.create(data, tx);
-    return ComplaintResponseSchema.parse(complaint);
+    const parsedComplaint = ComplaintResponseSchema.parse(complaint);
+
+    // Fire and forget admin notification email
+    sendComplaintCreatedAdminEmail({
+      complaintId: parsedComplaint.id,
+      userName: parsedComplaint.name,
+      userEmail: parsedComplaint.email,
+      subject: "New Complaint Received",
+      message: parsedComplaint.message,
+    }).catch((err) =>
+      console.error("Failed to send complaint admin notification email:", err)
+    );
+
+    return parsedComplaint;
   }
 }
