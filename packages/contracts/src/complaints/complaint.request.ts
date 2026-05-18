@@ -1,15 +1,17 @@
 import { z } from "zod";
 
+import { PhoneSchema } from "../generic";
+
 export const ComplaintRequestBodySchema = z.object({
   name: z.string("Name is required").min(2, "Name must be at least 2 characters"),
   email: z.email("Invalid email address"),
-  phone: z.string("Phone number is required").min(7, "Invalid phone number"),
+  phone: PhoneSchema,
   message: z.string("Message is required").min(10, "Message must be at least 10 characters"),
 });
 
 export type ComplaintRequestBodyDto = z.infer<typeof ComplaintRequestBodySchema>;
 
-export const GetComplaintsQuerySchema = z.object({
+export const GetComplaintsBodySchema = z.object({
   page: z.coerce.number().optional().default(1),
   limit: z.coerce.number().optional().default(50),
   search: z.string().optional(),
@@ -20,4 +22,4 @@ export const GetComplaintsQuerySchema = z.object({
   endDate: z.string().optional(),
 });
 
-export type GetComplaintsQueryDto = z.infer<typeof GetComplaintsQuerySchema>;
+export type GetComplaintsBodyDto = z.infer<typeof GetComplaintsBodySchema>;

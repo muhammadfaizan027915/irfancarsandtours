@@ -65,7 +65,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
 
         <Input
           type="tel"
-          placeholder="Phone"
+          placeholder="Phone (e.g. +1234567890)"
           startIcon={<Phone size={18} />}
           name={"phone"}
           defaultValue={user?.phone ?? ""}
@@ -74,7 +74,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
 
         <Input
           id="cnic"
-          placeholder="CNIC"
+          placeholder="National ID / CNIC"
           startIcon={<IdCard size={18} />}
           name={"cnic"}
           defaultValue={user?.cnic ?? ""}

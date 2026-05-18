@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { CNICSchema, PhoneSchema } from "../generic";
 import { DetailedUserResponseSchema } from "./user.response";
 
 const PasswordSchema = z.stringFormat(
@@ -18,6 +19,8 @@ export type SignInBodyDto = z.infer<typeof SignInBodySchema>;
 export const CreateGuestUserBodySchema = z.object({
   name: z.string("Name required."),
   email: z.email("Email required."),
+  phone: PhoneSchema.optional().nullable(),
+  cnic: CNICSchema.optional().nullable(),
 });
 
 export type CreateGuestUserBodyDto = z.infer<typeof CreateGuestUserBodySchema>;
@@ -35,7 +38,12 @@ export type CreateUserBodyDto = z.infer<typeof CreateUserBodySchema>;
 export const UpdateUserBodySchema = DetailedUserResponseSchema.omit({
   createdAt: true,
   updatedAt: true,
-}).partial();
+})
+  .extend({
+    phone: PhoneSchema.optional().nullable(),
+    cnic: CNICSchema.optional().nullable(),
+  })
+  .partial();
 
 export type UpdateUserBodyDto = z.infer<typeof UpdateUserBodySchema>;
 

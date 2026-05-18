@@ -61,7 +61,7 @@ export function ComplaintForm() {
           <Label>Phone Number</Label>
           <Input
             type="tel"
-            placeholder="Phone Number"
+            placeholder="Phone (e.g. +1234567890)"
             startIcon={<Phone size={18} />}
             name={"phone"}
             errors={error?.cause?.phone?._errors}

@@ -80,7 +80,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
         <Label htmlFor="phone">Phone Number</Label>
         <Input
           id="phone"
-          placeholder="Enter your phone number"
+          placeholder="Enter phone (e.g. +1234567890)"
           startIcon={<Phone size={18} />}
           name={"phone"}
           defaultValue={defaultValue?.phone}
@@ -89,10 +89,10 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="cnic">CNIC</Label>
+        <Label htmlFor="cnic">National ID / CNIC</Label>
         <Input
           id="cnic"
-          placeholder="Enter your CNIC number"
+          placeholder="Enter National ID or CNIC"
           startIcon={<IdCard size={18} />}
           name={"cnic"}
           defaultValue={defaultValue?.cnic}

@@ -50,6 +50,20 @@ export function toArray<T extends core.SomeType>(schema: T) {
   }, z.array(schema));
 }
 
+export const PhoneSchema = z
+  .string()
+  .regex(
+    /^\+?[1-9]\d{1,14}$|^(\+?\d{1,3})?[\s-]?\(?\d{2,4}\)?[\s-]?\d{3,4}[\s-]?\d{3,4}$/,
+    "Invalid phone number format. Use E.164 (e.g., +1234567890) or a standard local format."
+  );
+
+export const CNICSchema = z
+  .string()
+  .regex(
+    /^[a-zA-Z0-9\s-]{5,20}$/,
+    "Invalid National ID / CNIC format. Must be alphanumeric and between 5-20 characters."
+  );
+
 export const toDate = <T extends z.ZodTypeAny>(schema: T) =>
   z.preprocess((arg) => {
     if (arg === null || arg === undefined) return arg;
