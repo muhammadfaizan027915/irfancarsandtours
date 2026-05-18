@@ -10,10 +10,10 @@ export const bookedCarsTable = pgTable("booked_cars", {
     .$defaultFn(() => crypto.randomUUID()),
   carId: text("car_id")
     .notNull()
-    .references(() => carsTable.id),
+    .references(() => carsTable.id, { onDelete: "cascade", onUpdate: "cascade" }),
   bookingId: text("booking_id")
     .notNull()
-    .references(() => bookingsTable.id, { onDelete: "cascade" }),
+    .references(() => bookingsTable.id, { onDelete: "cascade", onUpdate: "cascade" }),
   quotedPrice: integer("quoted_price"),
   bookedWithDriver: boolean("booked_with_driver").default(false),
   quantity: integer("quantity").default(1),

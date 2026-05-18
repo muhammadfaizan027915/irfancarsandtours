@@ -17,6 +17,7 @@ export const BookingItemSelect = {
   pickupAddress: bookingsTable.pickupAddress,
   dropoffDate: bookingsTable.dropoffDate,
   dropoffAddress: bookingsTable.dropoffAddress,
+  totalPrice: bookingsTable.totalPrice,
   userId: bookingsTable.userId,
   createdAt: bookingsTable.createdAt,
   updatedAt: bookingsTable.updatedAt,

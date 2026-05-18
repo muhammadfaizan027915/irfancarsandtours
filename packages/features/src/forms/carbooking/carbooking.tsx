@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowRight, IdCard,Mail, Phone, User } from "lucide-react";
-import { useActionState } from "react";
+import { ArrowRight, IdCard, Mail, Phone, User } from "lucide-react";
+import { useActionState, useEffect } from "react";
 
 import { mergeObjectToFormData } from "@icat/lib/utils";
 import { AlertBox } from "@icat/ui/components/alert";
@@ -13,6 +13,7 @@ import { Textarea } from "@icat/ui/components/textarea";
 import { bookCar } from "@icat/web/actions";
 
 import { CarBookingFormProps } from "./carbooking.types";
+import { toast } from "@icat/ui";
 
 export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
   const [result, action, pending] = useActionState(bookCar, null);
@@ -27,6 +28,17 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
 
     action(formDataWithCars);
   };
+
+  useEffect(() => {
+    if (success && !result.data?.isLoggedIn) {
+      toast.success(
+        "Car Booked successfully, you'll receive a confirmation email!",
+        {
+          position: "top-center",
+        },
+      );
+    }
+  }, [success]);
 
   return (
     <form action={actionWithCars} className="grid gap-4 w-full">

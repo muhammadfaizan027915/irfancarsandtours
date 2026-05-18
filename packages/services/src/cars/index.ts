@@ -12,6 +12,7 @@ import {
   RegisterCarBodyDto,
   UpdateCarBodyDto,
 } from "@icat/contracts";
+import { db, DbOrTransaction } from "@icat/database";
 import { CarRepository } from "@icat/repositories";
 
 export class CarService {
@@ -21,8 +22,11 @@ export class CarService {
     this.carRepository = new CarRepository();
   }
 
-  async getAll(args?: GetCarsBodyDto): Promise<PaginatedCarResponseDto> {
-    const result = await this.carRepository.findAll(args);
+  async getAll(
+    args?: GetCarsBodyDto,
+    tx: DbOrTransaction = db,
+  ): Promise<PaginatedCarResponseDto> {
+    const result = await this.carRepository.findAll(args, tx);
 
     const data = result?.data;
 
@@ -36,44 +40,62 @@ export class CarService {
     return PaginatedCarResponseSchema.parse(result);
   }
 
-  async getCarsDriverRules(carIds: string[]) {
-    return await this.carRepository.findCarsDriverRules(carIds);
+  async getCarsDriverAndStartingPrice(
+    carIds: string[],
+    tx: DbOrTransaction = db,
+  ) {
+    return await this.carRepository.findCarsDriverAndStartingPrice(carIds, tx);
   }
 
-  async getFeaturedCars(): Promise<CarsListResponseDto> {
-    const cars = await this.carRepository.findFeatured();
+  async getFeaturedCars(
+    tx: DbOrTransaction = db,
+  ): Promise<CarsListResponseDto> {
+    const cars = await this.carRepository.findFeatured(tx);
     return CarsListResponseSchema.parse(cars);
   }
 
-  async getMostSearchedCars(limit = 10): Promise<CarsListResponseDto> {
-    const cars = await this.carRepository.findMostSearched(limit);
+  async getMostSearchedCars(
+    limit = 10,
+    tx: DbOrTransaction = db,
+  ): Promise<CarsListResponseDto> {
+    const cars = await this.carRepository.findMostSearched(limit, tx);
     return CarsListResponseSchema.parse(cars);
   }
 
-  async getCarById(id: string): Promise<CarResponseDto | null> {
-    const car = await this.carRepository.findById(id);
+  async getCarById(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<CarResponseDto | null> {
+    const car = await this.carRepository.findById(id, tx);
     return car ? CarResponseSchema.parse(car) : null;
   }
 
-  async createCar(data: RegisterCarBodyDto): Promise<CarResponseDto> {
-    const car = await this.carRepository.create(data);
+  async createCar(
+    data: RegisterCarBodyDto,
+    tx: DbOrTransaction = db,
+  ): Promise<CarResponseDto> {
+    const car = await this.carRepository.create(data, tx);
     return CarResponseSchema.parse(car);
   }
 
   async updateCar(
     id: string,
     updates: UpdateCarBodyDto,
+    tx: DbOrTransaction = db,
   ): Promise<CarResponseDto | null> {
-    const car = await this.carRepository.update(id, updates);
+    const car = await this.carRepository.update(id, updates, tx);
     return car ? CarResponseSchema.parse(car) : null;
   }
 
-  async deleteCar(data: DeleteCarBodyDto): Promise<CarResponseDto | null> {
-    const car = await this.carRepository.delete(data.id);
+  async deleteCar(
+    data: DeleteCarBodyDto,
+    tx: DbOrTransaction = db,
+  ): Promise<CarResponseDto | null> {
+    const car = await this.carRepository.delete(data.id, tx);
     return car ? CarResponseSchema.parse(car) : null;
   }
 
-  async hardDeleteCar(id: string): Promise<void> {
-    await this.carRepository.hardDelete(id);
+  async hardDeleteCar(id: string, tx: DbOrTransaction = db): Promise<void> {
+    await this.carRepository.hardDelete(id, tx);
   }
 }

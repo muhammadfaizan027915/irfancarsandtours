@@ -5,6 +5,7 @@ import {
   PaginatedComplaintResponseDto,
   PaginatedComplaintResponseSchema,
 } from "@icat/contracts";
+import { db, DbOrTransaction } from "@icat/database";
 import { ComplaintRepository } from "@icat/repositories";
 
 export class ComplaintService {
@@ -15,21 +16,26 @@ export class ComplaintService {
   }
 
   async getAll(
-    args: GetComplaintsQueryDto
+    args: GetComplaintsQueryDto,
+    tx: DbOrTransaction = db
   ): Promise<PaginatedComplaintResponseDto> {
-    const result = await this.complaintRepository.findAll(args);
+    const result = await this.complaintRepository.findAll(args, tx);
     return PaginatedComplaintResponseSchema.parse(result);
   }
 
-  async getComplaintById(id: string): Promise<ComplaintResponseDto | null> {
-    const complaint = await this.complaintRepository.findById(id);
+  async getComplaintById(
+    id: string,
+    tx: DbOrTransaction = db
+  ): Promise<ComplaintResponseDto | null> {
+    const complaint = await this.complaintRepository.findById(id, tx);
     return complaint ? ComplaintResponseSchema.parse(complaint) : null;
   }
 
   async createComplaint(
-    data: Omit<ComplaintResponseDto, "id" | "createdAt" | "updatedAt">
+    data: Omit<ComplaintResponseDto, "id" | "createdAt" | "updatedAt">,
+    tx: DbOrTransaction = db
   ): Promise<ComplaintResponseDto> {
-    const complaint = await this.complaintRepository.create(data);
+    const complaint = await this.complaintRepository.create(data, tx);
     return ComplaintResponseSchema.parse(complaint);
   }
 }

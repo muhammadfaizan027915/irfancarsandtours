@@ -44,6 +44,13 @@ export const RegisterCarBodySchema = z.object({
     .number("Seating capacity is required")
     .int("Seating capacity is required")
     .min(1, "Seating capacity must be at least 1"),
+  startingPrice: z.coerce
+    .number("Starting price is required")
+    .int("Starting price is required")
+    .min(0, "Starting price cannot be negative")
+    .optional()
+    .default(0),
+  seoId: z.uuid("SEO ID must be a valid UUID").optional(),
   isFeatured: z.coerce.boolean().optional().default(false),
   forceWithDriver: z.coerce.boolean().optional().default(false),
 });
@@ -51,7 +58,7 @@ export const RegisterCarBodySchema = z.object({
 export type RegisterCarBodyDto = z.infer<typeof RegisterCarBodySchema>;
 
 export const UpdateCarBodySchema = RegisterCarBodySchema.partial().extend({
-  id: z.uuid("Invalid car ID"),
+  id: z.uuid().optional(),
 });
 
 export type UpdateCarBodyDto = z.infer<typeof UpdateCarBodySchema>;

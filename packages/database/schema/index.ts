@@ -1,7 +1,7 @@
 import { ExtractTablesWithRelations } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { PgTransaction } from "drizzle-orm/pg-core";
-import { PostgresJsQueryResultHKT } from "drizzle-orm/postgres-js";
+import { NodePgQueryResultHKT } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 
 import { accountsTable } from "./accountsTable";
@@ -9,7 +9,6 @@ import { bookedCarsTable } from "./bookedCarsTable";
 import { bookingsTable } from "./bookingsTable";
 import { carsTable } from "./carsTable";
 import { complaintsTable } from "./complaintsTable";
-import * as schema from "./index";
 import * as relations from "./relations";
 import { seoTable } from "./seoTable";
 import { sessionsTable } from "./sessionsTable";
@@ -35,27 +34,29 @@ const pool = new Pool({
   connectionTimeoutMillis: 20000,
 });
 
+const tables = {
+  carsTable,
+  usersTable,
+  sessionsTable,
+  accountsTable,
+  verificationTokensTable,
+  complaintsTable,
+  bookingsTable,
+  bookedCarsTable,
+  seoTable,
+  ...relations,
+};
+
 export const db = drizzle(pool, {
-  schema: {
-    carsTable,
-    usersTable,
-    sessionsTable,
-    accountsTable,
-    verificationTokensTable,
-    complaintsTable,
-    bookingsTable,
-    bookedCarsTable,
-    seoTable,
-    ...relations,
-  },
+  schema: tables,
 });
 
 export type Database = typeof db;
 
 export type Transaction = PgTransaction<
-  PostgresJsQueryResultHKT,
-  typeof schema,
-  ExtractTablesWithRelations<typeof schema>
+  NodePgQueryResultHKT,
+  typeof tables,
+  ExtractTablesWithRelations<typeof tables>
 >;
 
 export type DbOrTransaction = Database | Transaction;

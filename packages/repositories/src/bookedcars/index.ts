@@ -36,6 +36,17 @@ export class BookedCarRepository {
     return bookedcar;
   }
 
+  async createMany(
+    data: BookedCarInsert[],
+    tx: DbOrTransaction = db,
+  ): Promise<BookedCarSelect[]> {
+    const bookedcars = await tx
+      .insert(bookedCarsTable)
+      .values(data)
+      .returning();
+    return bookedcars;
+  }
+
   async findAll(tx: DbOrTransaction = db): Promise<BookedCarSelect[]> {
     return tx
       .select()

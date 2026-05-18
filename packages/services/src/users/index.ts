@@ -1,6 +1,7 @@
 import {
   ChangePasswordBodyDto,
   CreateUserBodyDto,
+  CreateGuestUserBodyDto,
   DetailedUserResponseDto,
   DetailedUserResponseSchema,
   GetUsersBodyDto,
@@ -12,7 +13,13 @@ import {
   UserResponseSchema,
   UserResponseWithPasswordSchema,
 } from "@icat/contracts";
-import { DuplicateEmailError, NotFoundError, ValidationError } from "@icat/lib";
+import { db, DbOrTransaction } from "@icat/database";
+import {
+  DuplicateEmailError,
+  ForbiddenError,
+  NotFoundError,
+  ValidationError,
+} from "@icat/lib";
 import { UserRepository } from "@icat/repositories";
 
 import { AuthService } from "../auth";
@@ -26,13 +33,19 @@ export class UserService {
     this.authService = new AuthService();
   }
 
-  async getAll(arg?:GetUsersBodyDto): Promise<PaginatedUserResponseDto> {
-    const result = await this.userRepository.findAll(arg);
+  async getAll(
+    arg?: GetUsersBodyDto,
+    tx: DbOrTransaction = db,
+  ): Promise<PaginatedUserResponseDto> {
+    const result = await this.userRepository.findAll(arg, tx);
     return PaginatedUserResponseSchema.parse(result);
   }
 
-  async getUserByEmail(email: string): Promise<UserResponseDto> {
-    const user = await this.userRepository.findByEmail(email);
+  async getUserByEmail(
+    email: string,
+    tx: DbOrTransaction = db,
+  ): Promise<UserResponseDto> {
+    const user = await this.userRepository.findByEmail(email, tx);
 
     if (!user) {
       throw new NotFoundError("User");
@@ -41,8 +54,8 @@ export class UserService {
     return UserResponseSchema.parse(user);
   }
 
-  async getUserByEmailWithPassword(email: string) {
-    const user = await this.userRepository.findByEmail(email);
+  async getUserByEmailWithPassword(email: string, tx: DbOrTransaction = db) {
+    const user = await this.userRepository.findByEmail(email, tx);
 
     if (!user) {
       throw new NotFoundError("User");
@@ -51,32 +64,49 @@ export class UserService {
     return UserResponseWithPasswordSchema.parse(user);
   }
 
-  async createUser(data: CreateUserBodyDto): Promise<UserResponseDto> {
-    const existingUser = await this.userRepository.findByEmail(data.email);
+  async createUser(
+    data: CreateUserBodyDto | CreateGuestUserBodyDto,
+    tx: DbOrTransaction = db,
+  ): Promise<UserResponseDto> {
+    const existingUser = await this.userRepository.findByEmail(data.email, tx);
 
     if (existingUser) {
       throw new DuplicateEmailError(data?.email);
     }
 
-    const passwordHash = await this.authService.hashPassword(data.password);
+    const passwordHash =
+      "password" in data && data.password
+        ? await this.authService.hashPassword(data.password)
+        : null;
 
-    const createdUser = await this.userRepository.create({
-      ...data,
-      password: passwordHash,
-    });
+    const createdUser = await this.userRepository.create(
+      {
+        ...data,
+        password: passwordHash,
+      },
+      tx,
+    );
 
     return UserResponseSchema.parse(createdUser);
   }
 
   async validateUserCredentials(
-    credentials: SignInBodyDto
+    credentials: SignInBodyDto,
+    tx: DbOrTransaction = db,
   ): Promise<UserResponseDto> {
     const { email, password } = credentials || {};
-    const user = await this.getUserByEmailWithPassword(email);
+    const user = await this.getUserByEmailWithPassword(email, tx);
+
+    if (!user.password) {
+      throw new ForbiddenError({
+        message:
+          "This account was created as a guest. Please reset your password to log in.",
+      });
+    }
 
     const isValid = await this.authService.comparePassword(
       password,
-      user.password
+      user.password,
     );
 
     if (!isValid) {
@@ -87,9 +117,10 @@ export class UserService {
   }
 
   async getDetailedUserByEmail(
-    email: string
+    email: string,
+    tx: DbOrTransaction = db,
   ): Promise<DetailedUserResponseDto> {
-    const user = await this.userRepository.findByEmail(email);
+    const user = await this.userRepository.findByEmail(email, tx);
 
     if (!user) {
       throw new NotFoundError("User");
@@ -100,24 +131,26 @@ export class UserService {
 
   async updateUser(
     id: string,
-    updates: UpdateUserBodyDto
+    updates: UpdateUserBodyDto,
+    tx: DbOrTransaction = db,
   ): Promise<DetailedUserResponseDto | null> {
-    const existingUser = await this.userRepository.findById(id);
+    const existingUser = await this.userRepository.findById(id, tx);
 
     if (!existingUser) {
       throw new NotFoundError("User");
     }
 
-    const updatedUser = await this.userRepository.update(id, updates);
+    const updatedUser = await this.userRepository.update(id, updates, tx);
 
     return updatedUser ? DetailedUserResponseSchema.parse(updatedUser) : null;
   }
 
   async changePassword(
     id: string,
-    data: ChangePasswordBodyDto
+    data: ChangePasswordBodyDto,
+    tx: DbOrTransaction = db,
   ): Promise<UserResponseDto | null> {
-    const user = await this.userRepository.findById(id);
+    const user = await this.userRepository.findById(id, tx);
 
     if (!user) {
       throw new NotFoundError("User");
@@ -127,7 +160,7 @@ export class UserService {
 
     const isValid = await this.authService.comparePassword(
       data?.currentPassword,
-      userWithPassword.password
+      userWithPassword?.password ?? "",
     );
 
     if (!isValid) {
@@ -136,9 +169,13 @@ export class UserService {
 
     const hashedPassword = await this.authService.hashPassword(data?.password);
 
-    const updatedUser = await this.userRepository.update(id, {
-      password: hashedPassword,
-    });
+    const updatedUser = await this.userRepository.update(
+      id,
+      {
+        password: hashedPassword,
+      },
+      tx,
+    );
 
     return updatedUser ? UserResponseSchema.parse(updatedUser) : null;
   }

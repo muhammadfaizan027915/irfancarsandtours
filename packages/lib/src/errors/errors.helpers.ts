@@ -9,6 +9,11 @@ export function handleError(error: unknown) {
     throw error;
   }
 
+  // Log the error for debugging in development
+  if (process.env.NODE_ENV === "development") {
+    console.error("Error caught in handleError:", error);
+  }
+
   if (error instanceof BaseApiError) {
     return error.toJSON();
   }

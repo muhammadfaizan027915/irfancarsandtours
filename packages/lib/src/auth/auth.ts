@@ -13,9 +13,10 @@ import {
 import { UserService } from "@icat/services";
 
 import { handleError } from "../errors";
+import { authConfig } from "./auth.config";
 
 const result = NextAuth({
-  trustHost: true,
+  ...authConfig,
 
   adapter: DrizzleAdapter(db, {
     usersTable,
@@ -53,34 +54,6 @@ const result = NextAuth({
       },
     }),
   ],
-
-  pages: {
-    signIn: "/signin",
-    signOut: "/signout",
-    error: "/signin",
-  },
-
-  debug: process.env.NODE_ENV === "development",
-
-  session: {
-    strategy: "jwt",
-  },
-
-  callbacks: {
-    jwt({ token, user }) {
-      return {
-        ...token,
-        ...user,
-      };
-    },
-
-    async session({ session, token }) {
-      const { jti, exp, iat, sub, ...user } = token;
-      session.user = user as any;
-
-      return session;
-    },
-  },
 });
 
 export const authHandlers: NextAuthResult['handlers'] = result.handlers;

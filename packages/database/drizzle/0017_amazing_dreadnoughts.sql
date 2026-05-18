@@ -1,0 +1,1 @@
+ALTER TABLE "bookings" ADD COLUMN "total_price" integer DEFAULT 0;

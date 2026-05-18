@@ -10,6 +10,7 @@ export const BookingResponseSchema = z.object({
   pickupDate: toDate(z.date()),
   dropoffAddress: z.string().min(1),
   dropoffDate: toDate(z.date()),
+  totalPrice: z.number().int().nullish(),
   deletedAt: toDate(z.date().nullish()),
   createdAt: toDate(z.date()),
   updatedAt: toDate(z.date()),

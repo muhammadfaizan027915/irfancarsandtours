@@ -24,6 +24,7 @@ export const carsTable = pgTable("cars", {
   amenities: amenitiesEnum("amenities").array().notNull(),
   imageUrls: text("image_urls").array(),
   seatingCapacity: integer("seating_capacity").notNull(),
+  startingPrice: integer("starting_price").default(0),
   description: text("description"),
   isFeatured: boolean("is_featured").default(false),
   timesSearched: integer("times_searched").default(0),

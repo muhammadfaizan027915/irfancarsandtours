@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp,varchar } from "drizzle-orm/pg-core";
+import { integer, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 import { timestampColumns } from "../utils";
 import { bookingStatusEnum } from "./enums";
@@ -23,9 +23,10 @@ export const bookingsTable = pgTable("bookings", {
     withTimezone: true,
   }).notNull(),
   status: bookingStatusEnum("status").default("pending").notNull(),
+  totalPrice: integer("total_price").default(0),
   userId: text("user_id")
     .notNull()
-    .references(() => usersTable.id),
+    .references(() => usersTable.id, { onDelete: "cascade", onUpdate: "cascade" }),
   ...timestampColumns,
 });
 
