@@ -1,6 +1,9 @@
 "use client";
 
+import { ChevronDown, Globe } from "lucide-react";
 import { useActionState, useEffect } from "react";
+
+import { useDisclosure } from "@icat/lib/hooks";
 import {
   AlertBox,
   Autocomplete,
@@ -14,10 +17,8 @@ import {
   toast,
 } from "@icat/ui";
 import { cn } from "@icat/ui/lib/utils";
-import { ChevronDown, Globe } from "lucide-react";
-
 import { upsertCarSeo } from "@icat/web/actions";
-import { useDisclosure } from "@icat/lib/hooks";
+
 import { SeoFormProps } from "./seo.types";
 
 

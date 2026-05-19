@@ -5,5 +5,5 @@ type AuthLayoutProps = {
 };
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
-  return <div className="px-4 py-32 flex justify-center">{children}</div>;
+  return <div className="py-32 flex justify-center">{children}</div>;
 }

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { CNICSchema, PhoneSchema, toDate } from "@icat/contracts/generic";
+import { BookingStatusList } from "@icat/database/enums";
 
 export const CarBookingRequestSchema = z
   .object({
@@ -24,7 +25,7 @@ export const CarBookingRequestSchema = z
         carId: z.string(),
         quantity: z.coerce.number().optional().default(1),
         bookedWithDriver: z.coerce.boolean().optional().default(false),
-      })
+      }),
     ),
   })
   .refine(
@@ -37,7 +38,7 @@ export const CarBookingRequestSchema = z
     {
       message: "Drop-off time must be after pickup time (even if same day)",
       path: ["dropoffDate"],
-    }
+    },
   );
 
 export type BookingRequestDto = z.infer<typeof CarBookingRequestSchema>;
@@ -61,3 +62,25 @@ export const GetBookingByUserIdBodySchema = GetBookingsBodySchema.extend({
 export type GetBookingsByUserIdBodyDto = z.infer<
   typeof GetBookingByUserIdBodySchema
 >;
+
+export const UpdateBookingRequestSchema = z.object({
+  pickupAddress: z.string().min(5).max(255).optional(),
+  pickupDate: toDate(z.date()).optional(),
+  dropoffAddress: z.string().min(5).max(255).optional(),
+  dropoffDate: toDate(z.date()).optional(),
+  status: z.enum(BookingStatusList).optional(),
+  totalPrice: z.number().int().optional(),
+});
+
+export type UpdateBookingRequestDto = z.infer<
+  typeof UpdateBookingRequestSchema
+>;
+
+export const UpdateBookingStatusSchema = z.object({
+  id: z.string().min(1, "Invalid booking ID"),
+  status: z.enum(BookingStatusList, {
+    error: "Please select a valid booking status",
+  }),
+});
+
+export type UpdateBookingStatusDto = z.infer<typeof UpdateBookingStatusSchema>;

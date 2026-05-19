@@ -1,8 +1,8 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
-import Image from "next/image";
 import { Car, ImageIcon, Info, Settings2, X } from "lucide-react";
+import Image from "next/image";
+import { useActionState, useEffect } from "react";
 
 import {
   AmenitiesList,

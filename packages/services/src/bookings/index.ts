@@ -10,6 +10,7 @@ import {
   PaginatedBookingResponseSchema,
   PaginatedBookingWithUserResponseDto,
   PaginatedBookingWithUserResponseSchema,
+  UpdateBookingRequestDto,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
 import { BookingRepository } from "@icat/repositories";
@@ -80,7 +81,7 @@ export class BookingService {
             transaction,
           );
           userId = user.id;
-        } catch (error) {
+        } catch {
           const newUser = await this.userService.createUser(data, transaction);
           userId = newUser.id;
         }
@@ -134,5 +135,14 @@ export class BookingService {
     return tx === db
       ? await db.transaction((newTx) => executeCreate(newTx))
       : await executeCreate(tx);
+  }
+
+  async updateBooking(
+    bookingId: string,
+    data: UpdateBookingRequestDto,
+    tx: DbOrTransaction = db,
+  ): Promise<BookingResponseDto | null> {
+    const booking = await this.bookingRepository.update(bookingId, data, tx);
+    return booking ? BookingResponseSchema.parse(booking) : null;
   }
 }

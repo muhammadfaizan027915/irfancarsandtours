@@ -42,7 +42,7 @@ export function UserAvatar({ user }: UserAvatarProps) {
   };
 
   return (
-    <div className="p-8 flex flex-col items-center">
+    <div className="p-6 md:p-8 flex flex-col items-center">
       <div className="relative">
         <input
           type="file"

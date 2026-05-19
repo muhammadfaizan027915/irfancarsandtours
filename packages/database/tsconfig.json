@@ -8,6 +8,6 @@
     "tsBuildInfoFile": "dist/.tsbuildinfo",
     "jsx": "preserve"
   },
-  "include": ["src", "schema", "utils/index.ts"],
+  "include": ["src", "schema", "utils/index.ts", "load-env.ts"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]
 }

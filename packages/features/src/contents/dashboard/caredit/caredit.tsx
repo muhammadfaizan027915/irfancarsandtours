@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 
 import { CarForm } from "@icat/features/dashboard/forms/car";
 import { SeoForm } from "@icat/features/dashboard/forms/seo";
-import { getCarSeo } from "@icat/web/data/seo";
 import { getCar } from "@icat/web/data/cars";
+import { getCarSeo } from "@icat/web/data/seo";
 
 type DashboardCarEditContentProps = {
   carId: string;

@@ -25,7 +25,7 @@ export function ChangePasswordForm() {
   }, [result]);
 
   return (
-    <Card className="w-full p-8 flex flex-col items-center gap-2 shadow-none">
+    <Card className="w-full p-6 md:p-8 flex flex-col items-center gap-2 shadow-none">
       <h1 className="font-bold text-4xl">Change Password</h1>
 
       <form action={action} className="flex flex-col gap-3 w-full mt-8">

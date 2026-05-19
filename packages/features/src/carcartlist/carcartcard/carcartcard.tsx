@@ -22,11 +22,11 @@ export function CarCartCard({ car }: CarCartCardProps) {
   const { incrementQuantity, decrementQuantity, toggleDriver } = useCarCart();
   const imageUrl = car?.imageUrls?.[0];
 
-  const handleIncrementQuantity = (e: MouseEvent) => {
+  const handleIncrementQuantity = (_e: MouseEvent) => {
     incrementQuantity(car.id);
   };
 
-  const handleDecrementQuantity = (e: MouseEvent) => {
+  const handleDecrementQuantity = (_e: MouseEvent) => {
     decrementQuantity(car.id);
   };
 

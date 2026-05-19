@@ -5,13 +5,10 @@ import { CarBooking } from "@icat/features/cardetail/booking";
 import { CarDescription } from "@icat/features/cardetail/description";
 import { CarGetStarted } from "@icat/features/cardetail/getstarted";
 import { CarProperties } from "@icat/features/cardetail/properties";
-import { LoginNotice } from "@icat/features/loginnotice";
 import { CarImages } from "@icat/features/sliders/carimages";
-import { getSessionUser } from "@icat/lib/auth";
 import { getUserCar } from "@icat/web/data/cars";
 
 export async function CarDetailContent({ carId }: { carId: string }) {
-  const user = await getSessionUser();
   const car = await getUserCar(carId);
 
   if (!car) {

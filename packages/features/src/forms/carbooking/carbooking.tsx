@@ -4,6 +4,7 @@ import { ArrowRight, IdCard, Mail, Phone, User } from "lucide-react";
 import { useActionState, useEffect } from "react";
 
 import { mergeObjectToFormData } from "@icat/lib/utils";
+import { toast } from "@icat/ui";
 import { AlertBox } from "@icat/ui/components/alert";
 import { Button } from "@icat/ui/components/button";
 import { DateTimePicker } from "@icat/ui/components/date-time-picker";
@@ -13,7 +14,6 @@ import { Textarea } from "@icat/ui/components/textarea";
 import { bookCar } from "@icat/web/actions";
 
 import { CarBookingFormProps } from "./carbooking.types";
-import { toast } from "@icat/ui";
 
 export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
   const [result, action, pending] = useActionState(bookCar, null);

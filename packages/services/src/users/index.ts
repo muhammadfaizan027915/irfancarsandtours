@@ -1,7 +1,7 @@
 import {
   ChangePasswordBodyDto,
-  CreateUserBodyDto,
   CreateGuestUserBodyDto,
+  CreateUserBodyDto,
   DetailedUserResponseDto,
   DetailedUserResponseSchema,
   GetUsersBodyDto,

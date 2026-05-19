@@ -53,7 +53,14 @@ export const customersColumns: ColumnDef<DetailedUserResponseDto>[] = [
   {
     accessorKey: "phone",
     header: "Phone",
-    cell: ({ row }) => row.original.phone || "—",
+    cell: ({ row }) => (
+      <Link
+        href={`tel:${row.original.phone}`}
+        className="text-secondary-foreground underline"
+      >
+        {row.original.phone || "—"}
+      </Link>
+    ),
   },
   {
     accessorKey: "cnic",
