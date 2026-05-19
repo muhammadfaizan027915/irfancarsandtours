@@ -1,6 +1,7 @@
 import { pgTable, text, varchar } from "drizzle-orm/pg-core";
 
 import { timestampColumns } from "../utils";
+import { complaintStatusEnum } from "./enums";
 
 export const complaintsTable = pgTable("complaints", {
   id: text("id")
@@ -10,6 +11,7 @@ export const complaintsTable = pgTable("complaints", {
   email: varchar("email", { length: 255 }).notNull(),
   phone: text("phone").notNull(),
   message: varchar("message").notNull(),
+  status: complaintStatusEnum("status").notNull().default("pending"),
   ...timestampColumns,
 });
 

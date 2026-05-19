@@ -169,6 +169,13 @@
       "when": 1779034500000,
       "tag": "0023_fix_cnic_typo",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1779216492523,
+      "tag": "0024_high_dragon_lord",
+      "breakpoints": true
     }
   ]
 }

@@ -32,10 +32,22 @@ export class ComplaintService {
   }
 
   async createComplaint(
-    data: Omit<ComplaintResponseDto, "id" | "createdAt" | "updatedAt">,
+    data: Omit<
+      ComplaintResponseDto,
+      "id" | "createdAt" | "updatedAt" | "status"
+    >,
     tx: DbOrTransaction = db
   ): Promise<ComplaintResponseDto> {
     const complaint = await this.complaintRepository.create(data, tx);
     return ComplaintResponseSchema.parse(complaint);
+  }
+
+  async updateComplaint(
+    id: string,
+    data: Partial<Omit<ComplaintResponseDto, "id" | "createdAt" | "updatedAt">>,
+    tx: DbOrTransaction = db
+  ): Promise<ComplaintResponseDto | null> {
+    const complaint = await this.complaintRepository.update(id, data, tx);
+    return complaint ? ComplaintResponseSchema.parse(complaint) : null;
   }
 }

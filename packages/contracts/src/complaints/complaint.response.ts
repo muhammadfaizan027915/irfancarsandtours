@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { PaginatedResponseSchema } from "@icat/contracts/generic";
+import { ComplaintStatusList } from "@icat/database/enums";
 
 export const ComplaintResponseSchema = z.object({
   id: z.string(),
@@ -8,6 +9,7 @@ export const ComplaintResponseSchema = z.object({
   email: z.email(),
   phone: z.string(),
   message: z.string(),
+  status: z.enum(ComplaintStatusList),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });

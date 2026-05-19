@@ -10,7 +10,7 @@ import {
   PaginatedBookingResponseSchema,
   PaginatedBookingWithUserResponseDto,
   PaginatedBookingWithUserResponseSchema,
-  UpdateBookingRequestDto,
+  UpdateBookingRequestBodyDto,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
 import { BookingRepository } from "@icat/repositories";
@@ -139,7 +139,7 @@ export class BookingService {
 
   async updateBooking(
     bookingId: string,
-    data: UpdateBookingRequestDto,
+    data: UpdateBookingRequestBodyDto,
     tx: DbOrTransaction = db,
   ): Promise<BookingResponseDto | null> {
     const booking = await this.bookingRepository.update(bookingId, data, tx);

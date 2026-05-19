@@ -63,7 +63,7 @@ export type GetBookingsByUserIdBodyDto = z.infer<
   typeof GetBookingByUserIdBodySchema
 >;
 
-export const UpdateBookingRequestSchema = z.object({
+export const UpdateBookingRequestBodySchema = z.object({
   pickupAddress: z.string().min(5).max(255).optional(),
   pickupDate: toDate(z.date()).optional(),
   dropoffAddress: z.string().min(5).max(255).optional(),
@@ -72,8 +72,8 @@ export const UpdateBookingRequestSchema = z.object({
   totalPrice: z.number().int().optional(),
 });
 
-export type UpdateBookingRequestDto = z.infer<
-  typeof UpdateBookingRequestSchema
+export type UpdateBookingRequestBodyDto = z.infer<
+  typeof UpdateBookingRequestBodySchema
 >;
 
 export const UpdateBookingStatusSchema = z.object({

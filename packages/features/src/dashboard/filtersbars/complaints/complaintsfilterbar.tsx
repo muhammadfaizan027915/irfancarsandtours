@@ -2,11 +2,12 @@
 
 import { X } from "lucide-react";
 
+import { ComplaintStatusList } from "@icat/database/enums";
 import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 import { Button } from "@icat/ui/components/button";
-import { Card, CardContent,CardHeader } from "@icat/ui/components/card";
+import { Card, CardContent, CardHeader } from "@icat/ui/components/card";
 
-import { DateRangeFilter, TextFilter } from "../filters";
+import { DateRangeFilter, SelectFilter, TextFilter } from "../filters";
 
 export function ComplaintsFilterBar() {
   const { getSearchParams, updateSearchParams } = useSearchRouter();
@@ -14,11 +15,17 @@ export function ComplaintsFilterBar() {
   const nameValue = getSearchParams("name")?.[0];
   const emailValue = getSearchParams("email")?.[0];
   const phoneValue = getSearchParams("phone")?.[0];
+  const statusValue = getSearchParams("status")?.[0];
   const startDateValue = getSearchParams("startDate")?.[0];
   const endDateValue = getSearchParams("endDate")?.[0];
 
   const hasFilters = Boolean(
-    nameValue || emailValue || phoneValue || startDateValue || endDateValue
+    nameValue ||
+      emailValue ||
+      phoneValue ||
+      statusValue ||
+      startDateValue ||
+      endDateValue
   );
 
   const handleClearFilters = () => {
@@ -26,6 +33,7 @@ export function ComplaintsFilterBar() {
       name: undefined,
       email: undefined,
       phone: undefined,
+      status: undefined,
       startDate: undefined,
       endDate: undefined,
     });
@@ -48,17 +56,14 @@ export function ComplaintsFilterBar() {
         )}
       </CardHeader>
 
-      <CardContent className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+      <CardContent className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
         <TextFilter label="Name" name="name" placeholder="Search by name" />
-        <TextFilter
-          label="Email"
-          name="email"
-          placeholder="Search by email"
-        />
-        <TextFilter
-          label="Phone"
-          name="phone"
-          placeholder="Search by phone"
+        <TextFilter label="Email" name="email" placeholder="Search by email" />
+        <TextFilter label="Phone" name="phone" placeholder="Search by phone" />
+        <SelectFilter
+          label="Status"
+          name="status"
+          options={ComplaintStatusList}
         />
         <DateRangeFilter label="Date Range" />
       </CardContent>

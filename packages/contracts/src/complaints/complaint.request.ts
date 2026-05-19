@@ -1,15 +1,23 @@
 import { z } from "zod";
 
+import { ComplaintStatusList } from "@icat/database/enums";
+
 import { PhoneSchema } from "../generic";
 
 export const ComplaintRequestBodySchema = z.object({
-  name: z.string("Name is required").min(2, "Name must be at least 2 characters"),
+  name: z
+    .string("Name is required")
+    .min(2, "Name must be at least 2 characters"),
   email: z.email("Invalid email address"),
   phone: PhoneSchema,
-  message: z.string("Message is required").min(10, "Message must be at least 10 characters"),
+  message: z
+    .string("Message is required")
+    .min(10, "Message must be at least 10 characters"),
 });
 
-export type ComplaintRequestBodyDto = z.infer<typeof ComplaintRequestBodySchema>;
+export type ComplaintRequestBodyDto = z.infer<
+  typeof ComplaintRequestBodySchema
+>;
 
 export const GetComplaintsBodySchema = z.object({
   page: z.coerce.number().optional().default(1),
@@ -18,8 +26,29 @@ export const GetComplaintsBodySchema = z.object({
   name: z.string().optional(),
   email: z.string().optional(),
   phone: z.string().optional(),
+  status: z.enum(ComplaintStatusList).optional(),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
 });
 
 export type GetComplaintsBodyDto = z.infer<typeof GetComplaintsBodySchema>;
+
+export const UpdateComplaintBodySchema = z.object({
+  id: z.string(),
+  name: z.string().min(2).optional(),
+  email: z.email().optional(),
+  phone: PhoneSchema.optional(),
+  message: z.string().min(10).optional(),
+  status: z.enum(ComplaintStatusList).optional(),
+});
+
+export type UpdateComplaintBodyDto = z.infer<typeof UpdateComplaintBodySchema>;
+
+export const UpdateComplaintStatusBodySchema = z.object({
+  id: z.string(),
+  status: z.enum(ComplaintStatusList),
+});
+
+export type UpdateComplaintStatusBodyDto = z.infer<
+  typeof UpdateComplaintStatusBodySchema
+>;

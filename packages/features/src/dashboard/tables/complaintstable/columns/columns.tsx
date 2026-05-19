@@ -12,6 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@icat/ui";
 
+import { StatusCell } from "./statuscell";
+
 export const complaintColumns: ColumnDef<ComplaintResponseDto>[] = [
   {
     accessorKey: "name",
@@ -59,6 +61,11 @@ export const complaintColumns: ColumnDef<ComplaintResponseDto>[] = [
         </DropdownMenu>
       );
     },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: StatusCell,
   },
   {
     accessorKey: "createdAt",
