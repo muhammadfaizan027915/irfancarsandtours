@@ -4,20 +4,14 @@ import { useOptimistic, useRef, useTransition } from "react";
 import { toast } from "sonner";
 
 import { BookingStatus, BookingStatusList } from "@icat/database/enums";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@icat/ui";
+import { SingleSelect } from "@icat/ui";
 import { updateBookingStatus } from "@icat/web/actions/bookings";
 
 type BookingStatusSelectorProps = {
   id: string;
   status: BookingStatus;
   className?: string;
-}
+};
 
 export function BookingStatusSelector({
   id,
@@ -57,22 +51,14 @@ export function BookingStatusSelector({
     <form ref={formRef} action={action}>
       <input type="hidden" name="id" value={id} />
       <input type="hidden" name="status" value={optimisticStatus} />
-      <Select
+      <SingleSelect
+        name="status"
+        options={BookingStatusList}
         value={optimisticStatus}
-        onValueChange={handleStatusChange}
+        onChange={handleStatusChange}
         disabled={isPending}
-      >
-        <SelectTrigger className={className}>
-          <SelectValue placeholder="Status" />
-        </SelectTrigger>
-        <SelectContent>
-          {BookingStatusList.map((s) => (
-            <SelectItem key={s} value={s} className="capitalize text-xs">
-              {s}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        className={className}
+      />
     </form>
   );
 }

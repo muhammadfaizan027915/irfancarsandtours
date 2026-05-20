@@ -54,7 +54,7 @@ function SingleSelect<T extends string>({
 
         <SelectContent>
           {options.map((opt) => (
-            <SelectItem key={opt} value={opt}>
+            <SelectItem key={opt} value={opt} className="capitalize">
               {opt}
             </SelectItem>
           ))}
