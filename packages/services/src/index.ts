@@ -5,3 +5,4 @@ export * from "./cars";
 export * from "./complaints";
 export * from "./seo";
 export * from "./users";
+export * from "./verificationtokens";

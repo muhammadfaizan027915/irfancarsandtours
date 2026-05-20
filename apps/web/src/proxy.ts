@@ -3,9 +3,12 @@ import { NavigationUrls } from "@icat/features/header/header.constants";
 import { UserResponseDto } from "@icat/contracts";
 import { auth } from "@icat/lib/auth/auth";
 
-const UserProtectedRoutes = [NavigationUrls.PROFILE, NavigationUrls.BOOKINGS, NavigationUrls.CHECKOUT];
+const UserProtectedRoutes = [
+  NavigationUrls.PROFILE,
+  NavigationUrls.BOOKINGS,
+  NavigationUrls.CHECKOUT,
+];
 const AdminProtectedRoutes = ["/dashboard"];
-const ProtectedRoutes = [...UserProtectedRoutes, ...AdminProtectedRoutes];
 
 export const proxy = auth((req) => {
   const { pathname, origin } = req.nextUrl;
@@ -13,23 +16,22 @@ export const proxy = auth((req) => {
   const sessionUser = req.auth?.user as UserResponseDto;
   const isAdmin = sessionUser?.role === "admin";
 
-  const isProtected = ProtectedRoutes.some((route) =>
-    pathname.startsWith(route)
+  const isUserProtectedRoute = UserProtectedRoutes.some((route) =>
+    pathname.startsWith(route),
   );
 
-  if (isProtected && !req.auth) {
+  if (isUserProtectedRoute && !req.auth) {
     const signinUrl = new URL(NavigationUrls.SIGNIN, origin);
     signinUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(signinUrl);
   }
 
   const isAdminProtectedRoute = AdminProtectedRoutes.some((route) =>
-    pathname.startsWith(route)
+    pathname.startsWith(route),
   );
 
-  if (isProtected && isAdminProtectedRoute && !isAdmin) {
-    const homeUrl = new URL(NavigationUrls.HOME, origin);
-    return NextResponse.redirect(homeUrl);
+  if (isAdminProtectedRoute && (!req.auth || !isAdmin)) {
+    return NextResponse.rewrite(new URL("/404", req.url));
   }
 
   return NextResponse.next();
@@ -42,5 +44,5 @@ export const config = {
     "/bookings/:path*",
     "/profile",
     "/checkout",
-  ]
+  ],
 };

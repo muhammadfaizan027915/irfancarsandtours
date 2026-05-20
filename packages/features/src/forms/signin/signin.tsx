@@ -50,6 +50,15 @@ export function SignInFrom() {
           errors={error?.cause?.password?._errors}
         />
 
+        <div className="flex justify-end">
+          <Link
+            href={NavigationUrls.FORGOT_PASSWORD}
+            className="text-sm text-muted-foreground hover:text-primary transition-colors"
+          >
+            Forgot Password?
+          </Link>
+        </div>
+
         <Button size={"lg"} className="font-bold shadow-none group mt-4" disabled={pending}>
           Sign In
           <ArrowRight className="group-hover:translate-x-1 transition-transform" />

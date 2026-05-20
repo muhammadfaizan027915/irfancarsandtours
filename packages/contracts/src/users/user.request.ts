@@ -60,6 +60,25 @@ export const ChangePasswordBodySchema = z
 
 export type ChangePasswordBodyDto = z.infer<typeof ChangePasswordBodySchema>;
 
+export const ForgotPasswordBodySchema = z.object({
+  email: z.email("Email required."),
+});
+
+export type ForgotPasswordBodyDto = z.infer<typeof ForgotPasswordBodySchema>;
+
+export const ResetPasswordBodySchema = z
+  .object({
+    token: z.string("Token required."),
+    password: PasswordSchema,
+    confirmPassword: z.string("Confirm password requied."),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
+export type ResetPasswordBodyDto = z.infer<typeof ResetPasswordBodySchema>;
+
 export const GetUsersBodySchema = z.object({
   page: z.coerce.number().optional().default(1),
   limit: z.coerce.number().optional().default(50),

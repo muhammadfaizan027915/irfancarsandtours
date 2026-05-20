@@ -22,25 +22,13 @@ import {
   sendWelcomeEmail,
 } from "@icat/lib";
 import { UserRepository } from "@icat/repositories";
-
-import { AuthService } from "../auth";
+import { comparePassword, hashPassword } from "../auth/password.utils";
 
 export class UserService {
   private readonly userRepository: UserRepository;
-  private readonly authService: AuthService;
 
   constructor() {
     this.userRepository = new UserRepository();
-    this.authService = new AuthService();
-    
-    // One-time check to see if your .env.dev is being read by Docker
-    if (process.env.NODE_ENV === "development") {
-      console.log("--- EMAIL SYSTEM CHECK ---");
-      console.log("SMTP_HOST:", process.env.SMTP_HOST || "NOT FOUND (Using fallback)");
-      console.log("SMTP_PORT:", process.env.SMTP_PORT || "NOT FOUND (Using fallback)");
-      console.log("SMTP_USER:", process.env.SMTP_USER || "NOT FOUND (Using fallback)");
-      console.log("---------------------------");
-    }
   }
 
   async getAll(
@@ -49,6 +37,14 @@ export class UserService {
   ): Promise<PaginatedUserResponseDto> {
     const result = await this.userRepository.findAll(arg, tx);
     return PaginatedUserResponseSchema.parse(result);
+  }
+
+  async findById(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<UserResponseDto | null> {
+    const user = await this.userRepository.findById(id, tx);
+    return user ? UserResponseSchema.parse(user) : null;
   }
 
   async getUserByEmail(
@@ -86,7 +82,7 @@ export class UserService {
 
     const passwordHash =
       "password" in data && data.password
-        ? await this.authService.hashPassword(data.password)
+        ? await hashPassword(data.password)
         : null;
 
     const createdUser = await this.userRepository.create(
@@ -122,7 +118,7 @@ export class UserService {
       });
     }
 
-    const isValid = await this.authService.comparePassword(
+    const isValid = await comparePassword(
       password,
       user.password,
     );
@@ -149,7 +145,7 @@ export class UserService {
 
   async updateUser(
     id: string,
-    updates: UpdateUserBodyDto,
+    updates: Partial<UpdateUserBodyDto> & { password?: string | null },
     tx: DbOrTransaction = db,
   ): Promise<DetailedUserResponseDto | null> {
     const existingUser = await this.userRepository.findById(id, tx);
@@ -176,7 +172,7 @@ export class UserService {
 
     const userWithPassword = UserResponseWithPasswordSchema.parse(user);
 
-    const isValid = await this.authService.comparePassword(
+    const isValid = await comparePassword(
       data?.currentPassword,
       userWithPassword?.password ?? "",
     );
@@ -185,7 +181,7 @@ export class UserService {
       throw new ValidationError({ message: "Current password is incorrect" });
     }
 
-    const hashedPassword = await this.authService.hashPassword(data?.password);
+    const hashedPassword = await hashPassword(data?.password);
 
     const updatedUser = await this.userRepository.update(
       id,
