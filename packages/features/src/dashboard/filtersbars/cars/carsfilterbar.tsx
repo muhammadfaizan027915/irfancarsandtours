@@ -65,7 +65,7 @@ export function CarsFilterBar() {
         )}
       </CardHeader>
 
-      <CardContent className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+      <CardContent className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
         <TextFilter label="Name" name="name" placeholder="Car Name" />
         <TextFilter label="Model" name="model" placeholder="Car Model" />
         <SelectFilter
