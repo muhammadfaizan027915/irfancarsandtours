@@ -52,7 +52,7 @@ export class BookingRepository {
       id,
       name,
       address,
-      status = "pending",
+      status,
       startDate,
       endDate,
     } = args || {};
@@ -145,7 +145,7 @@ export class BookingRepository {
       id,
       name,
       address,
-      status = "pending",
+      status,
       startDate,
       endDate,
     } = args || {};

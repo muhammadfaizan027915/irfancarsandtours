@@ -8,6 +8,7 @@ export function Logo() {
     <Link href={NavigationUrls.HOME}>
       <div className="overflow-hidden w-18 h-18">
         <Image
+          loading={"eager"}
           alt="Irfan Cars And Tours"
           src={"/assets/logo.png"}
           height={150}

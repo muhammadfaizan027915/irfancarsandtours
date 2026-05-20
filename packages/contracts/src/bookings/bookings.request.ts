@@ -49,6 +49,7 @@ export const GetBookingsBodySchema = z.object({
   id: z.string().optional(),
   name: z.string().optional(),
   address: z.string().optional(),
+  status: z.enum(BookingStatusList).optional(),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
 });

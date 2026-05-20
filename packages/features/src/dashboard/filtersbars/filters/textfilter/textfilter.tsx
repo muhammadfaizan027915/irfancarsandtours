@@ -28,10 +28,12 @@ export function TextFilter({ label, name, placeholder }: TextFilterProps) {
   const debouncedValue = useDebounce(value, 500);
 
   useEffect(() => {
+    if (debouncedValue === externalValue) return;
+
     updateSearchParams({
       [name]: debouncedValue || undefined,
     });
-  }, [debouncedValue, name, updateSearchParams]);
+  }, [debouncedValue, name, updateSearchParams, externalValue]);
 
   return (
     <div className="flex flex-col gap-2 w-full">

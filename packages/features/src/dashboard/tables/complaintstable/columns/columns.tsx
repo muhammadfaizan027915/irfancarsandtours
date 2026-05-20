@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 import { ComplaintResponseDto } from "@icat/contracts";
@@ -51,11 +52,12 @@ export const complaintColumns: ColumnDef<ComplaintResponseDto>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild className="cursor-pointer transition-all mx-auto">
-            <Button variant="ghost" size="sm" className="shadow-none">
+            <Button variant="ghost" size="sm" className="shadow-none gap-2">
               View Message
+              <ChevronDown className="h-4 w-4 text-muted-foreground" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-64 rounded-2xl shadow-lg p-4 border border-border/50">
+          <DropdownMenuContent className="w-full max-w-150 wrap-break-word rounded-2xl shadow-lg p-4 border border-border/50">
             <div className="max-w-sm whitespace-pre-wrap">{message}</div>
           </DropdownMenuContent>
         </DropdownMenu>

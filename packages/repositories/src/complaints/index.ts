@@ -42,7 +42,7 @@ export class ComplaintRepository {
       name,
       email,
       phone,
-      status = "pending",
+      status,
       startDate,
       endDate,
     } = args;

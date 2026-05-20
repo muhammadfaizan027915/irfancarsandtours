@@ -8,6 +8,7 @@ export function PrimrayHero() {
   return (
     <section className="relative h-[calc(100vh+80px)] w-full overflow-hidden">
       <Image
+        loading="eager"
         src="/assets/hero_background_primary.jpg"
         alt="Luxury car background"
         fill
