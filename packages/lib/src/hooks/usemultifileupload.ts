@@ -18,7 +18,7 @@ type UploadedFile = {
 type UseMultiFileUploadOptions = {
   initialUrls?: string[];
   onSuccess?: (uploadFiles: UploadedFile[]) => void;
-  onError?: (error: any) => void;
+  onError?: (error: unknown) => void;
 };
 
 export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {

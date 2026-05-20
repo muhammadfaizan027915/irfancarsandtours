@@ -1,4 +1,4 @@
-import { ZodObject } from "zod";
+import { ZodObject, ZodRawShape } from "zod";
 
 import { handleError } from "../errors";
 import { formDataToObject } from "../utils/form-to-object";
@@ -22,7 +22,7 @@ export function handlerFormActionWithError<
   TArgs,
   TResult
 >(args: {
-  schema: ZodObject<any, any>;
+  schema: ZodObject<ZodRawShape>;
   action: (args: TArgs) => Promise<TResult> | void;
   shouldResetForm?: boolean;
 }) {

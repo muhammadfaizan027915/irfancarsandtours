@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Body,
   Container,
@@ -6,76 +7,45 @@ import {
   Html,
   Preview,
   Section,
+  Tailwind,
   Text,
-} from "@react-email/components";
-import * as React from "react";
+} from "react-email";
 
-interface PasswordResetSuccessEmailProps {
-  userFirstname?: string;
-}
+import { SendPasswordResetSuccessEmailArgs } from "../sender.types";
+
+type PasswordResetSuccessEmailProps = SendPasswordResetSuccessEmailArgs;
 
 export const PasswordResetSuccessEmail = ({
-  userFirstname,
+  user,
 }: PasswordResetSuccessEmailProps) => {
   return (
     <Html>
       <Head />
       <Preview>Your Irfan Cars & Tours password was reset</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          <Heading style={h1}>Password updated successfully</Heading>
-          <Text style={text}>Hi {userFirstname},</Text>
-          <Section>
-            <Text style={text}>
-              This is a confirmation that the password for your Irfan Cars & Tours account
-              has been successfully changed.
+      <Tailwind>
+        <Body className="bg-[#f6f9fc] font-sans">
+          <Container className="bg-white mx-auto py-5 pb-12 mb-16 px-4">
+            <Heading className="text-[#333] text-2xl font-bold text-center my-8">
+              Password updated successfully
+            </Heading>
+            <Text className="text-[#333] text-base leading-7">Hi {user.name},</Text>
+            <Section>
+              <Text className="text-[#333] text-base leading-7">
+                This is a confirmation that the password for your Irfan Cars & Tours account
+                has been successfully changed.
+              </Text>
+              <Text className="text-[#333] text-base leading-7">
+                If you did not make this change, please contact our support team immediately.
+              </Text>
+            </Section>
+            <Text className="text-[#8898aa] text-xs leading-4 text-center mt-5">
+              © {new Date().getFullYear()} Irfan Cars & Tours. All rights reserved.
             </Text>
-            <Text style={text}>
-              If you did not make this change, please contact our support team immediately.
-            </Text>
-          </Section>
-          <Text style={footer}>
-            © {new Date().getFullYear()} Irfan Cars & Tours. All rights reserved.
-          </Text>
-        </Container>
-      </Body>
+          </Container>
+        </Body>
+      </Tailwind>
     </Html>
   );
-};
-
-const main = {
-  backgroundColor: "#f6f9fc",
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
-};
-
-const container = {
-  backgroundColor: "#ffffff",
-  margin: "0 auto",
-  padding: "20px 0 48px",
-  marginBottom: "64px",
-};
-
-const h1 = {
-  color: "#333",
-  fontSize: "24px",
-  fontWeight: "bold",
-  textAlign: "center" as const,
-  margin: "30px 0",
-};
-
-const text = {
-  color: "#333",
-  fontSize: "16px",
-  lineHeight: "26px",
-};
-
-const footer = {
-  color: "#8898aa",
-  fontSize: "12px",
-  lineHeight: "16px",
-  textAlign: "center" as const,
-  marginTop: "20px",
 };
 
 export default PasswordResetSuccessEmail;

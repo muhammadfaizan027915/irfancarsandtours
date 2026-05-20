@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Body,
   Container,
@@ -6,111 +7,66 @@ import {
   Html,
   Preview,
   Section,
+  Tailwind,
   Text,
-} from "@react-email/components";
-import * as React from "react";
+} from "react-email";
 
-interface BookingConfirmationEmailProps {
-  userFirstname?: string;
-  bookingId?: string;
-  totalPrice?: number;
-  pickupDate?: string;
-  dropoffDate?: string;
-}
+import { SendBookingConfirmationEmailArgs } from "../sender.types";
+
+type BookingConfirmationEmailProps = SendBookingConfirmationEmailArgs;
 
 export const BookingConfirmationEmail = ({
-  userFirstname,
-  bookingId,
-  totalPrice,
-  pickupDate,
-  dropoffDate,
+  user,
+  booking,
 }: BookingConfirmationEmailProps) => {
   return (
     <Html>
       <Head />
       <Preview>Your booking confirmation - Irfan Cars & Tours</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          <Heading style={h1}>Booking Confirmation</Heading>
-          <Text style={text}>Hi {userFirstname},</Text>
-          <Text style={text}>
-            Thank you for booking with Irfan Cars & Tours! Your booking has been
-            received and is being processed.
-          </Text>
-          <Section style={detailsContainer}>
-            <Text style={detailText}>
-              <strong>Booking ID:</strong> {bookingId}
+      <Tailwind>
+        <Body className="bg-[#f6f9fc] font-sans">
+          <Container className="bg-white mx-auto py-5 pb-12 mb-16 px-4">
+            <Heading className="text-[#333] text-2xl font-bold text-center my-8">
+              Booking Confirmation
+            </Heading>
+            <Text className="text-[#333] text-base leading-7">Hi {user.name},</Text>
+            <Text className="text-[#333] text-base leading-7">
+              Thank you for booking with Irfan Cars & Tours! Your booking has been
+              received and is being processed.
             </Text>
-            <Text style={detailText}>
-              <strong>Total Price:</strong> Rs. {totalPrice?.toLocaleString()}
+            <Section className="bg-[#f9f9f9] p-5 rounded my-5">
+              <Text className="text-[#333] text-sm leading-5 my-1">
+                <strong>Booking ID:</strong> {booking.id}
+              </Text>
+              <Text className="text-[#333] text-sm leading-5 my-1">
+                <strong>Total Price:</strong> Rs. {booking.totalPrice?.toLocaleString()}
+              </Text>
+              <Text className="text-[#333] text-sm leading-5 my-1">
+                <strong>Pickup Date:</strong> {booking.pickupDate.toLocaleString()}
+              </Text>
+              <Text className="text-[#333] text-sm leading-5 my-1">
+                <strong>Drop-off Date:</strong> {booking.dropoffDate.toLocaleString()}
+              </Text>
+              <Text className="text-[#333] text-sm leading-5 my-1">
+                <strong>Pickup Address:</strong> {booking.pickupAddress}
+              </Text>
+              <Text className="text-[#333] text-sm leading-5 my-1">
+                <strong>Drop-off Address:</strong> {booking.dropoffAddress}
+              </Text>
+            </Section>
+            <Text className="text-[#333] text-base leading-7">
+              We will contact you shortly with further details. If you have any
+              questions, please reply to this email.
             </Text>
-            <Text style={detailText}>
-              <strong>Pickup Date:</strong> {pickupDate}
+            <Text className="text-[#8898aa] text-xs leading-4 text-center mt-5">
+              © {new Date().getFullYear()} Irfan Cars & Tours. All rights
+              reserved.
             </Text>
-            <Text style={detailText}>
-              <strong>Drop-off Date:</strong> {dropoffDate}
-            </Text>
-          </Section>
-          <Text style={text}>
-            We will contact you shortly with further details. If you have any
-            questions, please reply to this email.
-          </Text>
-          <Text style={footer}>
-            © {new Date().getFullYear()} Irfan Cars & Tours. All rights reserved.
-          </Text>
-        </Container>
-      </Body>
+          </Container>
+        </Body>
+      </Tailwind>
     </Html>
   );
-};
-
-const main = {
-  backgroundColor: "#f6f9fc",
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
-};
-
-const container = {
-  backgroundColor: "#ffffff",
-  margin: "0 auto",
-  padding: "20px 0 48px",
-  marginBottom: "64px",
-};
-
-const h1 = {
-  color: "#333",
-  fontSize: "24px",
-  fontWeight: "bold",
-  textAlign: "center" as const,
-  margin: "30px 0",
-};
-
-const text = {
-  color: "#333",
-  fontSize: "16px",
-  lineHeight: "26px",
-};
-
-const detailsContainer = {
-  backgroundColor: "#f9f9f9",
-  padding: "20px",
-  borderRadius: "5px",
-  margin: "20px 0",
-};
-
-const detailText = {
-  color: "#333",
-  fontSize: "14px",
-  lineHeight: "20px",
-  margin: "5px 0",
-};
-
-const footer = {
-  color: "#8898aa",
-  fontSize: "12px",
-  lineHeight: "16px",
-  textAlign: "center" as const,
-  marginTop: "20px",
 };
 
 export default BookingConfirmationEmail;

@@ -5,7 +5,13 @@ import { BaseApiError } from "./errors";
 import { InternalServerError, ValidationError } from "./errors";
 
 export function handleError(error: unknown) {
-  if ((error as any).digest?.startsWith("NEXT_REDIRECT")) {
+  if (
+    error &&
+    typeof error === "object" &&
+    "digest" in error &&
+    typeof error.digest === "string" &&
+    error.digest.startsWith("NEXT_REDIRECT")
+  ) {
     throw error;
   }
 

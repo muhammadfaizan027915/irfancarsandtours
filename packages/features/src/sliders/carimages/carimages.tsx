@@ -9,11 +9,6 @@ import { CarImagesProps } from "./carimages.types";
 export function CarImages({ imageUrls }: CarImagesProps) {
   const [ready, setReady] = useState(false);
 
-  const settings = {
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-
   useEffect(() => {
     const id = requestAnimationFrame(() => setReady(true));
     return () => cancelAnimationFrame(id);

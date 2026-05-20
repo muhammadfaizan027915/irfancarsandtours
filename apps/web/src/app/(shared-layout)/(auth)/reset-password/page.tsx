@@ -10,7 +10,7 @@ const ResetPasswordForm = dynamic(
   }
 );
 
-interface PageProps {
+type PageProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 

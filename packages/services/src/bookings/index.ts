@@ -1,3 +1,5 @@
+import { after } from "next/server";
+
 import {
   BookingRequestDto,
   BookingResponseDto,
@@ -74,17 +76,15 @@ export class BookingService {
   ): Promise<BookingResponseDto> {
     const executeCreate = async (transaction: DbOrTransaction) => {
       let totalPrice = 0;
+      let user = null;
 
       if (!userId) {
         try {
-          const user = await this.userService.getUserByEmail(
-            data.email,
-            transaction,
-          );
+          user = await this.userService.getUserByEmail(data.email, transaction);
           userId = user.id;
         } catch {
-          const newUser = await this.userService.createUser(data, transaction);
-          userId = newUser.id;
+          user = await this.userService.createUser(data, transaction);
+          userId = user.id;
         }
       }
 
@@ -122,7 +122,7 @@ export class BookingService {
         },
         transaction,
       );
-      
+
       await this.userService.updateUser(userId, data, transaction);
 
       await this.bookedCarService.createMany(
@@ -132,17 +132,14 @@ export class BookingService {
 
       const parsedBooking = BookingResponseSchema.parse(booking);
 
-      // Fire and forget booking confirmation email
-      sendBookingConfirmationEmail({
-        email: data.email,
-        userFirstname: data.name,
-        bookingId: parsedBooking.id,
-        totalPrice: parsedBooking.totalPrice,
-        pickupDate: parsedBooking.pickupDate.toLocaleDateString(),
-        dropoffDate: parsedBooking.dropoffDate.toLocaleDateString(),
-      }).catch((err) =>
-        console.error("Failed to send booking confirmation email:", err),
-      );
+      if (user && parsedBooking) {
+        after(
+          sendBookingConfirmationEmail({
+            user,
+            booking: parsedBooking,
+          }),
+        );
+      }
 
       return parsedBooking;
     };

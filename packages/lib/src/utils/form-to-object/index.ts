@@ -26,13 +26,13 @@ export function objectToFormData(
   return form;
 }
 
-export function formDataToObject(formData: FormData): Record<string, any> {
-  const result: Record<string, any> = {};
+export function formDataToObject(formData: FormData): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
 
   for (const [key, value] of formData.entries()) {
     const path = key.replace(/\]/g, "").split("[").filter(Boolean);
 
-    let current = result;
+    let current = result as Record<string, unknown>;
     for (let i = 0; i < path.length; i++) {
       const part = path[i];
       const nextPart = path[i + 1];
@@ -40,7 +40,7 @@ export function formDataToObject(formData: FormData): Record<string, any> {
       if (i === path.length - 1) {
         if (current[part] !== undefined) {
           if (Array.isArray(current[part])) {
-            current[part].push(value);
+            (current[part] as unknown[]).push(value);
           } else {
             current[part] = [current[part], value];
           }
@@ -51,7 +51,7 @@ export function formDataToObject(formData: FormData): Record<string, any> {
         if (!current[part]) {
           current[part] = /^\d+$/.test(nextPart) ? [] : {};
         }
-        current = current[part];
+        current = current[part] as Record<string, unknown>;
       }
     }
   }

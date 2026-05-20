@@ -1,3 +1,5 @@
+import { after } from "next/server";
+
 import {
   ChangePasswordBodyDto,
   CreateGuestUserBodyDto,
@@ -18,10 +20,11 @@ import {
   DuplicateEmailError,
   ForbiddenError,
   NotFoundError,
-  ValidationError,
   sendWelcomeEmail,
+  ValidationError,
 } from "@icat/lib";
 import { UserRepository } from "@icat/repositories";
+
 import { comparePassword, hashPassword } from "../auth/password.utils";
 
 export class UserService {
@@ -95,11 +98,11 @@ export class UserService {
 
     const parsedUser = UserResponseSchema.parse(createdUser);
 
-    // Fire and forget welcome email
-    sendWelcomeEmail({
-      email: parsedUser.email,
-      name: parsedUser.name,
-    }).catch((err) => console.error("Failed to send welcome email:", err));
+    after(
+      sendWelcomeEmail({
+        user: parsedUser,
+      }),
+    );
 
     return parsedUser;
   }
@@ -118,10 +121,7 @@ export class UserService {
       });
     }
 
-    const isValid = await comparePassword(
-      password,
-      user.password,
-    );
+    const isValid = await comparePassword(password, user.password);
 
     if (!isValid) {
       throw new ValidationError({ message: "Invalid email or password" });

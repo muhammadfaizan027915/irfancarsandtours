@@ -11,7 +11,7 @@ export async function uploadFile(arg: {
   onPreview?: (url: string) => void;
   onProgress?: (progress: number) => void;
   onSuccess?: (fileUrl: string) => void;
-  onError?: (error: any) => void;
+  onError?: (error: unknown) => void;
   onFinally?: () => void;
 }): Promise<string | null> {
   const { file, onPreview, onProgress, onSuccess, onError, onFinally } = arg;
@@ -57,7 +57,7 @@ export async function deleteFile(arg: {
   fileUrl: string;
   onStart?: () => void;
   onSuccess?: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: unknown) => void;
   onFinally?: () => void;
 }): Promise<boolean> {
   const { fileUrl, onStart, onSuccess, onError, onFinally } = arg;

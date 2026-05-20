@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Body,
   Container,
@@ -6,118 +7,56 @@ import {
   Html,
   Preview,
   Section,
+  Tailwind,
   Text,
-} from "@react-email/components";
-import * as React from "react";
+} from "react-email";
 
-interface ComplaintCreatedAdminEmailProps {
-  complaintId?: string;
-  userName?: string;
-  userEmail?: string;
-  subject?: string;
-  message?: string;
-}
+import { SendComplaintCreatedAdminEmailArgs } from "../sender.types";
+
+type ComplaintCreatedAdminEmailProps = SendComplaintCreatedAdminEmailArgs;
 
 export const ComplaintCreatedAdminEmail = ({
-  complaintId,
-  userName,
-  userEmail,
-  subject,
-  message,
+  complaint,
 }: ComplaintCreatedAdminEmailProps) => {
   return (
     <Html>
       <Head />
       <Preview>New Complaint Received - Irfan Cars & Tours</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          <Heading style={h1}>New Complaint Submitted</Heading>
-          <Text style={text}>Hello Admin,</Text>
-          <Text style={text}>
-            A new complaint has been submitted through the platform.
-          </Text>
-          <Section style={detailsContainer}>
-            <Text style={detailText}>
-              <strong>Complaint ID:</strong> {complaintId}
+      <Tailwind>
+        <Body className="bg-[#f6f9fc] font-sans">
+          <Container className="bg-white mx-auto py-5 pb-12 mb-16 px-4">
+            <Heading className="text-[#333] text-2xl font-bold text-center my-8">
+              New Complaint Submitted
+            </Heading>
+            <Text className="text-[#333] text-base leading-7">Hello Admin,</Text>
+            <Text className="text-[#333] text-base leading-7">
+              A new complaint has been submitted through the platform.
             </Text>
-            <Text style={detailText}>
-              <strong>From:</strong> {userName} ({userEmail})
+            <Section className="bg-[#f9f9f9] p-5 rounded my-5">
+              <Text className="text-[#333] text-sm leading-5 my-1">
+                <strong>Complaint ID:</strong> {complaint.id}
+              </Text>
+              <Text className="text-[#333] text-sm leading-5 my-1">
+                <strong>From:</strong> {complaint.name} ({complaint.email})
+              </Text>
+              <Text className="text-[#333] text-sm leading-5 my-1">
+                <strong>Phone:</strong> {complaint.phone}
+              </Text>
+              <Text className="text-[#333] text-sm leading-5 mt-3 mb-1">
+                <strong>Message:</strong>
+              </Text>
+              <Text className="text-[#555] text-sm leading-6 italic p-3 bg-white border border-solid border-[#ddd] rounded">
+                {complaint.message}
+              </Text>
+            </Section>
+            <Text className="text-[#8898aa] text-xs leading-4 text-center mt-5">
+              © {new Date().getFullYear()} Irfan Cars & Tours. All rights reserved.
             </Text>
-            <Text style={detailText}>
-              <strong>Subject:</strong> {subject}
-            </Text>
-            <Text style={detailText}>
-              <strong>Message:</strong>
-            </Text>
-            <Text style={messageText}>{message}</Text>
-          </Section>
-          <Text style={footer}>
-            © {new Date().getFullYear()} Irfan Cars & Tours. All rights reserved.
-          </Text>
-        </Container>
-      </Body>
+          </Container>
+        </Body>
+      </Tailwind>
     </Html>
   );
-};
-
-const main = {
-  backgroundColor: "#f6f9fc",
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
-};
-
-const container = {
-  backgroundColor: "#ffffff",
-  margin: "0 auto",
-  padding: "20px 0 48px",
-  marginBottom: "64px",
-};
-
-const h1 = {
-  color: "#333",
-  fontSize: "24px",
-  fontWeight: "bold",
-  textAlign: "center" as const,
-  margin: "30px 0",
-};
-
-const text = {
-  color: "#333",
-  fontSize: "16px",
-  lineHeight: "26px",
-};
-
-const detailsContainer = {
-  backgroundColor: "#f9f9f9",
-  padding: "20px",
-  borderRadius: "5px",
-  margin: "20px 0",
-};
-
-const detailText = {
-  color: "#333",
-  fontSize: "14px",
-  lineHeight: "20px",
-  margin: "5px 0",
-};
-
-const messageText = {
-  color: "#555",
-  fontSize: "14px",
-  lineHeight: "22px",
-  fontStyle: "italic",
-  padding: "10px",
-  backgroundColor: "#fff",
-  border: "1px solid #ddd",
-  borderRadius: "4px",
-};
-
-const footer = {
-  color: "#8898aa",
-  fontSize: "12px",
-  lineHeight: "16px",
-  textAlign: "center" as const,
-  marginTop: "20px",
 };
 
 export default ComplaintCreatedAdminEmail;

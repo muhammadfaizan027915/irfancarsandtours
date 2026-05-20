@@ -1,14 +1,16 @@
-import {
-  ForgotPasswordBodyDto,
-  ResetPasswordBodyDto,
-  UserResponseDto,
-} from "@icat/contracts";
-import { NavigationUrls } from "@icat/features/header/header.constants";
-import { db, DbOrTransaction } from "@icat/database";
-import { ValidationError } from "@icat/lib";
+import { after } from "next/server";
 
-import { VerificationTokenService } from "../verificationtokens";
+import { ForgotPasswordBodyDto, ResetPasswordBodyDto } from "@icat/contracts";
+import { db, DbOrTransaction } from "@icat/database";
+import { NavigationUrls } from "@icat/features/header/header.constants";
+import {
+  sendForgotPasswordEmail,
+  sendPasswordResetSuccessEmail,
+  ValidationError,
+} from "@icat/lib";
+
 import { UserService } from "../users";
+import { VerificationTokenService } from "../verificationtokens";
 import { comparePassword, hashPassword } from "./password.utils";
 
 export class AuthService {
@@ -42,14 +44,17 @@ export class AuthService {
           tx,
         );
 
-        // In a real application, you would send an email here.
-        // For testing, we log the link to the console.
         const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
         const resetLink = `${baseUrl}${NavigationUrls.RESET_PASSWORD}?token=${token.token}`;
-        console.log("Password reset link:", resetLink);
+
+        after(
+          sendForgotPasswordEmail({
+            user,
+            resetLink,
+          }),
+        );
       }
     } catch (error) {
-      // If user not found, we still return success to prevent email enumeration
       console.error("Forgot password error:", error);
     }
   }
@@ -85,5 +90,11 @@ export class AuthService {
     );
 
     await this.verificationTokenService.deleteToken(data.token, tx);
+
+    after(
+      sendPasswordResetSuccessEmail({
+        user,
+      }),
+    );
   }
 }

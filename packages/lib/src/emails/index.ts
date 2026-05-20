@@ -1,103 +1,78 @@
 import * as React from "react";
+
 import { sendEmail } from "./sender";
-import WelcomeEmail from "./templates/WelcomeEmail";
-import ForgotPasswordEmail from "./templates/ForgotPasswordEmail";
-import PasswordResetSuccessEmail from "./templates/PasswordResetSuccessEmail";
-import BookingConfirmationEmail from "./templates/BookingConfirmationEmail";
-import ComplaintCreatedAdminEmail from "./templates/ComplaintCreatedAdminEmail";
-import ComplaintResolvedEmail from "./templates/ComplaintResolvedEmail";
+import {
+  SendBookingConfirmationEmailArgs,
+  SendComplaintCreatedAdminEmailArgs,
+  SendComplaintStatusUpdateEmailArgs,
+  SendForgotPasswordEmailArgs,
+  SendPasswordResetSuccessEmailArgs,
+  SendWelcomeEmailArgs,
+} from "./sender.types";
+import {
+  BookingConfirmationEmail,
+  ComplaintCreatedAdminEmail,
+  ComplaintStatusUpdateEmail,
+  ForgotPasswordEmail,
+  PasswordResetSuccessEmail,
+  WelcomeEmail,
+} from "./templates";
 
 export * from "./sender";
 
 export async function sendWelcomeEmail({
-  email,
-  name,
-}: {
-  email: string;
-  name?: string;
-}) {
+  user,
+}: SendWelcomeEmailArgs): Promise<void> {
   return sendEmail({
-    to: email,
+    to: user.email,
     subject: "Welcome to Irfan Cars & Tours!",
-    template: React.createElement(WelcomeEmail, { name }),
+    content: React.createElement(WelcomeEmail, { user }),
   });
 }
 
 export async function sendForgotPasswordEmail({
-  email,
-  userFirstname,
-  resetPasswordLink,
-}: {
-  email: string;
-  userFirstname?: string;
-  resetPasswordLink: string;
-}) {
+  user,
+  resetLink,
+}: SendForgotPasswordEmailArgs): Promise<void> {
   return sendEmail({
-    to: email,
+    to: user.email,
     subject: "Reset your Irfan Cars & Tours password",
-    template: React.createElement(ForgotPasswordEmail, {
-      userFirstname,
-      resetPasswordLink,
+    content: React.createElement(ForgotPasswordEmail, {
+      user,
+      resetLink,
     }),
   });
 }
 
 export async function sendPasswordResetSuccessEmail({
-  email,
-  userFirstname,
-}: {
-  email: string;
-  userFirstname?: string;
-}) {
+  user,
+}: SendPasswordResetSuccessEmailArgs): Promise<void> {
   return sendEmail({
-    to: email,
+    to: user.email,
     subject: "Your Irfan Cars & Tours password was reset",
-    template: React.createElement(PasswordResetSuccessEmail, { userFirstname }),
+    content: React.createElement(PasswordResetSuccessEmail, { user }),
   });
 }
 
 export async function sendBookingConfirmationEmail({
-  email,
-  userFirstname,
-  bookingId,
-  totalPrice,
-  pickupDate,
-  dropoffDate,
-}: {
-  email: string;
-  userFirstname?: string;
-  bookingId: string;
-  totalPrice?: number | null;
-  pickupDate: string;
-  dropoffDate: string;
-}) {
+  user,
+  booking,
+}: SendBookingConfirmationEmailArgs): Promise<void> {
   return sendEmail({
-    to: email,
-    subject: `Booking Confirmation - ${bookingId}`,
-    template: React.createElement(BookingConfirmationEmail, {
-      userFirstname,
-      bookingId,
-      totalPrice: totalPrice ?? 0,
-      pickupDate,
-      dropoffDate,
+    to: user.email,
+    subject: `Booking Confirmation - ${booking.id}`,
+    content: React.createElement(BookingConfirmationEmail, {
+      user,
+      booking,
     }),
   });
 }
 
 export async function sendComplaintCreatedAdminEmail({
-  complaintId,
-  userName,
-  userEmail,
-  subject,
-  message,
-}: {
-  complaintId: string;
-  userName?: string;
-  userEmail?: string;
-  subject: string;
-  message?: string;
-}) {
+  complaint,
+}: SendComplaintCreatedAdminEmailArgs): Promise<void> {
   const adminEmail = process.env.ADMIN_EMAIL;
+
   if (!adminEmail) {
     console.warn("ADMIN_EMAIL not set, skipping complaint notification.");
     return;
@@ -105,35 +80,21 @@ export async function sendComplaintCreatedAdminEmail({
 
   return sendEmail({
     to: adminEmail,
-    subject: `New Complaint: ${subject}`,
-    template: React.createElement(ComplaintCreatedAdminEmail, {
-      complaintId,
-      userName,
-      userEmail,
-      subject,
-      message,
+    subject: `New Complaint: ${complaint.id}`,
+    content: React.createElement(ComplaintCreatedAdminEmail, {
+      complaint,
     }),
   });
 }
 
-export async function sendComplaintResolvedEmail({
-  email,
-  userFirstname,
-  complaintId,
-  subject,
-}: {
-  email: string;
-  userFirstname?: string;
-  complaintId: string;
-  subject: string;
-}) {
+export async function sendComplaintStatusUpdateEmail({
+  complaint,
+}: SendComplaintStatusUpdateEmailArgs): Promise<void> {
   return sendEmail({
-    to: email,
-    subject: "Your complaint has been resolved",
-    template: React.createElement(ComplaintResolvedEmail, {
-      userFirstname,
-      complaintId,
-      subject,
+    to: complaint.email,
+    subject: `Complaint Status Updated - ${complaint.id}`,
+    content: React.createElement(ComplaintStatusUpdateEmail, {
+      complaint,
     }),
   });
 }

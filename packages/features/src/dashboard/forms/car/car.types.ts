@@ -1,4 +1,4 @@
-import { CarResponseDto, SeoResponseDto } from "@icat/contracts";
+import { CarResponseDto } from "@icat/contracts";
 
 export type CarFormProps = {
   mode: "create" | "update";
