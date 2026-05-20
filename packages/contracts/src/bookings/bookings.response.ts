@@ -1,5 +1,7 @@
 import z from "zod";
 
+import { BookingStatusList } from "@icat/database/enums";
+
 import { PaginatedResponseSchema, toDate } from "../generic";
 import { DetailedUserResponseSchema } from "../users";
 
@@ -11,6 +13,7 @@ export const BookingResponseSchema = z.object({
   dropoffAddress: z.string().min(1),
   dropoffDate: toDate(z.date()),
   totalPrice: z.number().int().nullish(),
+  status: z.enum(BookingStatusList),
   deletedAt: toDate(z.date().nullish()),
   createdAt: toDate(z.date()),
   updatedAt: toDate(z.date()),

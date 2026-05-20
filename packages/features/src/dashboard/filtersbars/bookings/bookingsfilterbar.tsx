@@ -2,11 +2,12 @@
 
 import { X } from "lucide-react";
 
+import { BookingStatusList } from "@icat/database/enums";
 import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 import { Button } from "@icat/ui/components/button";
-import { Card, CardContent,CardHeader } from "@icat/ui/components/card";
+import { Card, CardContent, CardHeader } from "@icat/ui/components/card";
 
-import { DateRangeFilter, TextFilter } from "../filters";
+import { DateRangeFilter, SelectFilter, TextFilter } from "../filters";
 
 export function BookingsFilterBar() {
   const { getSearchParams, updateSearchParams } = useSearchRouter();
@@ -14,11 +15,17 @@ export function BookingsFilterBar() {
   const idValue = getSearchParams("id")?.[0];
   const nameValue = getSearchParams("name")?.[0];
   const addressValue = getSearchParams("address")?.[0];
+  const statusValue = getSearchParams("status")?.[0];
   const startDateValue = getSearchParams("startDate")?.[0];
   const endDateValue = getSearchParams("endDate")?.[0];
 
   const hasFilters = Boolean(
-    idValue || nameValue || addressValue || startDateValue || endDateValue
+    idValue ||
+      nameValue ||
+      addressValue ||
+      statusValue ||
+      startDateValue ||
+      endDateValue
   );
 
   const handleClearFilters = () => {
@@ -26,6 +33,7 @@ export function BookingsFilterBar() {
       id: undefined,
       name: undefined,
       address: undefined,
+      status: undefined,
       startDate: undefined,
       endDate: undefined,
     });
@@ -48,13 +56,18 @@ export function BookingsFilterBar() {
         )}
       </CardHeader>
 
-      <CardContent className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+      <CardContent className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
         <TextFilter label="Booking ID" name="id" placeholder="BK..." />
         <TextFilter label="Customer Name" name="name" placeholder="Name" />
         <TextFilter
           label="Address"
           name="address"
           placeholder="Pickup/Dropoff"
+        />
+        <SelectFilter
+          label="Status"
+          name="status"
+          options={BookingStatusList}
         />
         <DateRangeFilter label="Date Range" />
       </CardContent>

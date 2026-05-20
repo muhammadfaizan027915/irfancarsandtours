@@ -1,0 +1,2 @@
+CREATE TYPE "public"."complaint_status_enum" AS ENUM('pending', 'in-progress', 'closed');--> statement-breakpoint
+ALTER TABLE "complaints" ADD COLUMN "status" "complaint_status_enum" DEFAULT 'pending' NOT NULL;

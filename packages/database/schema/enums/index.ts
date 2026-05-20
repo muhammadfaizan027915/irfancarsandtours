@@ -122,3 +122,15 @@ export const bookingStatusEnum = pgEnum(
   BookingStatusList
 );
 export type BookingStatus = (typeof BookingStatusList)[number];
+
+export const ComplaintStatusList = [
+  "pending",
+  "in-progress",
+  "closed",
+] as const;
+
+export const complaintStatusEnum = pgEnum(
+  "complaint_status_enum",
+  ComplaintStatusList
+);
+export type ComplaintStatus = (typeof ComplaintStatusList)[number];

@@ -15,9 +15,9 @@ import {
   DropdownMenuTrigger,
 } from "@icat/ui/components/dropdown-menu";
 
-import { BookingCellPorps } from "../columns.types";
+import { BookingCellProps } from "../columns.types";
 
-export function BookedByCell({ row }: BookingCellPorps) {
+export function BookedByCell({ row }: BookingCellProps) {
   const bookedBy = row.original.bookedBy;
   const nameInitials = getNameInitials(bookedBy?.name);
 

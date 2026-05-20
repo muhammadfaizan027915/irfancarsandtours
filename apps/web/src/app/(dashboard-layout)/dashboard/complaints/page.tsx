@@ -14,7 +14,7 @@ export default async function ComplaintsPage({
   const params = await searchParams;
 
   return (
-    <div className="flex flex-col gap-4 w-full p-4 md:p-8">
+    <div className="flex flex-col gap-4 w-full">
       <div>
         <h1 className="text-3xl font-semibold tracking-tight">Complaints</h1>
         <p className="text-muted-foreground">Manage all customer complaints</p>

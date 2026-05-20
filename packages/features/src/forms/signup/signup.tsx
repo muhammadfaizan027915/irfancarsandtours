@@ -19,7 +19,7 @@ export function SignUpForm() {
   const error = result?.error;
 
   return (
-    <Card className="w-full p-8 max-w-md flex flex-col items-center gap-2 shadow-none">
+    <Card className="w-full p-6 md:p-8 max-w-md flex flex-col items-center gap-2 shadow-none">
       <Badge variant={"accent"} className={"px-4 py-2 text-sm rounded-xl"}>
         Sign Up
       </Badge>

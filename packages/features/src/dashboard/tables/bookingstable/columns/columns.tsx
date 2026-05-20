@@ -9,6 +9,7 @@ import { BookingWithUserListItemResponseDto } from "@icat/contracts";
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 
 import { BookedByCell } from "./bookedbycell";
+import { StatusCell } from "./statuscell";
 
 export const bookingsColumns: ColumnDef<BookingWithUserListItemResponseDto>[] =
   [
@@ -62,6 +63,12 @@ export const bookingsColumns: ColumnDef<BookingWithUserListItemResponseDto>[] =
       header: "Booked By",
       size: 180,
       cell: BookedByCell,
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      size: 140,
+      cell: StatusCell,
     },
     {
       accessorKey: "createdAt",

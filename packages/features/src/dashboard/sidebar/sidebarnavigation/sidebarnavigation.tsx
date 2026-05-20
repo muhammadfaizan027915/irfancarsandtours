@@ -21,9 +21,9 @@ export function DashboardSidebarNavigation() {
               asChild
               size={"lg"}
               isActive={isActive}
-              className={cn("px-4 rounded-xl", isActive ? "shadow-md" : "")}
+              className={cn("p-0 rounded-xl", isActive ? "shadow-md" : "")}
             >
-              <Link href={navigation.url}>
+              <Link href={navigation.url} className="px-4 py-2">
                 <navigation.icon />
                 <span>{navigation?.title}</span>
               </Link>

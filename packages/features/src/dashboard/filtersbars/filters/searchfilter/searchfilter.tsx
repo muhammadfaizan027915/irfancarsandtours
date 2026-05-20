@@ -1,7 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 import { Button } from "@icat/ui/components/button";

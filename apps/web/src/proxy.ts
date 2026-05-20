@@ -28,8 +28,8 @@ export const proxy = auth((req) => {
   );
 
   if (isProtected && isAdminProtectedRoute && !isAdmin) {
-    const dashboardUrl = new URL(NavigationUrls.HOME, origin);
-    return NextResponse.redirect(dashboardUrl);
+    const homeUrl = new URL(NavigationUrls.HOME, origin);
+    return NextResponse.redirect(homeUrl);
   }
 
   return NextResponse.next();

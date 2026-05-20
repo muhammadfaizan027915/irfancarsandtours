@@ -60,7 +60,10 @@ export const userBookedCarsColumns: ColumnDef<BookedCarWithCarResponseDto>[] = [
   {
     accessorKey: "createdAt",
     header: "Booked On",
-    cell: ({ row }) =>
-      format(new Date(row.original.createdAt!), "dd MMM yyyy, hh:mm a"),
+    cell: ({ row }) => (
+      <span suppressHydrationWarning>
+        {format(new Date(row.original.createdAt!), "dd MMM yyyy, hh:mm a")}
+      </span>
+    ),
   },
 ];

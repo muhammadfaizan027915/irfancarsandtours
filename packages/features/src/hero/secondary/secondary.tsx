@@ -14,9 +14,10 @@ export function SecondaryHero({
 }: SecondaryHeroProps) {
   return (
     <section
-      className={`relative flex overflow-hidden rounded-2xl min-h-[320px] md:min-h-[400px] p-4 md:p-8 items-center justify-${FlexToTextPositionMap[position]}`}
+      className={`relative flex overflow-hidden rounded-2xl min-h-[320px] md:min-h-[400px] p-6 md:p-8 items-center justify-${FlexToTextPositionMap[position]}`}
     >
       <Image
+        loading="eager"
         src={heroImageUrl}
         alt={title || "Secondary hero background"}
         fill

@@ -7,6 +7,7 @@ import {
   db,
   DbOrTransaction,
 } from "@icat/database";
+import { ComplaintStatus } from "@icat/database/enums";
 
 export const ComplaintListSelect = {
   id: complaintsTable.id,
@@ -14,6 +15,7 @@ export const ComplaintListSelect = {
   email: complaintsTable.email,
   phone: complaintsTable.phone,
   message: complaintsTable.message,
+  status: complaintsTable.status,
   createdAt: complaintsTable.createdAt,
   updatedAt: complaintsTable.updatedAt,
 };
@@ -27,6 +29,7 @@ export class ComplaintRepository {
       name?: string;
       email?: string;
       phone?: string;
+      status?: ComplaintStatus;
       startDate?: string;
       endDate?: string;
     },
@@ -39,6 +42,7 @@ export class ComplaintRepository {
       name,
       email,
       phone,
+      status,
       startDate,
       endDate,
     } = args;
@@ -68,6 +72,10 @@ export class ComplaintRepository {
 
     if (phone) {
       conditions.push(ilike(complaintsTable.phone, `%${phone}%`));
+    }
+
+    if (status) {
+      conditions.push(eq(complaintsTable.status, status));
     }
 
     if (startDate) {
@@ -107,6 +115,16 @@ export class ComplaintRepository {
     };
   }
 
+  async findById(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<ComplaintSelect | null> {
+    const complaint = await tx.query.complaintsTable.findFirst({
+      where: eq(complaintsTable.id, id),
+    });
+    return complaint ?? null;
+  }
+
   async create(
     data: ComplaintInsert,
     tx: DbOrTransaction = db,
@@ -118,13 +136,17 @@ export class ComplaintRepository {
     return complaint;
   }
 
-  async findById(
+  async update(
     id: string,
+    data: Partial<ComplaintInsert>,
     tx: DbOrTransaction = db,
   ): Promise<ComplaintSelect | null> {
-    const complaint = await tx.query.complaintsTable.findFirst({
-      where: eq(complaintsTable.id, id),
-    });
+    const [complaint] = await tx
+      .update(complaintsTable)
+      .set(data)
+      .where(eq(complaintsTable.id, id))
+      .returning();
+
     return complaint ?? null;
   }
 }

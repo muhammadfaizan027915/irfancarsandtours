@@ -8,6 +8,11 @@ export async function getSessionUser() {
   return session?.user as UserResponseDto;
 }
 
+export async function isUserAdmin() {
+  const user = await getSessionUser();
+  return user?.role === "admin";
+}
+
 export async function requireAuth() {
   const user = await getSessionUser();
 

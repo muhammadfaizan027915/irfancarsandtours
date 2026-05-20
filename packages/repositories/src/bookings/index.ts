@@ -8,6 +8,7 @@ import {
   DbOrTransaction,
   usersTable,
 } from "@icat/database";
+import { BookingStatus } from "@icat/database/enums";
 
 import { UserItemSelect } from "../users";
 
@@ -18,6 +19,7 @@ export const BookingItemSelect = {
   dropoffDate: bookingsTable.dropoffDate,
   dropoffAddress: bookingsTable.dropoffAddress,
   totalPrice: bookingsTable.totalPrice,
+  status: bookingsTable.status,
   userId: bookingsTable.userId,
   createdAt: bookingsTable.createdAt,
   updatedAt: bookingsTable.updatedAt,
@@ -37,6 +39,7 @@ export class BookingRepository {
       id?: string;
       name?: string;
       address?: string;
+      status?: BookingStatus;
       startDate?: string;
       endDate?: string;
     },
@@ -49,6 +52,7 @@ export class BookingRepository {
       id,
       name,
       address,
+      status,
       startDate,
       endDate,
     } = args || {};
@@ -75,6 +79,10 @@ export class BookingRepository {
           `%${address}%`,
         )})`,
       );
+    }
+
+    if (status) {
+      conditions.push(eq(bookingsTable.status, status));
     }
 
     if (startDate) {
@@ -124,6 +132,7 @@ export class BookingRepository {
       id?: string;
       name?: string;
       address?: string;
+      status?: BookingStatus;
       startDate?: string;
       endDate?: string;
     },
@@ -136,6 +145,7 @@ export class BookingRepository {
       id,
       name,
       address,
+      status,
       startDate,
       endDate,
     } = args || {};
@@ -162,6 +172,10 @@ export class BookingRepository {
           `%${address}%`,
         )})`,
       );
+    }
+
+    if (status) {
+      conditions.push(eq(bookingsTable.status, status));
     }
 
     if (startDate) {
