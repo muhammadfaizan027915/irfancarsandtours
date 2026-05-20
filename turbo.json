@@ -9,7 +9,16 @@
     "GCS_CLIENT_EMAIL",
     "GCS_PRIVATE_KEY",
     "GCS_BUCKET_NAME",
-    "NEXTAUTH_SECRET"
+    "NEXTAUTH_SECRET",
+    "SMTP_HOST",
+    "SMTP_PORT",
+    "SMTP_USER",
+    "SMTP_PASS",
+    "SMTP_SECURE",
+    "MAIL_FROM_NAME",
+    "MAIL_FROM_ADDRESS",
+    "ADMIN_EMAIL",
+    "APP_URL"
   ],
   "tasks": {
     "migrate": {
