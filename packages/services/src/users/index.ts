@@ -19,6 +19,7 @@ import {
   ForbiddenError,
   NotFoundError,
   ValidationError,
+  sendWelcomeEmail,
 } from "@icat/lib";
 import { UserRepository } from "@icat/repositories";
 
@@ -31,6 +32,15 @@ export class UserService {
   constructor() {
     this.userRepository = new UserRepository();
     this.authService = new AuthService();
+    
+    // One-time check to see if your .env.dev is being read by Docker
+    if (process.env.NODE_ENV === "development") {
+      console.log("--- EMAIL SYSTEM CHECK ---");
+      console.log("SMTP_HOST:", process.env.SMTP_HOST || "NOT FOUND (Using fallback)");
+      console.log("SMTP_PORT:", process.env.SMTP_PORT || "NOT FOUND (Using fallback)");
+      console.log("SMTP_USER:", process.env.SMTP_USER || "NOT FOUND (Using fallback)");
+      console.log("---------------------------");
+    }
   }
 
   async getAll(
@@ -87,7 +97,15 @@ export class UserService {
       tx,
     );
 
-    return UserResponseSchema.parse(createdUser);
+    const parsedUser = UserResponseSchema.parse(createdUser);
+
+    // Fire and forget welcome email
+    sendWelcomeEmail({
+      email: parsedUser.email,
+      name: parsedUser.name,
+    }).catch((err) => console.error("Failed to send welcome email:", err));
+
+    return parsedUser;
   }
 
   async validateUserCredentials(

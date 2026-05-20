@@ -26,5 +26,17 @@
   ],
   "license": "MIT",
   "author": "Muhammad Faizan",
-  "packageManager": "npm@11.14.1"
+  "packageManager": "npm@11.14.1",
+  "dependencies": {
+    "@react-email/components": "^1.0.12",
+    "@react-email/render": "^2.0.8",
+    "nodemailer": "^7.0.13",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^8.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3"
+  }
 }

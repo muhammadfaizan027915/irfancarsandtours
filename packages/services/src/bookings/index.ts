@@ -13,6 +13,7 @@ import {
   UpdateBookingRequestBodyDto,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
+import { sendBookingConfirmationEmail } from "@icat/lib";
 import { BookingRepository } from "@icat/repositories";
 import { BookedCarService, CarService, UserService } from "@icat/services";
 
@@ -129,7 +130,21 @@ export class BookingService {
         transaction,
       );
 
-      return BookingResponseSchema.parse(booking);
+      const parsedBooking = BookingResponseSchema.parse(booking);
+
+      // Fire and forget booking confirmation email
+      sendBookingConfirmationEmail({
+        email: data.email,
+        userFirstname: data.name,
+        bookingId: parsedBooking.id,
+        totalPrice: parsedBooking.totalPrice,
+        pickupDate: parsedBooking.pickupDate.toLocaleDateString(),
+        dropoffDate: parsedBooking.dropoffDate.toLocaleDateString(),
+      }).catch((err) =>
+        console.error("Failed to send booking confirmation email:", err),
+      );
+
+      return parsedBooking;
     };
 
     return tx === db
