@@ -28,6 +28,13 @@ services:
       - .:/app
       - /app/node_modules
       - /app/apps/web/node_modules
+      - /app/packages/lib/node_modules
+      - /app/packages/contracts/node_modules
+      - /app/packages/database/node_modules
+      - /app/packages/features/node_modules
+      - /app/packages/repositories/node_modules
+      - /app/packages/services/node_modules
+      - /app/packages/ui/node_modules
     environment:
       WATCHPACK_POLLING: "true"
       NODE_ENV: development

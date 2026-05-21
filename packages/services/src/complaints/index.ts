@@ -1,3 +1,7 @@
+import "server-only";
+
+import { after } from "next/server";
+
 import {
   ComplaintResponseDto,
   ComplaintResponseSchema,
@@ -6,7 +10,10 @@ import {
   PaginatedComplaintResponseSchema,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
-import { sendComplaintCreatedAdminEmail } from "@icat/lib";
+import {
+  sendComplaintCreatedAdminEmail,
+  sendComplaintStatusUpdateEmail,
+} from "@icat/lib/emails";
 import { ComplaintRepository } from "@icat/repositories";
 
 export class ComplaintService {
@@ -18,7 +25,7 @@ export class ComplaintService {
 
   async getAll(
     args: GetComplaintsBodyDto,
-    tx: DbOrTransaction = db
+    tx: DbOrTransaction = db,
   ): Promise<PaginatedComplaintResponseDto> {
     const result = await this.complaintRepository.findAll(args, tx);
     return PaginatedComplaintResponseSchema.parse(result);
@@ -26,7 +33,7 @@ export class ComplaintService {
 
   async getComplaintById(
     id: string,
-    tx: DbOrTransaction = db
+    tx: DbOrTransaction = db,
   ): Promise<ComplaintResponseDto | null> {
     const complaint = await this.complaintRepository.findById(id, tx);
     return complaint ? ComplaintResponseSchema.parse(complaint) : null;
@@ -37,20 +44,15 @@ export class ComplaintService {
       ComplaintResponseDto,
       "id" | "createdAt" | "updatedAt" | "status"
     >,
-    tx: DbOrTransaction = db
+    tx: DbOrTransaction = db,
   ): Promise<ComplaintResponseDto> {
     const complaint = await this.complaintRepository.create(data, tx);
     const parsedComplaint = ComplaintResponseSchema.parse(complaint);
 
-    // Fire and forget admin notification email
-    sendComplaintCreatedAdminEmail({
-      complaintId: parsedComplaint.id,
-      userName: parsedComplaint.name,
-      userEmail: parsedComplaint.email,
-      subject: "New Complaint Received",
-      message: parsedComplaint.message,
-    }).catch((err) =>
-      console.error("Failed to send complaint admin notification email:", err)
+    after(
+      sendComplaintCreatedAdminEmail({
+        complaint: parsedComplaint,
+      }),
     );
 
     return parsedComplaint;
@@ -59,9 +61,22 @@ export class ComplaintService {
   async updateComplaint(
     id: string,
     data: Partial<Omit<ComplaintResponseDto, "id" | "createdAt" | "updatedAt">>,
-    tx: DbOrTransaction = db
+    tx: DbOrTransaction = db,
   ): Promise<ComplaintResponseDto | null> {
     const complaint = await this.complaintRepository.update(id, data, tx);
-    return complaint ? ComplaintResponseSchema.parse(complaint) : null;
+
+    if (!complaint) return null;
+
+    const parsedComplaint = ComplaintResponseSchema.parse(complaint);
+
+    if (data.status) {
+      after(
+        sendComplaintStatusUpdateEmail({
+          complaint: parsedComplaint,
+        }),
+      );
+    }
+
+    return parsedComplaint;
   }
 }

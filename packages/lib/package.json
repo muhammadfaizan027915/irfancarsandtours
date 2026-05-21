@@ -14,6 +14,31 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts",
+      "default": "./dist/utils/index.js"
+    },
+    "./hooks": {
+      "import": "./dist/hooks/index.js",
+      "types": "./dist/hooks/index.d.ts",
+      "default": "./dist/hooks/index.js"
+    },
+    "./errors": {
+      "import": "./dist/errors/index.js",
+      "types": "./dist/errors/index.d.ts",
+      "default": "./dist/errors/index.js"
+    },
+    "./auth": {
+      "import": "./dist/auth/index.js",
+      "types": "./dist/auth/index.d.ts",
+      "default": "./dist/auth/index.js"
+    },
+    "./handlers": {
+      "import": "./dist/handlers/index.js",
+      "types": "./dist/handlers/index.d.ts",
+      "default": "./dist/handlers/index.js"
     }
   },
   "keywords": [
@@ -28,11 +53,10 @@
   "author": "Muhammad Faizan",
   "packageManager": "npm@11.14.1",
   "dependencies": {
-    "@react-email/components": "^1.0.12",
-    "@react-email/render": "^2.0.8",
     "nodemailer": "^7.0.13",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "react-email": "^6.1.5"
   },
   "devDependencies": {
     "@types/nodemailer": "^8.0.0",

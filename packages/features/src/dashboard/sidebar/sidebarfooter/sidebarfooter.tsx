@@ -2,7 +2,7 @@ import { LogOut,MoreHorizontal, UserRound } from "lucide-react";
 import Link from "next/link";
 
 import { NavigationUrls } from "@icat/features/header/header.constants";
-import { getNameInitials } from "@icat/lib";
+import { getNameInitials } from "@icat/lib/utils";
 import { getSessionUser } from "@icat/lib/auth";
 import {
   Avatar,

@@ -1,6 +1,6 @@
 "use server";
 
-import { handleServerActionWithError } from "@icat/lib";
+import { handleServerActionWithError } from "@icat/lib/handlers";
 import { gcsClient } from "@icat/lib/utils/gcs-client";
 import { requireAdmin, requireAuth } from "@icat/lib/auth";
 

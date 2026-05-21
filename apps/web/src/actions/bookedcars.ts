@@ -1,7 +1,7 @@
 "use server";
 
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
-import { handleServerActionWithError } from "@icat/lib";
+import { handleServerActionWithError } from "@icat/lib/handlers";
 import { BookedCarService } from "@icat/services";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@icat/lib/auth";

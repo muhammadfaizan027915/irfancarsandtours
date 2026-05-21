@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { UserTabs } from "@icat/features";
-import { requireAuth } from "@icat/lib";
+import { requireAuth } from "@icat/lib/auth";
 
 type UserLayoutProps = {
   children: ReactNode;

@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Body,
   Button,
@@ -7,97 +8,56 @@ import {
   Html,
   Preview,
   Section,
+  Tailwind,
   Text,
-} from "@react-email/components";
-import * as React from "react";
+} from "react-email";
 
-interface ForgotPasswordEmailProps {
-  userFirstname?: string;
-  resetPasswordLink?: string;
-}
+import { SendForgotPasswordEmailArgs } from "../sender.types";
+
+type ForgotPasswordEmailProps = SendForgotPasswordEmailArgs;
 
 export const ForgotPasswordEmail = ({
-  userFirstname,
-  resetPasswordLink,
+  user,
+  resetLink,
 }: ForgotPasswordEmailProps) => {
   return (
     <Html>
       <Head />
       <Preview>Reset your Irfan Cars & Tours password</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          <Heading style={h1}>Reset your password</Heading>
-          <Text style={text}>Hi {userFirstname},</Text>
-          <Text style={text}>
-            Someone requested a password reset for your Irfan Cars & Tours account.
-            If this was you, you can set a new password here:
-          </Text>
-          <Section style={btnContainer}>
-            <Button style={button} href={resetPasswordLink}>
-              Reset password
-            </Button>
-          </Section>
-          <Text style={text}>
-            If you don't want to change your password or didn't request this, just
-            ignore and delete this message.
-          </Text>
-          <Text style={footer}>
-            © {new Date().getFullYear()} Irfan Cars & Tours. All rights reserved.
-          </Text>
-        </Container>
-      </Body>
+      <Tailwind>
+        <Body className="bg-[#f6f9fc] font-sans">
+          <Container className="bg-white mx-auto py-5 pb-12 mb-16 px-4">
+            <Heading className="text-[#333] text-2xl font-bold text-center my-8">
+              Reset your password
+            </Heading>
+            <Text className="text-[#333] text-base leading-7">
+              Hi {user.name},
+            </Text>
+            <Text className="text-[#333] text-base leading-7">
+              Someone requested a password reset for your Irfan Cars & Tours
+              account. If this was you, you can set a new password here:
+            </Text>
+            <Section className="text-center my-8">
+              <Button
+                className="bg-[#5F51E8] rounded text-white text-base font-semibold text-center block p-3 no-underline"
+                href={resetLink}
+              >
+                Reset password
+              </Button>
+            </Section>
+            <Text className="text-[#333] text-base leading-7">
+              If you don&apos;t want to change your password or didn&apos;t request this,
+              just ignore and delete this message.
+            </Text>
+            <Text className="text-[#8898aa] text-xs leading-4 text-center mt-5">
+              © {new Date().getFullYear()} Irfan Cars & Tours. All rights
+              reserved.
+            </Text>
+          </Container>
+        </Body>
+      </Tailwind>
     </Html>
   );
-};
-
-const main = {
-  backgroundColor: "#f6f9fc",
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
-};
-
-const container = {
-  backgroundColor: "#ffffff",
-  margin: "0 auto",
-  padding: "20px 0 48px",
-  marginBottom: "64px",
-};
-
-const h1 = {
-  color: "#333",
-  fontSize: "24px",
-  fontWeight: "bold",
-  textAlign: "center" as const,
-  margin: "30px 0",
-};
-
-const text = {
-  color: "#333",
-  fontSize: "16px",
-  lineHeight: "26px",
-};
-
-const btnContainer = {
-  textAlign: "center" as const,
-};
-
-const button = {
-  backgroundColor: "#5F51E8",
-  borderRadius: "3px",
-  color: "#fff",
-  fontSize: "16px",
-  textDecoration: "none",
-  textAlign: "center" as const,
-  display: "block",
-  padding: "12px",
-};
-
-const footer = {
-  color: "#8898aa",
-  fontSize: "12px",
-  lineHeight: "16px",
-  textAlign: "center" as const,
-  marginTop: "20px",
 };
 
 export default ForgotPasswordEmail;

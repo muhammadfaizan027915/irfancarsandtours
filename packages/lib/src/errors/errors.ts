@@ -3,7 +3,7 @@ import { BaseApiErrorOptions, ErrorCode } from "./errors.types";
 
 export class BaseApiError<
   TCause extends object = object,
-  TArgs extends any[] = any[]
+  TArgs extends unknown[] = unknown[]
 > extends Error {
   status: number;
   code: ErrorCode;
@@ -24,7 +24,7 @@ export class BaseApiError<
     Object.setPrototypeOf(this, new.target.prototype);
   }
 
-  private static resolveMessage<TArgs extends any[]>(
+  private static resolveMessage<TArgs extends unknown[]>(
     code: ErrorCode,
     args?: TArgs
   ): string {

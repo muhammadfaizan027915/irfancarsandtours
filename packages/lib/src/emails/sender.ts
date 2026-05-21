@@ -1,25 +1,15 @@
 import nodemailer from "nodemailer";
-import { render } from "@react-email/render";
-import { ReactElement } from "react";
+import { render } from "react-email";
 
-/**
- * Generic email sender using Nodemailer and React Email.
- */
+import { SendEmailArgs } from "./sender.types";
+
+
+
 export async function sendEmail({
   to,
   subject,
-  template,
-}: {
-  to: string;
-  subject: string;
-  template: ReactElement;
-}): Promise<void> {
-  console.log("DEBUG: Email Environment Variables:");
-  console.log("- SMTP_HOST:", process.env.SMTP_HOST);
-  console.log("- SMTP_PORT:", process.env.SMTP_PORT);
-  console.log("- SMTP_USER:", process.env.SMTP_USER);
-  console.log("- MAIL_FROM_ADDRESS:", process.env.MAIL_FROM_ADDRESS);
-  console.log("- APP_URL:", process.env.APP_URL);
+  content,
+}: SendEmailArgs): Promise<void> {
 
   try {
     const transporter = nodemailer.createTransport({
@@ -32,13 +22,12 @@ export async function sendEmail({
       },
     });
 
-    const html = await render(template);
-
-    const fromName = process.env.MAIL_FROM_NAME || "Irfan Cars & Tours";
-    const fromAddress = process.env.MAIL_FROM_ADDRESS || process.env.EMAIL_FROM || "noreply@irfancarsandtours.com";
+    const html = await render(content);
+    const from = process.env.MAIL_FROM_NAME || "Irfan Cars & Tours";
+    const email = process.env.MAIL_FROM_ADDRESS || process.env.EMAIL_FROM || "noreply@irfancarsandtours.com";
 
     const info = await transporter.sendMail({
-      from: `"${fromName}" <${fromAddress}>`,
+      from: `"${from}" <${email}>`,
       to,
       subject,
       html,
@@ -47,6 +36,5 @@ export async function sendEmail({
     console.log("Email sent: %s", info.messageId);
   } catch (error) {
     console.error("Error sending email:", error);
-    // We don't throw here to avoid breaking the main flow (Fire and Forget)
   }
 }

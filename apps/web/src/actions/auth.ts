@@ -1,12 +1,17 @@
 "use server";
 
-import { handlerFormActionWithError, signIn, signOut } from "@icat/lib";
-import { UserService } from "@icat/services";
+import { signIn, signOut } from "@icat/lib/auth";
+import { handlerFormActionWithError } from "@icat/lib/handlers";
+import { UserService, AuthService } from "@icat/services";
 import {
   SignInBodySchema,
   CreateUserBodySchema,
   CreateUserBodyDto,
   SignInBodyDto,
+  ForgotPasswordBodySchema,
+  ForgotPasswordBodyDto,
+  ResetPasswordBodySchema,
+  ResetPasswordBodyDto,
 } from "@icat/contracts";
 import { NavigationUrls } from "@icat/features/header/header.constants";
 import { redirect, RedirectType } from "next/navigation";
@@ -36,3 +41,20 @@ export const signUpUser = handlerFormActionWithError({
 export const lougOutUser = async () => {
   await signOut();
 };
+
+export const forgotPassword = handlerFormActionWithError({
+  schema: ForgotPasswordBodySchema,
+  action: async (data: ForgotPasswordBodyDto) => {
+    const authService = new AuthService();
+    await authService.forgotPassword(data);
+  },
+});
+
+export const resetPassword = handlerFormActionWithError({
+  schema: ResetPasswordBodySchema,
+  action: async (data: ResetPasswordBodyDto) => {
+    const authService = new AuthService();
+    await authService.resetPassword(data);
+    redirect(NavigationUrls.SIGNIN, RedirectType.push);
+  },
+});

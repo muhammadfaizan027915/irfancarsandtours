@@ -13,7 +13,7 @@ export type ErrorCodeType = keyof typeof ErrorMessages;
 
 export type BaseApiErrorOptions<
   TCause extends object = object,
-  TArgs extends any[] = any[]
+  TArgs extends unknown[] = unknown[]
 > = {
   message?: string;
   cause?: TCause;

@@ -1,3 +1,3 @@
-import { authHandlers } from "@icat/lib";
+import { authHandlers } from "@icat/lib/auth";
 
 export const { GET, POST } = authHandlers;

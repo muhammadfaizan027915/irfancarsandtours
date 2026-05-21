@@ -57,7 +57,7 @@ export const complaintColumns: ColumnDef<ComplaintResponseDto>[] = [
               <ChevronDown className="h-4 w-4 text-muted-foreground" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-full max-w-150 wrap-break-word rounded-2xl shadow-lg p-4 border border-border/50">
+          <DropdownMenuContent className="w-full max-w-dvw wrap-break-word rounded-2xl shadow-lg m-4 p-4 border border-border/50">
             <div className="max-w-sm whitespace-pre-wrap">{message}</div>
           </DropdownMenuContent>
         </DropdownMenu>

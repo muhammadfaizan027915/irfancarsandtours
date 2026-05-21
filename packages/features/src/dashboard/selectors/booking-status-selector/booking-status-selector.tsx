@@ -4,6 +4,7 @@ import { useOptimistic, useRef, useTransition } from "react";
 import { toast } from "sonner";
 
 import { BookingStatus, BookingStatusList } from "@icat/database/enums";
+import { mergeObjectToFormData } from "@icat/lib/utils";
 import { SingleSelect } from "@icat/ui";
 import { updateBookingStatus } from "@icat/web/actions/bookings";
 
@@ -35,7 +36,12 @@ export function BookingStatusSelector({
   };
 
   const action = async (formData: FormData) => {
-    const result = await updateBookingStatus(null, formData);
+    const data = mergeObjectToFormData(formData, {
+      id,
+      status: optimisticStatus,
+    });
+
+    const result = await updateBookingStatus(null, data);
     if (result && !result.success) {
       toast.error(result.error?.message || "Failed to update booking status", {
         position: "top-center",
@@ -49,10 +55,7 @@ export function BookingStatusSelector({
 
   return (
     <form ref={formRef} action={action}>
-      <input type="hidden" name="id" value={id} />
-      <input type="hidden" name="status" value={optimisticStatus} />
       <SingleSelect
-        name="status"
         options={BookingStatusList}
         value={optimisticStatus}
         onChange={handleStatusChange}
