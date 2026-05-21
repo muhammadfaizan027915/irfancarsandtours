@@ -10,7 +10,7 @@ import {
 import {
   handlerFormActionWithError,
   handleServerActionWithError,
-} from "@icat/lib";
+} from "@icat/lib/handlers";
 import { CarService } from "@icat/services";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@icat/lib/auth";

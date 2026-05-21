@@ -8,7 +8,7 @@ import {
 } from "@icat/contracts";
 import { NavigationUrls } from "@icat/features/header/header.constants";
 import { finalizeTempFileUrl } from "@icat/lib/utils/fileupload/finalize-temp-file-url";
-import { handlerFormActionWithError } from "@icat/lib";
+import { handlerFormActionWithError } from "@icat/lib/handlers";
 import { requireAuth } from "@icat/lib/auth";
 import { UserService } from "@icat/services";
 import { revalidatePath } from "next/cache";

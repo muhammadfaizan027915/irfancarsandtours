@@ -1,3 +1,5 @@
+import "server-only";
+
 export * from "./bookedcars";
 export * from "./bookings";
 export * from "./cars";

@@ -20,7 +20,7 @@
   ],
   "license": "MIT",
   "author": "Muhammad Faizan",
-  "packageManager": "npm@11.12.1",
+  "packageManager": "npm@11.14.1",
   "workspaces": [
     "apps/*",
     "packages/*"

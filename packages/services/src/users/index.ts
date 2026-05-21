@@ -1,3 +1,5 @@
+import "server-only";
+
 import { after } from "next/server";
 
 import {
@@ -20,9 +22,9 @@ import {
   DuplicateEmailError,
   ForbiddenError,
   NotFoundError,
-  sendWelcomeEmail,
   ValidationError,
-} from "@icat/lib";
+} from "@icat/lib/errors";
+import { sendWelcomeEmail } from "@icat/lib/emails";
 import { UserRepository } from "@icat/repositories";
 
 import { comparePassword, hashPassword } from "../auth/password.utils";

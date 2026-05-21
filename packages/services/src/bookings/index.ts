@@ -1,3 +1,5 @@
+import "server-only";
+
 import { after } from "next/server";
 
 import {
@@ -15,8 +17,8 @@ import {
   UpdateBookingRequestBodyDto,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
-import { sendBookingConfirmationEmail } from "@icat/lib";
 import { BookingRepository } from "@icat/repositories";
+import { sendBookingConfirmationEmail } from "@icat/lib/emails";
 import { BookedCarService, CarService, UserService } from "@icat/services";
 
 export class BookingService {

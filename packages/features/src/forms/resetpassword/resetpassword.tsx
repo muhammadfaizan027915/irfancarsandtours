@@ -4,6 +4,7 @@ import { ArrowRight, Lock } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useActionState, useEffect } from "react";
 
+import { mergeObjectToFormData } from "@icat/lib/utils";
 import { AlertBox } from "@icat/ui/components/alert";
 import { Badge } from "@icat/ui/components/badge";
 import { Button } from "@icat/ui/components/button";
@@ -29,6 +30,11 @@ export function ResetPasswordForm() {
     }
   }, [success]);
 
+  const handleAction = (formData: FormData) => {
+    const data = mergeObjectToFormData(formData, { token: token ?? "" });
+    action(data);
+  };
+
   return (
     <Card className="w-full p-6 md:p-8 max-w-md flex flex-col items-center gap-2 shadow-none">
       <Badge variant={"accent"} className={"px-4 py-2 text-sm rounded-xl"}>
@@ -40,7 +46,7 @@ export function ResetPasswordForm() {
         Please enter your new password below.
       </p>
 
-      <form action={action} className="flex flex-col gap-3 w-full mt-8">
+      <form action={handleAction} className="flex flex-col gap-3 w-full mt-8">
         {!success && error?.message && (
           <AlertBox
             key={error.status}
@@ -48,8 +54,6 @@ export function ResetPasswordForm() {
             description={error?.message}
           />
         )}
-
-        <input type="hidden" name="token" value={token ?? ""} />
 
         <Input
           type="password"
@@ -81,3 +85,4 @@ export function ResetPasswordForm() {
     </Card>
   );
 }
+

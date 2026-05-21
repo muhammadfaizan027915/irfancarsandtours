@@ -3,6 +3,7 @@
 import { ChevronDown, Globe } from "lucide-react";
 import { useActionState, useEffect } from "react";
 
+import { mergeObjectToFormData } from "@icat/lib/utils";
 import { useDisclosure } from "@icat/lib/hooks";
 import {
   AlertBox,
@@ -21,7 +22,6 @@ import { upsertCarSeo } from "@icat/web/actions";
 
 import { SeoFormProps } from "./seo.types";
 
-
 export function SeoForm({ carId, seo }: SeoFormProps) {
   const [isOpenSeo, , , onToggleSeo] = useDisclosure(false);
   const [result, action, pending] = useActionState(upsertCarSeo, null);
@@ -36,6 +36,11 @@ export function SeoForm({ carId, seo }: SeoFormProps) {
       });
     }
   }, [success]);
+
+  const handleAction = (formData: FormData) => {
+    const data = mergeObjectToFormData(formData, { carId });
+    action(data);
+  };
 
   return (
     <div className="space-y-6 pt-4 border-t">
@@ -71,7 +76,7 @@ export function SeoForm({ carId, seo }: SeoFormProps) {
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent className="pt-6">
-          <form action={action} className="space-y-6">
+          <form action={handleAction} className="space-y-6">
             {!success && error?.message && (
               <AlertBox
                 key={error.status}
@@ -79,8 +84,6 @@ export function SeoForm({ carId, seo }: SeoFormProps) {
                 description={error?.message}
               />
             )}
-
-            <input type="hidden" name="carId" value={carId} />
 
             <div className="space-y-2">
               <Label htmlFor="title">SEO Title</Label>
@@ -151,7 +154,12 @@ export function SeoForm({ carId, seo }: SeoFormProps) {
               />
             </div>
 
-            <Button type="submit" size="lg" className="w-full" disabled={pending}>
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full"
+              disabled={pending}
+            >
               {pending ? "Saving..." : "Save SEO Settings"}
             </Button>
           </form>

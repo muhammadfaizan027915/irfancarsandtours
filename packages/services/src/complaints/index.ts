@@ -1,3 +1,5 @@
+import "server-only";
+
 import { after } from "next/server";
 
 import {
@@ -11,7 +13,7 @@ import { db, DbOrTransaction } from "@icat/database";
 import {
   sendComplaintCreatedAdminEmail,
   sendComplaintStatusUpdateEmail,
-} from "@icat/lib";
+} from "@icat/lib/emails";
 import { ComplaintRepository } from "@icat/repositories";
 
 export class ComplaintService {

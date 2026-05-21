@@ -12,7 +12,7 @@ import { NavigationUrls } from "@icat/features/header/header.constants";
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import {
   handlerFormActionWithError,
-} from "@icat/lib";
+} from "@icat/lib/handlers";
 import { carCartKey } from "@icat/web/store";
 import { BookingService } from "@icat/services";
 import { redirect } from "next/navigation";

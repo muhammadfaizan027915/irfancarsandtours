@@ -1,13 +1,15 @@
+import "server-only";
+
 import { after } from "next/server";
 
 import { ForgotPasswordBodyDto, ResetPasswordBodyDto } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
 import { NavigationUrls } from "@icat/features/header/header.constants";
+import { ValidationError } from "@icat/lib/errors";
 import {
   sendForgotPasswordEmail,
   sendPasswordResetSuccessEmail,
-  ValidationError,
-} from "@icat/lib";
+} from "@icat/lib/emails";
 
 import { UserService } from "../users";
 import { VerificationTokenService } from "../verificationtokens";
@@ -98,3 +100,4 @@ export class AuthService {
     );
   }
 }
+

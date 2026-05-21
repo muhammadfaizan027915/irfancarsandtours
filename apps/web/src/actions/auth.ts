@@ -1,6 +1,7 @@
 "use server";
 
-import { handlerFormActionWithError, signIn, signOut } from "@icat/lib";
+import { signIn, signOut } from "@icat/lib/auth";
+import { handlerFormActionWithError } from "@icat/lib/handlers";
 import { UserService, AuthService } from "@icat/services";
 import {
   SignInBodySchema,

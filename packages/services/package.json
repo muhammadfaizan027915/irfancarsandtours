@@ -27,10 +27,11 @@
   "author": "Muhammad Faizan",
   "packageManager": "npm@11.14.1",
   "dependencies": {
-    "bcryptjs": "^3.0.3",
     "@auth/drizzle-adapter": "^1.11.2",
-    "@icat/repositories": "*",
     "@icat/contracts": "*",
-    "@icat/lib": "*"
+    "@icat/lib": "*",
+    "@icat/repositories": "*",
+    "bcryptjs": "^3.0.3",
+    "server-only": "^0.0.1"
   }
 }
