@@ -16,3 +16,10 @@ export async function getCustomers(arg?: GetUsersBodyDto) {
   const result = await userService.getAll(args);
   return result;
 }
+
+export async function getCustomerById(id: string) {
+  await requireAdmin();
+  const userService = new UserService();
+  const user = await userService.getDetailedUserById(id);
+  return user;
+}

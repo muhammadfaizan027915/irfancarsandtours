@@ -5,25 +5,66 @@ import {
   UpdateUserBodyDto,
   ChangePasswordBodySchema,
   ChangePasswordBodyDto,
+  CreateUserBodySchema,
+  CreateUserBodyDto,
 } from "@icat/contracts";
-import { NavigationUrls } from "@icat/features/header/header.constants";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { finalizeTempFileUrl } from "@icat/lib/utils/fileupload/finalize-temp-file-url";
 import { handlerFormActionWithError } from "@icat/lib/handlers";
-import { requireAuth } from "@icat/lib/auth";
+import { requireAdmin, requireAuth } from "@icat/lib/auth";
 import { UserService } from "@icat/services";
 import { revalidatePath } from "next/cache";
+
+export const createUser = handlerFormActionWithError({
+  schema: CreateUserBodySchema,
+  action: async (data: CreateUserBodyDto) => {
+    await requireAdmin();
+
+    const userService = new UserService();
+    const user = await userService.createUser(data);
+
+    revalidatePath("/dashboard/customers");
+    return user;
+  },
+});
 
 export const updateUser = handlerFormActionWithError({
   schema: UpdateUserBodySchema,
   action: async (data: UpdateUserBodyDto) => {
     const sessionUser = await requireAuth();
 
-    data.image = await finalizeTempFileUrl(data?.image ?? "", "users");
+    if (data?.image) {
+      data.image = await finalizeTempFileUrl(data.image, "users");
+    }
 
     const userService = new UserService();
     const user = await userService.updateUser(sessionUser?.id as string, data);
 
     revalidatePath(NavigationUrls.PROFILE);
+    return user;
+  },
+});
+
+export const updateUserById = handlerFormActionWithError({
+  schema: UpdateUserBodySchema,
+  action: async (data: UpdateUserBodyDto) => {
+    await requireAdmin();
+
+    const { id, ...updates } = data;
+
+    if (!id) {
+      throw new Error("User ID is required for update.");
+    }
+
+    if (updates?.image) {
+      updates.image = await finalizeTempFileUrl(updates.image, "users");
+    }
+
+    const userService = new UserService();
+    const user = await userService.updateUser(id, updates);
+
+    revalidatePath("/dashboard/customers");
+    revalidatePath(`/dashboard/customers/${id}`);
     return user;
   },
 });

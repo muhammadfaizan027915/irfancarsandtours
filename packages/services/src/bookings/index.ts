@@ -17,8 +17,8 @@ import {
   UpdateBookingRequestBodyDto,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
-import { BookingRepository } from "@icat/repositories";
 import { sendBookingConfirmationEmail } from "@icat/lib/emails";
+import { BookingRepository } from "@icat/repositories";
 import { BookedCarService, CarService, UserService } from "@icat/services";
 
 export class BookingService {

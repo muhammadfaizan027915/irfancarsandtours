@@ -1,5 +1,5 @@
-import { SecondaryHero } from "@icat/features/hero/secondary";
-import { HowItWork } from "@icat/features/howitwork";
+import { SecondaryHero } from "@icat/features/common/hero/secondary";
+import { HowItWork } from "@icat/features/common/howitwork";
 
 export default function AboutUsPage() {
   return (

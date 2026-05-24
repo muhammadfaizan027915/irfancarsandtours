@@ -2,7 +2,9 @@ import { GetUsersBodyDto } from "@icat/contracts";
 import { Suspense } from "react";
 import { DashboardCustomersContent } from "@icat/features/contents/dashboard/customers";
 import { CustomersFilterBar } from "@icat/features/dashboard/filtersbars/customers";
-import { DataTableSkeleton } from "@icat/ui";
+import { Button, DataTableSkeleton } from "@icat/ui";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 
 type CustomersPageProps = {
   searchParams: Promise<GetUsersBodyDto>;
@@ -15,9 +17,17 @@ export default async function CustomersPage({
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Customers</h1>
-        <p className="text-muted-foreground">Manage all registered customers</p>
+      <div className="flex flex-row justify-between">
+        <div>
+          <h1 className="text-3xl font-semibold tracking-tight">Customers</h1>
+          <p className="text-muted-foreground">Manage all registered customers</p>
+        </div>
+        <Link href="/dashboard/customers/create">
+          <Button size={"lg"}>
+            <Plus className="w-4 h-4 mr-2" />
+            Create Customer
+          </Button>
+        </Link>
       </div>
 
       <Suspense fallback={null}>

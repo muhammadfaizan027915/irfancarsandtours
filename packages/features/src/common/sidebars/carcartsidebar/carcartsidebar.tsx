@@ -1,0 +1,80 @@
+"use client";
+
+import { LayoutGrid } from "lucide-react";
+import Link from "next/link";
+
+import { CarCartCard } from "@icat/features/carcartlist/carcartcard";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
+import { Button } from "@icat/ui/components/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@icat/ui/components/sheet";
+import { toast } from "@icat/ui/components/sonner";
+import { useCarCart } from "@icat/web/store";
+
+import { EmptyCarCartMessage } from "../../emptycarcartmessage";
+
+export function CarCartSidebar() {
+  const { carsList, clearCart } = useCarCart();
+
+  const handleClearCart = () => {
+    if (carsList?.length) {
+      clearCart();
+
+      toast.success("Cart cleared successfully!", {
+        position: "top-center",
+      });
+    }
+  };
+
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button size={"lg"} className="shadow-none">
+          <LayoutGrid />
+        </Button>
+      </SheetTrigger>
+      <SheetClose />
+      <SheetContent>
+        <SheetHeader className="border-b">
+          <SheetTitle className="text-xl">Your Cart</SheetTitle>
+        </SheetHeader>
+
+        <div className="flex-1 overflow-auto p-2 space-y-4">
+          {carsList?.length ? (
+            carsList?.map((car) => <CarCartCard car={car} key={car?.id} />)
+          ) : (
+            <EmptyCarCartMessage />
+          )}
+        </div>
+
+        <SheetFooter className="flex flex-row gap-2 border-t w-full">
+          <Button
+            className="w-fit shadow-none"
+            variant="outline"
+            onClick={handleClearCart}
+          >
+            Clear
+          </Button>
+          <Button
+            className="flex-1 shadow-none"
+            asChild={!!carsList?.length}
+            disabled={!carsList?.length}
+          >
+            {carsList?.length ? (
+              <Link href={NavigationUrls.CHECKOUT}>Checkout</Link>
+            ) : (
+              <>Checkout</>
+            )}
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+}

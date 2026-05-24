@@ -1,6 +1,6 @@
+import { UserAvatar } from "@icat/features/common/useravatar";
 import { ChangePasswordForm } from "@icat/features/forms/changepassword";
 import { ProfileForm } from "@icat/features/forms/profile";
-import { UserAvatar } from "@icat/features/useravatar";
 import { getUserProfile } from "@icat/web/data/users";
 
 export async function ProfileContent() {

@@ -13,7 +13,7 @@ import {
   ResetPasswordBodySchema,
   ResetPasswordBodyDto,
 } from "@icat/contracts";
-import { NavigationUrls } from "@icat/features/header/header.constants";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { redirect, RedirectType } from "next/navigation";
 
 export const logInUser = handlerFormActionWithError({

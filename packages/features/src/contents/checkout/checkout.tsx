@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { CarCartList } from "@icat/features/carcartlist";
 import { CarBooking } from "@icat/features/cardetail/booking";
-import { NavigationUrls } from "@icat/features/header/header.constants";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { getCartCars } from "@icat/web/data/cart";
 import { CarCartItem } from "@icat/web/store";
 

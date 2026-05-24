@@ -3,8 +3,8 @@
 import { Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
-import { NavigationUrls } from "@icat/features/header/header.constants";
 import { Button } from "@icat/ui/components/button";
 import {
   DropdownMenu,

@@ -4,7 +4,7 @@ import { ArrowRight, Lock,Mail } from "lucide-react";
 import Link from "next/link";
 import { useActionState } from "react";
 
-import { NavigationUrls } from "@icat/features/header/header.constants";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { AlertBox } from "@icat/ui/components/alert";
 import { Badge } from "@icat/ui/components/badge";
 import { Button } from "@icat/ui/components/button";

@@ -1,5 +1,5 @@
-import { SecondaryHero } from "@icat/features/hero/secondary";
-import { ContactDetails } from "@icat/features/contactdetails";
+import { SecondaryHero } from "@icat/features/common/hero/secondary";
+import { ContactDetails } from "@icat/features/common/contactdetails";
 
 import dynamic from "next/dynamic";
 
@@ -12,7 +12,7 @@ const ComplaintForm = dynamic(
   }
 );
 
-const Map = dynamic(() => import("@icat/features/map").then((m) => m.Map), {
+const Map = dynamic(() => import("@icat/features/common/map").then((m) => m.Map), {
   loading: () => <Skeleton className="h-[400px] w-full rounded-xl" />,
 });
 

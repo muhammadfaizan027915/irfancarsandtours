@@ -37,6 +37,14 @@ export const customersColumns: ColumnDef<DetailedUserResponseDto>[] = [
   {
     accessorKey: "name",
     header: "Name",
+    cell: ({ row }) => (
+      <Link
+        href={`/dashboard/customers/${row.original.id}`}
+        className="font-medium hover:underline text-primary"
+      >
+        {row.original.name}
+      </Link>
+    ),
   },
   {
     accessorKey: "email",

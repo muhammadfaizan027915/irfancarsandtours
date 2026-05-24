@@ -3,8 +3,8 @@
 import { ChevronDown, Globe } from "lucide-react";
 import { useActionState, useEffect } from "react";
 
-import { mergeObjectToFormData } from "@icat/lib/utils";
 import { useDisclosure } from "@icat/lib/hooks";
+import { mergeObjectToFormData } from "@icat/lib/utils";
 import {
   AlertBox,
   Autocomplete,

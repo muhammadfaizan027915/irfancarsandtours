@@ -6,7 +6,7 @@ import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 import { BookingListItemResponseDto } from "@icat/contracts";
-import { NavigationUrls } from "@icat/features/header/header.constants";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 
 export const userBookingsColumns: ColumnDef<BookingListItemResponseDto>[] = [
   {

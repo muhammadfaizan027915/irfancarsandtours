@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { NavigationUrls } from "@icat/features/header/header.constants";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { UserResponseDto } from "@icat/contracts";
 import { auth } from "@icat/lib/auth/auth";
 

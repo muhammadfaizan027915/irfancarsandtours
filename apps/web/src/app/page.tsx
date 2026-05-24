@@ -1,12 +1,12 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
-import { Searchbar } from "@icat/features/searchbar";
+import { Searchbar } from "@icat/features/common/searchbar";
 import { BrandSlider } from "@icat/features/sliders/brands";
 import { CarTypes } from "@icat/features/sliders/cartypes";
-import { FloatingWhatsApp } from "@icat/features/floatingwhatsapp";
-import { PrimrayHero } from "@icat/features/hero/primary";
-import { HowItWork } from "@icat/features/howitwork";
+import { FloatingWhatsApp } from "@icat/features/common/floatingwhatsapp";
+import { PrimrayHero } from "@icat/features/common/hero/primary";
+import { HowItWork } from "@icat/features/common/howitwork";
 import {
   HomeFeaturedCars,
   HomeFeaturedCarsSkeleton,
@@ -17,7 +17,7 @@ import {
 
 import { Skeleton } from "@icat/ui/components/skeleton";
 
-const Footer = dynamic(() => import("@icat/features/footer").then((m) => m.Footer), {
+const Footer = dynamic(() => import("@icat/features/common/footer").then((m) => m.Footer), {
   loading: () => <Skeleton className="h-40 w-full" />,
 });
 

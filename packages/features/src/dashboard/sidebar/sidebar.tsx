@@ -1,4 +1,4 @@
-import { Logo } from "@icat/features/header/logo";
+import { Logo } from "@icat/features/common/header/logo";
 import {
   Sidebar,
   SidebarContent,
