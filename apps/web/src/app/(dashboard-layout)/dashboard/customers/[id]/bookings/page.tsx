@@ -4,6 +4,7 @@ import { BookingsTable } from "@icat/features/dashboard/tables/bookingstable";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 
 type CustomerBookingsPageProps = {
   params: Promise<{ id: string }>;
@@ -41,7 +42,7 @@ export default async function CustomerBookingsPage({
   return (
     <div className="flex flex-col gap-6 w-full">
       <div className="flex flex-col gap-2">
-        <Link href={`/dashboard/customers/${id}`} className="flex items-center text-sm text-primary hover:underline gap-1">
+        <Link href={`${DashboardNavigationUrls.CUSTOMERS}/${id}`} className="flex items-center text-sm text-primary hover:underline gap-1">
           <ArrowLeft size={16} />
           Back to Profile
         </Link>

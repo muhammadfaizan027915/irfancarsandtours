@@ -5,6 +5,7 @@ import { CustomersFilterBar } from "@icat/features/dashboard/filtersbars/custome
 import { Button, DataTableSkeleton } from "@icat/ui";
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 
 type CustomersPageProps = {
   searchParams: Promise<GetUsersBodyDto>;
@@ -22,7 +23,7 @@ export default async function CustomersPage({
           <h1 className="text-3xl font-semibold tracking-tight">Customers</h1>
           <p className="text-muted-foreground">Manage all registered customers</p>
         </div>
-        <Link href="/dashboard/customers/create">
+        <Link href={DashboardNavigationUrls.CREATE_CUSTOMER}>
           <Button size={"lg"}>
             <Plus className="w-4 h-4 mr-2" />
             Create Customer

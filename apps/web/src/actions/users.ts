@@ -9,6 +9,7 @@ import {
   CreateUserBodyDto,
 } from "@icat/contracts";
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import { finalizeTempFileUrl } from "@icat/lib/utils/fileupload/finalize-temp-file-url";
 import { handlerFormActionWithError } from "@icat/lib/handlers";
 import { requireAdmin, requireAuth } from "@icat/lib/auth";
@@ -23,7 +24,7 @@ export const createUser = handlerFormActionWithError({
     const userService = new UserService();
     const user = await userService.createUser(data);
 
-    revalidatePath("/dashboard/customers");
+    revalidatePath(DashboardNavigationUrls.CUSTOMERS);
     return user;
   },
 });
@@ -63,8 +64,8 @@ export const updateUserById = handlerFormActionWithError({
     const userService = new UserService();
     const user = await userService.updateUser(id, updates);
 
-    revalidatePath("/dashboard/customers");
-    revalidatePath(`/dashboard/customers/${id}`);
+    revalidatePath(DashboardNavigationUrls.CUSTOMERS);
+    revalidatePath(`${DashboardNavigationUrls.CUSTOMERS}/${id}`);
     return user;
   },
 });

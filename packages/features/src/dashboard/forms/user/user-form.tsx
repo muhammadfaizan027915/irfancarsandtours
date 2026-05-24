@@ -14,6 +14,7 @@ import { useActionState, useEffect, useState } from "react";
 
 import { DetailedUserResponseDto } from "@icat/contracts";
 import { ProfileImageUploader } from "@icat/features/common/profileimageuploader";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import { AlertBox } from "@icat/ui/components/alert";
 import { Button } from "@icat/ui/components/button";
 import { Card, CardContent } from "@icat/ui/components/card";
@@ -47,7 +48,7 @@ export function UserForm({ user }: UserFormProps) {
         },
       );
       if (!isUpdate) {
-        router.push("/dashboard/customers");
+        router.push(DashboardNavigationUrls.CUSTOMERS);
       }
     }
   }, [success, isUpdate, router]);

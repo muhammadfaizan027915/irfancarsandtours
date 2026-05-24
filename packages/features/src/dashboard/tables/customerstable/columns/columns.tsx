@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 
 import { DetailedUserResponseDto } from "@icat/contracts";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import { getNameInitials } from "@icat/lib/utils";
 import {
   Avatar,
@@ -39,7 +40,7 @@ export const customersColumns: ColumnDef<DetailedUserResponseDto>[] = [
     header: "Name",
     cell: ({ row }) => (
       <Link
-        href={`/dashboard/customers/${row.original.id}`}
+        href={`${DashboardNavigationUrls.CUSTOMERS}/${row.original.id}`}
         className="font-medium hover:underline text-primary"
       >
         {row.original.name}

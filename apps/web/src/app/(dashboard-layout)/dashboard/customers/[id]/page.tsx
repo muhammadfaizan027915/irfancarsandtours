@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Button } from "@icat/ui/components/button";
 import Link from "next/link";
 import { History } from "lucide-react";
+import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 
 type CustomerDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -26,7 +27,7 @@ export default async function CustomerDetailPage({
           <h1 className="text-3xl font-semibold tracking-tight">Customer Profile</h1>
           <p className="text-muted-foreground">Manage profile information for {user.name}</p>
         </div>
-        <Link href={`/dashboard/customers/${id}/bookings`}>
+        <Link href={`${DashboardNavigationUrls.CUSTOMERS}/${id}/bookings`}>
           <Button variant="outline" className="font-bold shadow-none">
             <History className="w-4 h-4 mr-2" />
             Booking History
