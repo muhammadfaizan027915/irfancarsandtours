@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
-import { Footer } from "@icat/features/footer";
-import { Header } from "@icat/features/header";
-import { Topbar } from "@icat/features/topbar";
-import { FloatingWhatsApp } from "@icat/features/floatingwhatsapp";
+import { Footer } from "@icat/features/common/footer";
+import { Header } from "@icat/features/common/header";
+import { Topbar } from "@icat/features/common/topbar";
+import { FloatingWhatsApp } from "@icat/features/common/floatingwhatsapp";
 
 type SharedLayoutProps = {
   children: ReactNode;

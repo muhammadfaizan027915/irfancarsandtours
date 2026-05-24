@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { NavigationUrls } from "@icat/features/header/header.constants";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { Card } from "@icat/ui/components/card";
 
 import { BrandCardProps } from "./brandcard.types";

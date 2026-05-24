@@ -1,4 +1,4 @@
-import { NavigationUrls } from "@icat/features/header/header.constants";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { getUserBooking } from "@icat/web/data/bookings";
 import { redirect } from "next/navigation";
 

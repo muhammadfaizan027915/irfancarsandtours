@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MouseEvent } from "react";
 
-import { NavigationUrls } from "@icat/features/header/header.constants";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { Button } from "@icat/ui/components/button";
 import {
   Card,

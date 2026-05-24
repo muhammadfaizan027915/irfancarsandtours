@@ -4,12 +4,12 @@ import { after } from "next/server";
 
 import { ForgotPasswordBodyDto, ResetPasswordBodyDto } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
-import { NavigationUrls } from "@icat/features/header/header.constants";
-import { ValidationError } from "@icat/lib/errors";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import {
   sendForgotPasswordEmail,
   sendPasswordResetSuccessEmail,
 } from "@icat/lib/emails";
+import { ValidationError } from "@icat/lib/errors";
 
 import { UserService } from "../users";
 import { VerificationTokenService } from "../verificationtokens";

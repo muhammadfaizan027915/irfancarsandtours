@@ -18,13 +18,13 @@ import {
   UserResponseWithPasswordSchema,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
+import { sendWelcomeEmail } from "@icat/lib/emails";
 import {
   DuplicateEmailError,
   ForbiddenError,
   NotFoundError,
   ValidationError,
 } from "@icat/lib/errors";
-import { sendWelcomeEmail } from "@icat/lib/emails";
 import { UserRepository } from "@icat/repositories";
 
 import { comparePassword, hashPassword } from "../auth/password.utils";
@@ -145,6 +145,19 @@ export class UserService {
     return DetailedUserResponseSchema.parse(user);
   }
 
+  async getDetailedUserById(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<DetailedUserResponseDto> {
+    const user = await this.userRepository.findById(id, tx);
+
+    if (!user) {
+      throw new NotFoundError("User");
+    }
+
+    return DetailedUserResponseSchema.parse(user);
+  }
+
   async updateUser(
     id: string,
     updates: Partial<UpdateUserBodyDto> & { password?: string | null },
@@ -154,6 +167,12 @@ export class UserService {
 
     if (!existingUser) {
       throw new NotFoundError("User");
+    }
+
+    if (updates.password) {
+      updates.password = await hashPassword(updates.password);
+    } else {
+      delete updates.password;
     }
 
     const updatedUser = await this.userRepository.update(id, updates, tx);

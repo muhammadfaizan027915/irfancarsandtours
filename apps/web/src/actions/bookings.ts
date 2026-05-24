@@ -8,7 +8,7 @@ import {
   UpdateBookingStatusSchema,
   UpdateBookingStatusDto,
 } from "@icat/contracts";
-import { NavigationUrls } from "@icat/features/header/header.constants";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import {
   handlerFormActionWithError,

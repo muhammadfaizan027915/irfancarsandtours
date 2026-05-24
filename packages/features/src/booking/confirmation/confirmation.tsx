@@ -1,7 +1,7 @@
 import { CheckCircle2, MapPin } from "lucide-react";
 import Link from "next/link";
 
-import { NavigationUrls } from "@icat/features/header/header.constants";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { Button } from "@icat/ui/components/button";
 import { Card, CardContent,CardHeader } from "@icat/ui/components/card";
 

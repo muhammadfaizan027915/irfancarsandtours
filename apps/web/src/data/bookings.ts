@@ -36,6 +36,19 @@ export async function getUserBooking(bookingId: string) {
   return booking;
 }
 
+export async function getBookingsByUserId(userId: string, arg?: GetBookingsBodyDto) {
+  await requireAdmin();
+  const args = GetBookingByUserIdBodySchema.parse({
+    userId,
+    ...arg,
+  });
+
+  const bookingService = new BookingService();
+  const result = await bookingService.getAllByUserId(args);
+
+  return result;
+}
+
 export async function getBooking(bookingId: string) {
   await requireAdmin();
   const bookingService = new BookingService();

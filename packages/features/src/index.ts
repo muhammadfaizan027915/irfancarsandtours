@@ -9,19 +9,10 @@ export * from "./cars";
 export * from "./dashboard";
 export * from "./filtersbar";
 export * from "./filtersclearer";
-export * from "./footer";
 export * from "./forms";
-export * from "./header";
-export * from "./hero";
-export * from "./howitwork";
-export * from "./loginnotice";
-export * from "./map";
-export * from "./searchbar";
-export * from "./sidebars";
+export * from "./profilesignin";
 export * from "./sliders";
 export * from "./tables";
-export * from "./topbar";
-export * from "./useravatar";
 export * from "./usertabs";
 
 /* Contents */

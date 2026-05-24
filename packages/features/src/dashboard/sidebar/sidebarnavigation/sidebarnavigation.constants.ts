@@ -10,6 +10,7 @@ export const DashboardNavigationUrls = {
   CARS: "/dashboard/cars",
   REGISTER_CAR: "/dashboard/cars/new",
   CUSTOMERS: "/dashboard/customers",
+  CREATE_CUSTOMER: "/dashboard/customers/create",
   COMPLAINTS: "/dashboard/complaints",
 } as const;
 

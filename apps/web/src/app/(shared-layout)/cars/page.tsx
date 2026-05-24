@@ -1,4 +1,4 @@
-import { SecondaryHero } from "@icat/features/hero/secondary";
+import { SecondaryHero } from "@icat/features/common/hero/secondary";
 import { GetCarsBodyDto } from "@icat/contracts";
 import { Suspense } from "react";
 import { CarsContent, CarsContentSkeleton } from "@icat/features/contents/cars";
@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 import { Skeleton } from "@icat/ui/components/skeleton";
 
 const Searchbar = dynamic(
-  () => import("@icat/features/searchbar").then((m) => m.Searchbar),
+  () => import("@icat/features/common/searchbar").then((m) => m.Searchbar),
   {
     loading: () => <Skeleton className="h-20 w-full rounded-xl" />,
   }

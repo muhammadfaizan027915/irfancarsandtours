@@ -1,7 +1,7 @@
 import { GetCarsBodyDto } from "@icat/contracts";
 import { Cars } from "@icat/features/cars";
+import { FiltersSidebar } from "@icat/features/common/sidebars/filterssidebar";
 import { FiltersClearer } from "@icat/features/filtersclearer";
-import { FiltersSidebar } from "@icat/features/sidebars/filterssidebar";
 import { PaginationBar } from "@icat/ui/components/pagination";
 import { PaginationInfo } from "@icat/ui/components/pagination-info";
 import { getUserCars } from "@icat/web/data/cars";
