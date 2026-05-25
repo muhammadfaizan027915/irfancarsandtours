@@ -93,7 +93,7 @@ export class BookingService {
           activeUserId = user.id;
         }
       } else {
-        user = await this.userService.findById(userId, transaction);
+        user = await this.userService.findById(activeUserId!, transaction);
       }
 
       const carIds = cars.map((car) => car.carId);
