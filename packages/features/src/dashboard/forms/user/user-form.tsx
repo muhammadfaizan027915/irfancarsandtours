@@ -2,11 +2,8 @@
 
 import {
   ArrowRight,
-  IdCard,
   Lock,
-  Mail,
   MapPin,
-  Phone,
   UserRound,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -15,12 +12,18 @@ import { useActionState, useEffect, useState } from "react";
 import { DetailedUserResponseDto } from "@icat/contracts";
 import { ProfileImageUploader } from "@icat/features/common/profileimageuploader";
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
-import { AlertBox } from "@icat/ui/components/alert";
-import { Button } from "@icat/ui/components/button";
-import { Card, CardContent } from "@icat/ui/components/card";
-import { Input } from "@icat/ui/components/input";
-import { toast } from "@icat/ui/components/sonner";
-import { Textarea } from "@icat/ui/components/textarea";
+import {
+  AlertBox,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+  Label,
+  Textarea,
+  toast,
+} from "@icat/ui";
 import { createUser, updateUserById } from "@icat/web/actions";
 
 export type UserFormProps = {
@@ -54,106 +57,151 @@ export function UserForm({ user }: UserFormProps) {
   }, [success, isUpdate, router]);
 
   return (
-    <Card className="w-full shadow-none">
-      <CardContent>
-        <form action={action} className="flex flex-col gap-3 w-full mt-4">
-          {error?.message && (
-            <AlertBox
-              key={error.status}
-              variant="destructive"
-              description={error?.message}
-            />
-          )}
-
-          <ProfileImageUploader
-            initialImage={user?.image}
-            userName={user?.name}
-            onUploadingChange={setIsUploading}
-          />
-
-          <h1 className="font-bold text-2xl">
+    <div className="w-full space-y-6 pb-8">
+      <Card className="shadow-none">
+        <CardHeader className="border-b">
+          <CardTitle className="text-2xl font-bold">
             {isUpdate ? "Update User Profile" : "Create New User"}
-          </h1>
+          </CardTitle>
+          <p className="text-muted-foreground">
+            {isUpdate
+              ? "Update existing user information and security settings."
+              : "Register a new user account for the platform."}
+          </p>
+        </CardHeader>
+        <CardContent className="p-6 md:p-8">
+          <form action={action} className="space-y-8">
+            {!success && error?.message && (
+              <AlertBox
+                key={error.status}
+                variant="destructive"
+                description={error?.message}
+              />
+            )}
 
-          {isUpdate && <input type="hidden" name="id" value={user?.id} />}
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              type="text"
-              placeholder="Full Name"
-              startIcon={<UserRound size={18} />}
-              name={"name"}
-              defaultValue={user?.name}
-              errors={error?.cause?.name?._errors}
+            <ProfileImageUploader
+              initialImage={user?.image}
+              userName={user?.name}
+              onUploadingChange={setIsUploading}
             />
 
-            <Input
-              type="email"
-              placeholder="Email Address"
-              startIcon={<Mail size={18} />}
-              name={"email"}
-              defaultValue={user?.email}
-              disabled={isUpdate}
-              errors={error?.cause?.email?._errors}
-            />
+            {isUpdate && <input type="hidden" name="id" value={user?.id} />}
 
-            <Input
-              type="tel"
-              placeholder="Phone Number"
-              startIcon={<Phone size={18} />}
-              name={"phone"}
-              defaultValue={user?.phone ?? ""}
-              errors={error?.cause?.phone?._errors}
-            />
+            {/* Basic Information */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <UserRound className="size-5 text-primary" />
+                <h2 className="text-lg font-semibold">Basic Information</h2>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Full Name</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    placeholder="Enter full name"
+                    defaultValue={user?.name}
+                    errors={error?.cause?.name?._errors}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Email address"
+                    defaultValue={user?.email}
+                    disabled={isUpdate}
+                    errors={error?.cause?.email?._errors}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    placeholder="e.g. +92 300 0000000"
+                    defaultValue={user?.phone ?? ""}
+                    errors={error?.cause?.phone?._errors}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="cnic">National ID / CNIC</Label>
+                  <Input
+                    id="cnic"
+                    name="cnic"
+                    placeholder="ID Number"
+                    defaultValue={user?.cnic ?? ""}
+                    errors={error?.cause?.cnic?._errors}
+                  />
+                </div>
+              </div>
+            </div>
 
-            <Input
-              id="cnic"
-              placeholder="CNIC / ID Number"
-              startIcon={<IdCard size={18} />}
-              name={"cnic"}
-              defaultValue={user?.cnic ?? ""}
-              errors={error?.cause?.cnic?._errors}
-            />
-          </div>
+            {/* Security Section */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Lock className="size-5 text-primary" />
+                <h2 className="text-lg font-semibold">Security Settings</h2>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="password">
+                    {isUpdate ? "New Password (optional)" : "Password"}
+                  </Label>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="Enter password"
+                    errors={error?.cause?.password?._errors}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="Re-enter password"
+                    errors={error?.cause?.confirmPassword?._errors}
+                  />
+                </div>
+              </div>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              type="password"
-              placeholder={isUpdate ? "New Password (optional)" : "Password"}
-              startIcon={<Lock size={18} />}
-              name={"password"}
-              errors={error?.cause?.password?._errors}
-            />
-            <Input
-              type="password"
-              placeholder={
-                isUpdate ? "Confirm New Password" : "Confirm Password"
-              }
-              startIcon={<Lock size={18} />}
-              name={"confirmPassword"}
-              errors={error?.cause?.confirmPassword?._errors}
-            />
-          </div>
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <MapPin className="size-5 text-primary" />
+                <h2 className="text-lg font-semibold">Address & Location</h2>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="address">Residential Address</Label>
+                <Textarea
+                  id="address"
+                  name="address"
+                  placeholder="Enter full residential address"
+                  className="min-h-24 resize-none"
+                  defaultValue={user?.address ?? ""}
+                  errors={error?.cause?.address?._errors}
+                />
+              </div>
+            </div>
 
-          <Textarea
-            className="h-30 scrollbar-thin"
-            placeholder="Residential Address"
-            startIcon={<MapPin size={20} />}
-            name={"address"}
-            defaultValue={user?.address ?? ""}
-            errors={error?.cause?.address?._errors}
-          />
-
-          <Button
-            size={"lg"}
-            className="font-bold shadow-none group mt-4 w-full md:w-fit"
-            disabled={pending || isUploading}
-          >
-            {isUpdate ? "Save Changes" : "Create User"}
-            <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+            <div className="flex justify-end pt-6">
+              <Button
+                size={"lg"}
+                className="px-12 font-bold shadow-lg group"
+                disabled={pending || isUploading}
+              >
+                {isUpdate ? "Save Changes" : "Create User"}
+                <ArrowRight className="ml-2 size-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

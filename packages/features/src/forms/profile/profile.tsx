@@ -2,8 +2,6 @@
 
 import {
   ArrowRight,
-  IdCard,
-  Mail,
   MapPin,
   Phone,
   UserRound,
@@ -12,8 +10,9 @@ import { useActionState, useEffect } from "react";
 
 import { AlertBox } from "@icat/ui/components/alert";
 import { Button } from "@icat/ui/components/button";
-import { Card } from "@icat/ui/components/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@icat/ui/components/card";
 import { Input } from "@icat/ui/components/input";
+import { Label } from "@icat/ui/components/label";
 import { toast } from "@icat/ui/components/sonner";
 import { Textarea } from "@icat/ui/components/textarea";
 import { updateUser } from "@icat/web/actions";
@@ -32,69 +31,119 @@ export function ProfileForm({ user }: ProfileFormProps) {
         position: "top-center",
       });
     }
-  }, [result]);
+  }, [success]);
 
   return (
-    <Card className="w-full p-6 md:p-8 flex flex-col items-center gap-2 shadow-none">
-      <h1 className="font-bold text-4xl">Update Your Profile</h1>
+    <div className="w-full space-y-6 pb-8">
+      <Card className="shadow-none">
+        <CardHeader className="border-b">
+          <CardTitle className="text-2xl font-bold">Update Your Profile</CardTitle>
+          <p className="text-muted-foreground">
+            Manage your personal information and contact details.
+          </p>
+        </CardHeader>
+        <CardContent className="p-6 md:p-8">
+          <form action={action} className="space-y-8">
+            {!success && error?.message && (
+              <AlertBox
+                key={error.status}
+                variant="destructive"
+                description={error?.message}
+              />
+            )}
 
-      <form action={action} className="flex flex-col gap-3 w-full mt-8">
-        {!success && error?.message && (
-          <AlertBox
-            key={error.status}
-            variant="destructive"
-            description={error?.message}
-          />
-        )}
+            {/* Account Information */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <UserRound className="size-5 text-primary" />
+                <h2 className="text-lg font-semibold">Account Information</h2>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Full Name</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                    defaultValue={user?.name}
+                    errors={error?.cause?.name?._errors}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input
+                    id="email"
+                    disabled
+                    placeholder="Email address"
+                    defaultValue={user?.email}
+                  />
+                </div>
+              </div>
+            </div>
 
-        <Input
-          type="text"
-          placeholder="Name"
-          startIcon={<UserRound size={18} />}
-          name={"name"}
-          defaultValue={user?.name}
-          errors={error?.cause?.name?._errors}
-        />
+            {/* Contact Details */}
+            <div className="space-y-4 border-t pt-8">
+              <div className="flex items-center gap-2">
+                <Phone className="size-5 text-primary" />
+                <h2 className="text-lg font-semibold">Contact Details</h2>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="e.g. +1234567890"
+                    defaultValue={user?.phone ?? ""}
+                    errors={error?.cause?.phone?._errors}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="cnic">National ID / CNIC</Label>
+                  <Input
+                    id="cnic"
+                    name="cnic"
+                    placeholder="Enter ID number"
+                    defaultValue={user?.cnic ?? ""}
+                    errors={error?.cause?.cnic?._errors}
+                  />
+                </div>
+              </div>
+            </div>
 
-        <Input
-          disabled
-          placeholder="Email Address"
-          startIcon={<Mail size={18} />}
-          defaultValue={user?.email}
-        />
+            {/* Location */}
+            <div className="space-y-4 border-t pt-8">
+              <div className="flex items-center gap-2">
+                <MapPin className="size-5 text-primary" />
+                <h2 className="text-lg font-semibold">Location</h2>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="address">Full Address</Label>
+                <Textarea
+                  id="address"
+                  name="address"
+                  placeholder="Enter your residential address"
+                  className="min-h-24 resize-none"
+                  defaultValue={user.address ?? ""}
+                  errors={error?.cause?.address?._errors}
+                />
+              </div>
+            </div>
 
-        <Input
-          type="tel"
-          placeholder="Phone (e.g. +1234567890)"
-          startIcon={<Phone size={18} />}
-          name={"phone"}
-          defaultValue={user?.phone ?? ""}
-          errors={error?.cause?.phone?._errors}
-        />
-
-        <Input
-          id="cnic"
-          placeholder="National ID / CNIC"
-          startIcon={<IdCard size={18} />}
-          name={"cnic"}
-          defaultValue={user?.cnic ?? ""}
-          errors={error?.cause?.cnic?._errors}
-        />
-
-        <Textarea
-          className="h-30 scrollbar-thin"
-          placeholder="Address"
-          startIcon={<MapPin size={20} />}
-          name={"address"}
-          defaultValue={user.address ?? ""}
-          errors={error?.cause?.address?._errors}
-        />
-
-        <Button size={"lg"} className="font-bold shadow-none group mt-4" disabled={pending}>
-          Update Profile
-          <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-        </Button>
-      </form>
-    </Card>
+            <div className="flex justify-end pt-6">
+              <Button
+                size={"lg"}
+                className="px-12 font-bold shadow-lg group"
+                disabled={pending}
+              >
+                Update Profile
+                <ArrowRight className="ml-2 size-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -34,6 +34,17 @@ export const bookCar = handlerFormActionWithError({
   },
 });
 
+export const bookCarAdmin = handlerFormActionWithError({
+  schema: CarBookingRequestSchema,
+  action: async (data: BookingRequestDto) => {
+    await requireAdmin();
+    const bookingService = new BookingService();
+    const booking = await bookingService.createBooking(data);
+
+    return booking;
+  },
+});
+
 export const updateBookingStatus = handlerFormActionWithError({
   schema: UpdateBookingStatusSchema,
   action: async (data: UpdateBookingStatusDto) => {

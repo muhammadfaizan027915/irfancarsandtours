@@ -9,7 +9,7 @@ export async function ProfileContent() {
     <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4">
       <UserAvatar user={user} />
       <div className="flex flex-col gap-8">
-        <ProfileForm user={user} />
+        <ProfileForm user ={user} />
         <ChangePasswordForm />
       </div>
     </div>

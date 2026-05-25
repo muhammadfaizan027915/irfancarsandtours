@@ -72,21 +72,22 @@ export class BookingService {
   }
 
   async createBooking(
-    { cars, ...data }: BookingRequestDto,
-    userId?: string,
+    { cars, userId, ...data }: BookingRequestDto,
+    providedUserId?: string,
     tx: DbOrTransaction = db,
   ): Promise<BookingResponseDto> {
     const executeCreate = async (transaction: DbOrTransaction) => {
       let totalPrice = 0;
       let user = null;
+      let activeUserId = userId || providedUserId;
 
-      if (!userId) {
+      if (!activeUserId) {
         try {
           user = await this.userService.getUserByEmail(data.email, transaction);
-          userId = user.id;
+          activeUserId = user.id;
         } catch {
           user = await this.userService.createUser(data, transaction);
-          userId = user.id;
+          activeUserId = user.id;
         }
       }
 
@@ -103,21 +104,21 @@ export class BookingService {
 
       const bookedCars = cars.map((car) => {
         const carDetail = carDetailsMap.get(car.carId);
-        const startingPrice = carDetail?.startingPrice ?? 0;
+        const quotedPrice = car.quotedPrice ?? carDetail?.startingPrice ?? 0;
 
-        totalPrice += startingPrice * (car.quantity ?? 1);
+        totalPrice += quotedPrice * (car.quantity ?? 1);
 
         return {
           ...car,
           bookedWithDriver: carDetail?.forceWithDriver ?? car.bookedWithDriver,
-          quotedPrice: startingPrice,
+          quotedPrice,
         };
       });
 
       const booking = await this.bookingRepository.create(
         {
           ...data,
-          userId,
+          userId: activeUserId,
           pickupDate: new Date(data.pickupDate),
           dropoffDate: new Date(data.dropoffDate),
           totalPrice,
@@ -125,7 +126,7 @@ export class BookingService {
         transaction,
       );
 
-      await this.userService.updateUser(userId, data, transaction);
+      await this.userService.updateUser(activeUserId, data, transaction);
 
       await this.bookedCarService.createMany(
         bookedCars.map((bc) => ({ ...bc, bookingId: booking.id })),

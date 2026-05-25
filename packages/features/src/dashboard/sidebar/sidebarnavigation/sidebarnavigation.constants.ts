@@ -7,6 +7,7 @@ import {
 
 export const DashboardNavigationUrls = {
   BOOKINGS: "/dashboard/bookings",
+  CREATE_BOOKING: "/dashboard/bookings/new",
   CARS: "/dashboard/cars",
   REGISTER_CAR: "/dashboard/cars/new",
   CUSTOMERS: "/dashboard/customers",
