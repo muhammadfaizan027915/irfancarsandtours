@@ -1,7 +1,6 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 
@@ -11,6 +10,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
+  FormattedDate,
 } from "@icat/ui";
 
 import { StatusCell } from "./statuscell";
@@ -72,8 +72,8 @@ export const complaintColumns: ColumnDef<ComplaintResponseDto>[] = [
   {
     accessorKey: "createdAt",
     header: "Date",
-    cell: ({ row }) => {
-      return format(new Date(row.original.createdAt), "PPP");
-    },
+    cell: ({ row }) => (
+      <FormattedDate date={row.original.createdAt} formatStr="PPP" />
+    ),
   },
 ];

@@ -1,11 +1,11 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
 import Link from "next/link";
 
 import { BookedCarWithCarResponseDto } from "@icat/contracts";
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
+import { FormattedDate } from "@icat/ui";
 import { SmallImage } from "@icat/ui/components/small-image";
 
 export const userBookedCarsColumns: ColumnDef<BookedCarWithCarResponseDto>[] = [
@@ -61,9 +61,10 @@ export const userBookedCarsColumns: ColumnDef<BookedCarWithCarResponseDto>[] = [
     accessorKey: "createdAt",
     header: "Booked On",
     cell: ({ row }) => (
-      <span suppressHydrationWarning>
-        {format(new Date(row.original.createdAt!), "dd MMM yyyy, hh:mm a")}
-      </span>
+      <FormattedDate
+        date={row.original.createdAt!}
+        formatStr="dd MMM yyyy, hh:mm a"
+      />
     ),
   },
 ];
