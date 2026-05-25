@@ -11,6 +11,7 @@ import {
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
 import {
+  sendComplaintConfirmationEmail,
   sendComplaintCreatedAdminEmail,
   sendComplaintStatusUpdateEmail,
 } from "@icat/lib/emails";
@@ -50,9 +51,14 @@ export class ComplaintService {
     const parsedComplaint = ComplaintResponseSchema.parse(complaint);
 
     after(
-      sendComplaintCreatedAdminEmail({
-        complaint: parsedComplaint,
-      }),
+      Promise.all([
+        sendComplaintCreatedAdminEmail({
+          complaint: parsedComplaint,
+        }),
+        sendComplaintConfirmationEmail({
+          complaint: parsedComplaint,
+        }),
+      ]),
     );
 
     return parsedComplaint;
