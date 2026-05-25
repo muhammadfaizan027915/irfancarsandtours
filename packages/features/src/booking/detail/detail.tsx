@@ -1,9 +1,9 @@
-import { format } from "date-fns";
 import { Calendar, IdCard, Mail, MapPin, Phone, User } from "lucide-react";
 import Link from "next/link";
 
 import { BookingStatusSelector } from "@icat/features/dashboard/selectors";
 import { isUserAdmin } from "@icat/lib/auth";
+import { FormattedDate } from "@icat/ui";
 import {
   Avatar,
   AvatarFallback,
@@ -48,7 +48,7 @@ export async function BookingDetail({ booking }: BookingDetailProps) {
             <div>
               <p className="text-muted-foreground">Booked At</p>
               <p className="font-medium">
-                {format(new Date(booking.createdAt!), "PPPp")}
+                <FormattedDate date={booking.createdAt!} formatStr="PPPp" />
               </p>
             </div>
           </div>
@@ -60,7 +60,7 @@ export async function BookingDetail({ booking }: BookingDetailProps) {
                 <div>
                   <p className="text-sm text-muted-foreground">Pickup Date</p>
                   <p className="font-medium">
-                    {format(new Date(booking.pickupDate), "PPp")}
+                    <FormattedDate date={booking.pickupDate} formatStr="PPp" />
                   </p>
                 </div>
               </div>
@@ -82,7 +82,7 @@ export async function BookingDetail({ booking }: BookingDetailProps) {
                 <div>
                   <p className="text-sm text-muted-foreground">Drop-off Date</p>
                   <p className="font-medium">
-                    {format(new Date(booking.dropoffDate), "PPp")}
+                    <FormattedDate date={booking.dropoffDate} formatStr="PPp" />
                   </p>
                 </div>
               </div>
