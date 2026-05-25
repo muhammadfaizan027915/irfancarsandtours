@@ -3,6 +3,8 @@ import * as React from "react";
 import { sendEmail } from "./sender";
 import {
   SendBookingConfirmationEmailArgs,
+  SendBookingStatusUpdateEmailArgs,
+  SendComplaintConfirmationEmailArgs,
   SendComplaintCreatedAdminEmailArgs,
   SendComplaintStatusUpdateEmailArgs,
   SendForgotPasswordEmailArgs,
@@ -11,6 +13,8 @@ import {
 } from "./sender.types";
 import {
   BookingConfirmationEmail,
+  BookingStatusUpdateEmail,
+  ComplaintConfirmationEmail,
   ComplaintCreatedAdminEmail,
   ComplaintStatusUpdateEmail,
   ForgotPasswordEmail,
@@ -68,6 +72,20 @@ export async function sendBookingConfirmationEmail({
   });
 }
 
+export async function sendBookingStatusUpdateEmail({
+  user,
+  booking,
+}: SendBookingStatusUpdateEmailArgs): Promise<void> {
+  return sendEmail({
+    to: user.email,
+    subject: `Booking Status Updated - ${booking.id}`,
+    content: React.createElement(BookingStatusUpdateEmail, {
+      user,
+      booking,
+    }),
+  });
+}
+
 export async function sendComplaintCreatedAdminEmail({
   complaint,
 }: SendComplaintCreatedAdminEmailArgs): Promise<void> {
@@ -82,6 +100,18 @@ export async function sendComplaintCreatedAdminEmail({
     to: adminEmail,
     subject: `New Complaint: ${complaint.id}`,
     content: React.createElement(ComplaintCreatedAdminEmail, {
+      complaint,
+    }),
+  });
+}
+
+export async function sendComplaintConfirmationEmail({
+  complaint,
+}: SendComplaintConfirmationEmailArgs): Promise<void> {
+  return sendEmail({
+    to: complaint.email,
+    subject: `Complaint Received - ${complaint.id}`,
+    content: React.createElement(ComplaintConfirmationEmail, {
       complaint,
     }),
   });
