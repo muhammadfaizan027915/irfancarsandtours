@@ -30,7 +30,16 @@ export type SendBookingConfirmationEmailArgs = {
   booking: BookingResponseDto;
 };
 
+export type SendBookingStatusUpdateEmailArgs = {
+  user: UserResponseDto;
+  booking: BookingResponseDto;
+};
+
 export type SendComplaintCreatedAdminEmailArgs = {
+  complaint: ComplaintResponseDto;
+};
+
+export type SendComplaintConfirmationEmailArgs = {
   complaint: ComplaintResponseDto;
 };
 

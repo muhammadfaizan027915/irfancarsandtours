@@ -1,4 +1,6 @@
 export * from "./BookingConfirmationEmail";
+export * from "./BookingStatusUpdateEmail";
+export * from "./ComplaintConfirmationEmail";
 export * from "./ComplaintCreatedAdminEmail";
 export * from "./ComplaintStatusUpdateEmail";
 export * from "./ForgotPasswordEmail";

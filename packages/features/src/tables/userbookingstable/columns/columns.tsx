@@ -1,12 +1,12 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 import { BookingListItemResponseDto } from "@icat/contracts";
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
+import { FormattedDate } from "@icat/ui";
 
 export const userBookingsColumns: ColumnDef<BookingListItemResponseDto>[] = [
   {
@@ -18,16 +18,23 @@ export const userBookingsColumns: ColumnDef<BookingListItemResponseDto>[] = [
     accessorKey: "pickupDate",
     header: "Pickup Date",
     size: 140,
-    cell: ({ row }) => format(new Date(row.original.pickupDate), "dd MMM yyyy"),
+    cell: ({ row }) => (
+      <FormattedDate date={row.original.pickupDate} formatStr="dd MMM yyyy" />
+    ),
   },
   {
     accessorKey: "dropoffDate",
     header: "Dropoff Date",
     size: 140,
     cell: ({ row }) =>
-      row.original.dropoffDate
-        ? format(new Date(row.original.dropoffDate), "dd MMM yyyy")
-        : "—",
+      row.original.dropoffDate ? (
+        <FormattedDate
+          date={row.original.dropoffDate}
+          formatStr="dd MMM yyyy"
+        />
+      ) : (
+        "—"
+      ),
   },
   {
     accessorKey: "pickupAddress",
@@ -59,8 +66,12 @@ export const userBookingsColumns: ColumnDef<BookingListItemResponseDto>[] = [
     accessorKey: "createdAt",
     header: "Created",
     size: 180,
-    cell: ({ row }) =>
-      format(new Date(row.original.createdAt!), "dd MMM yyyy hh:mm a"),
+    cell: ({ row }) => (
+      <FormattedDate
+        date={row.original.createdAt!}
+        formatStr="dd MMM yyyy hh:mm a"
+      />
+    ),
   },
   {
     id: "actions",

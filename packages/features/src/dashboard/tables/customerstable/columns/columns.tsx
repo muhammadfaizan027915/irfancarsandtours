@@ -1,12 +1,12 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
 import Link from "next/link";
 
 import { DetailedUserResponseDto } from "@icat/contracts";
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import { getNameInitials } from "@icat/lib/utils";
+import { FormattedDate } from "@icat/ui";
 import {
   Avatar,
   AvatarFallback,
@@ -79,7 +79,11 @@ export const customersColumns: ColumnDef<DetailedUserResponseDto>[] = [
   {
     accessorKey: "createdAt",
     header: "Joined On",
-    cell: ({ row }) =>
-      format(new Date(row.original.createdAt), "dd MMM yyyy, hh:mm a"),
+    cell: ({ row }) => (
+      <FormattedDate
+        date={row.original.createdAt}
+        formatStr="dd MMM yyyy, hh:mm a"
+      />
+    ),
   },
 ];
