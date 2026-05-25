@@ -2,8 +2,9 @@ import { CheckCircle2, MapPin } from "lucide-react";
 import Link from "next/link";
 
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
+import { FormattedDate } from "@icat/ui";
 import { Button } from "@icat/ui/components/button";
-import { Card, CardContent,CardHeader } from "@icat/ui/components/card";
+import { Card, CardContent, CardHeader } from "@icat/ui/components/card";
 
 import { BookingConfirmationProps } from "./confirmation.types";
 
@@ -31,7 +32,7 @@ export function BookingConfirmation({ booking }: BookingConfirmationProps) {
               Pickup: {booking?.pickupAddress}
             </p>
             <p className="text-sm text-muted-foreground">
-              {booking?.pickupDate?.toLocaleString()}
+              <FormattedDate date={booking?.pickupDate} formatStr="PPp" />
             </p>
           </div>
         </div>
@@ -43,7 +44,7 @@ export function BookingConfirmation({ booking }: BookingConfirmationProps) {
               Dropoff: {booking?.dropoffAddress}
             </p>
             <p className="text-sm text-muted-foreground">
-              {booking?.dropoffDate?.toLocaleString()}
+              <FormattedDate date={booking?.dropoffDate} formatStr="PPp" />
             </p>
           </div>
         </div>
