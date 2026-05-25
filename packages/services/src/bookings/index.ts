@@ -17,7 +17,10 @@ import {
   UpdateBookingRequestBodyDto,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
-import { sendBookingConfirmationEmail } from "@icat/lib/emails";
+import {
+  sendBookingConfirmationEmail,
+  sendBookingStatusUpdateEmail,
+} from "@icat/lib/emails";
 import { BookingRepository } from "@icat/repositories";
 import { BookedCarService, CarService, UserService } from "@icat/services";
 
@@ -89,6 +92,8 @@ export class BookingService {
           user = await this.userService.createUser(data, transaction);
           activeUserId = user.id;
         }
+      } else {
+        user = await this.userService.findById(userId, transaction);
       }
 
       const carIds = cars.map((car) => car.carId);
@@ -158,6 +163,26 @@ export class BookingService {
     tx: DbOrTransaction = db,
   ): Promise<BookingResponseDto | null> {
     const booking = await this.bookingRepository.update(bookingId, data, tx);
-    return booking ? BookingResponseSchema.parse(booking) : null;
+
+    if (!booking) return null;
+
+    const parsedBooking = BookingResponseSchema.parse(booking);
+
+    if (data.status) {
+      after(async () => {
+        const user = await this.userService.findById(
+          parsedBooking.userId,
+          tx,
+        );
+        if (user) {
+          await sendBookingStatusUpdateEmail({
+            user,
+            booking: parsedBooking,
+          });
+        }
+      });
+    }
+
+    return parsedBooking;
   }
 }
