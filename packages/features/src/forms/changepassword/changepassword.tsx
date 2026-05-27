@@ -5,8 +5,9 @@ import { useActionState, useEffect } from "react";
 
 import { AlertBox } from "@icat/ui/components/alert";
 import { Button } from "@icat/ui/components/button";
-import { Card } from "@icat/ui/components/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@icat/ui/components/card";
 import { Input } from "@icat/ui/components/input";
+import { Label } from "@icat/ui/components/label";
 import { toast } from "@icat/ui/components/sonner";
 import { changeUserPassword } from "@icat/web/actions";
 
@@ -22,54 +23,84 @@ export function ChangePasswordForm() {
         position: "top-center",
       });
     }
-  }, [result]);
+  }, [success]);
 
   return (
-    <Card className="w-full p-6 md:p-8 flex flex-col items-center gap-2 shadow-none">
-      <h1 className="font-bold text-4xl">Change Password</h1>
+    <div className="w-full space-y-6 pb-8">
+      <Card className="shadow-none border-destructive/20 bg-destructive/5">
+        <CardHeader className="border-b border-destructive/10">
+          <CardTitle className="text-2xl font-bold text-destructive">Security: Change Password</CardTitle>
+          <p className="text-muted-foreground text-destructive/80">
+            Ensure your account is secure by using a strong, unique password.
+          </p>
+        </CardHeader>
+        <CardContent className="p-6 md:p-8">
+          <form action={action} className="space-y-8">
+            {!success && error?.message && (
+              <AlertBox
+                key={error.status}
+                variant="destructive"
+                description={error?.message}
+              />
+            )}
 
-      <form action={action} className="flex flex-col gap-3 w-full mt-8">
-        {!success && error?.message && (
-          <AlertBox
-            key={error.status}
-            variant="destructive"
-            description={error?.message}
-          />
-        )}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Lock className="size-5 text-destructive" />
+                <h2 className="text-lg font-semibold">Update Credentials</h2>
+              </div>
+              <div className="grid gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="currentPassword">Current Password</Label>
+                  <Input
+                    id="currentPassword"
+                    type="password"
+                    placeholder="Enter current password"
+                    name="currentPassword"
+                    errors={error?.cause?.currentPassword?._errors}
+                  />
+                </div>
 
-        <Input
-          type="password"
-          placeholder="Current Password"
-          startIcon={<Lock size={18} />}
-          name={"currentPassword"}
-          errors={error?.cause?.currentPassword?._errors}
-        />
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="password">New Password</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="Enter new password"
+                      name="password"
+                      errors={error?.cause?.password?._errors}
+                    />
+                  </div>
 
-        <Input
-          type="password"
-          placeholder="New Password"
-          startIcon={<Lock size={18} />}
-          name={"password"}
-          errors={error?.cause?.password?._errors}
-        />
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      placeholder="Re-enter new password"
+                      name="confirmPassword"
+                      errors={error?.cause?.confirmPassword?._errors}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <Input
-          type="password"
-          placeholder="Confirm Password"
-          startIcon={<Lock size={18} />}
-          name={"confirmPassword"}
-          errors={error?.cause?.confirmPassword?._errors}
-        />
-
-        <Button
-          size={"lg"}
-          className="font-bold shadow-none group mt-4"
-          disabled={pending}
-        >
-          Change Password
-          <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-        </Button>
-      </form>
-    </Card>
+            <div className="flex justify-end pt-6">
+              <Button
+                size={"lg"}
+                variant="destructive"
+                className="px-12 font-bold shadow-lg group"
+                disabled={pending}
+              >
+                Change Password
+                <ArrowRight className="ml-2 size-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

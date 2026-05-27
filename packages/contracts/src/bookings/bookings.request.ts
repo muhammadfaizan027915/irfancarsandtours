@@ -25,8 +25,10 @@ export const CarBookingRequestSchema = z
         carId: z.string(),
         quantity: z.coerce.number().optional().default(1),
         bookedWithDriver: z.coerce.boolean().optional().default(false),
+        quotedPrice: z.coerce.number().int().optional(),
       }),
     ),
+    userId: z.string().optional(),
   })
   .refine(
     (obj) => {

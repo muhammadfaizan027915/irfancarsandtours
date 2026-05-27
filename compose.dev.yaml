@@ -19,6 +19,8 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.dev
+    mem_limit: 2g
+    memswap_limit: 2g
     env_file:
       - .env.dev
       - .env.docker

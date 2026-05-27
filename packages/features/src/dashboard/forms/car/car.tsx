@@ -1,6 +1,6 @@
 "use client";
 
-import { Car, ImageIcon, Info, Settings2, X } from "lucide-react";
+import { ArrowRight, Car, ImageIcon, Info, Settings2, X } from "lucide-react";
 import Image from "next/image";
 import { useActionState, useEffect } from "react";
 
@@ -56,7 +56,7 @@ export function CarForm({ car, mode }: CarFormProps) {
       );
       if (!isUpdateMode) resetFiles();
     }
-  }, [result]);
+  }, [result, isUpdateMode, resetFiles]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) uploadFiles(e.target.files);
@@ -80,8 +80,9 @@ export function CarForm({ car, mode }: CarFormProps) {
             {isUpdateMode ? "Update Car" : "Register New Car"}
           </CardTitle>
           <p className="text-muted-foreground">
-            Fill in the details below to {isUpdateMode ? "update" : "register"}{" "}
-            your vehicle.
+            {isUpdateMode
+              ? "Update vehicle specifications, pricing, and media gallery."
+              : "Fill in the details below to register a new vehicle to the fleet."}
           </p>
         </CardHeader>
         <CardContent className="p-6 md:p-8">
@@ -298,7 +299,7 @@ export function CarForm({ car, mode }: CarFormProps) {
               <Button
                 type="submit"
                 size="lg"
-                className="px-12 font-bold shadow-lg"
+                className="px-12 font-bold shadow-lg group"
                 disabled={pending || isUploading}
               >
                 {pending
@@ -306,6 +307,7 @@ export function CarForm({ car, mode }: CarFormProps) {
                   : isUpdateMode
                     ? "Update Car"
                     : "Register Car"}
+                <ArrowRight className="ml-2 size-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
           </form>
