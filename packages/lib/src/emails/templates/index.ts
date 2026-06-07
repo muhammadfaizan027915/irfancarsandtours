@@ -6,3 +6,7 @@ export * from "./ComplaintStatusUpdateEmail";
 export * from "./ForgotPasswordEmail";
 export * from "./PasswordResetSuccessEmail";
 export * from "./WelcomeEmail";
+export * from "./TourBookingConfirmationEmail";
+export * from "./TourBookingCreatedAdminEmail";
+export * from "./TourBookingPriceUpdateEmail";
+export * from "./TourBookingStatusUpdateEmail";

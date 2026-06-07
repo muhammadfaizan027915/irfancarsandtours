@@ -30,7 +30,7 @@ export function CarTypeCard({ name, image }: CarTypeCardProps) {
             <h4 className="text-xl font-bold">{name}</h4>
             <Button
               size={"sm"}
-              className="rounded-3xl bg-muted dark:not-[:hover]:text-muted-foreground w-8 h-8 shadow-none"
+              className="rounded-3xl bg-muted dark:not-[:hover]:text-muted-foreground w-8 h-8"
             >
               <ArrowRight />
             </Button>

@@ -1,6 +1,7 @@
 import type { SeoResponseDto } from "@icat/contracts";
 
 export type SeoFormProps = {
-  carId: string;
+  carId?: string;
+  tourId?: string;
   seo?: SeoResponseDto | null;
 };

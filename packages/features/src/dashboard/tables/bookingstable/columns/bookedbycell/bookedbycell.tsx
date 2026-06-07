@@ -18,8 +18,9 @@ import {
 import { BookingCellProps } from "../columns.types";
 
 export function BookedByCell({ row }: BookingCellProps) {
-  const bookedBy = row.original.bookedBy;
-  const nameInitials = getNameInitials(bookedBy?.name);
+  const booking = row.original;
+  const bookedBy = booking.bookedBy;
+  const nameInitials = getNameInitials(booking.name || bookedBy?.name);
 
   return (
     <DropdownMenu>
@@ -28,7 +29,7 @@ export function BookedByCell({ row }: BookingCellProps) {
           <AvatarImage
             className="object-cover"
             src={bookedBy?.image || ""}
-            alt={bookedBy?.name}
+            alt={booking.name || bookedBy?.name}
           />
           <AvatarFallback className="bg-primary/10 text-primary font-medium">
             {nameInitials}
@@ -45,7 +46,7 @@ export function BookedByCell({ row }: BookingCellProps) {
             <AvatarImage
               className="object-cover"
               src={bookedBy?.image || ""}
-              alt={bookedBy?.name}
+              alt={booking.name || bookedBy?.name}
             />
             <AvatarFallback className="bg-primary/10 text-primary">
               {nameInitials}
@@ -53,7 +54,7 @@ export function BookedByCell({ row }: BookingCellProps) {
           </Avatar>
           <div>
             <h3 className="font-semibold truncate">
-              {bookedBy?.name ?? "Unknown"}
+              {(booking.name || bookedBy?.name) ?? "Unknown"}
             </h3>
             <p className="text-sm text-muted-foreground">Customer Profile</p>
           </div>
@@ -63,25 +64,25 @@ export function BookedByCell({ row }: BookingCellProps) {
 
         <DropdownMenuItem>
           <Link
-            href={`mailto:${bookedBy?.email}`}
+            href={`mailto:${booking.email || bookedBy?.email}`}
             className="truncate max-w-52"
           >
             <Mail size={18} className="inline" />{" "}
-            {bookedBy?.email ?? "No email"}
+            {(booking.email || bookedBy?.email) ?? "No email"}
           </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem>
-          <Link href={`tel:${bookedBy?.phone}`} className="truncate max-w-52">
+          <Link href={`tel:${booking.phone || bookedBy?.phone}`} className="truncate max-w-52">
             <Phone size={18} className="inline" />{" "}
-            {bookedBy?.phone ?? "No phone"}
+            {(booking.phone || bookedBy?.phone) ?? "No phone"}
           </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem>
           <span className="truncate max-w-52">
             <IdCard size={18} className="inline" />{" "}
-            {bookedBy?.cnic ?? "No CNIC"}
+            {(booking.cnic || bookedBy?.cnic) ?? "No CNIC"}
           </span>
         </DropdownMenuItem>
       </DropdownMenuContent>

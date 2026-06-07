@@ -1,13 +1,18 @@
 export const NavigationUrls = {
   HOME: "/",
   CARS: "/cars",
+  TOURS: "/tours",
   SIGNIN: "/signin",
   SIGNUP: "/signup",
   ABOUT_US: "/about-us",
   COMPLAINTS: "/complaints",
   PROFILE: "/profile",
   BOOKINGS: "/bookings",
+  BOOKINGS_CARS: "/bookings/cars",
+  BOOKINGS_TOURS: "/bookings/tours",
   CHECKOUT: "/checkout",
+  CHECKOUT_CARS: "/checkout/cars",
+  CHECKOUT_TOURS: "/checkout/tours",
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
 } as const;

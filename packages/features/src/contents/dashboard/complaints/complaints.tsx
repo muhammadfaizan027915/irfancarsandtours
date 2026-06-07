@@ -10,8 +10,8 @@ export async function DashboardComplaintsContent({
   searchParams,
 }: DashboardComplaintsContentProps) {
   const result = await getComplaints(searchParams);
-  const data = result?.data;
+  const complaints = result?.data;
   const pagination = result?.pagination;
 
-  return <ComplaintsTable data={data} pagination={pagination} />;
+  return <ComplaintsTable complaints={complaints} pagination={pagination} />;
 }

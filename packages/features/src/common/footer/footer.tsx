@@ -88,8 +88,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between gap-2 border-t pt-8 mt-16 text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} ICAT. All rights reserved.</p>
+        <div className="flex flex-col md:flex-row justify-between gap-2 border-t border-muted-foreground/40 pt-8 mt-16 text-sm text-muted-foreground">
+          <p>© {new Date().getFullYear()} Irfan Cars And Tours. All rights reserved.</p>
 
           <p>
             Developed By:{" "}

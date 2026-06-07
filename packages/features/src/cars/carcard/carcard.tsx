@@ -85,7 +85,7 @@ export function CarCard({ car }: CarCardProps) {
             <Button
               size="icon"
               variant="outline"
-              className="shadow-none font-bold border border-border bg-muted dark:not-[:hover]:text-muted-foreground hover:border-transparent hover:bg-primary"
+              className="font-bold border border-border bg-muted dark:not-[:hover]:text-muted-foreground hover:border-transparent hover:bg-primary"
               onClick={handleAddToCart}
             >
               <ShoppingCart size={20} />
@@ -93,7 +93,7 @@ export function CarCard({ car }: CarCardProps) {
 
             <Button
               asChild
-              className="flex-1 shadow-none ont-bold rounded-xl px-6"
+              className="flex-1 font-bold rounded-xl px-6"
               size="lg"
             >
               <Link href={`${NavigationUrls.CARS}/${car?.id}`}>Book Now</Link>

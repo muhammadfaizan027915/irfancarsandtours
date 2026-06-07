@@ -1,5 +1,5 @@
 import { GetUsersBodyDto } from "@icat/contracts";
-import { CustoemrsTable } from "@icat/features/dashboard/tables/customerstable";
+import { CustomersTable } from "@icat/features/dashboard/tables/customerstable";
 import { getCustomers } from "@icat/web/data/users";
 
 type DashboardCustomersContentProps = {
@@ -13,5 +13,5 @@ export async function DashboardCustomersContent({
   const customers = result.data;
   const pagination = result?.pagination;
 
-  return <CustoemrsTable customers={customers} pagination={pagination} />;
+  return <CustomersTable customers={customers} pagination={pagination} />;
 }

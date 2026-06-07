@@ -122,33 +122,33 @@ export async function BookingDetail({ booking }: BookingDetailProps) {
               src={booking.bookedBy?.image || ""}
             />
             <AvatarFallback className="text-2xl">
-              {booking.bookedBy?.name?.[0] ?? "U"}
+              {(booking.name?.[0] || booking.bookedBy?.name?.[0]) ?? "U"}
             </AvatarFallback>
           </Avatar>
 
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-3">
               <User className="w-5 h-5 text-primary shrink-0" />
-              <p className="font-medium truncate">{booking.bookedBy?.name}</p>
+              <p className="font-medium truncate">{booking.name || booking.bookedBy?.name}</p>
             </div>
             <div className="flex items-center gap-3">
               <Mail className="w-5 h-5 text-primary shrink-0" />
               <Link
-                href={`mailto:${booking.bookedBy?.email}`}
+                href={`mailto:${booking.email || booking.bookedBy?.email}`}
                 className="hover:underline truncate"
               >
-                {booking.bookedBy?.email}
+                {booking.email || booking.bookedBy?.email}
               </Link>
             </div>
             <div className="flex items-center gap-3">
               <Phone className="w-5 h-5 text-primary shrink-0" />
-              <Link href={`tel:${booking.bookedBy?.phone}`} className="hover:underline">
-                {booking.bookedBy?.phone}
+              <Link href={`tel:${booking.phone || booking.bookedBy?.phone}`} className="hover:underline">
+                {booking.phone || booking.bookedBy?.phone}
               </Link>
             </div>
             <div className="flex items-center gap-3">
               <IdCard className="w-5 h-5 text-primary shrink-0" />
-              <p>{booking.bookedBy?.cnic}</p>
+              <p>{booking.cnic || booking.bookedBy?.cnic}</p>
             </div>
           </div>
         </CardContent>

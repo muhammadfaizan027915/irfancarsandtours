@@ -6,17 +6,21 @@ import { Pool } from "pg";
 
 import { accountsTable } from "./accountsTable";
 import { bookedCarsTable } from "./bookedCarsTable";
+import { bookedToursTable } from "./bookedToursTable";
 import { bookingsTable } from "./bookingsTable";
 import { carsTable } from "./carsTable";
 import { complaintsTable } from "./complaintsTable";
 import * as relations from "./relations";
 import { seoTable } from "./seoTable";
 import { sessionsTable } from "./sessionsTable";
+import { tourBookingsTable } from "./tourBookingsTable";
+import { toursTable } from "./toursTable";
 import { usersTable } from "./usersTable";
 import { verificationTokensTable } from "./verificationTokensTable";
 
 export * from "./accountsTable";
 export * from "./bookedCarsTable";
+export * from "./bookedToursTable";
 export * from "./bookingsTable";
 export * from "./carsTable";
 export * from "./complaintsTable";
@@ -24,6 +28,8 @@ export * from "./enums";
 export * from "./relations";
 export * from "./seoTable";
 export * from "./sessionsTable";
+export * from "./tourBookingsTable";
+export * from "./toursTable";
 export * from "./usersTable";
 export * from "./verificationTokensTable";
 
@@ -32,7 +38,9 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 20000,
-});
+}).on("error", (err) => {
+  console.log("Error in database: ", err)
+ });
 
 const tables = {
   carsTable,
@@ -44,6 +52,9 @@ const tables = {
   bookingsTable,
   bookedCarsTable,
   seoTable,
+  toursTable,
+  tourBookingsTable,
+  bookedToursTable,
   ...relations,
 };
 

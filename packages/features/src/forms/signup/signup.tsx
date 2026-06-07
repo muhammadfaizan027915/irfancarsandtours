@@ -68,7 +68,7 @@ export function SignUpForm() {
 
         <Button
           size={"lg"}
-          className="font-bold shadow-none group mt-4"
+          className="font-bold group mt-4"
           disabled={pending}
         >
           Sign Up

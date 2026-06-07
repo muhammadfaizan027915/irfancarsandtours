@@ -4,13 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@icat/ui/components/ca
 
 import { CarBookingProps } from "./booking.types";
 
-export async function CarBooking({ cars }: CarBookingProps) {
+export async function CarBooking({ cars, tours }: CarBookingProps) {
   const sessionUser = await getSessionUser();
 
   return (
-    <Card className="shadow-none rounded-xl overflow-hidden">
-      <CardHeader className="border-b bg-muted/50">
-        <CardTitle className="text-2xl font-bold">Make Car Booking</CardTitle>
+    <Card className="shadow-none rounded-xl overflow-hidden p-0">
+      <CardHeader className="border-b bg-muted/50 py-6">
+        <CardTitle className="text-2xl font-bold">Make Booking</CardTitle>
         <p className="text-muted-foreground text-sm">
           Please provide your details and logistics information to confirm your booking.
         </p>

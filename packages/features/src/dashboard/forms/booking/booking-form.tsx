@@ -22,9 +22,9 @@ import {
 } from "@icat/ui";
 import { bookCarAdmin } from "@icat/web/actions";
 
-import { CarSelection } from "./components/car-selection/car-selection";
-import { SelectedCar, SelectedCarsList } from "./components/selected-cars-list";
-import { UserSelection } from "./components/user-selection/user-selection";
+import { UserSelection } from "../../../common/user-selection/user-selection";
+import { CarSelection } from "./car-selection/car-selection";
+import { SelectedCar, SelectedCarsList } from "./selected-cars-list/selected-cars-list";
 
 export function AdminBookingForm() {
   const router = useRouter();
@@ -42,7 +42,7 @@ export function AdminBookingForm() {
       toast.success("Booking created successfully.", {
         position: "top-center",
       });
-      router.push(DashboardNavigationUrls.BOOKINGS);
+      router.push(DashboardNavigationUrls.BOOKINGS_CARS);
     }
   }, [success, router]);
 
@@ -102,7 +102,7 @@ export function AdminBookingForm() {
     <div className="w-full space-y-6 pb-8">
       <Card className="shadow-none">
         <CardHeader className="border-b">
-          <CardTitle className="text-2xl font-bold">Create Manual Booking</CardTitle>
+          <CardTitle className="text-2xl font-bold">Create Manual Car Booking</CardTitle>
           <p className="text-muted-foreground">
             Create a booking for an existing or new customer.
           </p>

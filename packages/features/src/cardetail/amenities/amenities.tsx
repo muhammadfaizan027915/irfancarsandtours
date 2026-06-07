@@ -36,7 +36,7 @@ export function CarAmenities({ amenities }: CarAmenitiesProps) {
             {amenities?.map((amenity, i) => (
               <Button
                 size="lg"
-                className="shadow-none rounded-lg bg-accent flex-1 pointer-events-none font-semibold basis-20"
+                className="rounded-lg bg-accent flex-1 pointer-events-none font-semibold basis-20"
                 variant="outline"
                 key={i}
               >

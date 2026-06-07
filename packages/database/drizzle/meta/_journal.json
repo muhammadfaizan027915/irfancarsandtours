@@ -176,6 +176,20 @@
       "when": 1779216492523,
       "tag": "0024_high_dragon_lord",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1780239795173,
+      "tag": "0025_familiar_micromacro",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1780858844569,
+      "tag": "0026_groovy_vargas",
+      "breakpoints": true
     }
   ]
 }

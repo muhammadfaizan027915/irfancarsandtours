@@ -47,7 +47,7 @@ export function CarSearchbar({ search, brand }: CarSerachProps) {
         </div>
         <Button
           size={"lg"}
-          className="h-12 md:h-16 w-full lg:max-w-48 shadow-none"
+          className="h-12 md:h-16 w-full lg:max-w-48"
         >
           <Search /> Find Car
         </Button>

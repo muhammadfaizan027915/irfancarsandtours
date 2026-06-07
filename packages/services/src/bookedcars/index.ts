@@ -25,7 +25,7 @@ export class BookedCarService {
     return BookedCarResponseSchema.parse(result);
   }
 
-  async createMany(
+  async createBookedCars(
     data: BookedCarInsert[],
     tx: DbOrTransaction = db,
   ): Promise<BookedCarResponseDto[]> {

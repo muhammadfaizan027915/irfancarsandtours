@@ -65,7 +65,7 @@ export function ProfileImageUploader({
         <Button
           type="button"
           size="icon"
-          className="absolute top-2 right-2 z-10 rounded-full shadow-none"
+          className="absolute top-2 right-2 z-10 rounded-full"
           onClick={handleImageClick}
           disabled={isUploading}
         >

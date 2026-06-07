@@ -17,7 +17,7 @@ export async function ProfileSigin({ className }: ProfileSigninProps) {
   return sessionUser?.id ? (
     <div className={cn("flex gap-4", className)}>
       {sessionUser?.role === UserRolesList[0] && <Button asChild size={"lg"} variant={"ghost"}>
-        <Link href={DashboardNavigationUrls.BOOKINGS}>
+        <Link href={DashboardNavigationUrls.BOOKINGS_CARS}>
           <LayoutDashboard size={18} className="inline" /> Dashboard
         </Link>
       </Button>}

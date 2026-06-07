@@ -12,9 +12,13 @@ pnpm-debug.log*
 
 # Build output
 dist
+**/dist
 build
+**/build
 .next
+**/.next
 .out
+**/outnpm 
 /.vercel
 /.vercel_build_output
 /.turbo

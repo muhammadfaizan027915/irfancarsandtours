@@ -53,7 +53,7 @@ export function ForgotPasswordForm() {
 
         <Button
           size={"lg"}
-          className="font-bold shadow-none group mt-4"
+          className="font-bold group mt-4"
           disabled={pending || success}
         >
           Send Reset Link

@@ -7,6 +7,10 @@ import { DetailedUserResponseSchema } from "../users";
 
 export const BookingResponseSchema = z.object({
   id: z.string(),
+  name: z.string(),
+  email: z.string(),
+  phone: z.string(),
+  cnic: z.string(),
   userId: z.string(),
   pickupAddress: z.string().min(1),
   pickupDate: toDate(z.date()),

@@ -66,12 +66,12 @@ export const CNICSchema = z
 
 export const toDate = <T extends z.ZodTypeAny>(schema: T) =>
   z.preprocess((arg) => {
-    if (arg === null || arg === undefined) return arg;
+    if (arg === null || arg === undefined || arg === "") return undefined;
     if (arg instanceof Date) return arg;
     if (typeof arg === "number") return new Date(arg);
     if (typeof arg === "string") {
       const d = new Date(arg);
-      return isNaN(d.getTime()) ? arg : d;
+      return isNaN(d.getTime()) ? undefined : d;
     }
     return arg;
   }, schema);

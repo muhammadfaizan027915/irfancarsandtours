@@ -1,19 +1,6 @@
-import { GetBookingsBodyDto } from "@icat/contracts";
-import { Suspense } from "react";
-import { BookingsContent, BookingsContentSkeleton } from "@icat/features/contents/bookings";
+import { redirect } from "next/navigation";
+import { NavigationUrls } from "@icat/features/common/header/header.constants";
 
-type UserBookingsPageProps = {
-  searchParams: Promise<GetBookingsBodyDto>;
-};
-
-export default async function UserBookingsPage({
-  searchParams,
-}: UserBookingsPageProps) {
-  const filters = await searchParams;
-
-  return (
-    <Suspense fallback={<BookingsContentSkeleton />}>
-      <BookingsContent searchParams={filters} />
-    </Suspense>
-  );
+export default function BookingsIndexPage() {
+  redirect(NavigationUrls.BOOKINGS_CARS);
 }

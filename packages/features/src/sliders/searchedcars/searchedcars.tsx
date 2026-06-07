@@ -29,7 +29,7 @@ export async function SearchedCars() {
       <Button
         asChild
         size="lg"
-        className="shadow-none mx-auto px-8 py-4 font-bold h-fit max-w-fit"
+        className="mx-auto px-8 py-4 font-bold h-fit max-w-fit"
       >
         <Link href={NavigationUrls.CARS}>
           <LoaderCircle />

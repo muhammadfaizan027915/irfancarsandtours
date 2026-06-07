@@ -19,47 +19,12 @@ export const bookingsColumns: ColumnDef<BookingWithUserListItemResponseDto>[] =
       size: 120,
     },
     {
-      accessorKey: "pickupDate",
-      header: "Pickup Date",
+      accessorKey: "totalPrice",
+      header: "Total Price",
       size: 140,
       cell: ({ row }) => (
-        <FormattedDate date={row.original.pickupDate} formatStr="dd MMM yyyy" />
-      ),
-    },
-    {
-      accessorKey: "dropoffDate",
-      header: "Dropoff Date",
-      size: 140,
-      cell: ({ row }) => (
-        <FormattedDate
-          date={row.original.dropoffDate}
-          formatStr="dd MMM yyyy"
-        />
-      ),
-    },
-    {
-      accessorKey: "pickupAddress",
-      header: "Pickup Address",
-      size: 220,
-      cell: ({ row }) => (
-        <span
-          className="block max-w-[200px] truncate"
-          title={row.original.pickupAddress}
-        >
-          {row.original.pickupAddress}
-        </span>
-      ),
-    },
-    {
-      accessorKey: "dropoffAddress",
-      header: "Dropoff Address",
-      size: 220,
-      cell: ({ row }) => (
-        <span
-          className="block max-w-[200px] truncate"
-          title={row.original.dropoffAddress}
-        >
-          {row.original.dropoffAddress}
+        <span className="font-bold text-primary">
+          Rs. {row?.original?.totalPrice?.toLocaleString()}
         </span>
       ),
     },
@@ -91,7 +56,7 @@ export const bookingsColumns: ColumnDef<BookingWithUserListItemResponseDto>[] =
       size: 80,
       cell: ({ row }) => (
         <Link
-          href={`${DashboardNavigationUrls.BOOKINGS}/${row.original.id}`}
+          href={`${DashboardNavigationUrls.BOOKINGS_CARS}/${row.original.id}`}
           className="text-primary flex justify-center"
         >
           <ExternalLink size={18} />

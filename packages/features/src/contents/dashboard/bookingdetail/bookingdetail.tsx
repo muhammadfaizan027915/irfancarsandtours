@@ -5,7 +5,13 @@ import { BookedCarsTable } from "@icat/features/dashboard/tables/bookedcarstable
 import { getBookedCars } from "@icat/web/data/bookedcars";
 import { getBooking } from "@icat/web/data/bookings";
 
-export async function DashboardBookingDetailContent({ bookingId }: { bookingId: string }) {
+type DashboardBookingDetailContentProps = {
+  bookingId: string;
+};
+
+export async function DashboardBookingDetailContent({
+  bookingId,
+}: DashboardBookingDetailContentProps) {
   const booking = await getBooking(bookingId);
   const bookedCars = await getBookedCars(bookingId);
 

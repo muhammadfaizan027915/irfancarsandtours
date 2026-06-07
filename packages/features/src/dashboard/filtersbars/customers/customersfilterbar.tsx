@@ -47,7 +47,6 @@ export function CustomersFilterBar() {
             onClick={handleClearFilters}
             size="sm"
             variant="outline"
-            className="shadow-none"
           >
             <X className="w-4 h-4 mr-2" />
             Clear Filters

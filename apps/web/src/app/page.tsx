@@ -10,6 +10,8 @@ import { HowItWork } from "@icat/features/common/howitwork";
 import {
   HomeFeaturedCars,
   HomeFeaturedCarsSkeleton,
+  HomeFeaturedTours,
+  HomeFeaturedToursSkeleton,
   HomeSearchedCars,
   HomeSearchedCarsSkeleton
 } from "@icat/features/contents/home";
@@ -31,7 +33,7 @@ export default function HomePage() {
       <main className="pb-16">
         <div className="bg-muted pb-16">
           <div className="container mx-auto px-4 md:px-8">
-            <Searchbar type="cars" />
+            <Searchbar type="cars" showTabs={true} />
             <BrandSlider />
           </div>
         </div>
@@ -43,6 +45,12 @@ export default function HomePage() {
         <div className="pb-16 container mx-auto px-4 md:px-8">
           <Suspense fallback={<HomeFeaturedCarsSkeleton />}>
             <HomeFeaturedCars />
+          </Suspense>
+        </div>
+
+        <div className="pb-16 container mx-auto px-4 md:px-8">
+          <Suspense fallback={<HomeFeaturedToursSkeleton />}>
+            <HomeFeaturedTours />
           </Suspense>
         </div>
 

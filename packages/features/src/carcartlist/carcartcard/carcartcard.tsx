@@ -74,7 +74,7 @@ export function CarCartCard({ car }: CarCartCardProps) {
           <Button
             variant="outline"
             size="icon"
-            className="shadow-none h-6 w-6"
+            className="h-6 w-6"
             onClick={handleDecrementQuantity}
           >
             <Minus size={14} />
@@ -83,7 +83,7 @@ export function CarCartCard({ car }: CarCartCardProps) {
           <Button
             variant="outline"
             size="icon"
-            className="shadow-none h-6 w-6"
+            className="h-6 w-6"
             onClick={handleIncrementQuantity}
           >
             <Plus size={14} />

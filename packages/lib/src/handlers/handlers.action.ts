@@ -36,6 +36,7 @@ export function handlerFormActionWithError<
         data: data ?? null,
       };
     } catch (error) {
+      console.error("Error in form action:", error);
       const errorPayload = handleError(error);
       return { success: false, error: errorPayload };
     }

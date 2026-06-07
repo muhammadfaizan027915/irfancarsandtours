@@ -59,7 +59,7 @@ export function SignInFrom() {
           </Link>
         </div>
 
-        <Button size={"lg"} className="font-bold shadow-none group mt-4" disabled={pending}>
+        <Button size={"lg"} className="font-bold group mt-4" disabled={pending}>
           Sign In
           <ArrowRight className="group-hover:translate-x-1 transition-transform" />
         </Button>

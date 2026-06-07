@@ -41,7 +41,7 @@ export function SearchFilter({
             }
           }}
         />
-        <Button size="lg" onClick={handleSearch} className="shadow-none">
+        <Button size="lg" onClick={handleSearch}>
           <Search className="w-4 h-4" />
         </Button>
       </div>

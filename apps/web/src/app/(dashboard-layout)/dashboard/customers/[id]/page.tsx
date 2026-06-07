@@ -27,8 +27,8 @@ export default async function CustomerDetailPage({
           <h1 className="text-3xl font-semibold tracking-tight">Customer Profile</h1>
           <p className="text-muted-foreground">Manage profile information for {user.name}</p>
         </div>
-        <Link href={`${DashboardNavigationUrls.CUSTOMERS}/${id}/bookings`}>
-          <Button variant="outline" className="font-bold shadow-none">
+        <Link href={`${DashboardNavigationUrls.CUSTOMERS}/${id}/bookings/cars`}>
+          <Button variant="outline" className="font-bold">
             <History className="w-4 h-4 mr-2" />
             Booking History
           </Button>

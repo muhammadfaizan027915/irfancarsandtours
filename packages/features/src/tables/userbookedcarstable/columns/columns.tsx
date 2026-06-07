@@ -11,6 +11,7 @@ import { SmallImage } from "@icat/ui/components/small-image";
 export const userBookedCarsColumns: ColumnDef<BookedCarWithCarResponseDto>[] = [
   {
     id: "car",
+    header: "Car",
     cell: ({ row }) => {
       const car = row.original.car;
       const imageUrl = car?.imageUrls?.[0];
@@ -42,10 +43,10 @@ export const userBookedCarsColumns: ColumnDef<BookedCarWithCarResponseDto>[] = [
   },
   {
     accessorKey: "quotedPrice",
-    header: "Quoted Price",
+    header: "Price",
     cell: ({ row }) => {
       const qoutedPrice = row.original?.quotedPrice;
-      return qoutedPrice ? `${qoutedPrice} Rs` : "N/A";
+      return qoutedPrice ? `Rs. ${qoutedPrice}` : "N/A";
     },
   },
   {
@@ -54,7 +55,7 @@ export const userBookedCarsColumns: ColumnDef<BookedCarWithCarResponseDto>[] = [
     cell: ({ row }) => {
       const quantity = row.original.quantity;
       const quotedPrice = row.original?.quotedPrice;
-      return quotedPrice ? `${quantity * quotedPrice} Rs` : "N/A";
+      return quotedPrice ? `Rs. ${quantity * quotedPrice}` : "N/A";
     },
   },
   {

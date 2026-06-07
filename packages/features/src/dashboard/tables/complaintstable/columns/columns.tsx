@@ -52,7 +52,7 @@ export const complaintColumns: ColumnDef<ComplaintResponseDto>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild className="cursor-pointer transition-all mx-auto">
-            <Button variant="ghost" size="sm" className="shadow-none gap-2">
+            <Button variant="ghost" size="sm" className="gap-2">
               View Message
               <ChevronDown className="h-4 w-4 text-muted-foreground" />
             </Button>
