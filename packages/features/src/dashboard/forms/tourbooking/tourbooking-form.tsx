@@ -38,13 +38,13 @@ export function AdminTourBookingForm() {
   const error = result?.error;
 
   useEffect(() => {
-    if (success) {
+    if (result?.success) {
       toast.success("Booking created successfully.", {
         position: "top-center",
       });
       router.push(DashboardNavigationUrls.BOOKINGS_TOURS);
     }
-  }, [success, router]);
+  }, [result, router]);
 
   const handleTourSelect = (tour: TourResponseDto) => {
     if (selectedTours.some((st) => st.tour.id === tour.id)) return;

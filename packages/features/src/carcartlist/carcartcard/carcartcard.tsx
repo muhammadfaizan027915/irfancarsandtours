@@ -1,11 +1,11 @@
 "use client";
 
 import { Armchair, Fuel, Minus, Plus } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { MouseEvent } from "react";
 
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
+import { AppImage as Image } from "@icat/ui/components/app-image";
 import { Button } from "@icat/ui/components/button";
 import {
   Card,
@@ -40,7 +40,7 @@ export function CarCartCard({ car }: CarCartCardProps) {
   return (
     <Card className="flex flex-row gap-2 items-center p-3 rounded-xl shadow-none hover:shadow hover:-translate-y-1 duration-300 transition-normal">
 
-      <Link href={`${NavigationUrls.CARS}/${car?.id}`}>
+      <Link href={`${NavigationUrls.CARS}/${car?.slug || car?.id}`}>
         <div className="relative w-24 h-20 rounded-lg overflow-hidden">
           <Image
             width={100}
@@ -55,7 +55,7 @@ export function CarCartCard({ car }: CarCartCardProps) {
       <CardContent className="flex-1 p-0">
         <CardHeader className="p-0">
           <CardTitle className="text-lg font-bold">
-            <Link href={`${NavigationUrls.CARS}/${car?.id}`} className="hover:underline">
+            <Link href={`${NavigationUrls.CARS}/${car?.slug || car?.id}`} className="hover:underline">
               {car?.brand} {car?.name}
             </Link>
           </CardTitle>

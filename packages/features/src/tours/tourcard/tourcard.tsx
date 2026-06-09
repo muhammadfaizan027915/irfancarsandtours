@@ -1,13 +1,14 @@
 "use client";
 
 import { Calendar, MapPin, ShoppingCart,Users } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
+import { AppImage as Image } from "@icat/ui/components/app-image";
 import { Button } from "@icat/ui/components/button";
 import { toast } from "@icat/ui/components/sonner";
 import { useTourCart } from "@icat/web/store";
+
 import { TourCardProps } from "./tourcard.types";
 
 export function TourCard({ tour }: TourCardProps) {
@@ -26,7 +27,7 @@ export function TourCard({ tour }: TourCardProps) {
 
   return (
     <div className="border border-border rounded-xl hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal overflow-hidden">
-      <Link href={`${NavigationUrls.TOURS}/${tour.id}`}>
+      <Link href={`${NavigationUrls.TOURS}/${tour?.slug || tour?.id}`}>
         <div className="h-56 relative">
           <Image
             width={250}
@@ -37,17 +38,12 @@ export function TourCard({ tour }: TourCardProps) {
             sizes="(max-width: 768px) 150px, 250px"
             quality={70}
           />
-          {tour.isFeatured && (
-            <div className="absolute top-4 left-4 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg uppercase tracking-tighter">
-              Featured
-            </div>
-          )}
         </div>
       </Link>
 
       <div className="p-6 pt-8 bg-card rounded-2xl flex flex-col gap-6">
         <h4 className="text-2xl font-bold line-clamp-1">
-          <Link href={`${NavigationUrls.TOURS}/${tour.id}`}>{tour.name}</Link>
+          <Link href={`${NavigationUrls.TOURS}/${tour?.slug || tour?.id}`}>{tour.name}</Link>
         </h4>
         <hr className="border-t border-border" />
         <div className="grid grid-cols-2 gap-4 text-sm">
@@ -95,7 +91,7 @@ export function TourCard({ tour }: TourCardProps) {
               className="flex-1 font-bold rounded-xl px-6"
               size="lg"
             >
-              <Link href={`${NavigationUrls.TOURS}/${tour.id}`}>Book Now</Link>
+              <Link href={`${NavigationUrls.TOURS}/${tour?.slug || tour?.id}`}>Book Now</Link>
             </Button>
           </div>
         </div>

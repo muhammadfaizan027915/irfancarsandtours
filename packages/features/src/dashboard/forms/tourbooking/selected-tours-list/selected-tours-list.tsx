@@ -1,9 +1,10 @@
 "use client";
 
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2, Map } from "lucide-react";
 
 import { TourResponseDto } from "@icat/contracts";
 import { Button } from "@icat/ui/components/button";
+import { EmptyMessage } from "@icat/ui/components/empty-message";
 import { Input } from "@icat/ui/components/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@icat/ui/components/table";
 
@@ -24,8 +25,11 @@ export type SelectedToursListProps = {
 export function SelectedToursList({ selectedTours, onUpdate, onRemove }: SelectedToursListProps) {
   if (selectedTours.length === 0) {
     return (
-      <div className="p-8 text-center border-2 border-dashed rounded-lg text-muted-foreground">
-        No tours selected yet. Search and add tours above.
+      <div className="p-8 border-2 border-dashed rounded-lg bg-muted/20">
+        <EmptyMessage 
+          icon={Map} 
+          message="No tours selected yet. Search and add tours above." 
+        />
       </div>
     );
   }

@@ -38,13 +38,13 @@ export function AdminBookingForm() {
   const error = result?.error;
 
   useEffect(() => {
-    if (success) {
+    if (result?.success) {
       toast.success("Booking created successfully.", {
         position: "top-center",
       });
       router.push(DashboardNavigationUrls.BOOKINGS_CARS);
     }
-  }, [success, router]);
+  }, [result, router]);
 
   const handleCarSelect = (car: CarResponseDto) => {
     if (selectedCars.some((sc) => sc.car.id === car.id)) return;

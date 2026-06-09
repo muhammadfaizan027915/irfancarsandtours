@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, desc, eq, gte, ilike, inArray,isNull, lte, sql } from "drizzle-orm";
+import { and, desc, eq, gte, ilike, inArray,isNull, lte, or, sql } from "drizzle-orm";
 
 import {
   db,
@@ -12,6 +12,7 @@ import {
 
 export const TourItemSelect = {
   id: toursTable.id,
+  slug: toursTable.slug,
   name: toursTable.name,
   location: toursTable.location,
   meetingPoint: toursTable.meetingPoint,
@@ -147,6 +148,31 @@ export class TourRepository {
       .select()
       .from(toursTable)
       .where(and(eq(toursTable.id, id), isNull(toursTable.deletedAt)))
+      .limit(1);
+
+    return tour ?? null;
+  }
+
+  async findByIdOrSlug(idOrSlug: string, tx: DbOrTransaction = db) {
+    const [tour] = await tx
+      .select()
+      .from(toursTable)
+      .where(
+        and(
+          or(eq(toursTable.id, idOrSlug), eq(toursTable.slug, idOrSlug)),
+          isNull(toursTable.deletedAt)
+        )
+      )
+      .limit(1);
+
+    return tour ?? null;
+  }
+
+  async findBySlug(slug: string, tx: DbOrTransaction = db) {
+    const [tour] = await tx
+      .select()
+      .from(toursTable)
+      .where(and(eq(toursTable.slug, slug), isNull(toursTable.deletedAt)))
       .limit(1);
 
     return tour ?? null;

@@ -18,12 +18,12 @@ export function ChangePasswordForm() {
   const error = result?.error;
 
   useEffect(() => {
-    if (success) {
+    if (result?.success) {
       toast.success("Password changed successfully!", {
         position: "top-center",
       });
     }
-  }, [success]);
+  }, [result]);
 
   return (
     <div className="w-full space-y-6 pb-8">

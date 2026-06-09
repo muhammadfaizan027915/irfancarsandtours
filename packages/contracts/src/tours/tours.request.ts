@@ -4,6 +4,12 @@ import { toDate } from "../generic";
 
 export const RegisterTourBodySchema = z.object({
   name: z.string().min(1, "Name is required"),
+  slug: z
+  .string()
+  .regex(/^[A-Za-z0-9_-]*$/, {
+    message: "Slug can only contain letters, numbers, underscores (_) and hyphens (-)",
+  })
+  .optional(),
   description: z.string().min(1, "Description is required"),
   location: z.string().min(1, "Location is required"),
   meetingPoint: z.string().min(1, "Meeting point is required"),

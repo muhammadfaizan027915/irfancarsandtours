@@ -87,7 +87,11 @@ export class TourBookingService {
     status: BookingStatus,
     tx: DbOrTransaction = db,
   ) {
-    const updatedBooking = await this.tourBookingRepository.updateStatus(id, status, tx);
+    const updatedBooking = await this.tourBookingRepository.updateStatus(
+      id,
+      status,
+      tx,
+    );
 
     if (updatedBooking) {
       after(
@@ -137,8 +141,6 @@ export class TourBookingService {
           })
           .from(bookedToursTable)
           .where(eq(bookedToursTable.tourId, tour.id));
-
-          console.log(`Tour ID: ${tour.id}, Booked: ${capacity.booked}, Max Capacity: ${tour.maxCapacity}`);
 
         const currentBooked = Number(capacity.booked);
         const requestedParticipants = tours
@@ -226,7 +228,7 @@ export class TourBookingService {
   ): Promise<void> {
     const bookedTours = await this.bookedTourService.getBookedToursByBookingId(
       bookingId,
-      tx
+      tx,
     );
 
     let totalPrice = 0;
@@ -260,7 +262,7 @@ export class TourBookingService {
 
         const booking = await this.tourBookingRepository.findById(
           updatedBookedTour.tourBookingId,
-          transaction
+          transaction,
         );
 
         if (booking) {

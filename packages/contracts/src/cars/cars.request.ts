@@ -10,6 +10,12 @@ import {
 
 export const RegisterCarBodySchema = z.object({
   name: z.string("Name is required").min(1, "Name cannot be empty"),
+  slug: z
+  .string()
+  .regex(/^[A-Za-z0-9_-]*$/, {
+    message: "Slug can only contain letters, numbers, underscores (_) and hyphens (-)",
+  })
+  .optional(),
   model: z.string("Model is required").min(1, "Model cannot be empty"),
   year: z.coerce
     .number("Year is required")

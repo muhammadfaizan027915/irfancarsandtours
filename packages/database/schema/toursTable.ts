@@ -15,6 +15,7 @@ export const toursTable = pgTable("tours", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
+  slug: varchar("slug", { length: 255 }).unique(),
   name: varchar("name", { length: 255 }).notNull(),
   description: text("description").notNull(),
   location: varchar("location", { length: 255 }).notNull(),

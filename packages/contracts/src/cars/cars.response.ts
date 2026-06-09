@@ -11,6 +11,7 @@ import {
 
 export const CarResponseSchema = z.object({
   id: z.uuid(),
+  slug: z.string().nullish(),
   name: z.string(),
   model: z.string(),
   year: z.number().int(),

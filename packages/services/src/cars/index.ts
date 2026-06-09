@@ -15,6 +15,7 @@ import {
   UpdateCarBodyDto,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
+import { ValidationError } from "@icat/lib/errors";
 import { CarRepository } from "@icat/repositories";
 
 export class CarService {
@@ -68,7 +69,7 @@ export class CarService {
     id: string,
     tx: DbOrTransaction = db,
   ): Promise<CarResponseDto | null> {
-    const car = await this.carRepository.findById(id, tx);
+    const car = await this.carRepository.findByIdOrSlug(id, tx);
     return car ? CarResponseSchema.parse(car) : null;
   }
 
@@ -76,6 +77,13 @@ export class CarService {
     data: RegisterCarBodyDto,
     tx: DbOrTransaction = db,
   ): Promise<CarResponseDto> {
+    if (data.slug) {
+      const existing = await this.carRepository.findBySlug(data.slug, tx);
+      if (existing) {
+        throw new ValidationError({ message: "Car slug is already in use" });
+      }
+    }
+
     const car = await this.carRepository.create(data, tx);
     return CarResponseSchema.parse(car);
   }
@@ -85,6 +93,13 @@ export class CarService {
     updates: UpdateCarBodyDto,
     tx: DbOrTransaction = db,
   ): Promise<CarResponseDto | null> {
+    if (updates.slug) {
+      const existing = await this.carRepository.findBySlug(updates.slug, tx);
+      if (existing && existing.id !== id) {
+        throw new ValidationError({ message: "Car slug is already in use" });
+      }
+    }
+
     const car = await this.carRepository.update(id, updates, tx);
     return car ? CarResponseSchema.parse(car) : null;
   }

@@ -18,8 +18,7 @@ type TourDetailProps = {
 };
 
 export async function TourDetailContent({ tourId }: TourDetailProps) {
-
-const tour = await getTourById(tourId);
+  const tour = await getTourById(tourId);
 
   if (!tour) {
     return notFound();

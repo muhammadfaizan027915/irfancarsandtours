@@ -13,6 +13,7 @@ import {
   UpdateTourBodyDto,
 } from "@icat/contracts";
 import { db, DbOrTransaction } from "@icat/database";
+import { ValidationError } from "@icat/lib/errors";
 import { TourRepository } from "@icat/repositories";
 
 export class TourService {
@@ -41,12 +42,15 @@ export class TourService {
     id: string,
     tx: DbOrTransaction = db,
   ): Promise<TourResponseDto | null> {
-    const tour = await this.tourRepository.findById(id, tx);
+    const tour = await this.tourRepository.findByIdOrSlug(id, tx);
     return tour ? TourResponseSchema.parse(tour) : null;
   }
 
-  async getToursPricingsAndCapacity (id: string[], tx: DbOrTransaction = db) {
-    const toursPricings = await this.tourRepository.getToursPricingsAndCapacity(id, tx);
+  async getToursPricingsAndCapacity(id: string[], tx: DbOrTransaction = db) {
+    const toursPricings = await this.tourRepository.getToursPricingsAndCapacity(
+      id,
+      tx,
+    );
     return toursPricings;
   }
 
@@ -54,6 +58,13 @@ export class TourService {
     data: RegisterTourBodyDto,
     tx: DbOrTransaction = db,
   ): Promise<TourResponseDto> {
+    if (data.slug) {
+      const existing = await this.tourRepository.findBySlug(data.slug, tx);
+      if (existing) {
+        throw new ValidationError({ message: "Tour slug is already in use" });
+      }
+    }
+
     const tour = await this.tourRepository.create(data, tx);
     return TourResponseSchema.parse(tour);
   }
@@ -63,6 +74,13 @@ export class TourService {
     updates: Partial<UpdateTourBodyDto>,
     tx: DbOrTransaction = db,
   ): Promise<TourResponseDto | null> {
+    if (updates.slug) {
+      const existing = await this.tourRepository.findBySlug(updates.slug, tx);
+      if (existing && existing.id !== id) {
+        throw new ValidationError({ message: "Tour slug is already in use" });
+      }
+    }
+
     const tour = await this.tourRepository.update(id, updates, tx);
     return tour ? TourResponseSchema.parse(tour) : null;
   }

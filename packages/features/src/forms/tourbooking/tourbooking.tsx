@@ -47,7 +47,7 @@ export function TourBookingForm({
   };
 
   useEffect(() => {
-    if (success && !result.data?.isLoggedIn) {
+    if (result?.success && !result.data?.isLoggedIn) {
       toast.success(
         "Tour Booked successfully, you'll receive a confirmation email!",
         {
@@ -55,7 +55,7 @@ export function TourBookingForm({
         },
       );
     }
-  }, [success, result?.data?.isLoggedIn]);
+  }, [result, result?.data?.isLoggedIn]);
 
   return (
     <form action={actionWithTours} className="space-y-8 w-full">

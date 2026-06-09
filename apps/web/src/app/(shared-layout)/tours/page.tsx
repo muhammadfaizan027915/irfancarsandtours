@@ -35,6 +35,7 @@ export default async function ToursPage({ searchParams }: ToursPageProps) {
         title="Discover Unforgettable Tours"
         subtitle="Explore the world with our curated tour packages and local experiences"
         badge="Sightseeing, Adventure, and Culture"
+        heroImageUrl="/assets/hero_background_tour.jpg"
       />
 
       <div className="container mx-auto px-4 md:px-8">

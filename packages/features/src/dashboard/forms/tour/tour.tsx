@@ -9,7 +9,6 @@ import {
   Settings2,
   X,
 } from "lucide-react";
-import Image from "next/image";
 import { useActionState, useEffect, useState } from "react";
 
 import { useMultiFileUpload } from "@icat/lib/hooks";
@@ -29,7 +28,9 @@ import {
   Textarea,
   toast,
 } from "@icat/ui";
+import { AppImage as Image } from "@icat/ui/components/app-image";
 import { createTour, updateTour } from "@icat/web/actions";
+
 import { TourFormProps } from "./tour.types";
 
 export function TourForm({ tour, mode }: TourFormProps) {
@@ -137,6 +138,16 @@ export function TourForm({ tour, mode }: TourFormProps) {
                       name="name"
                       defaultValue={tour?.name}
                       errors={error?.cause?.name?._errors}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Slug</Label>
+                    <Input
+                      id="slug"
+                      placeholder="Toyota"
+                      name="slug"
+                      defaultValue={tour?.slug ?? ""}
+                      errors={error?.cause?.slug?._errors}
                     />
                   </div>
                   <div className="space-y-2">

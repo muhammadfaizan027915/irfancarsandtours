@@ -16,6 +16,7 @@ import {
 } from "@icat/ui/components/card";
 
 import { TourBookingDetailProps } from "./detail.types";
+import { TourBookingStatusSelector } from "@icat/features/dashboard/selectors";
 
 export async function TourBookingDetail({ booking }: TourBookingDetailProps) {
   const isAdmin = await isUserAdmin();
@@ -25,9 +26,16 @@ export async function TourBookingDetail({ booking }: TourBookingDetailProps) {
       <Card className="xl:col-span-4 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-7">
           <CardTitle className="text-xl">Tour Booking Information</CardTitle>
-          {!isAdmin && (
-            <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize bg-primary/10 text-primary">
-              {booking.status}
+          {isAdmin && (
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground font-normal">
+                Status:
+              </span>
+              <TourBookingStatusSelector
+                id={booking.id}
+                status={booking.status}
+                className="w-[130px] h-9 text-sm capitalize"
+              />
             </div>
           )}
         </CardHeader>
@@ -82,7 +90,9 @@ export async function TourBookingDetail({ booking }: TourBookingDetailProps) {
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-3">
               <User className="w-5 h-5 text-primary shrink-0" />
-              <p className="font-medium truncate">{booking.name || booking.bookedBy?.name}</p>
+              <p className="font-medium truncate">
+                {booking.name || booking.bookedBy?.name}
+              </p>
             </div>
             <div className="flex items-center gap-3">
               <Mail className="w-5 h-5 text-primary shrink-0" />
@@ -95,14 +105,19 @@ export async function TourBookingDetail({ booking }: TourBookingDetailProps) {
             </div>
             <div className="flex items-center gap-3">
               <Phone className="w-5 h-5 text-primary shrink-0" />
-              <Link href={`tel:${booking.phone || booking.bookedBy?.phone}`} className="hover:underline text-sm">
+              <Link
+                href={`tel:${booking.phone || booking.bookedBy?.phone}`}
+                className="hover:underline text-sm"
+              >
                 {booking.phone || booking.bookedBy?.phone}
               </Link>
             </div>
             {(booking.cnic || booking.bookedBy?.cnic) && (
               <div className="flex items-center gap-3">
                 <IdCard className="w-5 h-5 text-primary shrink-0" />
-                <p className="text-sm">{booking.cnic || booking.bookedBy?.cnic}</p>
+                <p className="text-sm">
+                  {booking.cnic || booking.bookedBy?.cnic}
+                </p>
               </div>
             )}
           </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowRight, Car, ImageIcon, Info, Settings2, X } from "lucide-react";
-import Image from "next/image";
 import { useActionState, useEffect } from "react";
 
 import {
@@ -28,6 +27,7 @@ import {
   Textarea,
   toast,
 } from "@icat/ui";
+import { AppImage as Image } from "@icat/ui/components/app-image";
 import { registerCar, updateCar } from "@icat/web/actions";
 
 import { CarFormProps } from "./car.types";
@@ -110,6 +110,16 @@ export function CarForm({ car, mode }: CarFormProps) {
                       name="name"
                       defaultValue={car?.name}
                       errors={error?.cause?.name?._errors}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Slug</Label>
+                    <Input
+                      id="slug"
+                      placeholder="Toyota"
+                      name="slug"
+                      defaultValue={car?.slug ?? ""}
+                      errors={error?.cause?.slug?._errors}
                     />
                   </div>
                   <div className="space-y-2">

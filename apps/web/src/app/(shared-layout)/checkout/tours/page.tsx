@@ -1,12 +1,14 @@
-import { Suspense } from "react";
-import { TourCheckoutContent, TourCheckoutContentSkeleton } from "@icat/features/contents/checkout";
+import { Metadata } from "next";
+import { TourCheckoutContent } from "@icat/features/contents/checkout";
+
+export const metadata: Metadata = {
+  title: "Checkout - Tours | Irfan Cars & Tours",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function TourCheckoutPage() {
-  return (
-    <>
-      <Suspense fallback={<TourCheckoutContentSkeleton />}>
-        <TourCheckoutContent />
-      </Suspense>
-    </>
-  );
+  return <TourCheckoutContent />;
 }

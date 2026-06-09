@@ -1,11 +1,11 @@
 "use client";
 
 import { Armchair, CarFront, Cog, Fuel, ShoppingCart } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { CarPlaceHolderImageUrl } from "@icat/features/common/common.constants";
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
+import { AppImage as Image } from "@icat/ui/components/app-image";
 import { Button } from "@icat/ui/components/button";
 import { toast } from "@icat/ui/components/sonner";
 import { useCarCart } from "@icat/web/store";
@@ -28,7 +28,7 @@ export function CarCard({ car }: CarCardProps) {
 
   return (
     <div className="border border-border rounded-xl hover:shadow-2xl hover:-translate-y-1 duration-300 transition-normal overflow-hidden">
-      <Link href={`${NavigationUrls.CARS}/${car?.id}`}>
+      <Link href={`${NavigationUrls.CARS}/${car?.slug || car?.id}`}>
         <div className="h-56 relative">
           <Image
             width={250}
@@ -44,7 +44,7 @@ export function CarCard({ car }: CarCardProps) {
 
       <div className="p-6 pt-8 bg-card rounded-2xl flex flex-col gap-6">
         <h4 className="text-2xl font-bold">
-          <Link href={`${NavigationUrls.CARS}/${car?.id}`}>
+          <Link href={`${NavigationUrls.CARS}/${car?.slug || car?.id}`}>
             {`${car?.brand} ${car?.name}`}
           </Link>
         </h4>
@@ -96,7 +96,7 @@ export function CarCard({ car }: CarCardProps) {
               className="flex-1 font-bold rounded-xl px-6"
               size="lg"
             >
-              <Link href={`${NavigationUrls.CARS}/${car?.id}`}>Book Now</Link>
+              <Link href={`${NavigationUrls.CARS}/${car?.slug || car?.id}`}>Book Now</Link>
             </Button>
           </div>
         </div>

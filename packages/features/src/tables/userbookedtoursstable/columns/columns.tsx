@@ -20,7 +20,7 @@ export const userBookedToursColumns: ColumnDef<BookedTourWithTourResponseDto>[] 
           <SmallImage src={imageUrl} alt={tour?.name} />
 
           <Link
-            href={`${NavigationUrls.TOURS}/${tour?.id}`}
+            href={`${NavigationUrls.TOURS}/${tour?.slug || tour?.id}`}
             target="_blank"
             className="hover:text-primary hover:underline"
           >

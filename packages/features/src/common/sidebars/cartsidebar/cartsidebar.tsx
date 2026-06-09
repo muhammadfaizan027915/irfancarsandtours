@@ -5,10 +5,10 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { CarCartCard } from "@icat/features/carcartlist/carcartcard";
-import { EmptyCartMessage } from "@icat/features/common/emptycartmessage";
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { TourCartCard } from "@icat/features/tourcartlist/tourcartcard";
 import { Button } from "@icat/ui/components/button";
+import { EmptyMessage } from "@icat/ui/components/empty-message";
 import {
   Sheet,
   SheetClose,
@@ -81,7 +81,7 @@ export function CartSidebar() {
             {carsList?.length ? (
               carsList?.map((car) => <CarCartCard car={car} key={car?.id} />)
             ) : (
-              <EmptyCartMessage />
+              <EmptyMessage message="Your cart is empty!" />
             )}
           </TabsContent>
 
@@ -91,7 +91,7 @@ export function CartSidebar() {
                 <TourCartCard tour={tour} key={tour?.id} />
               ))
             ) : (
-              <EmptyCartMessage />
+              <EmptyMessage message="Your cart is empty!" />
             )}
           </TabsContent>
         </Tabs>

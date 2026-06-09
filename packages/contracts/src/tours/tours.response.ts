@@ -4,6 +4,7 @@ import { PaginatedResponseSchema, toDate } from "../generic";
 
 export const TourResponseSchema = z.object({
   id: z.uuid(),
+  slug: z.string().nullish(),
   name: z.string(),
   description: z.string(),
   location: z.string(),

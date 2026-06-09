@@ -3,6 +3,7 @@ import { getTourSeo } from "@icat/web/data/seo";
 import { TourDetailContent } from "@icat/features/contents/tourdetail";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import Script from "next/script";
 
 type TourDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -48,5 +49,34 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
     notFound();
   }
 
-  return <TourDetailContent tourId={tour.id} />;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: tour.name,
+    image: tour.imageUrls ?? [],
+    description: tour.description || `Book the ${tour.name} tour with Irfan Cars and Tours.`,
+    brand: {
+      "@type": "Brand",
+      name: "Irfan Cars and Tours",
+    },
+    offers: {
+      "@type": "Offer",
+      price: tour.pricePerAdult,
+      priceCurrency: "PKR",
+      availability: "https://schema.org/InStock",
+      url: `https://irfancarsandtours.com/tours/${id}`,
+    },
+  };
+
+  return (
+    <>
+      <Script
+        id={`json-ld-tour-${id}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <TourDetailContent tourId={tour.id} />
+    </>
+  );
 }
+

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronUp } from "lucide-react";
+import { ChevronUp, Info } from "lucide-react";
 
 import { useDisclosure } from "@icat/lib/hooks";
 import { Button } from "@icat/ui/components/button";
@@ -10,6 +10,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@icat/ui/components/collapsible";
+import { EmptyMessage } from "@icat/ui/components/empty-message";
 
 import { TourInclusionsProps } from "./inclusions.types";
 
@@ -43,16 +44,20 @@ export function TourInclusions({
                 Inclusions
               </h4>
               <div className="flex flex-wrap gap-2">
-                {inclusions?.map((item, i) => (
-                  <Button
-                    size="lg"
-                    className="rounded-lg bg-accent pointer-events-none font-semibold basis-20"
-                    variant="outline"
-                    key={i}
-                  >
-                    {item}
-                  </Button>
-                ))}
+                {inclusions?.length ? (
+                  inclusions.map((item, i) => (
+                    <Button
+                      size="lg"
+                      className="rounded-lg bg-accent pointer-events-none font-semibold basis-20"
+                      variant="outline"
+                      key={i}
+                    >
+                      {item}
+                    </Button>
+                  ))
+                ) : (
+                  <EmptyMessage icon={Info} iconSize={32} message="No inclusions listed" className="py-2 w-full text-sm" />
+                )}
               </div>
             </div>
 
@@ -61,16 +66,20 @@ export function TourInclusions({
                 Exclusions
               </h4>
               <div className="flex flex-wrap gap-2">
-                {exclusions?.map((item, i) => (
-                  <Button
-                    size="lg"
-                    className="rounded-lg bg-destructive-foreground border-destructive/40  pointer-events-none font-semibold basis-20"
-                    variant="outline"
-                    key={i}
-                  >
-                    {item}
-                  </Button>
-                ))}
+                {exclusions?.length ? (
+                  exclusions.map((item, i) => (
+                    <Button
+                      size="lg"
+                      className="rounded-lg bg-destructive-foreground border-destructive/40  pointer-events-none font-semibold basis-20"
+                      variant="outline"
+                      key={i}
+                    >
+                      {item}
+                    </Button>
+                  ))
+                ) : (
+                  <EmptyMessage icon={Info} iconSize={32} message="No exclusions listed" className="py-2 w-full text-sm" />
+                )}
               </div>
             </div>
           </CollapsibleContent>

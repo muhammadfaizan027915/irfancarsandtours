@@ -1,10 +1,11 @@
 "use client";
 
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2, Car } from "lucide-react";
 
 import { CarResponseDto } from "@icat/contracts";
 import { Button } from "@icat/ui/components/button";
 import { Checkbox } from "@icat/ui/components/checkbox";
+import { EmptyMessage } from "@icat/ui/components/empty-message";
 import { Input } from "@icat/ui/components/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@icat/ui/components/table";
 
@@ -24,8 +25,11 @@ export type SelectedCarsListProps = {
 export function SelectedCarsList({ selectedCars, onUpdate, onRemove }: SelectedCarsListProps) {
   if (selectedCars.length === 0) {
     return (
-      <div className="p-8 text-center border-2 border-dashed rounded-lg text-muted-foreground">
-        No cars selected yet. Search and add cars above.
+      <div className="p-8 border-2 border-dashed rounded-lg bg-muted/20">
+        <EmptyMessage 
+          icon={Car} 
+          message="No cars selected yet. Search and add cars above." 
+        />
       </div>
     );
   }

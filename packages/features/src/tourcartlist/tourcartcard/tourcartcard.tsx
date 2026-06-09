@@ -1,11 +1,11 @@
 "use client";
 
 import { Minus, Plus, Trash2,Users } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { MouseEvent } from "react";
 
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
+import { AppImage as Image } from "@icat/ui/components/app-image";
 import { Button } from "@icat/ui/components/button";
 import {
   Card,
@@ -46,7 +46,7 @@ export function TourCartCard({ tour }: TourCartCardProps) {
       >
         <Trash2 size={16} />
       </Button>
-      <Link href={`${NavigationUrls.TOURS}/${tour?.id}`}>
+      <Link href={`${NavigationUrls.TOURS}/${tour?.slug || tour?.id}`}>
         <div className="relative w-24 h-20 rounded-lg overflow-hidden">
           <Image
             width={100}
@@ -61,7 +61,7 @@ export function TourCartCard({ tour }: TourCartCardProps) {
       <CardContent className="flex-1 p-0">
         <CardHeader className="p-0 pr-8">
           <CardTitle className="text-lg font-bold truncate">
-            <Link href={`${NavigationUrls.TOURS}/${tour?.id}`} className="hover:underline">
+            <Link href={`${NavigationUrls.TOURS}/${tour?.slug || tour?.id}`} className="hover:underline">
               {tour?.name}
             </Link>
           </CardTitle>

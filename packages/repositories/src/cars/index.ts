@@ -8,6 +8,7 @@ import {
   ilike,
   inArray,
   isNull,
+  or,
   sql,
 } from "drizzle-orm";
 
@@ -26,6 +27,7 @@ import {
 
 export const CarItemSelect = {
   id: carsTable.id,
+  slug: carsTable.slug,
   name: carsTable.name,
   model: carsTable.model,
   year: carsTable.year,
@@ -161,6 +163,31 @@ export class CarRepository {
       .select()
       .from(carsTable)
       .where(and(eq(carsTable.id, id), isNull(carsTable.deletedAt)))
+      .limit(1);
+
+    return car ?? null;
+  }
+
+  async findByIdOrSlug(idOrSlug: string, tx: DbOrTransaction = db) {
+    const [car] = await tx
+      .select()
+      .from(carsTable)
+      .where(
+        and(
+          or(eq(carsTable.id, idOrSlug), eq(carsTable.slug, idOrSlug)),
+          isNull(carsTable.deletedAt)
+        )
+      )
+      .limit(1);
+
+    return car ?? null;
+  }
+
+  async findBySlug(slug: string, tx: DbOrTransaction = db) {
+    const [car] = await tx
+      .select()
+      .from(carsTable)
+      .where(and(eq(carsTable.slug, slug), isNull(carsTable.deletedAt)))
       .limit(1);
 
     return car ?? null;

@@ -1,3 +1,5 @@
+import { CarFront, Map } from "lucide-react";
+
 import { Card } from "@icat/ui/components/card";
 import {
   Tabs,
@@ -5,7 +7,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@icat/ui/components/tabs";
-import { CarFront, Map } from "lucide-react";
 
 import { CarSearchbar } from "./carsearch";
 import { SearchbarProps } from "./searchbar.types";
@@ -25,13 +26,13 @@ export function Searchbar({
           <TabsList className="bg-background p-0 h-auto flex gap-2 rounded-t-2xl rounded-b-none w-fit border-none border-transparent z-20">
             <TabsTrigger
               value="cars"
-              className="rounded-b-none border-b-0 text-base data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:font-bold data-[state=inactive]:bg-muted data-[state=inactive]:text-muted-foreground shadow-none"
+              className="rounded-b-none cursor-pointer border-b-0 text-base data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:font-bold data-[state=inactive]:bg-muted data-[state=inactive]:text-muted-foreground shadow-none"
             >
               <CarFront className="w-5 h-5 mr-2" /> Cars
             </TabsTrigger>
             <TabsTrigger
               value="tours"
-              className="rounded-b-none border-b-0 text-base data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:font-bold data-[state=inactive]:bg-muted data-[state=inactive]:text-muted-foreground shadow-none"
+              className="rounded-b-none cursor-pointer border-b-0 text-base data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:font-bold data-[state=inactive]:bg-muted data-[state=inactive]:text-muted-foreground shadow-none"
             >
               <Map className="w-5 h-5 mr-2" /> Tours
             </TabsTrigger>

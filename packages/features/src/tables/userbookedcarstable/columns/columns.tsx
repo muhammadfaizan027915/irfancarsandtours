@@ -21,7 +21,7 @@ export const userBookedCarsColumns: ColumnDef<BookedCarWithCarResponseDto>[] = [
           <SmallImage src={imageUrl} alt={car?.name} />
 
           <Link
-            href={`${NavigationUrls.CARS}/${car?.id}`}
+            href={`${NavigationUrls.CARS}/${car?.slug || car?.id}`}
             target="_blank"
             className="hover:text-primary hover:underline"
           >

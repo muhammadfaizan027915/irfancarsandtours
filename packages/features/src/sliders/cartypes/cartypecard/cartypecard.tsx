@@ -1,10 +1,10 @@
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { CarPlaceHolderImageUrl } from "@icat/features/common/common.constants";
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { Card } from "@icat/ui";
+import { AppImage as Image } from "@icat/ui/components/app-image";
 import { Button } from "@icat/ui/components/button";
 
 import { CarTypeCardProps } from "./cartypecard.types";

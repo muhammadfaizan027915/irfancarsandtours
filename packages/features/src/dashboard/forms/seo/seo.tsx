@@ -35,12 +35,12 @@ export function SeoForm({ carId, tourId, seo }: SeoFormProps) {
   const error = result?.error;
 
   useEffect(() => {
-    if (success) {
+    if (result?.success) {
       toast.success("SEO settings updated successfully.", {
         position: "top-center",
       });
     }
-  }, [success]);
+  }, [result]);
 
   const handleAction = (formData: FormData) => {
     const data: { carId?: string; tourId?: string } = {};

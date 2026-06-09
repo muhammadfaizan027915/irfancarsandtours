@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
+import { AppImage as Image } from "@icat/ui/components/app-image";
 
 export function Logo() {
   return (

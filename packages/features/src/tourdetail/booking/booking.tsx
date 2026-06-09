@@ -1,11 +1,31 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+
 import { TourBookingForm } from "@icat/features/forms/tourbooking";
-import { getSessionUser } from "@icat/lib/auth";
-import { Card, CardContent, CardHeader, CardTitle } from "@icat/ui/components/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@icat/ui/components/card";
+import { TourCartItem, useTourCart } from "@icat/web/store";
 
 import { TourBookingProps } from "./booking.types";
 
-export async function TourBooking({ tours, hideNumberOfAdultsAndChildren }: TourBookingProps) {
-  const sessionUser = await getSessionUser();
+export function TourBooking({
+  tours = [],
+  hideNumberOfAdultsAndChildren,
+}: TourBookingProps) {
+  const { data } = useSession();
+  const { toursList } = useTourCart();
+  const sessionUser = data?.user;
+
+  const _tours = toursList?.map((tour: TourCartItem) => ({
+    tourId: tour?.id,
+    adultsNumber: tour?.adults,
+    childrenNumber: tour?.children,
+  }));
 
   return (
     <Card className="shadow-none rounded-xl overflow-hidden p-0">
@@ -17,7 +37,12 @@ export async function TourBooking({ tours, hideNumberOfAdultsAndChildren }: Tour
       </CardHeader>
       <CardContent className="p-6 md:p-8">
         <TourBookingForm
-          defaultValue={{ ...sessionUser, tours }}
+          defaultValue={{
+            ...sessionUser,
+            name: sessionUser?.email ?? "",
+            email: sessionUser?.email ?? "",
+            tours: [...tours, ..._tours],
+          }}
           hideNumberOfAdultsAndChildren={hideNumberOfAdultsAndChildren}
         />
       </CardContent>
