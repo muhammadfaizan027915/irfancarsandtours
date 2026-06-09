@@ -1,6 +1,6 @@
 import "server-only";
 
-import { GetToursBodyDto} from "@icat/contracts";
+import { GetTourBookingsBodyDto, GetToursBodyDto} from "@icat/contracts";
 import { TourService, TourBookingService } from "@icat/services";
 
 export async function getTours(query?: GetToursBodyDto) {
@@ -18,9 +18,9 @@ export async function getTourById(id: string) {
   return await tourService.getTourById(id);
 }
 
-export async function getTourBookings(query?: any) {
+export async function getTourBookings(args?: GetTourBookingsBodyDto){
   const service = new TourBookingService();
-  return await service.getAll(query);
+  return await service.getAll(args);
 }
 
 export async function getTourBookingById(id: string) {
