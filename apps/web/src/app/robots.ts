@@ -1,12 +1,13 @@
-import { MetadataRoute } from 'next'
- 
+import { MetadataRoute } from "next";
+
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = process.env.NEXTAUTH_URL;
   return {
     rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/dashboard/', '/api/', '/checkout/'],
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/dashboard/", "/api/", "/checkout/"],
     },
-    sitemap: `${process.env.NEXTAUTH_URL}/sitemap.xml`,
-  }
+    sitemap: `${baseUrl}/sitemap.xml`,
+  };
 }
