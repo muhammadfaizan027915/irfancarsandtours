@@ -3,7 +3,7 @@ import { db, carsTable, toursTable } from "@icat/database"
 import { isNotNull, isNull, and } from "drizzle-orm"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_AUTH_URL as string;
+  const baseUrl = process.env.NEXTAUTH_URL as string;
   
   const cars = await db
     .select({ slug: carsTable.slug, updatedAt: carsTable.updatedAt })

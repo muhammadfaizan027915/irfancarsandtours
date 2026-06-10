@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/dashboard/', '/api/', '/checkout/'],
     },
-    sitemap: 'https://irfancarsandtours.com/sitemap.xml',
+    sitemap: `${process.env.NEXTAUTH_URL}/sitemap.xml`,
   }
 }
