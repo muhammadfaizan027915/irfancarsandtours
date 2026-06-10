@@ -60,27 +60,6 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
-  },
-
-  redirects() {
-    return [
-      {
-        source: "/bookings",
-        destination: "/bookings/cars",
-        permanent: true,
-      },
-      {
-        source: "/dashboard",
-        destination: "/dashboard/bookings/cars",
-        permanent: true,
-      },
-
-      {
-        source: "/dashboard/bookings",
-        destination: "/dashboard/bookings/cars",
-        permanent: true,
-      },
-    ];
   }
 };
 
