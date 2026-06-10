@@ -42,13 +42,12 @@ export function BookingsFilterBar() {
   return (
     <Card className="py-4 shadow-none rounded-xl gap-2">
       <CardHeader className="px-4 h-8 flex flex-row gap-2 justify-between items-center">
-        <h3 className="font-semibold text-lg">Filter Bookings</h3>
+        <h3 className="font-semibold text-lg">Filter Car Bookings</h3>
         {hasFilters && (
           <Button
             onClick={handleClearFilters}
             size="sm"
             variant="outline"
-            className="shadow-none"
           >
             <X className="w-4 h-4 mr-2" />
             Clear Filters

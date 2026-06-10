@@ -52,12 +52,12 @@ export function BookingConfirmation({ booking }: BookingConfirmationProps) {
 
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
         <Link href={NavigationUrls.HOME}>
-          <Button variant="secondary" className="w-full sm:w-auto shadow-none">
+          <Button variant="secondary" className="w-full sm:w-auto">
             Back to Home
           </Button>
         </Link>
-        <Link href={`${NavigationUrls.BOOKINGS}/${booking?.id}`}>
-          <Button className="w-full sm:w-auto shadow-none">View Booking</Button>
+        <Link href={`${NavigationUrls.BOOKINGS_CARS}/${booking?.id}`}>
+          <Button className="w-full sm:w-auto">View Booking</Button>
         </Link>
       </div>
     </Card>

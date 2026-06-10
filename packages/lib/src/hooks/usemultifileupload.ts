@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import {
   deleteFile as deleteFileUtil,
@@ -34,7 +34,16 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
     })),
   );
 
-  const uploadFiles = (selectedFiles: FileList | File[]) => {
+  const updateFile = useCallback((id: string, updates: Partial<UploadedFile>) => {
+    setFiles((prev) =>
+      prev.map((file) => (file.id === id ? { ...file, ...updates } : file)),
+    );
+  }, []);
+
+  const getCurrentFiles = useCallback(() =>
+    JSON.parse(JSON.stringify(files)) as UploadedFile[], [files]);
+
+  const uploadFiles = useCallback((selectedFiles: FileList | File[]) => {
     const filesArray = Array.from(selectedFiles);
 
     filesArray.forEach(async (file) => {
@@ -72,9 +81,9 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
         },
       });
     });
-  };
+  }, [updateFile, getCurrentFiles, onSuccess, onError]);
 
-  const deleteFile = async (id: string) => {
+  const deleteFile = useCallback(async (id: string) => {
     const file = files.find((file) => file.id === id);
     if (!file) return;
 
@@ -98,18 +107,9 @@ export function useMultiFileUpload(options?: UseMultiFileUploadOptions) {
       setFiles(leftFiles);
       onSuccess?.(leftFiles);
     }
-  };
+  }, [files, getCurrentFiles, onSuccess, onError]);
 
-  const updateFile = (id: string, updates: Partial<UploadedFile>) => {
-    setFiles((prev) =>
-      prev.map((file) => (file.id === id ? { ...file, ...updates } : file)),
-    );
-  };
-
-  const getCurrentFiles = () =>
-    JSON.parse(JSON.stringify(files)) as UploadedFile[];
-
-  const resetFiles = () => setFiles([]);
+  const resetFiles = useCallback(() => setFiles([]), []);
 
   return {
     files,

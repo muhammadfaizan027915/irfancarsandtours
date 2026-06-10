@@ -8,6 +8,7 @@ import {
   ilike,
   inArray,
   isNull,
+  or,
   sql,
 } from "drizzle-orm";
 
@@ -26,6 +27,7 @@ import {
 
 export const CarItemSelect = {
   id: carsTable.id,
+  slug: carsTable.slug,
   name: carsTable.name,
   model: carsTable.model,
   year: carsTable.year,
@@ -156,11 +158,36 @@ export class CarRepository {
       .limit(limit);
   }
 
-  async findById(id: string, tx: DbOrTransaction = db): Promise<CarSelect | null> {
+  async findById(id: string, tx: DbOrTransaction = db) {
     const [car] = await tx
       .select()
       .from(carsTable)
       .where(and(eq(carsTable.id, id), isNull(carsTable.deletedAt)))
+      .limit(1);
+
+    return car ?? null;
+  }
+
+  async findByIdOrSlug(idOrSlug: string, tx: DbOrTransaction = db) {
+    const [car] = await tx
+      .select()
+      .from(carsTable)
+      .where(
+        and(
+          or(eq(carsTable.id, idOrSlug), eq(carsTable.slug, idOrSlug)),
+          isNull(carsTable.deletedAt)
+        )
+      )
+      .limit(1);
+
+    return car ?? null;
+  }
+
+  async findBySlug(slug: string, tx: DbOrTransaction = db) {
+    const [car] = await tx
+      .select()
+      .from(carsTable)
+      .where(and(eq(carsTable.slug, slug), isNull(carsTable.deletedAt)))
       .limit(1);
 
     return car ?? null;
@@ -176,24 +203,28 @@ export class CarRepository {
       .returning();
     return car;
   }
-async update(
-  id: string,
-  data: Partial<Omit<CarInsert, "id" | "createdAt" | "updatedAt">>,
-  tx: DbOrTransaction = db,
-): Promise<CarSelect | null> {
-  const [updatedCar] = await tx
-    .update(carsTable)
-    .set({
-      ...data,
-      updatedAt: new Date(),
-    })
-    .where(eq(carsTable.id, id))
-    .returning();
 
-  return updatedCar ?? null;
-}
+  async update(
+    id: string,
+    data: Partial<Omit<CarInsert, "id" | "createdAt" | "updatedAt">>,
+    tx: DbOrTransaction = db,
+  ): Promise<CarSelect | null> {
+    const [updatedCar] = await tx
+      .update(carsTable)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+      })
+      .where(eq(carsTable.id, id))
+      .returning();
 
-  async findCarsDriverAndStartingPrice(carIds: string[], tx: DbOrTransaction = db) {
+    return updatedCar ?? null;
+  }
+
+  async findCarsDriverAndStartingPrice(
+    carIds: string[],
+    tx: DbOrTransaction = db,
+  ) {
     const cars = await tx
       .select({
         id: carsTable.id,
@@ -213,7 +244,10 @@ async update(
       .where(inArray(carsTable.id, carIds));
   }
 
-  async delete(id: string, tx: DbOrTransaction = db): Promise<CarSelect | null> {
+  async delete(
+    id: string,
+    tx: DbOrTransaction = db,
+  ): Promise<CarSelect | null> {
     const [car] = await tx
       .update(carsTable)
       .set({ deletedAt: new Date() })

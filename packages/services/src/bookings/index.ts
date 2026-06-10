@@ -124,6 +124,10 @@ export class BookingService {
         {
           ...data,
           userId: activeUserId,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          cnic: data.cnic,
           pickupDate: new Date(data.pickupDate),
           dropoffDate: new Date(data.dropoffDate),
           totalPrice,
@@ -131,19 +135,17 @@ export class BookingService {
         transaction,
       );
 
-      await this.userService.updateUser(activeUserId, data, transaction);
-
-      await this.bookedCarService.createMany(
+      await this.bookedCarService.createBookedCars(
         bookedCars.map((bc) => ({ ...bc, bookingId: booking.id })),
         transaction,
       );
 
       const parsedBooking = BookingResponseSchema.parse(booking);
 
-      if (user && parsedBooking) {
+      if (parsedBooking) {
         after(
           sendBookingConfirmationEmail({
-            user,
+            user: { name: parsedBooking.name, email: parsedBooking.email },
             booking: parsedBooking,
           }),
         );
@@ -170,19 +172,57 @@ export class BookingService {
 
     if (data.status) {
       after(async () => {
-        const user = await this.userService.findById(
-          parsedBooking.userId,
-          tx,
-        );
-        if (user) {
-          await sendBookingStatusUpdateEmail({
-            user,
-            booking: parsedBooking,
-          });
-        }
+        await sendBookingStatusUpdateEmail({
+          user: { name: parsedBooking.name, email: parsedBooking.email },
+          booking: parsedBooking,
+        });
       });
     }
 
     return parsedBooking;
+  }
+
+  async recalculateTotalPrice(
+    bookingId: string,
+    tx: DbOrTransaction = db,
+  ): Promise<void> {
+    const bookedCars = await this.bookedCarService.getByBookingIdWithCars(
+      bookingId,
+      tx
+    );
+
+    let totalPrice = 0;
+    for (const car of bookedCars) {
+      totalPrice += (car.quotedPrice ?? 0) * (car.quantity ?? 1);
+    }
+
+    await this.bookingRepository.update(bookingId, { totalPrice }, tx);
+  }
+
+  async updateBookedCarPrice(
+    bookedCarId: string,
+    quotedPrice: number,
+    tx: DbOrTransaction = db,
+  ) {
+    const executeUpdate = async (transaction: DbOrTransaction) => {
+      const updatedBookedCar = await this.bookedCarService.update(
+        bookedCarId,
+        { quotedPrice },
+        transaction,
+      );
+
+      if (updatedBookedCar?.bookingId) {
+        await this.recalculateTotalPrice(
+          updatedBookedCar.bookingId,
+          transaction,
+        );
+      }
+
+      return updatedBookedCar;
+    };
+
+    return tx === db
+      ? await db.transaction((newTx) => executeUpdate(newTx))
+      : await executeUpdate(tx);
   }
 }

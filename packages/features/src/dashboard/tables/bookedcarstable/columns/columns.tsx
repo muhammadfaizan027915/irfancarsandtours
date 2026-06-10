@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef, Row } from "@tanstack/react-table";
-import { KeyboardEvent,useState } from "react";
+import { KeyboardEvent, useState } from "react";
 
 import { BookedCarWithCarResponseDto } from "@icat/contracts";
 import { userBookedCarsColumns } from "@icat/features/tables/userbookedcarstable/columns";
@@ -42,33 +42,27 @@ const QuotePriceCell = ({ row }: { row: Row<BookedCarWithCarResponseDto> }) => {
   };
 
   if (!qoutedPrice && !isOpen) {
-    return (
-      <Button className="shadow-none" onClick={onOpen}>
-        Qoute Price
-      </Button>
-    );
+    return <Button onClick={onOpen}>Qoute Price</Button>;
   }
 
   if (qoutedPrice && !isOpen) {
-    return (
-      <Button className="shadow-none" onClick={onOpen}>
-        Edit Price
-      </Button>
-    );
+    return <Button onClick={onOpen}>Edit Price</Button>;
   }
 
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex flex-col gap-2">
       <Input
         type="number"
-        className="w-30"
+        className="w-36"
         onChange={(e) => setQoutedPriceInput(Number(e.target.value))}
         onKeyDown={handleSavOnEnter}
       />
-      <Button className="shadow-none" variant="outline" onClick={onClose}>
-        Cancel
-      </Button>
-      <Button onClick={handleSave}>Save</Button>
+      <div className="flex gap-2">
+        <Button variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button onClick={handleSave}>Save</Button>
+      </div>
     </div>
   );
 };

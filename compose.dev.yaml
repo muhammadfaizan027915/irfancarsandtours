@@ -19,8 +19,6 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.dev
-    mem_limit: 2g
-    memswap_limit: 2g
     env_file:
       - .env.dev
       - .env.docker
@@ -28,17 +26,8 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
-      - /app/node_modules
-      - /app/apps/web/node_modules
-      - /app/packages/lib/node_modules
-      - /app/packages/contracts/node_modules
-      - /app/packages/database/node_modules
-      - /app/packages/features/node_modules
-      - /app/packages/repositories/node_modules
-      - /app/packages/services/node_modules
-      - /app/packages/ui/node_modules
     environment:
-      WATCHPACK_POLLING: "true"
+      WATCHPACK_POLLING: "false"
       NODE_ENV: development
     depends_on:
       database:

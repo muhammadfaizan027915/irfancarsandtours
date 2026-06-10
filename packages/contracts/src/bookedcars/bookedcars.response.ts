@@ -5,14 +5,14 @@ import { toDate } from "@icat/contracts/generic";
 
 export const BookedCarResponseSchema = z.object({
   id: z.string(),
+  bookingId: z.string().nullish(),
+  carId: z.string().nullish(),
   quotedPrice: z.number().nullish(),
   bookedWithDriver: z.boolean().default(false),
   quantity: z.number().default(1),
   createdAt: toDate(z.date().nullable()),
   updatedAt: toDate(z.date().nullish()),
   deletedAt: toDate(z.date().nullish()),
-  bookingId: z.string().nullish(),
-  carId: z.string().nullish(),
 });
 
 export type BookedCarResponseDto = z.infer<typeof BookedCarResponseSchema>;

@@ -14,7 +14,7 @@ export function DashboardSidebarNavigation() {
   return (
     <SidebarMenu className="gap-2">
       {DashboardNavigation?.map((navigation) => {
-        const isActive = pathname.startsWith(navigation.url);
+        const isActive = pathname.includes(navigation.url);
         return (
           <SidebarMenuItem key={navigation.title}>
             <SidebarMenuButton

@@ -78,7 +78,7 @@ export const userBookingsColumns: ColumnDef<BookingListItemResponseDto>[] = [
     cell: ({ row }) => {
       return (
         <Link
-          href={`${NavigationUrls.BOOKINGS}/${row.original.id}`}
+          href={`${NavigationUrls.BOOKINGS_CARS}/${row.original.id}`}
           className="text-primary"
         >
           <ExternalLink size={18} />

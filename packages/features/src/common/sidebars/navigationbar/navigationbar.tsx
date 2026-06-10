@@ -19,7 +19,7 @@ export function NavigationBar() {
         <Button
           size={"lg"}
           variant={"ghost"}
-          className="shadow-none block lg:hidden"
+          className="block lg:hidden"
         >
           <Menu />
         </Button>
@@ -28,7 +28,7 @@ export function NavigationBar() {
         <nav className="flex-1 overflow-auto flex flex-col gap-8 p-6">
           <Link href={NavigationUrls.HOME}>Home</Link>
           <Link href={NavigationUrls.CARS}>Cars</Link>
-          <a>Tours</a>
+          <Link href={NavigationUrls.TOURS}>Tours</Link>
           <Link href={NavigationUrls.ABOUT_US}>About Us</Link>
           <Link href={NavigationUrls.COMPLAINTS}>Complaints</Link>
         </nav>

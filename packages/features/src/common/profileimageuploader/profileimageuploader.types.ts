@@ -1,4 +1,4 @@
-export interface ProfileImageUploaderProps {
+export type ProfileImageUploaderProps = {
   initialImage?: string | null;
   userName?: string;
   onUploadSuccess?: (url: string) => void;

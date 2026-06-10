@@ -14,8 +14,8 @@ const Searchbar = dynamic(
   }
 );
 
-const FiltersBar = dynamic(
-  () => import("@icat/features/filtersbar").then((m) => m.FiltersBar),
+const CarsFiltersBar = dynamic(
+  () => import("@icat/features/filtersbars").then((m) => m.CarsFiltersBar),
   {
     loading: () => <Skeleton className="h-[600px] w-full rounded-xl" />,
   }
@@ -26,7 +26,7 @@ type CarsPageProps = {
 };
 
 export default async function CarsPage({ searchParams }: CarsPageProps) {
-  const filters = await searchParams;
+  const params = await searchParams;
 
   return (
     <>
@@ -36,7 +36,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
         badge="Find cars for sale and for rent near you"
       />
       <div className="container mx-auto px-4 md:px-8">
-        <Searchbar type="cars" {...filters} />
+        <Searchbar type="cars" {...params} />
       </div>
       <div className="container mx-auto flex flex-col gap-8 md:px-4">
         <div className="flex flex-col gap-2">
@@ -45,10 +45,10 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-[300px_1fr] items-start xl:gap-4">
           <div className="hidden xl:!block">
-            <FiltersBar />
+            <CarsFiltersBar />
           </div>
           <Suspense fallback={<CarsContentSkeleton />}>
-            <CarsContent filters={filters} />
+            <CarsContent searchParams={params} />
           </Suspense>
         </div>
       </div>

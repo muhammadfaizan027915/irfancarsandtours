@@ -14,6 +14,7 @@ export const carsTable = pgTable("cars", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
+  slug: varchar("slug", { length: 255 }).unique(),
   name: varchar("name", { length: 255 }).notNull(),
   model: varchar("model", { length: 255 }).notNull(),
   year: integer("year").notNull(),

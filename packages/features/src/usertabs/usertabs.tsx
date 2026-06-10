@@ -1,24 +1,26 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
-import { Tabs, TabsList, TabsTrigger } from "@icat/ui/components/tabs";
+
+import { BookingsHeader } from "../common/bookings-header";
 
 export function UserTabs() {
   const pathname = usePathname();
 
-  return (
-    <Tabs defaultValue={pathname}>
-      <TabsList>
-        <TabsTrigger value={NavigationUrls.BOOKINGS} className="w-20">
-          <Link href={NavigationUrls.BOOKINGS}>Bookings</Link>
-        </TabsTrigger>
-        <TabsTrigger value={NavigationUrls.PROFILE} className="w-20">
-          <Link href={NavigationUrls.PROFILE}>Profile</Link>
-        </TabsTrigger>
-      </TabsList>
-    </Tabs>
-  );
+  const tabs = [
+    {
+      label: "Bookings",
+      href: NavigationUrls.BOOKINGS,
+      isActive: pathname.startsWith(NavigationUrls.BOOKINGS),
+    },
+    {
+      label: "Profile",
+      href: NavigationUrls.PROFILE,
+      isActive: pathname === NavigationUrls.PROFILE,
+    },
+  ];
+
+  return <BookingsHeader tabs={tabs} />;
 }

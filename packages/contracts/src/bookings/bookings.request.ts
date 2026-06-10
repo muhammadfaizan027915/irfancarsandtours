@@ -45,27 +45,6 @@ export const CarBookingRequestSchema = z
 
 export type BookingRequestDto = z.infer<typeof CarBookingRequestSchema>;
 
-export const GetBookingsBodySchema = z.object({
-  page: z.coerce.number().optional().default(1),
-  limit: z.coerce.number().optional().default(50),
-  id: z.string().optional(),
-  name: z.string().optional(),
-  address: z.string().optional(),
-  status: z.enum(BookingStatusList).optional(),
-  startDate: z.string().optional(),
-  endDate: z.string().optional(),
-});
-
-export type GetBookingsBodyDto = z.infer<typeof GetBookingsBodySchema>;
-
-export const GetBookingByUserIdBodySchema = GetBookingsBodySchema.extend({
-  userId: z.string(),
-});
-
-export type GetBookingsByUserIdBodyDto = z.infer<
-  typeof GetBookingByUserIdBodySchema
->;
-
 export const UpdateBookingRequestBodySchema = z.object({
   pickupAddress: z.string().min(5).max(255).optional(),
   pickupDate: toDate(z.date()).optional(),
@@ -87,3 +66,26 @@ export const UpdateBookingStatusSchema = z.object({
 });
 
 export type UpdateBookingStatusDto = z.infer<typeof UpdateBookingStatusSchema>;
+
+export const GetBookingsBodySchema = z.object({
+  page: z.coerce.number().optional().default(1),
+  limit: z.coerce.number().optional().default(50),
+  id: z.string().optional(),
+  name: z.string().optional(),
+  email: z.email().optional(),
+  phone: PhoneSchema.optional(),
+  address: z.string().optional(),
+  status: z.enum(BookingStatusList).optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional(),
+});
+
+export type GetBookingsBodyDto = z.infer<typeof GetBookingsBodySchema>;
+
+export const GetBookingByUserIdBodySchema = GetBookingsBodySchema.extend({
+  userId: z.string(),
+});
+
+export type GetBookingsByUserIdBodyDto = z.infer<
+  typeof GetBookingByUserIdBodySchema
+>;

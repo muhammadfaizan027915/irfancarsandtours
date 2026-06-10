@@ -46,7 +46,7 @@ function SingleSelect<T extends string>({
         onValueChange={onChange}
       >
         <SelectTrigger
-          aria-invalid={hasError}
+          hasError={hasError}
           className={`w-full ${className}`}
         >
           <SelectValue placeholder={placeholder} />

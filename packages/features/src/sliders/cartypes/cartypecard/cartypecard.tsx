@@ -1,10 +1,10 @@
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { CarPlaceHolderImageUrl } from "@icat/features/common/common.constants";
 import { NavigationUrls } from "@icat/features/common/header/header.constants";
 import { Card } from "@icat/ui";
+import { AppImage as Image } from "@icat/ui/components/app-image";
 import { Button } from "@icat/ui/components/button";
 
 import { CarTypeCardProps } from "./cartypecard.types";
@@ -30,7 +30,7 @@ export function CarTypeCard({ name, image }: CarTypeCardProps) {
             <h4 className="text-xl font-bold">{name}</h4>
             <Button
               size={"sm"}
-              className="rounded-3xl bg-muted dark:not-[:hover]:text-muted-foreground w-8 h-8 shadow-none"
+              className="rounded-3xl bg-muted dark:not-[:hover]:text-muted-foreground w-8 h-8"
             >
               <ArrowRight />
             </Button>

@@ -16,7 +16,11 @@ export const SeoSchema = z.object({
 });
 
 export const UpsertSeoBodySchema = SeoSchema.extend({
-  carId: z.uuid("Invalid car ID"),
+  carId: z.string().uuid("Invalid car ID").optional(),
+  tourId: z.string().uuid("Invalid tour ID").optional(),
+}).refine(data => data.carId || data.tourId, {
+  message: "Either carId or tourId must be provided",
+  path: ["carId"]
 });
 
 export type UpsertSeoBodyDto = z.infer<typeof UpsertSeoBodySchema>;

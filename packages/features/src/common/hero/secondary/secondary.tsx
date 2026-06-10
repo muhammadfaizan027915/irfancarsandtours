@@ -1,6 +1,5 @@
-import Image from "next/image";
-
 import { FlexToTextPositionMap } from "@icat/features/common/common.constants";
+import { AppImage as Image } from "@icat/ui/components/app-image";
 import { Badge } from "@icat/ui/components/badge";
 
 import { SecondaryHeroProps } from "./secondary.types";

@@ -2,20 +2,22 @@
 
 import { DashboardNavigationUrls } from "@icat/features/dashboard/sidebar/sidebarnavigation/sidebarnavigation.constants";
 import { handleServerActionWithError } from "@icat/lib/handlers";
-import { BookedCarService } from "@icat/services";
+import { BookingService } from "@icat/services";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@icat/lib/auth";
 
 export const qoutePrice = handleServerActionWithError(
   async (bookedCarId: string, quotedPrice: number) => {
     await requireAdmin();
-    const bookedCarService = new BookedCarService();
-    const updatedBookedCar = await bookedCarService.update(bookedCarId, {
-      quotedPrice,
-    });
+    const bookingService = new BookingService();
+    
+    const updatedBookedCar = await bookingService.updateBookedCarPrice(
+      bookedCarId,
+      quotedPrice
+    );
 
     revalidatePath(
-      `${DashboardNavigationUrls.BOOKINGS}/${updatedBookedCar?.bookingId}`
+      `${DashboardNavigationUrls.BOOKINGS_CARS}/${updatedBookedCar?.bookingId}`
     );
 
     return updatedBookedCar;

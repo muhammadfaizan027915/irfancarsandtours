@@ -43,7 +43,7 @@ export function UserForm({ user }: UserFormProps) {
   const error = result?.error;
 
   useEffect(() => {
-    if (success) {
+    if (result?.success) {
       toast.success(
         isUpdate ? "User updated successfully." : "User created successfully.",
         {
@@ -54,7 +54,7 @@ export function UserForm({ user }: UserFormProps) {
         router.push(DashboardNavigationUrls.CUSTOMERS);
       }
     }
-  }, [success, isUpdate, router]);
+  }, [result, isUpdate, router]);
 
   return (
     <div className="w-full space-y-6 pb-8">

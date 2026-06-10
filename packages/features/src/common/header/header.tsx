@@ -14,11 +14,10 @@ const ProfileSignin = dynamic(
     loading: () => <Skeleton className="h-10 w-24 rounded-xl" />,
   }
 );
-
-const CarCartSidebar = dynamic(
-  () => import("@icat/features/common/sidebars/carcartsidebar").then((m) => m.CarCartSidebar),
+const CartSidebar = dynamic(
+  () => import("@icat/features/common/sidebars/cartsidebar").then((m) => m.CartSidebar),
   {
-    loading: () => <Skeleton className="h-10 w-10 rounded-xl" />,
+    loading: () => <Skeleton className="h-10 w-16" />,
   }
 );
 
@@ -48,14 +47,14 @@ export async function Header({ varient = "primary" }: HeaderProps) {
             <nav className="flex items-stretch gap-8">
               <Link href={NavigationUrls.HOME}>Home</Link>
               <Link href={NavigationUrls.CARS}>Cars</Link>
-              <a>Tours</a>
+              <Link href={NavigationUrls.TOURS}>Tours</Link>
               <Link href={NavigationUrls.ABOUT_US}>About Us</Link>
               <Link href={NavigationUrls.COMPLAINTS}>Complaints</Link>
             </nav>
           </div>
           <div className="lg:w-3/8 flex items-stretch justify-end gap-2">
             <ProfileSignin className="hidden md:!flex" />
-            <CarCartSidebar />
+            <CartSidebar />
             <NavigationBar />
           </div>
         </div>

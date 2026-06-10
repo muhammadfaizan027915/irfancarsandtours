@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { useDebounce } from "@icat/lib/hooks";
 import { useSearchRouter } from "@icat/lib/hooks/usersearchrouter";
 import { Input } from "@icat/ui/components/input";
 import { Label } from "@icat/ui/components/label";
@@ -25,15 +24,12 @@ export function TextFilter({ label, name, placeholder }: TextFilterProps) {
     setPrevExternalValue(externalValue);
   }
 
-  const debouncedValue = useDebounce(value, 500);
-
-  useEffect(() => {
-    if (debouncedValue === externalValue) return;
-
+  const handleUpdate = (val: string) => {
+    if (val === externalValue) return;
     updateSearchParams({
-      [name]: debouncedValue || undefined,
+      [name]: val || undefined,
     });
-  }, [debouncedValue, name, updateSearchParams, externalValue]);
+  };
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -43,8 +39,13 @@ export function TextFilter({ label, name, placeholder }: TextFilterProps) {
         value={value}
         placeholder={placeholder}
         onChange={(e) => setValue(e.target.value)}
+        onBlur={(e) => handleUpdate(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleUpdate(e.currentTarget.value);
+          }
+        }}
       />
     </div>
   );
 }
-

@@ -23,12 +23,12 @@ export function ResetPasswordForm() {
   const error = result?.error;
 
   useEffect(() => {
-    if (success) {
+    if (result?.success) {
       toast.success("Password reset successfully! You can now sign in.", {
         position: "top-center",
       });
     }
-  }, [success]);
+  }, [result]);
 
   const handleAction = (formData: FormData) => {
     const data = mergeObjectToFormData(formData, { token: token ?? "" });
@@ -75,7 +75,7 @@ export function ResetPasswordForm() {
 
         <Button
           size={"lg"}
-          className="font-bold shadow-none group mt-4"
+          className="font-bold group mt-4"
           disabled={pending || success}
         >
           Reset Password

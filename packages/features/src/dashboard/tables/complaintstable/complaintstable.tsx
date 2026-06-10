@@ -3,8 +3,8 @@ import { DataTable } from "@icat/ui/components/data-table";
 import { complaintColumns } from "./columns";
 import { ComplaintsTableProps } from "./complaintstable.types";
 
-export function ComplaintsTable({ data, pagination }: ComplaintsTableProps) {
+export function ComplaintsTable({ complaints, pagination }: ComplaintsTableProps) {
   return (
-    <DataTable columns={complaintColumns} data={data} pagination={pagination} />
+    <DataTable columns={complaintColumns} data={complaints} pagination={pagination} />
   );
 }

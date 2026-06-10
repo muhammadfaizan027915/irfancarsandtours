@@ -27,7 +27,7 @@ export const bookCar = handlerFormActionWithError({
 
     if (booking && sessionUser?.id) {
       (await cookies()).delete(carCartKey);
-      redirect(`${NavigationUrls.BOOKINGS}/${booking?.id}/confirmation`);
+      redirect(`${NavigationUrls.BOOKINGS_CARS}/${booking?.id}/confirmation`);
     }
 
     return { ...booking, isLoggedIn: !!sessionUser?.id };
@@ -55,8 +55,8 @@ export const updateBookingStatus = handlerFormActionWithError({
       status: data.status,
     });
 
-    revalidatePath(DashboardNavigationUrls.BOOKINGS);
-    revalidatePath(`${DashboardNavigationUrls.BOOKINGS}/${data.id}`);
+    revalidatePath(DashboardNavigationUrls.BOOKINGS_CARS);
+    revalidatePath(`${DashboardNavigationUrls.BOOKINGS_CARS}/${data.id}`);
 
     return booking;
   },

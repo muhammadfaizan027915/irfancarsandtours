@@ -1,7 +1,7 @@
 "use client";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import { AppImage as Image } from "@icat/ui/components/app-image";
 import { SliderContainer } from "@icat/ui/components/slider-container";
 
 import { CarImagesProps } from "./carimages.types";

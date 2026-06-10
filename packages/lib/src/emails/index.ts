@@ -10,6 +10,10 @@ import {
   SendForgotPasswordEmailArgs,
   SendPasswordResetSuccessEmailArgs,
   SendWelcomeEmailArgs,
+  SendTourBookingConfirmationEmailArgs,
+  SendTourBookingStatusUpdateEmailArgs,
+  SendTourBookingCreatedAdminEmailArgs,
+  SendTourBookingPriceUpdateEmailArgs,
 } from "./sender.types";
 import {
   BookingConfirmationEmail,
@@ -20,6 +24,10 @@ import {
   ForgotPasswordEmail,
   PasswordResetSuccessEmail,
   WelcomeEmail,
+  TourBookingConfirmationEmail,
+  TourBookingStatusUpdateEmail,
+  TourBookingCreatedAdminEmail,
+  TourBookingPriceUpdateEmail,
 } from "./templates";
 
 export * from "./sender";
@@ -125,6 +133,69 @@ export async function sendComplaintStatusUpdateEmail({
     subject: `Complaint Status Updated - ${complaint.id}`,
     content: React.createElement(ComplaintStatusUpdateEmail, {
       complaint,
+    }),
+  });
+}
+
+export async function sendTourBookingConfirmationEmail({
+  user,
+  booking,
+}: SendTourBookingConfirmationEmailArgs): Promise<void> {
+  return sendEmail({
+    to: user.email,
+    subject: `Tour Booking Received - ${booking.id}`,
+    content: React.createElement(TourBookingConfirmationEmail, {
+      user,
+      booking,
+    }),
+  });
+}
+
+export async function sendTourBookingStatusUpdateEmail({
+  user,
+  booking,
+}: SendTourBookingStatusUpdateEmailArgs): Promise<void> {
+  return sendEmail({
+    to: user.email,
+    subject: `Tour Booking Status Updated - ${booking.id}`,
+    content: React.createElement(TourBookingStatusUpdateEmail, {
+      user,
+      booking,
+    }),
+  });
+}
+
+export async function sendTourBookingCreatedAdminEmail({
+  user,
+  booking,
+}: SendTourBookingCreatedAdminEmailArgs): Promise<void> {
+  const adminEmail = process.env.ADMIN_EMAIL;
+
+  if (!adminEmail) {
+    console.warn("ADMIN_EMAIL not set, skipping tour booking admin notification.");
+    return;
+  }
+
+  return sendEmail({
+    to: adminEmail,
+    subject: `New Tour Booking Received: ${booking.id}`,
+    content: React.createElement(TourBookingCreatedAdminEmail, {
+      user,
+      booking,
+    }),
+  });
+}
+
+export async function sendTourBookingPriceUpdateEmail({
+  user,
+  booking,
+}: SendTourBookingPriceUpdateEmailArgs): Promise<void> {
+  return sendEmail({
+    to: user.email,
+    subject: `Tour Booking Quoted Price Updated - ${booking.id}`,
+    content: React.createElement(TourBookingPriceUpdateEmail, {
+      user,
+      booking,
     }),
   });
 }

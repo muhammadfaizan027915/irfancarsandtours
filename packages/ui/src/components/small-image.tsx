@@ -1,6 +1,5 @@
-import Image from "next/image";
-
 import { cn } from "../lib/utils";
+import { AppImage } from "./app-image";
 
 type SmallImageProps = {
   src?: string;
@@ -11,7 +10,7 @@ type SmallImageProps = {
 export function SmallImage({ src, alt, className }: SmallImageProps) {
   return src ? (
     <div className="flex items-center">
-      <Image
+      <AppImage
         alt={alt as string}
         src={src}
         width={50}

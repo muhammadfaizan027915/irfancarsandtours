@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import {
   BookingResponseDto,
   ComplaintResponseDto,
+  TourBookingResponseDto,
   UserResponseDto,
 } from "@icat/contracts";
 
@@ -26,13 +27,33 @@ export type SendPasswordResetSuccessEmailArgs = {
 };
 
 export type SendBookingConfirmationEmailArgs = {
-  user: UserResponseDto;
+  user: Pick<UserResponseDto, "name" | "email">;
   booking: BookingResponseDto;
 };
 
 export type SendBookingStatusUpdateEmailArgs = {
-  user: UserResponseDto;
+  user: Pick<UserResponseDto, "name" | "email">;
   booking: BookingResponseDto;
+};
+
+export type SendTourBookingConfirmationEmailArgs = {
+  user: Pick<UserResponseDto, "name" | "email">;
+  booking: Pick<TourBookingResponseDto, "id" | "totalPrice">;
+};
+
+export type SendTourBookingStatusUpdateEmailArgs = {
+  user: Pick<UserResponseDto, "name" | "email">;
+  booking: Pick<TourBookingResponseDto, "id" | "status">;
+};
+
+export type SendTourBookingCreatedAdminEmailArgs = {
+  user: Pick<UserResponseDto, "name" | "email">;
+  booking: Pick<TourBookingResponseDto, "id" | "totalPrice" | "notes">;
+};
+
+export type SendTourBookingPriceUpdateEmailArgs = {
+  user: Pick<UserResponseDto, "name" | "email">;
+  booking: Pick<TourBookingResponseDto, "id" | "totalPrice">;
 };
 
 export type SendComplaintCreatedAdminEmailArgs = {

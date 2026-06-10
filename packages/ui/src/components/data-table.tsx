@@ -1,5 +1,6 @@
 "use client";
 
+import { FileX } from "lucide-react";
 import {
   ColumnDef,
   flexRender,
@@ -17,6 +18,7 @@ import {
 } from "@icat/ui/components/table";
 
 import { PaginationBar } from "./pagination";
+import { EmptyMessage } from "./empty-message";
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
@@ -83,9 +85,9 @@ export function DataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-center p-0"
                 >
-                  No results.
+                  <EmptyMessage icon={FileX} message="No results found." className="py-8" />
                 </TableCell>
               </TableRow>
             )}

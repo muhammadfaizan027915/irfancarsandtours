@@ -1,6 +1,6 @@
 "use client";
 
-import { EmptyCarCartMessage } from "@icat/features/common/emptycarcartmessage";
+import { EmptyMessage } from "@icat/ui/components/empty-message";
 import { Card, CardContent, CardHeader } from "@icat/ui/components/card";
 import { useCarCart } from "@icat/web/store";
 
@@ -18,7 +18,7 @@ export function CarCartList() {
         {carsList?.length ? (
           carsList?.map((car) => <CarCartCard car={car} key={car?.id} />)
         ) : (
-          <EmptyCarCartMessage />
+          <EmptyMessage message="Your cart is empty!" />
         )}
       </CardContent>
     </Card>

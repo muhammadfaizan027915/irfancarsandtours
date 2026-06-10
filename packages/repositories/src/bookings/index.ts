@@ -16,6 +16,10 @@ import { UserItemSelect } from "../users";
 
 export const BookingItemSelect = {
   id: bookingsTable.id,
+  name: bookingsTable.name,
+  email: bookingsTable.email,
+  phone: bookingsTable.phone,
+  cnic: bookingsTable.cnic,
   pickupDate: bookingsTable.pickupDate,
   pickupAddress: bookingsTable.pickupAddress,
   dropoffDate: bookingsTable.dropoffDate,
@@ -71,7 +75,7 @@ export class BookingRepository {
     }
 
     if (name) {
-      conditions.push(ilike(usersTable.name, `%${name}%`));
+      conditions.push(ilike(bookingsTable.name, `%${name}%`));
     }
 
     if (address) {
@@ -164,7 +168,7 @@ export class BookingRepository {
     }
 
     if (name) {
-      conditions.push(ilike(usersTable.name, `%${name}%`));
+      conditions.push(ilike(bookingsTable.name, `%${name}%`));
     }
 
     if (address) {

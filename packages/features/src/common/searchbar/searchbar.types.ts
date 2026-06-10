@@ -12,7 +12,10 @@ export type CarSerachProps = BaseSearchbarProps & {
 };
 
 export type TourSearchProps = BaseSearchbarProps & {
-  destination?: string;
+  search?: string;
+  location?: string;
 };
 
-export type SearchbarProps = CarSerachProps & TourSearchProps;
+export type SearchbarProps = CarSerachProps & TourSearchProps & {
+  showTabs?: boolean;
+};

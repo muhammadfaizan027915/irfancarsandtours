@@ -6,7 +6,7 @@
   "author": "Muhammad Faizan",
   "packageManager": "npm@11.14.1",
   "scripts": {
-    "dev": "NODE_OPTIONS='--max-old-space-size=2048' next dev",
+    "dev": "NODE_OPTIONS='--max_old_space_size=2048' next dev --turbo",
     "build": "next build",
     "start": "next start",
     "clean": "rm -rf .next .turbo",
@@ -19,7 +19,8 @@
     "@icat/features": "*",
     "@icat/lib": "*",
     "@icat/services": "*",
-    "@icat/ui": "*"
+    "@icat/ui": "*",
+    "next": "^16.2.7"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

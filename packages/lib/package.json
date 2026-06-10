@@ -53,7 +53,7 @@
   "author": "Muhammad Faizan",
   "packageManager": "npm@11.14.1",
   "dependencies": {
-    "nodemailer": "^7.0.13",
+    "nodemailer": "^8.0.10",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-email": "^6.1.5"

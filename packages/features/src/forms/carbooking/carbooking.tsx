@@ -30,7 +30,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
   };
 
   useEffect(() => {
-    if (success && !result.data?.isLoggedIn) {
+    if (result?.success && !result.data?.isLoggedIn) {
       toast.success(
         "Car Booked successfully, you'll receive a confirmation email!",
         {
@@ -38,7 +38,7 @@ export function CarBookingForm({ defaultValue }: CarBookingFormProps) {
         },
       );
     }
-  }, [success, result?.data?.isLoggedIn]);
+  }, [result, result?.data?.isLoggedIn]);
 
   return (
     <form action={actionWithCars} className="space-y-8 w-full">

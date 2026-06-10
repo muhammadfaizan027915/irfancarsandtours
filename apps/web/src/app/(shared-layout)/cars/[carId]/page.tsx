@@ -6,6 +6,8 @@ import {
 import { Metadata } from "next";
 import { getCar } from "@icat/web/data/cars";
 import { getCarSeo } from "@icat/web/data/seo";
+import Script from "next/script";
+import { notFound } from "next/navigation";
 
 type CarDetailPageProps = {
   params: Promise<{ carId: string }>;
@@ -44,10 +46,43 @@ export async function generateMetadata({
 
 export default async function CarDetailPage({ params }: CarDetailPageProps) {
   const { carId } = await params;
+  const car = await getCar(carId);
+
+  if (!car) {
+    return notFound();
+  }
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${car.name} ${car.model} ${car.year}`,
+    image: car.imageUrls,
+    description:
+      car.description ||
+      `Rent ${car.name} ${car.model} ${car.year} from Irfan Cars and Tours.`,
+    brand: {
+      "@type": "Brand",
+      name: car.name,
+    },
+    offers: {
+      "@type": "Offer",
+      price: car.startingPrice,
+      priceCurrency: "PKR",
+      availability: "https://schema.org/InStock",
+      url: `https://irfancarsandtours.com/cars/${carId}`,
+    },
+  };
 
   return (
-    <Suspense fallback={<CarDetailContentSkeleton />}>
-      <CarDetailContent carId={carId} />
-    </Suspense>
+    <>
+      <Script
+        id={`json-ld-car-${carId}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Suspense fallback={<CarDetailContentSkeleton />}>
+        <CarDetailContent carId={carId} />
+      </Suspense>
+    </>
   );
 }

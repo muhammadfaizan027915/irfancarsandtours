@@ -21,7 +21,7 @@ export function LoginNotice({ tagline, ctaTitle }: LoginNoticeProps) {
         </p>
         <Button
           asChild
-          className="w-full font-bold shadow-none group mt-2"
+          className="w-full font-bold group mt-2"
           size="lg"
         >
           <Link href={NavigationUrls.SIGNIN}>

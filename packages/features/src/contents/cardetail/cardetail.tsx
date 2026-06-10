@@ -3,12 +3,16 @@ import { notFound } from "next/navigation";
 import { CarAmenities } from "@icat/features/cardetail/amenities";
 import { CarBooking } from "@icat/features/cardetail/booking";
 import { CarDescription } from "@icat/features/cardetail/description";
-import { CarGetStarted } from "@icat/features/cardetail/getstarted";
 import { CarProperties } from "@icat/features/cardetail/properties";
+import { GetStarted } from "@icat/features/common/getstarted";
 import { CarImages } from "@icat/features/sliders/carimages";
 import { getUserCar } from "@icat/web/data/cars";
 
-export async function CarDetailContent({ carId }: { carId: string }) {
+type CarDetailContentProps = {
+  carId: string;
+};
+
+export async function CarDetailContent({ carId }: CarDetailContentProps) {
   const car = await getUserCar(carId);
 
   if (!car) {
@@ -49,7 +53,7 @@ export async function CarDetailContent({ carId }: { carId: string }) {
             <CarAmenities amenities={car?.amenities || []} />
           </div>
           <div className="grid gap-6 col-span-6 lg:col-span-2">
-            <CarGetStarted />
+            <GetStarted />
             <CarBooking cars={_cars} />
           </div>
         </div>

@@ -12,6 +12,10 @@ export const bookingsTable = pgTable("bookings", {
       const random = Math.random().toString(36).substring(2, 6).toUpperCase();
       return `BK${date}-${random}`;
     }),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  cnic: text("cnic").notNull(),
   pickupAddress: varchar("pickup_address", { length: 255 }).notNull(),
   pickupDate: timestamp("pickup_date", {
     mode: "date",

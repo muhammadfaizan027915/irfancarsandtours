@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronUp } from "lucide-react";
+import { ChevronUp, Info } from "lucide-react";
 
 import { useDisclosure } from "@icat/lib/hooks";
 import { Button } from "@icat/ui/components/button";
@@ -10,6 +10,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@icat/ui/components/collapsible";
+import { EmptyMessage } from "@icat/ui/components/empty-message";
 
 import { CarAmenitiesProps } from "./amenities.types";
 
@@ -33,16 +34,20 @@ export function CarAmenities({ amenities }: CarAmenitiesProps) {
             />
           </CollapsibleTrigger>
           <CollapsibleContent className="flex flex-wrap gap-2  mt-4">
-            {amenities?.map((amenity, i) => (
-              <Button
-                size="lg"
-                className="shadow-none rounded-lg bg-accent flex-1 pointer-events-none font-semibold basis-20"
-                variant="outline"
-                key={i}
-              >
-                {amenity}
-              </Button>
-            ))}
+            {amenities?.length ? (
+              amenities.map((amenity, i) => (
+                <Button
+                  size="lg"
+                  className="rounded-lg bg-accent flex-1 pointer-events-none font-semibold basis-20"
+                  variant="outline"
+                  key={i}
+                >
+                  {amenity}
+                </Button>
+              ))
+            ) : (
+              <EmptyMessage icon={Info} iconSize={32} message="No amenities added" className="py-2 w-full text-sm" />
+            )}
           </CollapsibleContent>
         </Collapsible>
       </CardContent>
