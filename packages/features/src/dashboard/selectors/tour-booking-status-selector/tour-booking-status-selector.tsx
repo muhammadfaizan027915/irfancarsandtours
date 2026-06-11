@@ -27,6 +27,8 @@ export function TourBookingStatusSelector({
     );
   
     const handleStatusChange = (newStatus: string) => {
+      if (!newStatus) return;
+
       startTransition(() => {
         setOptimisticStatus(newStatus as BookingStatus);
         setTimeout(() => {
