@@ -14,11 +14,11 @@ export class GCSClient {
     const rawPrivateKey = getEnv("GCS_PRIVATE_KEY");
     this.bucketName = getEnv("GCS_BUCKET_NAME");
 
-    // if (!projectId || !clientEmail || !rawPrivateKey || !this.bucketName) {
-    //   throw new Error(
-    //     "GCS configuration is incomplete. Please check your environment variables.",
-    //   );
-    // }
+    if (!projectId || !clientEmail || !rawPrivateKey || !this.bucketName) {
+      throw new Error(
+        "GCS configuration is incomplete. Please check your environment variables.",
+      );
+    }
 
     const privateKey = rawPrivateKey
       .replace(/\\n/g, "\n")
