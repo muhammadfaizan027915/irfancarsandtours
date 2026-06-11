@@ -8,14 +8,14 @@ on:
 jobs:
   checkout:
     name: Checkout
-    runs-on: ubantu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v6
 
   build:
     name: Docker Build & Push to GHCR
-    runs-on: ubantu-latest
+    runs-on: ubuntu-latest
     
     steps:
 
@@ -41,7 +41,7 @@ jobs:
   
   deploy:
     name: Deploy on VPS
-    runs-on: ubantu-latest
+    runs-on: ubuntu-latest
 
     steps:
 
@@ -51,7 +51,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /opt/yourrepo
+            cd /home/irfancarsandtours
 
             docker compose pull
 
