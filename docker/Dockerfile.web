@@ -24,8 +24,6 @@ COPY --from=builder /app/tsconfig.base.json ./tsconfig.base.json
 COPY --from=builder /app/out/full/ ./
 COPY --from=builder /app/.env.prod ./.env.prod
 
-RUN echo "=== ENV FILE ===" && cat .env.prod && echo "=== END ==="
-
 RUN npm run build
 
 FROM base AS runner
