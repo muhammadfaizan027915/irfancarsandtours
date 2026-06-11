@@ -31,6 +31,29 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/irfancarsandtours-web:latest
 
+      - name: Create env file
+        run: |
+          cat > .env.prod << EOF
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+          NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
+          NEXT_AUTH_URL=${{ secrets.NEXT_AUTH_URL }}
+          GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }}
+          GCS_PROJECT_ID=${{ secrets.GCS_PROJECT_ID }}
+          GCS_CLIENT_EMAIL=${{ secrets.GCS_CLIENT_EMAIL }}
+          GCS_PRIVATE_KEY=${{ secrets.GCS_PRIVATE_KEY }}
+          SMTP_HOST=${{ secrets.SMTP_HOST }}
+          SMTP_PORT=${{ secrets.SMTP_PORT }}
+          SMTP_SECURE=${{ secrets.SMTP_SECURE }}
+          SMTP_USER=${{ secrets.SMTP_USER }}
+          SMTP_PASS=${{ secrets.SMTP_PASS }}
+          MAIL_FROM_NAME=${{ secrets.MAIL_FROM_NAME }}
+          MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS }}
+          ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}
+          EOF
+
       - uses: docker/build-push-action@v6
         with:
           context: .
@@ -47,7 +70,7 @@ jobs:
             cd /home/irfancarsandtours
 
             docker compose pull
-            
+
             docker compose up -d
 
             docker image prune -af
