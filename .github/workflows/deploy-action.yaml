@@ -35,6 +35,9 @@ jobs:
           SMTP_SECURE=${{ secrets.SMTP_SECURE }}
           SMTP_USER=${{ secrets.SMTP_USER }}
           SMTP_PASS=${{ secrets.SMTP_PASS }}
+          CERT_DOMAIN=${{ secrets.CERT_DOMAIN }}
+          CERT_EMAIL=${{ secrets.CERT_EMAIL }}
+          CERT_DOMAIN_WWW=${{ secrets.CERT_DOMAIN_WWW }}
           MAIL_FROM_NAME=${{ secrets.MAIL_FROM_NAME }}
           MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS }}
           ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}
@@ -69,6 +72,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          passphrase: ${{ secrets.VPS_SSH_PASSPHRASE }}
           source: .env.prod
           target: /home/irfancarsandtours/
 
