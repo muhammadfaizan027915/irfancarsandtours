@@ -24,7 +24,7 @@ COPY --from=builder /app/tsconfig.base.json ./tsconfig.base.json
 COPY --from=builder /app/out/full/ ./
 COPY --from=builder /app/.env.prod ./.env.prod
 
-RUN npm run build
+RUN set -a && . ./.env.prod && set +a && npm run build
 
 FROM base AS runner
 WORKDIR /app
