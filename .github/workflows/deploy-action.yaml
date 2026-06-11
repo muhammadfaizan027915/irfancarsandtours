@@ -25,7 +25,7 @@ jobs:
           POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB=${{ secrets.POSTGRES_DB }}
           NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
-          NEXT_AUTH_URL=${{ secrets.NEXT_AUTH_URL }}
+          NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
           GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }}
           GCS_PROJECT_ID=${{ secrets.GCS_PROJECT_ID }}
           GCS_CLIENT_EMAIL=${{ secrets.GCS_CLIENT_EMAIL }}
