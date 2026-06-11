@@ -22,7 +22,7 @@ RUN npm install -g npm@latest && npm install
 
 COPY --from=builder /app/tsconfig.base.json ./tsconfig.base.json
 COPY --from=builder /app/out/full/ ./
-COPY --from=builder /app/.env.prod ./.env.prod
+# COPY --from=builder /app/.env.prod ./.env.prod
 
 RUN npm run build
 
