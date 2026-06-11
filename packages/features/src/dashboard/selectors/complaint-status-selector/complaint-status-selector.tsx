@@ -27,6 +27,8 @@ export function ComplaintStatusSelector({
   );
 
   const handleStatusChange = (newStatus: string) => {
+    if (!newStatus) return;
+
     startTransition(() => {
       setOptimisticStatus(newStatus as ComplaintStatus);
       setTimeout(() => {

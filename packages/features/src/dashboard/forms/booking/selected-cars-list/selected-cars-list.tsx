@@ -7,7 +7,14 @@ import { Button } from "@icat/ui/components/button";
 import { Checkbox } from "@icat/ui/components/checkbox";
 import { EmptyMessage } from "@icat/ui/components/empty-message";
 import { Input } from "@icat/ui/components/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@icat/ui/components/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@icat/ui/components/table";
 
 export type SelectedCar = {
   car: CarResponseDto;
@@ -22,13 +29,17 @@ export type SelectedCarsListProps = {
   onRemove: (carId: string) => void;
 };
 
-export function SelectedCarsList({ selectedCars, onUpdate, onRemove }: SelectedCarsListProps) {
+export function SelectedCarsList({
+  selectedCars,
+  onUpdate,
+  onRemove,
+}: SelectedCarsListProps) {
   if (selectedCars.length === 0) {
     return (
       <div className="p-8 border-2 border-dashed rounded-lg bg-muted/20">
-        <EmptyMessage 
-          icon={Car} 
-          message="No cars selected yet. Search and add cars above." 
+        <EmptyMessage
+          icon={Car}
+          message="No cars selected yet. Search and add cars above."
         />
       </div>
     );
@@ -51,34 +62,50 @@ export function SelectedCarsList({ selectedCars, onUpdate, onRemove }: SelectedC
             <TableRow key={sc.car.id}>
               <TableCell>
                 <div className="flex flex-col">
-                  <span className="font-medium">{sc.car.brand} {sc.car.name}</span>
-                  <span className="text-xs text-muted-foreground">{sc.car.model}</span>
+                  <span className="font-medium">
+                    {sc.car.brand} {sc.car.name}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {sc.car.model}
+                  </span>
                 </div>
               </TableCell>
               <TableCell>
                 <Input
                   type="number"
                   value={sc.quotedPrice}
-                  onChange={(e) => onUpdate(sc.car.id, { quotedPrice: parseInt(e.target.value) || 0 })}
+                  onChange={(e) =>
+                    onUpdate(sc.car.id, {
+                      quotedPrice: parseInt(e.target.value) || 0,
+                    })
+                  }
                   className="h-8 shadow-none"
                 />
               </TableCell>
               <TableCell>
                 <div className="flex items-center justify-center gap-2">
                   <Button
+                    type="button"
                     variant="outline"
                     size="icon"
                     className="h-7 w-7 rounded-full"
-                    onClick={() => onUpdate(sc.car.id, { quantity: Math.max(1, sc.quantity - 1) })}
+                    onClick={() =>
+                      onUpdate(sc.car.id, {
+                        quantity: Math.max(1, sc.quantity - 1),
+                      })
+                    }
                   >
                     <Minus size={12} />
                   </Button>
                   <span className="w-4 text-center text-sm">{sc.quantity}</span>
                   <Button
+                    type="button"
                     variant="outline"
                     size="icon"
                     className="h-7 w-7 rounded-full"
-                    onClick={() => onUpdate(sc.car.id, { quantity: sc.quantity + 1 })}
+                    onClick={() =>
+                      onUpdate(sc.car.id, { quantity: sc.quantity + 1 })
+                    }
                   >
                     <Plus size={12} />
                   </Button>
@@ -87,7 +114,9 @@ export function SelectedCarsList({ selectedCars, onUpdate, onRemove }: SelectedC
               <TableCell className="text-center">
                 <Checkbox
                   checked={sc.bookedWithDriver}
-                  onCheckedChange={(checked) => onUpdate(sc.car.id, { bookedWithDriver: !!checked })}
+                  onCheckedChange={(checked) =>
+                    onUpdate(sc.car.id, { bookedWithDriver: !!checked })
+                  }
                 />
               </TableCell>
               <TableCell className="text-right">
