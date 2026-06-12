@@ -68,13 +68,13 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/${{ secrets.IMAGE_NAME }}-migrate:latest
 
-      - name: Copy env file to VPS
+      - name: Copy files to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: .env.prod
+          source: ".env.prod,docker-compose.yml"
           target: /home/irfancarsandtours/
 
       - name: Deploy on VPS
