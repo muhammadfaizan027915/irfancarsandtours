@@ -6,6 +6,7 @@ import { CarCartProvider, TourCartProvider } from "@icat/web/store";
 import "@icat/ui/globals.css";
 import { Suspense } from "react";
 import { SessionProvider } from "next-auth/react";
+import { IrfanCarsAndToursScripts } from "@icat/web/scripts";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -78,6 +79,7 @@ export default function RootLayout({
           </SessionProvider>
           <Toaster />
         </body>
+        <IrfanCarsAndToursScripts />
       </html>
     </>
   );
