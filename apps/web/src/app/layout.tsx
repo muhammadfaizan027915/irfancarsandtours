@@ -61,7 +61,9 @@ export default function RootLayout({
   return (
     <>
       <html lang="en" suppressHydrationWarning className={urbansist?.className}>
-        <head />
+        <head>
+          <IrfanCarsAndToursScripts />
+        </head>
         <body>
           <SessionProvider>
             <ThemeProvider
@@ -79,7 +81,6 @@ export default function RootLayout({
           </SessionProvider>
           <Toaster />
         </body>
-        <IrfanCarsAndToursScripts />
       </html>
     </>
   );
