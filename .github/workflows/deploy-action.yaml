@@ -87,6 +87,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /home/irfancarsandtours
+            cp .env.prod .env
             docker compose pull
             docker compose up -d
             docker image prune -af

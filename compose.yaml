@@ -24,7 +24,7 @@ services:
     restart: "no"
 
   web:
-    image: gchr.io/${GITHUB_USER}/${IMAGE_NAME}-web:latest
+    image: ghcr.io/${GITHUB_USER}/${IMAGE_NAME}-web:latest
     env_file: .env.prod
     networks:
       - frontend_backend
