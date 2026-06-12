@@ -76,6 +76,8 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           source: ".env.prod,docker-compose.yml"
           target: /home/irfancarsandtours/
+          timeout: 60s
+          command_timeout: 10m
 
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v1.2.0
