@@ -1,14 +1,24 @@
-import "server-only";
-
-import { and, desc, eq, gte, isNull, lte, sql } from "drizzle-orm";
+import {
+  and,
+  desc,
+  eq,
+  gte,
+  inArray,
+  isNotNull,
+  isNull,
+  lte,
+  sql,
+} from "drizzle-orm";
 
 import {
   BookingStatus,
+  bookedToursTable,
   db,
   DbOrTransaction,
   TourBookingInsert,
   TourBookingSelect,
   tourBookingsTable,
+  toursTable,
   usersTable,
 } from "@icat/database";
 
@@ -224,6 +234,47 @@ export class TourBookingRepository {
       .values(data as TourBookingInsert)
       .returning();
     return tourBooking;
+  }
+
+  async findIdsWithDeletedTours(
+    tx: DbOrTransaction = db,
+  ): Promise<string[]> {
+    const rows = await tx
+      .selectDistinct({ id: tourBookingsTable.id })
+      .from(tourBookingsTable)
+      .innerJoin(
+        bookedToursTable,
+        eq(tourBookingsTable.id, bookedToursTable.tourBookingId),
+      )
+      .innerJoin(toursTable, eq(bookedToursTable.tourId, toursTable.id))
+      .where(
+        and(
+          isNull(tourBookingsTable.deletedAt),
+          isNull(bookedToursTable.deletedAt),
+          isNotNull(toursTable.deletedAt),
+        ),
+      );
+
+    return rows.map((row) => row.id);
+  }
+
+  async deleteMany(
+    ids: string[],
+    tx: DbOrTransaction = db,
+  ): Promise<void> {
+    if (ids.length === 0) {
+      return;
+    }
+
+    await tx
+      .update(tourBookingsTable)
+      .set({ deletedAt: new Date() })
+      .where(
+        and(
+          isNull(tourBookingsTable.deletedAt),
+          inArray(tourBookingsTable.id, ids),
+        ),
+      );
   }
 
   async update(

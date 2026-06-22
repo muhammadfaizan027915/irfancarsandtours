@@ -36,6 +36,11 @@ export type SendBookingStatusUpdateEmailArgs = {
   booking: BookingResponseDto;
 };
 
+export type SendCarBookingCreatedAdminEmailArgs = {
+  user: Pick<UserResponseDto, "name" | "email">;
+  booking: BookingResponseDto;
+};
+
 export type SendTourBookingConfirmationEmailArgs = {
   user: Pick<UserResponseDto, "name" | "email">;
   booking: Pick<TourBookingResponseDto, "id" | "totalPrice">;

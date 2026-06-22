@@ -1,4 +1,3 @@
-import "server-only";
 
 import { eq, sql } from "drizzle-orm";
 import { after } from "next/server";
@@ -285,5 +284,20 @@ export class TourBookingService {
     return tx === db
       ? await db.transaction((newTx) => executeUpdate(newTx))
       : await executeUpdate(tx);
+  }
+
+  async deleteBookingsWithDeletedTours(tx: DbOrTransaction = db) {
+    const executeDelete = async (transaction: DbOrTransaction) => {
+      const bookingIds =
+        await this.tourBookingRepository.findIdsWithDeletedTours(transaction);
+
+      if (bookingIds.length > 0) {
+        await this.tourBookingRepository.deleteMany(bookingIds, transaction);
+      }
+    };
+
+    return tx === db
+      ? await db.transaction((newTx) => executeDelete(newTx))
+      : await executeDelete(tx);
   }
 }

@@ -24,7 +24,7 @@ export async function BookingDetail({ booking }: BookingDetailProps) {
   return (
     <div className="grid grid-cols-1 xl:grid-cols-6 gap-6">
       <Card className="xl:col-span-4 shadow-none">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-7">
+        <CardHeader className="flex flex-col md:flex-row md:items-center md:justify-between space-y-0 pb-7">
           <CardTitle className="text-xl">Booking Information</CardTitle>
           {isAdmin && (
             <div className="flex items-center gap-2">

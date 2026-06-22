@@ -1,4 +1,3 @@
-import "server-only";
 
 import { after } from "next/server";
 
@@ -20,6 +19,7 @@ import { db, DbOrTransaction } from "@icat/database";
 import {
   sendBookingConfirmationEmail,
   sendBookingStatusUpdateEmail,
+  sendCarBookingCreatedAdminEmail,
 } from "@icat/lib/emails";
 import { BookingRepository } from "@icat/repositories";
 import { BookedCarService, CarService, UserService } from "@icat/services";
@@ -149,6 +149,12 @@ export class BookingService {
             booking: parsedBooking,
           }),
         );
+        after(
+          sendCarBookingCreatedAdminEmail({
+            user: { name: parsedBooking.name, email: parsedBooking.email },
+            booking: parsedBooking,
+          }),
+        );
       }
 
       return parsedBooking;
@@ -188,7 +194,7 @@ export class BookingService {
   ): Promise<void> {
     const bookedCars = await this.bookedCarService.getByBookingIdWithCars(
       bookingId,
-      tx
+      tx,
     );
 
     let totalPrice = 0;
@@ -224,5 +230,20 @@ export class BookingService {
     return tx === db
       ? await db.transaction((newTx) => executeUpdate(newTx))
       : await executeUpdate(tx);
+  }
+
+  async deleteBookingsWithDeletedCars(tx: DbOrTransaction = db) {
+    const executeDelete = async (transaction: DbOrTransaction) => {
+      const bookingIds =
+        await this.bookingRepository.findIdsWithDeletedCars(transaction);
+
+      if (bookingIds.length > 0) {
+        await this.bookingRepository.deleteMany(bookingIds, transaction);
+      }
+    };
+
+    return tx === db
+      ? await db.transaction((newTx) => executeDelete(newTx))
+      : await executeDelete(tx);
   }
 }
