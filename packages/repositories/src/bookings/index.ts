@@ -1,22 +1,11 @@
-import {
-  and,
-  desc,
-  eq,
-  gte,
-  ilike,
-  inArray,
-  isNotNull,
-  isNull,
-  lte,
-  sql,
-} from "drizzle-orm";
+import "server-only";
+
+import { and, desc, eq, gte, ilike, isNull, lte, sql } from "drizzle-orm";
 
 import {
   BookingInsert,
   BookingSelect,
-  bookedCarsTable,
   bookingsTable,
-  carsTable,
   db,
   DbOrTransaction,
   usersTable,
@@ -273,44 +262,6 @@ export class BookingRepository {
   ): Promise<BookingSelect> {
     const [booking] = await tx.insert(bookingsTable).values(data).returning();
     return booking;
-  }
-
-  async findIdsWithDeletedCars(
-    tx: DbOrTransaction = db,
-  ): Promise<string[]> {
-    const rows = await tx
-      .selectDistinct({ id: bookingsTable.id })
-      .from(bookingsTable)
-      .innerJoin(bookedCarsTable, eq(bookingsTable.id, bookedCarsTable.bookingId))
-      .innerJoin(carsTable, eq(bookedCarsTable.carId, carsTable.id))
-      .where(
-        and(
-          isNull(bookingsTable.deletedAt),
-          isNull(bookedCarsTable.deletedAt),
-          isNotNull(carsTable.deletedAt),
-        ),
-      );
-
-    return rows.map((row) => row.id);
-  }
-
-  async deleteMany(
-    ids: string[],
-    tx: DbOrTransaction = db,
-  ): Promise<void> {
-    if (ids.length === 0) {
-      return;
-    }
-
-    await tx
-      .update(bookingsTable)
-      .set({ deletedAt: new Date() })
-      .where(
-        and(
-          isNull(bookingsTable.deletedAt),
-          inArray(bookingsTable.id, ids),
-        ),
-      );
   }
 
   async update(

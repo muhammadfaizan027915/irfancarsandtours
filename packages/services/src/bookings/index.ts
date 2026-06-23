@@ -1,3 +1,4 @@
+import "server-only";
 
 import { after } from "next/server";
 
@@ -230,20 +231,5 @@ export class BookingService {
     return tx === db
       ? await db.transaction((newTx) => executeUpdate(newTx))
       : await executeUpdate(tx);
-  }
-
-  async deleteBookingsWithDeletedCars(tx: DbOrTransaction = db) {
-    const executeDelete = async (transaction: DbOrTransaction) => {
-      const bookingIds =
-        await this.bookingRepository.findIdsWithDeletedCars(transaction);
-
-      if (bookingIds.length > 0) {
-        await this.bookingRepository.deleteMany(bookingIds, transaction);
-      }
-    };
-
-    return tx === db
-      ? await db.transaction((newTx) => executeDelete(newTx))
-      : await executeDelete(tx);
   }
 }

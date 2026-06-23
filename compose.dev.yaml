@@ -36,24 +36,6 @@ services:
       - backend_database
     restart: always
 
-  jobs:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.job
-    env_file:
-      - .env.dev
-      - .env.docker
-    volumes:
-      - .:/app
-    environment:
-      NODE_ENV: development
-    depends_on:
-      database:
-        condition: service_healthy
-    networks:
-      - backend_database
-    restart: always
-
 volumes:
   pg_data_dev:
     name: irfancarsandtours_postgres_db_dev
