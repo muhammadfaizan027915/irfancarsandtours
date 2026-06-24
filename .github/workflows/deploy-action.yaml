@@ -1,6 +1,5 @@
 name: deploy-action
 run-name: ${{ github.repository_owner }} is deploying to production.
-
 on:
   push:
     branches:

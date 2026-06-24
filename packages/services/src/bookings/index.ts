@@ -20,6 +20,7 @@ import { db, DbOrTransaction } from "@icat/database";
 import {
   sendBookingConfirmationEmail,
   sendBookingStatusUpdateEmail,
+  sendCarBookingCreatedAdminEmail,
 } from "@icat/lib/emails";
 import { BookingRepository } from "@icat/repositories";
 import { BookedCarService, CarService, UserService } from "@icat/services";
@@ -149,6 +150,12 @@ export class BookingService {
             booking: parsedBooking,
           }),
         );
+        after(
+          sendCarBookingCreatedAdminEmail({
+            user: { name: parsedBooking.name, email: parsedBooking.email },
+            booking: parsedBooking,
+          }),
+        );
       }
 
       return parsedBooking;
@@ -188,7 +195,7 @@ export class BookingService {
   ): Promise<void> {
     const bookedCars = await this.bookedCarService.getByBookingIdWithCars(
       bookingId,
-      tx
+      tx,
     );
 
     let totalPrice = 0;

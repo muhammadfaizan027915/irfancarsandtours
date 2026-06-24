@@ -4,30 +4,32 @@ import { sendEmail } from "./sender";
 import {
   SendBookingConfirmationEmailArgs,
   SendBookingStatusUpdateEmailArgs,
+  SendCarBookingCreatedAdminEmailArgs,
   SendComplaintConfirmationEmailArgs,
   SendComplaintCreatedAdminEmailArgs,
   SendComplaintStatusUpdateEmailArgs,
   SendForgotPasswordEmailArgs,
   SendPasswordResetSuccessEmailArgs,
-  SendWelcomeEmailArgs,
   SendTourBookingConfirmationEmailArgs,
-  SendTourBookingStatusUpdateEmailArgs,
   SendTourBookingCreatedAdminEmailArgs,
   SendTourBookingPriceUpdateEmailArgs,
+  SendTourBookingStatusUpdateEmailArgs,
+  SendWelcomeEmailArgs,
 } from "./sender.types";
 import {
   BookingConfirmationEmail,
   BookingStatusUpdateEmail,
+  CarBookingCreatedAdminEmail,
   ComplaintConfirmationEmail,
   ComplaintCreatedAdminEmail,
   ComplaintStatusUpdateEmail,
   ForgotPasswordEmail,
   PasswordResetSuccessEmail,
-  WelcomeEmail,
   TourBookingConfirmationEmail,
-  TourBookingStatusUpdateEmail,
   TourBookingCreatedAdminEmail,
   TourBookingPriceUpdateEmail,
+  TourBookingStatusUpdateEmail,
+  WelcomeEmail,
 } from "./templates";
 
 export * from "./sender";
@@ -88,6 +90,27 @@ export async function sendBookingStatusUpdateEmail({
     to: user.email,
     subject: `Booking Status Updated - ${booking.id}`,
     content: React.createElement(BookingStatusUpdateEmail, {
+      user,
+      booking,
+    }),
+  });
+}
+
+export async function sendCarBookingCreatedAdminEmail({
+  user,
+  booking,
+}: SendCarBookingCreatedAdminEmailArgs): Promise<void> {
+  const adminEmail = process.env.ADMIN_EMAIL;
+
+  if (!adminEmail) {
+    console.warn("ADMIN_EMAIL not set, skipping car booking admin notification.");
+    return;
+  }
+
+  return sendEmail({
+    to: adminEmail,
+    subject: `New Car Booking Received: ${booking.id}`,
+    content: React.createElement(CarBookingCreatedAdminEmail, {
       user,
       booking,
     }),

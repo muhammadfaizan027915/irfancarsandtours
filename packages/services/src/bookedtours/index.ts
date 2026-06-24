@@ -1,10 +1,5 @@
 import "server-only";
 
-import {
-  // BookedTourListResponseSchema,
-  // BookedTourResponseDto,
-  // BookedTourResponseSchema,
-} from "@icat/contracts";
 import { BookedTourInsert, db, DbOrTransaction } from "@icat/database";
 import { BookedTourRepository } from "@icat/repositories";
 
