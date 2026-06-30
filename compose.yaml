@@ -112,10 +112,10 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-    - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-    - ./nginx/conf.d:/etc/nginx/conf.d:ro
-    - ./certbot/letsencrypt:/etc/letsencrypt
-    - ./certbot/www:/var/www/certbot
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./certbot/letsencrypt:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     networks:
       - frontend_backend
 
@@ -135,16 +135,13 @@ services:
       certbot certonly \
         --webroot \
         --webroot-path=/var/www/certbot \
-        --agree-tos \
         --non-interactive \
+        --agree-tos \
         --email $$CERT_EMAIL \
-        -d $$CERT_DOMAIN_IRFAN_CARS_AND_TOURS
-        -d $$CERT_DOMAIN_IRFAN_CARS_AND_TOURS_WWW
-        -d $$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE
-        -d $$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE_WWW
-        # -d $$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL
-        # -d $$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL_WWW
-
+        -d $$CERT_DOMAIN_IRFAN_CARS_AND_TOURS \
+        -d $$CERT_DOMAIN_IRFAN_CARS_AND_TOURS_WWW \
+        -d $$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE \
+        -d $$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE_WWW;
 
       while :; do
         certbot renew --webroot --webroot-path=/var/www/certbot;
