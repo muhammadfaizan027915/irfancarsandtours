@@ -1,83 +1,171 @@
+version: "3.9"
+
 services:
-  database:
+  # ===========================
+  # PostgreSQL (App)
+  # ===========================
+  postgres:
     image: postgres:latest
     env_file: .env.prod
     volumes:
       - pg_data:/var/lib/postgresql/18/docker
+    restart: always
     networks:
       - backend_database
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 5s
       timeout: 5s
       retries: 5
-    restart: always
 
+  # ===========================
+  # App Migration
+  # ===========================
   migrate:
     image: ghcr.io/${GITHUB_USER}/${IMAGE_NAME}-migrate:latest
     env_file: .env.prod
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - backend_database
-    depends_on:
-      database:
-        condition: service_healthy
-    restart: "no"
 
+  # ===========================
+  # Backend App
+  # ===========================
   web:
     image: ghcr.io/${GITHUB_USER}/${IMAGE_NAME}-web:latest
     env_file: .env.prod
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     networks:
       - frontend_backend
       - backend_database
-    depends_on:
-      migrate:
-        condition: service_completed_successfully
-      database:
-        condition: service_healthy
-    restart: always
-    mem_limit: 512m
-    mem_reservation: 256m
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: 3
 
+  # ===========================
+  # MySQL (WordPress)
+  # ===========================
+  mysql:
+    image: mysql:latest
+    env_file: .env.prod
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - wordpress_backend
+
+  # ===========================
+  # Future Star Car Hire
+  # ===========================
+  wordpress-futurestarcarhire:
+    image: wordpress:latest
+    env_file: .env.prod
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_AUTO_UPDATE_CORE', false);
+    volumes:
+      - futurestarcarhire_wp:/var/www/html
+      - ./php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./uploads.conf:/etc/apache2/conf-enabled/uploads.conf
+    networks:
+      - wordpress_backend
+      - frontend_backend
+
+  # ===========================
+  # Future Star Car Rental
+  # ===========================
+  # wordpress-futurestarcarrental:
+  #   image: wordpress:5.4
+  #   env_file: .env
+  #   restart: always
+  #   depends_on:
+  #     - mysql
+  #   environment:
+  #     WORDPRESS_CONFIG_EXTRA: |
+  #       define('WP_AUTO_UPDATE_CORE', false);
+  #   volumes:
+  #     - futurestarcarrental_wp:/var/www/html
+  #     - ./php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+  #     - ./uploads.conf:/etc/apache2/conf-enabled/uploads.conf
+  #     - ./wordpress.conf:/etc/apache2/conf-enabled/wordpress.conf
+  #   networks:
+  #     - wordpress_backend
+  #     - frontend_backend
+
+  # ===========================
+  # Nginx Reverse Proxy
+  # ===========================
   proxy:
     image: nginx:alpine
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./certbot/letsencrypt:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
+    restart: always
     depends_on:
       - web
+      - wordpress-futurestarcarhire
+      - wordpress-futurestarcarrental
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+    - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    - ./certbot/letsencrypt:/etc/letsencrypt
+    - ./certbot/www:/var/www/certbot
     networks:
       - frontend_backend
-    restart: always
 
+  # ===========================
+  # Certbot
+  # ===========================
   certbot:
     image: certbot/certbot
     env_file: .env.prod
+    depends_on:
+      - proxy
     volumes:
       - ./certbot/letsencrypt:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    depends_on:
-      proxy:
-        condition: service_started
     entrypoint: >
-      sh -c "certbot certonly --non-interactive --agree-tos --email $$CERT_EMAIL --webroot --webroot-path=/var/www/certbot -d $$CERT_DOMAIN -d $$CERT_DOMAIN_WWW"
+      sh -c "
+      certbot certonly \
+        --webroot \
+        --webroot-path=/var/www/certbot \
+        --agree-tos \
+        --non-interactive \
+        --email $$CERT_EMAIL \
+        -d $$CERT_DOMAIN_IRFAN_CARS_AND_TOURS
+        -d $$CERT_DOMAIN_IRFAN_CARS_AND_TOURS_WWW
+        -d $$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE
+        -d $$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE_WWW
+        -d $$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL
+        -d $$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL_WWW
+
+
+      while :; do
+        certbot renew --webroot --webroot-path=/var/www/certbot;
+        sleep 12h;
+      done
+      "
 
 volumes:
   pg_data:
-    name: irfancarsandtours_postgres_db
-    driver: local
+  mysql_data:
+  futurestarcarhire_wp:
+  futurestarcarrental_wp:
 
 networks:
   frontend_backend:
     driver: bridge
 
   backend_database:
+    driver: bridge
+
+  wordpress_backend:
     driver: bridge
