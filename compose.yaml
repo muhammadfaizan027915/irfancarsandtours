@@ -71,7 +71,7 @@ services:
         define('WP_AUTO_UPDATE_CORE', false);
     volumes:
       - futurestarcarhire_wp:/var/www/html
-      - ./futurestarcarhire_backup:/var/www/html/wp-content/ai1wm-backups/
+      - ./backups/wordpress/futurestarcarhire.wpress:/var/www/html/wp-content/ai1wm-backups/
       - ./php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - ./uploads.conf:/etc/apache2/conf-enabled/uploads.conf
     networks:
