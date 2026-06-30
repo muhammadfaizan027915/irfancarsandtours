@@ -73,10 +73,23 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: ".env.prod,docker-compose.yml"
-          target: /home/irfancarsandtours/
+          source: |
+            compose.yml
+            .env.prod
+          target: /home/irfancarsandtours
+          overwrite: true
+          debug: true
           timeout: 60s
           command_timeout: 10m
+
+      - name: Verify deployment files
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            ls -lah /home/irfancarsandtours
 
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v1.2.0
