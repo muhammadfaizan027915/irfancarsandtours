@@ -44,6 +44,11 @@ jobs:
           SMTP_USER=${{ secrets.SMTP_USER }}
           SMTP_PASS=${{ secrets.SMTP_PASS }}
 
+          WORDPRESS_DB_HOST=${{ secrets.WORDPRESS_DB_HOST }}
+          WORDPRESS_DB_USER=${{ secrets.WORDPRESS_DB_USER }}
+          WORDPRESS_DB_PASSWORD=${{ secrets.WORDPRESS_DB_PASSWORD }}
+          WORDPRESS_DB_NAME=${{ secrets.WORDPRESS_DB_NAME }}
+
           CERT_EMAIL=${{ secrets.CERT_EMAIL }}
 
           CERT_DOMAIN_IRFAN_CARS_AND_TOURS=${{ secrets.CERT_DOMAIN_IRFAN_CARS_AND_TOURS }}
