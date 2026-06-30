@@ -143,6 +143,14 @@ services:
             --email "$CERT_EMAIL" \
             -d "$CERT_DOMAIN_IRFAN_CARS_AND_TOURS" \
             -d "$CERT_DOMAIN_IRFAN_CARS_AND_TOURS_WWW" \
+
+          certbot certonly \
+            --webroot \
+            --webroot-path=/var/www/certbot \
+            --non-interactive \
+            --agree-tos \
+            --expand \
+            --email "$CERT_EMAIL" \
             -d "$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE" \
             -d "$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE_WWW"
 
