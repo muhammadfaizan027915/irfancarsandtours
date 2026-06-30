@@ -109,7 +109,7 @@ services:
     depends_on:
       - web
       - wordpress-futurestarcarhire
-      - wordpress-futurestarcarrental
+      # - wordpress-futurestarcarrental
     ports:
       - "80:80"
       - "443:443"
@@ -144,8 +144,8 @@ services:
         -d $$CERT_DOMAIN_IRFAN_CARS_AND_TOURS_WWW
         -d $$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE
         -d $$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE_WWW
-        -d $$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL
-        -d $$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL_WWW
+        # -d $$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL
+        # -d $$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL_WWW
 
 
       while :; do
@@ -158,7 +158,7 @@ volumes:
   pg_data:
   mysql_data:
   futurestarcarhire_wp:
-  futurestarcarrental_wp:
+  # futurestarcarrental_wp:
 
 networks:
   frontend_backend:
