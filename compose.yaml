@@ -100,7 +100,7 @@ services:
     image: nginx:alpine
     restart: always
     depends_on:
-      - web
+      - web-irfancarsandtours
       - wordpress-futurestarcarhire
       - wordpress-futurestarcarrental
     ports:
