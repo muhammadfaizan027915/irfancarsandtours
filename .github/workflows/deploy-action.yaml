@@ -16,8 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create env file
+      - name: Create environment files
         run: |
+          # =====================================
+          # Main application
+          # =====================================
           cat > .env.prod << EOF
           DATABASE_URL=${{ secrets.DATABASE_URL }}
 
@@ -44,11 +47,6 @@ jobs:
           SMTP_USER=${{ secrets.SMTP_USER }}
           SMTP_PASS=${{ secrets.SMTP_PASS }}
 
-          WORDPRESS_DB_HOST=${{ secrets.WORDPRESS_DB_HOST }}
-          WORDPRESS_DB_USER=${{ secrets.WORDPRESS_DB_USER }}
-          WORDPRESS_DB_PASSWORD=${{ secrets.WORDPRESS_DB_PASSWORD }}
-          WORDPRESS_DB_NAME=${{ secrets.WORDPRESS_DB_NAME }}
-
           CERT_EMAIL=${{ secrets.CERT_EMAIL }}
 
           CERT_DOMAIN_IRFAN_CARS_AND_TOURS=${{ secrets.CERT_DOMAIN_IRFAN_CARS_AND_TOURS }}
@@ -67,6 +65,27 @@ jobs:
 
           IMAGE_NAME=${{ secrets.IMAGE_NAME }}
           GITHUB_USER=${{ github.repository_owner }}
+          EOF
+
+
+          # =====================================
+          # Future Star Car Hire
+          # =====================================
+          cat > .env.futurestarcarhire << EOF
+          WORDPRESS_DB_HOST=${{ secrets.WORDPRESS_DB_HOST }}
+          WORDPRESS_DB_USER=${{ secrets.WORDPRESS_DB_USER }}
+          WORDPRESS_DB_PASSWORD=${{ secrets.WORDPRESS_DB_PASSWORD }}
+          WORDPRESS_DB_NAME=${{ secrets.WORDPRESS_DB_NAME_FUTURESTAR_CAR_HIRE }}
+          EOF
+
+          # =====================================
+          # Future Star Car Rental
+          # =====================================
+          cat > .env.futurestarcarrental << EOF
+          WORDPRESS_DB_HOST=${{ secrets.WORDPRESS_DB_HOST }}
+          WORDPRESS_DB_USER=${{ secrets.WORDPRESS_DB_USER }}
+          WORDPRESS_DB_PASSWORD=${{ secrets.WORDPRESS_DB_PASSWORD }}
+          WORDPRESS_DB_NAME=${{ secrets.WORDPRESS_DB_NAME_FUTURESTAR_CAR_RENTAL }}
           EOF
 
       - name: Login to GitHub Container Registry
@@ -98,7 +117,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: ".env.prod,compose.yaml,nginx"
+          source: ".env.prod,.env.futurestarcarhire,.env.futurestarcarrental,compose.yaml,nginx"
           target: /home/irfancarsandtours
           overwrite: true
           debug: true

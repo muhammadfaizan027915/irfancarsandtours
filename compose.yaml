@@ -62,7 +62,7 @@ services:
   # ===========================
   wordpress-futurestarcarhire:
     image: wordpress:latest
-    env_file: .env.prod
+    env_file: .env.futurestarcarhire
     restart: always
     depends_on:
       - mysql
@@ -80,7 +80,7 @@ services:
   # ===========================
   wordpress-futurestarcarrental:
     image: wordpress:5.4
-    env_file: .env
+    env_file: .env.futurestarcarrental
     restart: always
     depends_on:
       - mysql
