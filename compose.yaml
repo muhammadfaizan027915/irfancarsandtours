@@ -67,6 +67,7 @@ services:
     depends_on:
       - mysql
     environment:
+      WORDPRESS_DEBUG: "1"
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_AUTO_UPDATE_CORE', false);
     volumes:
@@ -79,7 +80,7 @@ services:
   # Future Star Car Rental
   # ===========================
   wordpress-futurestarcarrental:
-    image: wordpress:5.4
+    image: wordpress:6.9.4
     env_file: .env.futurestarcarrental
     restart: always
     depends_on:
