@@ -57,6 +57,9 @@ jobs:
           CERT_DOMAIN_FUTURE_STAR_CAR_HIRE=${{ secrets.CERT_DOMAIN_FUTURE_STAR_CAR_HIRE }}
           CERT_DOMAIN_FUTURE_STAR_CAR_HIRE_WWW=${{ secrets.CERT_DOMAIN_FUTURE_STAR_CAR_HIRE_WWW }}
 
+          CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL=${{ secrets.CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL }}
+          CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL_WWW=${{ secrets.CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL_WWW }}
+
           MAIL_FROM_NAME=${{ secrets.MAIL_FROM_NAME }}
           MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS }}
 
@@ -95,7 +98,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: "./.env.prod, ./compose.yaml"
+          source: ".env.prod,compose.yaml,nginx"
           target: /home/irfancarsandtours
           overwrite: true
           debug: true

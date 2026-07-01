@@ -32,7 +32,7 @@ services:
   # ===========================
   # Backend App
   # ===========================
-  web:
+  web-irfancarsandtours:
     image: ghcr.io/${GITHUB_USER}/${IMAGE_NAME}-web:latest
     env_file: .env.prod
     restart: always
@@ -71,8 +71,6 @@ services:
         define('WP_AUTO_UPDATE_CORE', false);
     volumes:
       - futurestarcarhire_wp:/var/www/html
-      - ./php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-      - ./uploads.conf:/etc/apache2/conf-enabled/uploads.conf
     networks:
       - wordpress_backend
       - frontend_backend
@@ -80,23 +78,20 @@ services:
   # ===========================
   # Future Star Car Rental
   # ===========================
-  # wordpress-futurestarcarrental:
-  #   image: wordpress:5.4
-  #   env_file: .env
-  #   restart: always
-  #   depends_on:
-  #     - mysql
-  #   environment:
-  #     WORDPRESS_CONFIG_EXTRA: |
-  #       define('WP_AUTO_UPDATE_CORE', false);
-  #   volumes:
-  #     - futurestarcarrental_wp:/var/www/html
-  #     - ./php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-  #     - ./uploads.conf:/etc/apache2/conf-enabled/uploads.conf
-  #     - ./wordpress.conf:/etc/apache2/conf-enabled/wordpress.conf
-  #   networks:
-  #     - wordpress_backend
-  #     - frontend_backend
+  wordpress-futurestarcarrental:
+    image: wordpress:5.4
+    env_file: .env
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_AUTO_UPDATE_CORE', false);
+    volumes:
+      - futurestarcarrental_wp:/var/www/html
+    networks:
+      - wordpress_backend
+      - frontend_backend
 
   # ===========================
   # Nginx Reverse Proxy
@@ -107,7 +102,7 @@ services:
     depends_on:
       - web
       - wordpress-futurestarcarhire
-      # - wordpress-futurestarcarrental
+      - wordpress-futurestarcarrental
     ports:
       - "80:80"
       - "443:443"
@@ -154,6 +149,16 @@ services:
             -d "$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE" \
             -d "$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE_WWW"
 
+            certbot certonly \
+            --webroot \
+            --webroot-path=/var/www/certbot \
+            --non-interactive \
+            --agree-tos \
+            --expand \
+            --email "$CERT_EMAIL" \
+            -d "$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL" \
+            -d "$CERT_DOMAIN_FUTURE_STAR_RENTAL_WWW"
+
           while true; do
             certbot renew \
               --webroot \
@@ -166,7 +171,7 @@ volumes:
   pg_data:
   mysql_data:
   futurestarcarhire_wp:
-  # futurestarcarrental_wp:
+  futurestarcarrental_wp:
 
 networks:
   frontend_backend:
