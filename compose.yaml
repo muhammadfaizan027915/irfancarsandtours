@@ -157,7 +157,7 @@ services:
             --expand \
             --email "$CERT_EMAIL" \
             -d "$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL" \
-            -d "$CERT_DOMAIN_FUTURE_STAR_RENTAL_WWW"
+            -d "$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL_WWW"
 
           while true; do
             certbot renew \
