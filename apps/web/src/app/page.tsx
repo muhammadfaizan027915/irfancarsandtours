@@ -46,7 +46,7 @@ export default function HomePage() {
           <CarTypes />
         </div>
 
-        <div className="pb-16 container mx-auto px-4 md:px-8">
+        <div className="pb-16 container mx-auto px-2 md:px-8">
           <Suspense fallback={<HomeFeaturedCarsSkeleton />}>
             <HomeFeaturedCars />
           </Suspense>
