@@ -36,6 +36,8 @@ export * from "./contents/dashboard/tourbookings";
 export * from "./contents/dashboard/tours";
 export * from "./contents/home";
 export * from "./contents/profile";
+export * from "./common/ourservices";
+export * from "./common/whychoose";
 export * from "./contents/tourbookingdetail";
 export * from "./contents/tourbookings";
 export * from "./contents/tourdetail";

@@ -6,7 +6,7 @@ import { AppImage as Image } from "@icat/ui/components/app-image";
 export function Logo() {
   return (
     <Link href={NavigationUrls.HOME}>
-      <div className="overflow-hidden w-18 h-18">
+      <div className="overflow-hidden w-24 h-24 md:w-28 md:h-28">
         <Image
           loading={"eager"}
           alt="Irfan Cars And Tours"

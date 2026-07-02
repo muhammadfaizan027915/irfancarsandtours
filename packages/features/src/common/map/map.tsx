@@ -6,8 +6,7 @@ export function Map() {
       <CardContent>
         <CardTitle className="text-4xl font-bold">Our Location</CardTitle>
         <p className="text-muted-foreground mb-2">
-          Near Bloachistan Marble Facotry, Shaheen Town, Service Road West,
-          Rawalpindi, Punjab, Pakistan
+          Shop, 01, plot, 92/13, Block A, NPF, Islamabad
         </p>
 
         <iframe
