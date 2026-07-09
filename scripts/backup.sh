@@ -72,8 +72,15 @@ do
   log "Archive size: $SIZE"
 
   log "Uploading backup to gdrive:website-backups/"
-  rclone copy "$ARCHIVE" gdrive:website-backups/
-  log "Upload completed"
+  RCLONE_LOG="$TMP_DIR/rclone.log"
+  if rclone copy "$ARCHIVE" gdrive:website-backups/ >"$RCLONE_LOG" 2>&1; then
+    cat "$RCLONE_LOG"
+    log "Upload completed"
+  else
+    cat "$RCLONE_LOG"
+    log "Upload failed"
+    exit 1
+  fi
 
   log "Sending email notification to $BACKUP_EMAIL"
   printf '%s\n\n%s\n%s\n%s\n' \
