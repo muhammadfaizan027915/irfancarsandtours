@@ -71,8 +71,8 @@ do
   SIZE=$(du -h "$ARCHIVE" | cut -f1)
   log "Archive size: $SIZE"
 
-  log "Uploading backup to remote:website-backups/"
-  rclone copy "$ARCHIVE" remote:website-backups/
+  log "Uploading backup to gdrive:website-backups/"
+  rclone copy "$ARCHIVE" gdrive:website-backups/
   log "Upload completed"
 
   log "Sending email notification to $BACKUP_EMAIL"
@@ -80,7 +80,7 @@ do
     "Daily backup completed." \
     "File: backup-$DATE.tar.gz" \
     "Size: $SIZE" \
-    "Location: remote:website-backups/backup-$DATE.tar.gz" \
+    "Location: gdrive:website-backups/backup-$DATE.tar.gz" \
     | mutt -s 'Daily Website Backup Completed' -- "$BACKUP_EMAIL"
   log "Email notification sent"
 
