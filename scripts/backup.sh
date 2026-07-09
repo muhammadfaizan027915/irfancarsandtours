@@ -28,7 +28,9 @@ do
 
   log "Backing up PostgreSQL to $BACKUP_DIR/postgres.sql.gz"
   PGPASSWORD="$POSTGRES_PASSWORD" pg_dump \
-    --dbname="$DATABASE_URL" \
+    -h "${POSTGRES_HOST:-postgres}" \
+    -U "$POSTGRES_USER" \
+    "$POSTGRES_DB" \
     --no-owner \
     --no-acl \
     > "$TMP_DIR/postgres.sql"
@@ -80,20 +82,6 @@ do
     cat "$RCLONE_LOG"
     log "Upload failed"
     exit 1
-  fi
-
-  backup_email="${BACKUP_EMAIL:-${ADMIN_EMAIL:-${MAIL_FROM_ADDRESS:-}}}"
-  if [ -n "$backup_email" ]; then
-    log "Sending email notification to $backup_email"
-    printf '%s\n\n%s\n%s\n%s\n' \
-      "Daily backup completed." \
-      "File: backup-$DATE.tar.gz" \
-      "Size: $SIZE" \
-      "Location: gdrive:website-backups/backup-$DATE.tar.gz" \
-      | mutt -s 'Daily Website Backup Completed' -- "$backup_email"
-    log "Email notification sent"
-  else
-    log "Skipping email notification because no backup email is configured"
   fi
 
   log "Removing temporary backup directory $BACKUP_DIR"
