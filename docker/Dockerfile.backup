@@ -19,7 +19,7 @@ RUN set -eux; \
   apt-get update; \
   apt-get install -y --no-install-recommends \
     mariadb-client \
-    postgresql-client-18 \
+    postgresql-client \
     tar \
     gzip \
     msmtp-mta \

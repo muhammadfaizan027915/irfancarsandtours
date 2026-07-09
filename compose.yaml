@@ -153,8 +153,8 @@ services:
     volumes:
       - futurestarcarhire_wp:/wordpress/futurestarcarhire:ro
       - futurestarcarrental_wp:/wordpress/futurestarcarrental:ro
+      - ./rclone:/root/.config/rclone:ro
       - ./backups:/backups
-      - ./rclone:/config/rclone
     networks:
       - backend_database
       - wordpress_backend
