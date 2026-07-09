@@ -5,7 +5,14 @@ RUN set -eux; \
   apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
-    gnupg; \
+    gnupg \
+    tar \
+    gzip \
+    msmtp-mta \
+    mutt \
+    bash \
+    tzdata \
+    rclone; \
   install -d -m 0755 /usr/share/postgresql-common/pgdg; \
   curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc \
     -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc; \
@@ -19,14 +26,7 @@ RUN set -eux; \
   apt-get update; \
   apt-get install -y --no-install-recommends \
     mariadb-client \
-    postgresql-client \
-    tar \
-    gzip \
-    msmtp-mta \
-    mutt \
-    bash \
-    tzdata \
-    rclone; \
+    postgresql-client-18; \
   rm -rf /var/lib/apt/lists/*
 
 COPY scripts/backup.sh /usr/local/bin/backup.sh

@@ -5,6 +5,8 @@ services:
   postgres:
     image: postgres:latest
     env_file: .env.prod
+    environment:
+      PGDATA: /var/lib/postgresql/18/docker
     volumes:
       - pg_data:/var/lib/postgresql/18/docker
     restart: always

@@ -28,9 +28,9 @@ do
 
   log "Backing up PostgreSQL to $BACKUP_DIR/postgres.sql.gz"
   PGPASSWORD="$POSTGRES_PASSWORD" pg_dump \
-    -h postgres \
-    -U "$POSTGRES_USER" \
-    "$POSTGRES_DB" \
+    --dbname="$DATABASE_URL" \
+    --no-owner \
+    --no-acl \
     > "$TMP_DIR/postgres.sql"
   gzip -f "$TMP_DIR/postgres.sql"
   mv "$TMP_DIR/postgres.sql.gz" "$BACKUP_DIR/postgres.sql.gz"
@@ -52,17 +52,17 @@ do
   mv "$TMP_DIR/mysql.sql.gz" "$BACKUP_DIR/mysql.sql.gz"
   log "MySQL backup completed"
 
-  log "Backing up Future Star Car Hire files"
+  log "Backing up Future Star Car Hire wp-content"
   tar --warning=no-file-changed \
-    -czf "$BACKUP_DIR/futurestarcarhire.tar.gz" \
-    -C /wordpress futurestarcarhire
-  log "Future Star Car Hire files backup completed"
+    -czf "$BACKUP_DIR/futurestarcarhire-wp-content.tar.gz" \
+    -C /wordpress/futurestarcarhire wp-content
+  log "Future Star Car Hire wp-content backup completed"
 
-  log "Backing up Future Star Car Rental files"
+  log "Backing up Future Star Car Rental wp-content"
   tar --warning=no-file-changed \
-    -czf "$BACKUP_DIR/futurestarcarrental.tar.gz" \
-    -C /wordpress futurestarcarrental
-  log "Future Star Car Rental files backup completed"
+    -czf "$BACKUP_DIR/futurestarcarrental-wp-content.tar.gz" \
+    -C /wordpress/futurestarcarrental wp-content
+  log "Future Star Car Rental wp-content backup completed"
 
   log "Creating final archive $ARCHIVE"
   tar czf "$ARCHIVE" -C /backups "$DATE"
@@ -82,14 +82,19 @@ do
     exit 1
   fi
 
-  log "Sending email notification to $BACKUP_EMAIL"
-  printf '%s\n\n%s\n%s\n%s\n' \
-    "Daily backup completed." \
-    "File: backup-$DATE.tar.gz" \
-    "Size: $SIZE" \
-    "Location: gdrive:website-backups/backup-$DATE.tar.gz" \
-    | mutt -s 'Daily Website Backup Completed' -- "$BACKUP_EMAIL"
-  log "Email notification sent"
+  backup_email="${BACKUP_EMAIL:-${ADMIN_EMAIL:-${MAIL_FROM_ADDRESS:-}}}"
+  if [ -n "$backup_email" ]; then
+    log "Sending email notification to $backup_email"
+    printf '%s\n\n%s\n%s\n%s\n' \
+      "Daily backup completed." \
+      "File: backup-$DATE.tar.gz" \
+      "Size: $SIZE" \
+      "Location: gdrive:website-backups/backup-$DATE.tar.gz" \
+      | mutt -s 'Daily Website Backup Completed' -- "$backup_email"
+    log "Email notification sent"
+  else
+    log "Skipping email notification because no backup email is configured"
+  fi
 
   log "Removing temporary backup directory $BACKUP_DIR"
   rm -rf "$BACKUP_DIR"
