@@ -43,6 +43,7 @@ do
     -p"$MYSQL_PASSWORD" \
     --skip-ssl \
     --protocol=TCP \
+    --no-tablespaces \
     --single-transaction \
     --quick \
     --all-databases \
