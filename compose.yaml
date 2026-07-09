@@ -167,6 +167,118 @@ services:
 
             sleep 12h
           done
+    
+  backup:
+    image: alpine:latest
+    restart: always
+    depends_on:
+      - postgres
+      - mysql
+    env_file:
+      - .env.prod
+      - .env.futurestarcarhire
+      - .env.futurestarcarrental
+    volumes:
+      - futurestarcarhire_wp:/wordpress/futurestarcarhire:ro
+      - futurestarcarrental_wp:/wordpress/futurestarcarrental:ro
+      - ./backups:/backups
+      - ./rclone:/root/.config/rclone:ro
+    networks:
+      - backend_database
+      - wordpress_backend
+    command: >
+      sh -c "
+      apk add --no-cache
+        postgresql-client
+        mysql-client
+        tar
+        gzip
+        msmtp
+        mutt
+        bash
+        tzdata
+        rclone;
+
+      cat >/backup.sh <<'EOF'
+      #!/bin/bash
+      set -e
+
+      DATE=$(date +%F-%H-%M)
+      BACKUP_DIR=/backups/$DATE
+      ARCHIVE=/backups/backup-$DATE.tar.gz
+      DRIVE_PATH=gdrive:WebsiteBackups
+
+      mkdir -p \"$BACKUP_DIR\"
+
+      echo 'Backing up PostgreSQL database...'
+      PGPASSWORD=\"$POSTGRES_PASSWORD\" pg_dump \
+        -h postgres \
+        -U \"$POSTGRES_USER\" \
+        \"$POSTGRES_DB\" \
+        | gzip > \"$BACKUP_DIR/postgres.sql.gz\"
+
+      echo 'Backing up MySQL databases...'
+      mysqldump \
+        -h mysql \
+        -u\"$MYSQL_USER\" \
+        -p\"$MYSQL_PASSWORD\" \
+        --single-transaction \
+        --quick \
+        --all-databases \
+        | gzip > \"$BACKUP_DIR/mysql.sql.gz\"
+
+      echo 'Backing up WordPress wp-content only...'
+
+      tar czf \"$BACKUP_DIR/futurestarcarhire-wp-content.tar.gz\" \
+        -C /wordpress/futurestarcarhire wp-content
+
+      tar czf \"$BACKUP_DIR/futurestarcarrental-wp-content.tar.gz\" \
+        -C /wordpress/futurestarcarrental wp-content
+
+      echo 'Creating final archive...'
+      tar czf \"$ARCHIVE\" -C /backups \"$DATE\"
+
+      SIZE=$(du -h \"$ARCHIVE\" | cut -f1)
+
+      echo 'Uploading backup to Google Drive...'
+      rclone copy \"$ARCHIVE\" \"$DRIVE_PATH\" \
+        --drive-chunk-size 64M \
+        --transfers 1 \
+        --checkers 4 \
+        --retries 5 \
+        --low-level-retries 10 \
+        --stats 30s
+
+      echo 'Sending email notification...'
+      echo \"Daily backup completed successfully.
+
+      Backup includes:
+      - PostgreSQL database
+      - MySQL databases
+      - futurestarcarhire wp-content
+      - futurestarcarrental wp-content
+
+      File: backup-$DATE.tar.gz
+      Size: $SIZE
+      Uploaded to: Google Drive / WebsiteBackups/
+
+      No attachment was sent because backup files may be too large for email.\" | mutt \
+        -s 'Daily Website Backup Completed' \
+        -- \"$BACKUP_EMAIL\"
+
+      rm -rf \"$BACKUP_DIR\"
+
+      find /backups -name '*.tar.gz' -mtime +7 -delete
+      EOF
+
+      chmod +x /backup.sh
+
+      while true
+      do
+        /backup.sh
+        sleep 24h
+      done
+      "
 
 volumes:
   pg_data:
