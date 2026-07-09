@@ -111,6 +111,22 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/${{ secrets.IMAGE_NAME }}-migrate:latest
 
+      - name: Build and push certbot image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile.certbot
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/${{ secrets.IMAGE_NAME }}-certbot:latest
+
+      - name: Build and push backup image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile.backup
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/${{ secrets.IMAGE_NAME }}-backup:latest
+
       - name: Copy files to VPS
         uses: appleboy/scp-action@v0.1.7
         with:

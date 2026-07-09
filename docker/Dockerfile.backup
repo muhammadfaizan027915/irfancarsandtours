@@ -1,0 +1,18 @@
+FROM alpine:latest
+
+RUN apk add --no-cache \
+  postgresql-client \
+  mysql-client \
+  tar \
+  gzip \
+  curl \
+  msmtp \
+  mutt \
+  bash \
+  tzdata \
+  rclone
+
+COPY scripts/backup.sh /usr/local/bin/backup.sh
+RUN chmod +x /usr/local/bin/backup.sh
+
+ENTRYPOINT ["/usr/local/bin/backup.sh"]
