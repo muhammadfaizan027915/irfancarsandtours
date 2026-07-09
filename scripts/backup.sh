@@ -99,6 +99,6 @@ do
   rm -rf "$TMP_DIR"
   log "Backup cycle completed for $DATE"
 
-  log "Sleeping for 86400 seconds before next cycle"
-  sleep 86400
+  log "Sleeping for 24h before next cycle"
+  sleep 24h
 done
