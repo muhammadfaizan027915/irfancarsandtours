@@ -1,16 +1,18 @@
-FROM alpine:latest
+FROM debian:bookworm-slim
 
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  default-mysql-client \
   postgresql-client \
-  mariadb-client \
   tar \
   gzip \
   curl \
-  msmtp \
+  msmtp-mta \
   mutt \
   bash \
   tzdata \
-  rclone
+  rclone \
+  ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY scripts/backup.sh /usr/local/bin/backup.sh
 RUN chmod +x /usr/local/bin/backup.sh
