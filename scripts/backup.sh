@@ -5,6 +5,14 @@ log() {
   printf '%s %s\n' "$(date '+%F %T')" "$*"
 }
 
+cleanup() {
+  if [ -n "${TMP_DIR:-}" ] && [ -d "$TMP_DIR" ]; then
+    rm -rf "$TMP_DIR"
+  fi
+}
+
+trap cleanup EXIT INT TERM HUP
+
 log "Backup job started"
 
 while true
@@ -12,6 +20,7 @@ do
   DATE=$(date +%F-%H-%M)
   BACKUP_DIR=/backups/$DATE
   ARCHIVE=/backups/backup-$DATE.tar.gz
+  TMP_DIR=$(mktemp -d /tmp/backup.XXXXXX)
 
   log "Starting backup cycle for $DATE"
   log "Creating backup directory $BACKUP_DIR"
@@ -22,7 +31,9 @@ do
     -h postgres \
     -U "$POSTGRES_USER" \
     "$POSTGRES_DB" \
-    | gzip > "$BACKUP_DIR/postgres.sql.gz"
+    > "$TMP_DIR/postgres.sql"
+  gzip -f "$TMP_DIR/postgres.sql"
+  mv "$TMP_DIR/postgres.sql.gz" "$BACKUP_DIR/postgres.sql.gz"
   log "PostgreSQL backup completed"
 
   log "Backing up MySQL to $BACKUP_DIR/mysql.sql.gz"
@@ -30,10 +41,14 @@ do
     -h mysql \
     -u"$MYSQL_USER" \
     -p"$MYSQL_PASSWORD" \
+    --skip-ssl \
+    --protocol=TCP \
     --single-transaction \
     --quick \
     --all-databases \
-    | gzip > "$BACKUP_DIR/mysql.sql.gz"
+    > "$TMP_DIR/mysql.sql"
+  gzip -f "$TMP_DIR/mysql.sql"
+  mv "$TMP_DIR/mysql.sql.gz" "$BACKUP_DIR/mysql.sql.gz"
   log "MySQL backup completed"
 
   log "Backing up Future Star Car Hire files"
@@ -73,6 +88,7 @@ do
 
   log "Cleaning up old archives"
   find /backups -name '*.tar.gz' -mtime +7 -delete
+  rm -rf "$TMP_DIR"
   log "Backup cycle completed for $DATE"
 
   log "Sleeping for 86400 seconds before next cycle"
