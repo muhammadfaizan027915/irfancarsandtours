@@ -37,11 +37,11 @@ do
   log "PostgreSQL backup completed"
 
   log "Backing up MySQL to $BACKUP_DIR/mysql.sql.gz"
-  mysqldump \
+  mariadb-dump \
     -h mysql \
     -u"$MYSQL_USER" \
     -p"$MYSQL_PASSWORD" \
-    --ssl-mode=DISABLED \
+    --skip-ssl \
     --protocol=TCP \
     --single-transaction \
     --quick \
