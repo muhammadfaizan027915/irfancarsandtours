@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM mysql:8.4
 
 RUN set -eux; \
   apt-get update; \
@@ -17,11 +17,9 @@ RUN set -eux; \
     > /etc/apt/sources.list.d/pgdg.sources; \
   apt-get update; \
   apt-get install -y --no-install-recommends \
-    default-mysql-client \
     postgresql-client \
     tar \
     gzip \
-    curl \
     msmtp-mta \
     mutt \
     bash \
