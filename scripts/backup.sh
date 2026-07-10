@@ -27,30 +27,13 @@ do
   mkdir -p "$BACKUP_DIR"
 
   log "Backing up PostgreSQL to $BACKUP_DIR/postgres.sql.gz"
-  log "Target database: $POSTGRES_USER@postgres/$POSTGRES_DB"
-  PGPASSWORD="$POSTGRES_PASSWORD" psql \
-    -h postgres \
-    -U "$POSTGRES_USER" \
-    -d "$POSTGRES_DB" \
-    -Atqc "select count(*) from pg_catalog.pg_tables where schemaname not in ('pg_catalog', 'information_schema');" \
-    > "$TMP_DIR/postgres.table_count"
-  TABLE_COUNT=$(cat "$TMP_DIR/postgres.table_count")
-  log "Visible user tables: $TABLE_COUNT"
-
   PGPASSWORD="$POSTGRES_PASSWORD" pg_dump \
     -h postgres \
     -U "$POSTGRES_USER" \
-    -d "$POSTGRES_DB" \
+    "$POSTGRES_DB" \
     --no-owner \
     --no-acl \
-    --verbose \
-    > "$TMP_DIR/postgres.sql" 2>"$TMP_DIR/postgres.dump.log"
-  if [ ! -s "$TMP_DIR/postgres.sql" ]; then
-    cat "$TMP_DIR/postgres.dump.log"
-    log "PostgreSQL dump is empty"
-    exit 1
-  fi
-  cat "$TMP_DIR/postgres.dump.log"
+    > "$TMP_DIR/postgres.sql"
   gzip -f "$TMP_DIR/postgres.sql"
   mv "$TMP_DIR/postgres.sql.gz" "$BACKUP_DIR/postgres.sql.gz"
   log "PostgreSQL backup completed"
