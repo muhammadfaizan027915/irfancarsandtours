@@ -28,7 +28,7 @@ do
 
   log "Backing up PostgreSQL to $BACKUP_DIR/postgres.sql.gz"
   PGPASSWORD="$POSTGRES_PASSWORD" pg_dump \
-    -h "${POSTGRES_HOST:-postgres}" \
+    -h postgres \
     -U "$POSTGRES_USER" \
     "$POSTGRES_DB" \
     --no-owner \
