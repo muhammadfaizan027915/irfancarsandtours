@@ -142,7 +142,7 @@ services:
   # ===========================
   backup:
     image: ghcr.io/${GITHUB_USER}/${IMAGE_NAME}-backup:latest
-    restart: always
+    restart: "no"
     depends_on:
       postgres:
         condition: service_healthy

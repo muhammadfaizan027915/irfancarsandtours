@@ -1,32 +1,99 @@
-#!/bin/sh
-set -eu
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+CURRENT_STEP="initializing backup job"
 
 log() {
   printf '%s %s\n' "$(date '+%F %T')" "$*"
 }
 
+step() {
+  CURRENT_STEP="$1"
+  log "$CURRENT_STEP"
+}
+
+fail() {
+  log "ERROR: $*"
+  exit 1
+}
+
+on_error() {
+  local status=$?
+  local line=$1
+  local command=$2
+
+  log "ERROR: Backup failed during: $CURRENT_STEP"
+  log "ERROR: Exit status $status at line $line while running: $command"
+  exit "$status"
+}
+
 cleanup() {
+  local status=$?
+
   if [ -n "${TMP_DIR:-}" ] && [ -d "$TMP_DIR" ]; then
     rm -rf "$TMP_DIR"
   fi
+
+  if [ "$status" -ne 0 ]; then
+    log "Backup job stopped with exit status $status"
+  fi
+
+  exit "$status"
 }
 
+backup_wp_content() {
+  local label=$1
+  local source_dir=$2
+  local archive=$3
+  local tar_log=$4
+  local status=0
+
+  step "Backing up $label wp-content"
+
+  if ! [ -d "$source_dir/wp-content" ]; then
+    fail "$label wp-content directory not found at $source_dir/wp-content"
+  fi
+
+  tar -czf "$archive" -C "$source_dir" wp-content >"$tar_log" 2>&1 || status=$?
+
+  if [ -s "$tar_log" ]; then
+    sed "s/^/$label tar: /" "$tar_log"
+  fi
+
+  case "$status" in
+    0)
+      log "$label wp-content backup completed"
+      ;;
+    1)
+      if [ -s "$archive" ]; then
+        log "WARNING: $label tar reported changed files while reading live WordPress data; archive was created and backup will continue"
+      else
+        fail "$label tar exited with status 1 and did not create a usable archive"
+      fi
+      ;;
+    *)
+      fail "$label tar failed with exit status $status"
+      ;;
+  esac
+}
+
+trap 'on_error "$LINENO" "$BASH_COMMAND"' ERR
 trap cleanup EXIT INT TERM HUP
 
 log "Backup job started"
 
 while true
 do
-  DATE=$(date +%F-%H-%M)
+  DATE=$(date +%F-%H-%M-%S)
   BACKUP_DIR=/backups/$DATE
   ARCHIVE=/backups/backup-$DATE.tar.gz
   TMP_DIR=$(mktemp -d /tmp/backup.XXXXXX)
 
-  log "Starting backup cycle for $DATE"
-  log "Creating backup directory $BACKUP_DIR"
+  step "Starting backup cycle for $DATE"
+  step "Creating backup directory $BACKUP_DIR"
   mkdir -p "$BACKUP_DIR"
 
-  log "Backing up PostgreSQL to $BACKUP_DIR/postgres.sql.gz"
+  step "Backing up PostgreSQL to $BACKUP_DIR/postgres.sql.gz"
   PGPASSWORD="$POSTGRES_PASSWORD" pg_dump \
     -h postgres \
     -U "$POSTGRES_USER" \
@@ -38,7 +105,7 @@ do
   mv "$TMP_DIR/postgres.sql.gz" "$BACKUP_DIR/postgres.sql.gz"
   log "PostgreSQL backup completed"
 
-  log "Backing up MySQL to $BACKUP_DIR/mysql.sql.gz"
+  step "Backing up MySQL to $BACKUP_DIR/mysql.sql.gz"
   mariadb-dump \
     -h mysql \
     -u"$MYSQL_USER" \
@@ -54,26 +121,26 @@ do
   mv "$TMP_DIR/mysql.sql.gz" "$BACKUP_DIR/mysql.sql.gz"
   log "MySQL backup completed"
 
-  log "Backing up Future Star Car Hire wp-content"
-  tar --warning=no-file-changed \
-    -czf "$BACKUP_DIR/futurestarcarhire-wp-content.tar.gz" \
-    -C /wordpress/futurestarcarhire wp-content
-  log "Future Star Car Hire wp-content backup completed"
+  backup_wp_content \
+    "Future Star Car Hire" \
+    /wordpress/futurestarcarhire \
+    "$BACKUP_DIR/futurestarcarhire-wp-content.tar.gz" \
+    "$TMP_DIR/futurestarcarhire-tar.log"
 
-  log "Backing up Future Star Car Rental wp-content"
-  tar --warning=no-file-changed \
-    -czf "$BACKUP_DIR/futurestarcarrental-wp-content.tar.gz" \
-    -C /wordpress/futurestarcarrental wp-content
-  log "Future Star Car Rental wp-content backup completed"
+  backup_wp_content \
+    "Future Star Car Rental" \
+    /wordpress/futurestarcarrental \
+    "$BACKUP_DIR/futurestarcarrental-wp-content.tar.gz" \
+    "$TMP_DIR/futurestarcarrental-tar.log"
 
-  log "Creating final archive $ARCHIVE"
+  step "Creating final archive $ARCHIVE"
   tar czf "$ARCHIVE" -C /backups "$DATE"
   log "Final archive created"
 
   SIZE=$(du -h "$ARCHIVE" | cut -f1)
   log "Archive size: $SIZE"
 
-  log "Uploading backup to gdrive:website-backups/"
+  step "Uploading backup to gdrive:website-backups/"
   RCLONE_LOG="$TMP_DIR/rclone.log"
   if rclone copy "$ARCHIVE" gdrive:website-backups/ >"$RCLONE_LOG" 2>&1; then
     cat "$RCLONE_LOG"
@@ -84,14 +151,14 @@ do
     exit 1
   fi
 
-  log "Removing temporary backup directory $BACKUP_DIR"
+  step "Removing temporary backup directory $BACKUP_DIR"
   rm -rf "$BACKUP_DIR"
 
-  log "Cleaning up old archives"
+  step "Cleaning up old archives"
   find /backups -name '*.tar.gz' -mtime +7 -delete
   rm -rf "$TMP_DIR"
   log "Backup cycle completed for $DATE"
 
-  log "Sleeping for 24h before next cycle"
+  step "Sleeping for 24h before next cycle"
   sleep 24h
 done
