@@ -36,7 +36,7 @@ export function TourCard({ tour }: TourCardProps) {
             src={imageUrl || "/assets/placeholder-tour.jpg"}
             className="w-full h-full object-cover object-center"
             sizes="(max-width: 768px) 150px, 250px"
-            quality={70}
+            quality={90}
           />
         </div>
       </Link>

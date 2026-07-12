@@ -14,7 +14,7 @@ export function PrimrayHero() {
         fill
         priority
         sizes="100vw"
-        quality={80}
+        quality={90}
         className="object-cover object-center -z-10"
       />
 

@@ -30,7 +30,7 @@ export function CarImages({ imageUrls }: CarImagesProps) {
             alt="Car"
             height={200}
             width={480}
-            className="w-full h-60 md:h-120 lg:h-180 object-cover rounded-xl"
+            className="w-full h-40 md:h-120 lg:h-180 object-cover rounded-xl"
             sizes="(max-width: 768px) 80vw, 100vw"
             quality={90}
           />

@@ -33,7 +33,7 @@ export function TourImages({ imageUrls }: TourImagesProps) {
             alt="Tour"
             height={400}
             width={800}
-            className="w-full h-60 md:h-120 lg:h-180 object-cover rounded-xl"
+            className="w-full h-40 md:h-120 lg:h-180 object-cover rounded-xl"
             sizes="(max-width: 768px) 80vw, 100vw"
             quality={90}
           />

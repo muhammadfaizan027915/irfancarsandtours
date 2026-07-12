@@ -21,7 +21,7 @@ export function CarTypeCard({ name, image }: CarTypeCardProps) {
             alt={name ?? ""}
             className="w-full h-full object-cover object-center"
             sizes="(max-width: 768px) 150px, 250px"
-            quality={70}
+            quality={90}
           />
         </div>
 
