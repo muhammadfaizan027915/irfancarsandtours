@@ -77,6 +77,27 @@ backup_wp_content() {
   esac
 }
 
+cleanup_old_backups() {
+  local retention_days=7
+  local backup_root=/backups
+  local rclone_remote=gdrive:website-backups/
+
+  step "Cleaning up local backups older than $retention_days days"
+  find "$backup_root" -maxdepth 1 -type f -name '*.tar.gz' -mtime +$retention_days -print -delete
+
+  step "Cleaning up remote backups older than $retention_days days"
+  RCLONE_LOG="$TMP_DIR/rclone-retention.log"
+  if rclone delete --min-age "${retention_days}d" "$rclone_remote" >"$RCLONE_LOG" 2>&1; then
+    if [ -s "$RCLONE_LOG" ]; then
+      cat "$RCLONE_LOG"
+    fi
+    log "Remote retention cleanup completed"
+  else
+    cat "$RCLONE_LOG" || true
+    log "WARNING: Remote retention cleanup failed"
+  fi
+}
+
 trap 'on_error "$LINENO" "$BASH_COMMAND"' ERR
 trap cleanup EXIT INT TERM HUP
 
@@ -154,8 +175,9 @@ do
   step "Removing temporary backup directory $BACKUP_DIR"
   rm -rf "$BACKUP_DIR"
 
-  step "Cleaning up old archives"
-  find /backups -name '*.tar.gz' -mtime +7 -delete
+  step "Cleaning up old backups"
+  cleanup_old_backups
+
   rm -rf "$TMP_DIR"
   log "Backup cycle completed for $DATE"
 
