@@ -78,24 +78,46 @@ backup_wp_content() {
 }
 
 cleanup_old_backups() {
-  local retention_days=7
+  local retention_count=7
   local backup_root=/backups
   local rclone_remote=gdrive:website-backups/
 
-  step "Cleaning up local backups older than $retention_days days"
-  find "$backup_root" -maxdepth 1 -type f -name '*.tar.gz' -mtime +$retention_days -print -delete
+  step "Cleaning up local backups, keeping latest $retention_count files"
+  mapfile -t local_backups < <(find "$backup_root" -maxdepth 1 -type f -name 'backup-*.tar.gz' | sort)
+  local total_local=${#local_backups[@]}
 
-  step "Cleaning up remote backups older than $retention_days days"
-  RCLONE_LOG="$TMP_DIR/rclone-retention.log"
-  if rclone delete --min-age "${retention_days}d" "$rclone_remote" >"$RCLONE_LOG" 2>&1; then
-    if [ -s "$RCLONE_LOG" ]; then
-      cat "$RCLONE_LOG"
-    fi
-    log "Remote retention cleanup completed"
+  if [ "$total_local" -le "$retention_count" ]; then
+    log "Found $total_local local backups; nothing to delete"
   else
-    cat "$RCLONE_LOG" || true
-    log "WARNING: Remote retention cleanup failed"
+    local delete_count=$((total_local - retention_count))
+    log "Deleting $delete_count older local backups"
+    for ((i=0; i<delete_count; i++)); do
+      log "Deleting local backup ${local_backups[i]}"
+      rm -f "${local_backups[i]}"
+    done
   fi
+
+  step "Cleaning up remote backups, keeping latest $retention_count files"
+  local RCLONE_LOG="$TMP_DIR/rclone-retention.log"
+  mapfile -t remote_backups < <(rclone lsf --files-only "$rclone_remote" | grep -E '^backup-[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}\.tar\.gz$' | sort)
+  local total_remote=${#remote_backups[@]}
+
+  if [ "$total_remote" -le "$retention_count" ]; then
+    log "Found $total_remote remote backups; nothing to delete"
+  else
+    local delete_count=$((total_remote - retention_count))
+    log "Deleting $delete_count older remote backups"
+    for ((i=0; i<delete_count; i++)); do
+      local remote_file="${rclone_remote}${remote_backups[i]}"
+      log "Deleting remote backup $remote_file"
+      if ! rclone deletefile "$remote_file" >"$RCLONE_LOG" 2>&1; then
+        cat "$RCLONE_LOG" || true
+        log "WARNING: Failed deleting remote backup $remote_file"
+      fi
+    done
+  fi
+
+  log "Backup retention cleanup completed"
 }
 
 trap 'on_error "$LINENO" "$BASH_COMMAND"' ERR
