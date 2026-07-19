@@ -77,12 +77,11 @@ backup_wp_content() {
   esac
 }
 
-cleanup_old_backups() {
+cleanup_old_local_archives() {
   local retention_count=7
   local backup_root=/backups
-  local rclone_remote=gdrive:website-backups/
 
-  step "Cleaning up local backups, keeping latest $retention_count files"
+  step "Removing local backups older than the latest $retention_count files"
   mapfile -t local_backups < <(find "$backup_root" -maxdepth 1 -type f -name 'backup-*.tar.gz' | sort)
   local total_local=${#local_backups[@]}
 
@@ -96,9 +95,14 @@ cleanup_old_backups() {
       rm -f "${local_backups[i]}"
     done
   fi
+}
 
-  step "Cleaning up remote backups, keeping latest $retention_count files"
+cleanup_old_remote_backups() {
+  local retention_count=7
+  local rclone_remote=gdrive:website-backups/
   local RCLONE_LOG="$TMP_DIR/rclone-retention.log"
+
+  step "Cleaning up remote backups older than the latest $retention_count files"
   mapfile -t remote_backups < <(rclone lsf --files-only "$rclone_remote" | grep -E '^backup-[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}\.tar\.gz$' | sort)
   local total_remote=${#remote_backups[@]}
 
@@ -117,7 +121,7 @@ cleanup_old_backups() {
     done
   fi
 
-  log "Backup retention cleanup completed"
+  log "Remote backup retention cleanup completed"
 }
 
 trap 'on_error "$LINENO" "$BASH_COMMAND"' ERR
@@ -183,6 +187,9 @@ do
   SIZE=$(du -h "$ARCHIVE" | cut -f1)
   log "Archive size: $SIZE"
 
+  step "Cleaning up local old archives before upload"
+  cleanup_old_local_archives
+
   step "Uploading backup to gdrive:website-backups/"
   RCLONE_LOG="$TMP_DIR/rclone.log"
   if rclone copy "$ARCHIVE" gdrive:website-backups/ >"$RCLONE_LOG" 2>&1; then
@@ -197,8 +204,8 @@ do
   step "Removing temporary backup directory $BACKUP_DIR"
   rm -rf "$BACKUP_DIR"
 
-  step "Cleaning up old backups"
-  cleanup_old_backups
+  step "Cleaning up remote old backups"
+  cleanup_old_remote_backups
 
   rm -rf "$TMP_DIR"
   log "Backup cycle completed for $DATE"
