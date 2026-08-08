@@ -114,7 +114,7 @@ cleanup_old_remote_backups() {
     for ((i=0; i<delete_count; i++)); do
       local remote_file="${rclone_remote}${remote_backups[i]}"
       log "Deleting remote backup $remote_file"
-      if ! rclone deletefile "$remote_file" >"$RCLONE_LOG" 2>&1; then
+      if ! rclone deletefile "$remote_file" --drive-use-trash=false >"$RCLONE_LOG" 2>&1; then
         cat "$RCLONE_LOG" || true
         log "WARNING: Failed deleting remote backup $remote_file"
       fi
@@ -122,6 +122,23 @@ cleanup_old_remote_backups() {
   fi
 
   log "Remote backup retention cleanup completed"
+}
+
+cleanup_remote_trash() {
+  local rclone_remote=gdrive:website-backups/
+  local RCLONE_LOG="$TMP_DIR/rclone-trash-cleanup.log"
+
+  step "Permanently deleting trashed backup archives"
+  if rclone delete "$rclone_remote" \
+    --drive-trashed-only \
+    --drive-use-trash=false \
+    --include 'backup-*.tar.gz' >"$RCLONE_LOG" 2>&1; then
+    cat "$RCLONE_LOG"
+    log "Trashed backup cleanup completed"
+  else
+    cat "$RCLONE_LOG" || true
+    log "WARNING: Trashed backup cleanup failed; storage may still be full"
+  fi
 }
 
 trap 'on_error "$LINENO" "$BASH_COMMAND"' ERR
@@ -190,6 +207,10 @@ do
   step "Cleaning up local old archives before upload"
   cleanup_old_local_archives
 
+  step "Cleaning up remote old backups before upload"
+  cleanup_old_remote_backups
+  cleanup_remote_trash
+
   step "Uploading backup to gdrive:website-backups/"
   RCLONE_LOG="$TMP_DIR/rclone.log"
   if rclone copy "$ARCHIVE" gdrive:website-backups/ >"$RCLONE_LOG" 2>&1; then
@@ -203,9 +224,6 @@ do
 
   step "Removing temporary backup directory $BACKUP_DIR"
   rm -rf "$BACKUP_DIR"
-
-  step "Cleaning up remote old backups"
-  cleanup_old_remote_backups
 
   rm -rf "$TMP_DIR"
   log "Backup cycle completed for $DATE"
