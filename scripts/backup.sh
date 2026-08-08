@@ -98,7 +98,7 @@ cleanup_old_local_archives() {
 }
 
 cleanup_old_remote_backups() {
-  local retention_count=7
+  local retention_count="${1:-7}"
   local rclone_remote=gdrive:website-backups/
   local RCLONE_LOG="$TMP_DIR/rclone-retention.log"
 
@@ -208,7 +208,9 @@ do
   cleanup_old_local_archives
 
   step "Cleaning up remote old backups before upload"
-  cleanup_old_remote_backups
+  # Leave one slot free so the next 1.4G archive can be uploaded without
+  # temporarily exceeding the Drive quota. Final retention is restored below.
+  cleanup_old_remote_backups 6
   cleanup_remote_trash
 
   step "Uploading backup to gdrive:website-backups/"
@@ -224,6 +226,9 @@ do
 
   step "Removing temporary backup directory $BACKUP_DIR"
   rm -rf "$BACKUP_DIR"
+
+  step "Enforcing final remote retention of 7 backups"
+  cleanup_old_remote_backups 7
 
   rm -rf "$TMP_DIR"
   log "Backup cycle completed for $DATE"
