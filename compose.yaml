@@ -129,7 +129,6 @@ services:
   # ===========================
   certbot:
     image: ghcr.io/${GITHUB_USER}/${IMAGE_NAME}-certbot:latest
-    restart: always
     env_file: .env.prod
     depends_on:
       - proxy

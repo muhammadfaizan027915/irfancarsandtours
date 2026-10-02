@@ -1,56 +1,46 @@
 #!/bin/sh
-set -eu
+set -u
 
 log() {
   printf '%s %s\n' "$(date '+%F %T')" "$*"
 }
 
+# Request a cert only if one doesn't already exist
+request_cert() {
+  name="$1"; d1="$2"; d2="$3"
+
+  if [ -f "/etc/letsencrypt/live/$d1/fullchain.pem" ]; then
+    log "Certificate for $name already exists, skipping initial request"
+    return 0
+  fi
+
+  log "Requesting certificate for $name"
+  if certbot certonly \
+      --webroot \
+      --webroot-path=/var/www/certbot \
+      --non-interactive \
+      --agree-tos \
+      --email "$CERT_EMAIL" \
+      -d "$d1" -d "$d2"; then
+    log "Certificate request completed for $name"
+  else
+    log "Certificate request FAILED for $name (continuing)"
+  fi
+}
+
 log "Certbot job started"
 
-log "Requesting certificate for irfancarsandtours domains"
-certbot certonly \
-  --webroot \
-  --webroot-path=/var/www/certbot \
-  --non-interactive \
-  --agree-tos \
-  --expand \
-  --email "$CERT_EMAIL" \
-  -d "$CERT_DOMAIN_IRFAN_CARS_AND_TOURS" \
-  -d "$CERT_DOMAIN_IRFAN_CARS_AND_TOURS_WWW"
-log "Certificate request completed for irfancarsandtours"
+request_cert irfancarsandtours \
+  "$CERT_DOMAIN_IRFAN_CARS_AND_TOURS" "$CERT_DOMAIN_IRFAN_CARS_AND_TOURS_WWW"
+request_cert futurestarcarhire \
+  "$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE" "$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE_WWW"
+request_cert futurestarcarrental \
+  "$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL" "$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL_WWW"
 
-log "Requesting certificate for futurestarcarhire domains"
-certbot certonly \
-  --webroot \
-  --webroot-path=/var/www/certbot \
-  --non-interactive \
-  --agree-tos \
-  --expand \
-  --email "$CERT_EMAIL" \
-  -d "$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE" \
-  -d "$CERT_DOMAIN_FUTURE_STAR_CAR_HIRE_WWW"
-log "Certificate request completed for futurestarcarhire"
-
-log "Requesting certificate for futurestarcarrental domains"
-certbot certonly \
-  --webroot \
-  --webroot-path=/var/www/certbot \
-  --non-interactive \
-  --agree-tos \
-  --expand \
-  --email "$CERT_EMAIL" \
-  -d "$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL" \
-  -d "$CERT_DOMAIN_FUTURE_STAR_CAR_RENTAL_WWW"
-log "Certificate request completed for futurestarcarrental"
-
-while true
-do
+while true; do
   log "Starting certificate renewal check"
-  certbot renew \
-    --webroot \
-    --webroot-path=/var/www/certbot
-  log "Certificate renewal check completed"
-
-  log "Sleeping for 12 hours before next renewal check"
+  certbot renew --webroot --webroot-path=/var/www/certbot \
+    || log "Renewal check failed (will retry next cycle)"
+  log "Sleeping for 12 hours"
   sleep 12h
 done
