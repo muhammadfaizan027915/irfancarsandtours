@@ -135,7 +135,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           source: ".env.prod,.env.futurestarcarhire,.env.futurestarcarrental,compose.yaml,nginx"
-          target: /home/irfancarsandtours
+          target: /home/imranenterprises/apps
           overwrite: true
           debug: true
           timeout: 60s
@@ -148,7 +148,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /home/irfancarsandtours
+            cd /home/imranenterprises/apps
             cp .env.prod .env
             docker compose pull
             docker compose up -d
