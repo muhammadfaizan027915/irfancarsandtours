@@ -134,6 +134,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          paraphrase: ${{secrets.VPS_SSH_PARAPHRASE}}
           source: ".env.prod,.env.futurestarcarhire,.env.futurestarcarrental,compose.yaml,nginx"
           target: /home/imranenterprises/apps
           overwrite: true
@@ -147,6 +148,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          paraphrase: ${{secrets.VPS_SSH_PARAPHRASE}}
           script: |
             cd /home/imranenterprises/apps
             cp .env.prod .env

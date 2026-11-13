@@ -71,3 +71,4 @@ packages/*/dist
 .scratch/*
 docs/*
 skills-lock.json
+.ssh/
