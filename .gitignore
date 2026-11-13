@@ -72,3 +72,5 @@ packages/*/dist
 docs/*
 skills-lock.json
 .ssh/
+backups/
+.vps.json
