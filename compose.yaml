@@ -51,7 +51,8 @@ services:
   # MySQL (WordPress)
   # ===========================
   mysql:
-    image: mysql:latest
+    # Debian build: the Oracle-Linux-9 images need an x86-64-v2 CPU, which this VPS lacks
+    image: mysql:8.0-debian
     env_file: .env.prod
     restart: always
     volumes:
@@ -78,6 +79,10 @@ services:
       WORDPRESS_DEBUG: "1"
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_AUTO_UPDATE_CORE', false);
+        // nginx terminates TLS, so is_ssl() is false here and WordPress emits http:// asset URLs
+        if ( isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' === $$_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
+            $$_SERVER['HTTPS'] = 'on';
+        }
     volumes:
       - futurestarcarhire_wp:/var/www/html
     networks:
